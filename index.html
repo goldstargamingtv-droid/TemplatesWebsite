@@ -609,6 +609,7 @@
             display: flex;
             gap: 0.75rem;
             align-items: center;
+            margin-top: -3px;
         }
 
         /* User Menu Styles */
@@ -677,22 +678,50 @@
 
         /* Theme Toggle Button */
         .theme-toggle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--card-bg);
+            position: relative;
+            width: 60px;
+            height: 30px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
             border: 2px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             cursor: pointer;
-            transition: var(--transition);
-            font-size: 1.25rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            padding: 0;
         }
 
         .theme-toggle:hover {
-            background: var(--card-hover);
             border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .theme-toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #27272a 0%, #3f3f46 100%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theme-toggle-slider svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--accent);
+        }
+        
+        [data-theme="light"] .theme-toggle {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+        }
+        
+        [data-theme="light"] .theme-toggle-slider {
+            left: 32px;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
         }
 
         /* Hero Section */
@@ -1550,9 +1579,7 @@
 
         @media (max-width: 768px) {
             .nav-cta {
-                display: flex;
-                gap: 0.5rem;
-                align-items: center;
+                display: none;
             }
             
             .nav-links {
@@ -2502,7 +2529,11 @@
                 <li><a href="#pricing" onclick="event.preventDefault(); scrollToSection('pricing');">Pricing</a></li>
                 <li>
                     <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" aria-label="Toggle theme">
-                        <span class="theme-icon" id="themeIcon">🌙</span>
+                        <span class="theme-toggle-slider" id="themeIcon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                            </svg>
+                        </span>
                     </button>
                 </li>
             </ul>
@@ -3341,12 +3372,26 @@
             localStorage.setItem('theme', newTheme);
             
             const icon = document.getElementById('themeIcon');
-            if (icon) icon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+            if (icon) {
+                icon.innerHTML = newTheme === 'light' 
+                    ? '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+                    : '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+            }
         }
 
-        // Load saved theme
+        // Load saved theme and set icon
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
+        
+        // Set initial icon based on saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const icon = document.getElementById('themeIcon');
+            if (icon) {
+                icon.innerHTML = savedTheme === 'light' 
+                    ? '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+                    : '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+            }
+        });
 
         // ============================================
         // NAVIGATION & ROUTING
