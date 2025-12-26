@@ -345,7 +345,7 @@
 
         // Initialize Supabase
         const { createClient } = window.supabase;
-        const supabase = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY, {
+        const supabaseClient = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY, {
             db: { schema: 'public' },
             global: {
                 headers: {
@@ -357,7 +357,7 @@
 
         // Check admin authentication
         async function checkAdmin() {
-            const { data: { user } } = await supabase.auth.getUser();
+            const { data: { user } } = await supabaseClient.auth.getUser();
             
             if (!user || user.email !== CONFIG.ADMIN_EMAIL) {
                 document.getElementById('authCheck').innerHTML = `
@@ -413,7 +413,7 @@
                 // Upload preview image
                 const previewImageExt = previewImage.name.split('.').pop();
                 const previewImagePath = `previews/${slug}.${previewImageExt}`;
-                const { error: imageError } = await supabase.storage
+                const { error: imageError } = await supabaseClient.storage
                     .from('templates')
                     .upload(previewImagePath, previewImage, { upsert: true });
 
@@ -421,18 +421,18 @@
 
                 // Upload ZIP file
                 const zipPath = `files/${slug}.zip`;
-                const { error: zipError } = await supabase.storage
+                const { error: zipError } = await supabaseClient.storage
                     .from('templates')
                     .upload(zipPath, zipFile, { upsert: true });
 
                 if (zipError) throw zipError;
 
                 // Get public URLs
-                const { data: previewUrlData } = supabase.storage
+                const { data, error } = supabaseClient.storage
                     .from('templates')
                     .getPublicUrl(previewImagePath);
 
-                const { data: zipUrlData } = supabase.storage
+                const { data, error } = supabaseClient.storage
                     .from('templates')
                     .getPublicUrl(zipPath);
 
