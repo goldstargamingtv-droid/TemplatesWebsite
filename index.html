@@ -16,15 +16,15 @@
 
         /* CSS Variables */
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --primary-light: #818cf8;
-            --secondary: #06b6d4;
-            --accent: #ec4899;
+            --primary: #0D9488;
+            --primary-dark: #0F766E;
+            --primary-light: #14B8A6;
+            --secondary: #06B6D4;
+            --accent: #F97316;
             
-            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-1: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%);
+            --gradient-2: linear-gradient(135deg, #14B8A6 0%, #06B6D4 100%);
+            --gradient-3: linear-gradient(135deg, #0F766E 0%, #0EA5E9 100%);
             
             --border-radius: 8px;
             --border-radius-lg: 16px;
@@ -89,6 +89,33 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-1);
+            border-radius: 6px;
+            border: 2px solid var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gradient-2);
+            box-shadow: 0 0 10px rgba(13, 148, 136, 0.5);
+        }
+
+        /* Firefox Scrollbar */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) var(--bg-secondary);
+        }
+
         img {
             max-width: 100%;
             height: auto;
@@ -143,25 +170,27 @@
 
         .btn-primary {
             background: var(--primary);
-            color: var(--white);
+            color: #ffffff;
             box-shadow: var(--shadow);
         }
 
         .btn-primary:hover {
-            background: var(--primary-dark);
+            background: #14B8A6;
             transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 8px 20px rgba(20, 184, 166, 0.4);
         }
 
         .btn-secondary {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
+            background: var(--accent);
+            color: #ffffff;
+            border: none;
+            box-shadow: var(--shadow);
         }
 
         .btn-secondary:hover {
-            background: var(--primary);
-            color: var(--white);
+            background: #EA580C;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4);
         }
 
         .btn-outline {
@@ -216,16 +245,147 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid transparent;
+            border-image: var(--gradient-1) 1;
             z-index: 1000;
             padding: 1rem 0;
             transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(13, 148, 136, 0.1);
         }
 
         [data-theme="light"] .navbar {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.08);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        /* Navbar Search */
+        .nav-search-wrapper {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .nav-search {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-search svg {
+            position: absolute;
+            left: 0.875rem;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .nav-search input {
+            width: 100%;
+            padding: 0.625rem 0.875rem 0.625rem 2.5rem;
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .nav-search input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+        }
+
+        .nav-search input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Search Suggestions Dropdown */
+        .search-suggestions {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 10000;
+            display: none;
+        }
+
+        .search-suggestions.active {
+            display: block;
+        }
+
+        .suggestion-item {
+            padding: 0.875rem 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background: var(--card-hover);
+        }
+
+        .suggestion-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            background: var(--gradient-1);
+            flex-shrink: 0;
+        }
+
+        .suggestion-content {
+            flex: 1;
+        }
+
+        .suggestion-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .suggestion-category {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .suggestion-price {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .suggestion-empty {
+            padding: 2rem 1rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .suggestion-empty svg {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 0.75rem;
+            opacity: 0.3;
         }
 
         .navbar .container {
@@ -237,10 +397,20 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 800;
-            color: var(--text-primary);
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            filter: drop-shadow(0 0 8px rgba(13, 148, 136, 0.3));
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            filter: drop-shadow(0 0 12px rgba(13, 148, 136, 0.5));
+            transform: translateY(-1px);
         }
 
         .logo-icon {
@@ -254,13 +424,30 @@
         }
 
         .nav-links a {
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-secondary);
             transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
             color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .mobile-menu-toggle {
@@ -276,7 +463,7 @@
         .mobile-menu-toggle span {
             width: 25px;
             height: 3px;
-            background: var(--text-primary);
+            background: var(--primary);
             border-radius: 2px;
             transition: var(--transition);
         }
@@ -1527,6 +1714,476 @@
             gap: 0.75rem;
         }
 
+        /* Browse Page */
+        .browse-page {
+            padding: 8rem 0 4rem;
+            min-height: 100vh;
+        }
+
+        .browse-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .browse-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .browse-header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .browse-controls {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box .search-suggestions {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: 0;
+            right: 0;
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 1rem;
+            color: var(--text-muted);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 0.875rem 1.25rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-select:hover {
+            border-color: var(--primary);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+        }
+
+        .loading-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-state p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 4rem;
+        }
+
+        .pagination-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .pagination-pages {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pagination-page {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pagination-page:hover {
+            border-color: var(--primary);
+        }
+
+        .pagination-page.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        /* Template Detail Page */
+        .template-detail {
+            padding: 8rem 0 4rem;
+            min-height: 100vh;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 2rem;
+        }
+
+        .back-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .detail-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+            align-items: start;
+        }
+
+        .detail-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--accent);
+            color: #ffffff;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .detail-category {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .detail-title {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .detail-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .detail-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .meta-item svg {
+            color: var(--primary);
+        }
+
+        .detail-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .detail-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+        }
+
+        .price-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .detail-preview {
+            position: sticky;
+            top: 100px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .detail-preview-image {
+            width: 100%;
+            height: 500px;
+            background: var(--gradient-1);
+        }
+
+        .detail-section {
+            margin-bottom: 4rem;
+        }
+
+        .detail-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-1);
+            border-radius: var(--border-radius);
+            color: #ffffff;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .feature-content h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .screenshot-item {
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .screenshot-item:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .included-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .included-item {
+            display: flex;
+            align-items: start;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+        }
+
+        .included-item svg {
+            color: var(--primary);
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .included-item h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .included-item p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tech-item {
+            padding: 1rem 1.5rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .tech-item:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Notification Toast */
+        .notification {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-xl);
+            z-index: 10000;
+            animation: slideInRight 0.3s ease-out;
+            max-width: 400px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
         .notification.success {
             background: #10b981;
             color: white;
@@ -1583,12 +2240,25 @@
                 <span class="logo-icon">⚡</span>
                 DeployTemplate
             </a>
+            
+            <!-- Navbar Search -->
+            <div class="nav-search-wrapper">
+                <div class="nav-search">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    <input type="text" id="navSearch" placeholder="Search templates..." autocomplete="off">
+                </div>
+                <div class="search-suggestions" id="navSearchSuggestions"></div>
+            </div>
+            
             <ul class="nav-links">
+                <li><a href="#" onclick="navigateTo('browse'); return false;">Browse</a></li>
                 <li><a href="#templates" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('templates').scrollIntoView({behavior:'smooth'}),100);}">Templates</a></li>
                 <li><a href="#features" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('features').scrollIntoView({behavior:'smooth'}),100);}">Features</a></li>
                 <li><a href="#pricing" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('pricing').scrollIntoView({behavior:'smooth'}),100);}">Pricing</a></li>
                 <li><a href="#showcase" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('showcase').scrollIntoView({behavior:'smooth'}),100);}">Showcase</a></li>
-                <li><a href="about.html">About</a></li>
                 <li>
                     <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" aria-label="Toggle theme">
                         <span class="theme-icon" id="themeIcon">🌙</span>
@@ -2204,6 +2874,201 @@
     </div>
     <!-- END HOME PAGE SECTION -->
 
+    <!-- BROWSE TEMPLATES PAGE -->
+    <div id="browse-page" class="page-section">
+        <div class="browse-page">
+            <div class="container">
+                <div class="browse-header">
+                    <h1>Browse Templates</h1>
+                    <p>Find the perfect template for your next project</p>
+                </div>
+
+                <!-- Search & Filter Bar -->
+                <div class="browse-controls">
+                    <div class="search-box">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" id="templateSearch" placeholder="Search templates..." autocomplete="off">
+                        <div class="search-suggestions" id="browseSearchSuggestions"></div>
+                    </div>
+
+                    <div class="filter-group">
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="saas">SaaS & Startups</option>
+                            <option value="portfolio">Portfolio & Creative</option>
+                            <option value="business">Business & Local</option>
+                            <option value="ecommerce">E-commerce</option>
+                            <option value="landing">Landing Pages</option>
+                        </select>
+
+                        <select id="sortFilter" class="filter-select">
+                            <option value="newest">Newest First</option>
+                            <option value="popular">Most Popular</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Templates Grid -->
+                <div id="browseTemplatesGrid" class="templates-grid">
+                    <!-- Templates will be loaded here dynamically -->
+                    <div class="loading-state">
+                        <div class="loader"></div>
+                        <p>Loading templates...</p>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="browsePagination" style="display: none;">
+                    <button class="pagination-btn" id="prevPage">← Previous</button>
+                    <div class="pagination-pages" id="paginationPages"></div>
+                    <button class="pagination-btn" id="nextPage">Next →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END BROWSE PAGE -->
+
+    <!-- TEMPLATE DETAIL PAGE -->
+    <div id="template-detail-page" class="page-section">
+        <div class="template-detail">
+            <div class="container">
+                <!-- Back Button -->
+                <button class="back-btn" onclick="navigateTo('browse')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Browse
+                </button>
+
+                <!-- Template Header -->
+                <div class="detail-header">
+                    <div class="detail-header-content">
+                        <div class="detail-badge" id="detailBadge"></div>
+                        <div class="detail-category" id="detailCategory"></div>
+                        <h1 class="detail-title" id="detailTitle"></h1>
+                        <p class="detail-description" id="detailDescription"></p>
+                        
+                        <div class="detail-meta">
+                            <div class="meta-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                <span id="detailDownloads">0 downloads</span>
+                            </div>
+                            <div class="meta-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                </svg>
+                                <span>4.9 rating</span>
+                            </div>
+                            <div class="meta-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                                <span id="detailUpdated">Updated recently</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-actions">
+                            <div class="detail-price">
+                                <span class="price-label">Price:</span>
+                                <div>
+                                    <span class="price-original" id="detailPriceOriginal"></span>
+                                    <span class="price-current" id="detailPriceCurrent"></span>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary btn-lg" id="detailBuyBtn" onclick="buyTemplateFromDetail()">
+                                Buy Now →
+                            </button>
+                            <button class="btn btn-primary btn-lg" id="detailPreviewBtn">
+                                Live Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="detail-preview" id="detailPreview">
+                        <!-- Preview will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Template Features -->
+                <div class="detail-section">
+                    <h2>Features</h2>
+                    <div class="feature-list" id="detailFeatures">
+                        <!-- Features loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Template Screenshots -->
+                <div class="detail-section">
+                    <h2>Screenshots</h2>
+                    <div class="screenshots-grid" id="detailScreenshots">
+                        <!-- Screenshots loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- What's Included -->
+                <div class="detail-section">
+                    <h2>What's Included</h2>
+                    <div class="included-list">
+                        <div class="included-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <div>
+                                <h4>Complete Source Code</h4>
+                                <p>All HTML, CSS, and JavaScript files fully customizable</p>
+                            </div>
+                        </div>
+                        <div class="included-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <div>
+                                <h4>Lifetime Updates</h4>
+                                <p>Get all future versions and improvements for free</p>
+                            </div>
+                        </div>
+                        <div class="included-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <div>
+                                <h4>Documentation</h4>
+                                <p>Detailed setup guide and customization instructions</p>
+                            </div>
+                        </div>
+                        <div class="included-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <div>
+                                <h4>Premium Support</h4>
+                                <p>Email support for any questions or issues</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tech Stack -->
+                <div class="detail-section">
+                    <h2>Tech Stack</h2>
+                    <div class="tech-stack" id="detailTechStack">
+                        <!-- Tech stack loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END TEMPLATE DETAIL PAGE -->
+
     <!-- LOGIN MODAL -->
     <div id="loginModal" class="modal-overlay">
         <div class="modal">
@@ -2314,6 +3179,7 @@
         // Global State
         let currentUser = null;
         let currentRoute = 'home';
+        let currentTemplateSlug = null;
 
         // ============================================
         // THEME TOGGLE
@@ -2340,14 +3206,23 @@
         // ============================================
         
         function navigateTo(page) {
-            // Hide all pages
+            // Hide all page sections
             document.querySelectorAll('.page-section').forEach(section => {
                 section.classList.remove('active');
             });
             
             // Show selected page
-            const pageId = page === 'home' ? 'homePage' : page === 'dashboard' ? 'dashboardPage' : 'homePage';
-            const pageElement = document.getElementById(pageId);
+            let pageElement;
+            if (page === 'home') {
+                pageElement = document.getElementById('homePage');
+            } else if (page === 'dashboard') {
+                pageElement = document.getElementById('dashboardPage');
+            } else if (page === 'browse') {
+                pageElement = document.getElementById('browse-page');
+                loadBrowseTemplates(); // Load templates when browsing
+            } else if (page === 'template-detail') {
+                pageElement = document.getElementById('template-detail-page');
+            }
             
             if (pageElement) {
                 pageElement.classList.add('active');
@@ -2781,6 +3656,588 @@
         }
 
         // ============================================
+        // BROWSE TEMPLATES
+        // ============================================
+        
+        let currentPage = 1;
+        let templatesPerPage = 9;
+        let allTemplates = [];
+        let filteredTemplates = [];
+
+        async function loadBrowseTemplates() {
+            console.log('Loading browse templates...');
+            const grid = document.getElementById('browseTemplatesGrid');
+            
+            if (!grid) {
+                console.error('Browse grid element not found!');
+                return;
+            }
+            
+            try {
+                // Fetch all templates from Supabase
+                const { data: templates, error } = await supabaseClient
+                    .from('templates')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                // Use templates from DB, or fallback to mock data if empty
+                allTemplates = (templates && templates.length > 0) ? templates : getMockTemplates();
+                filteredTemplates = [...allTemplates];
+                
+                console.log(`Loaded ${allTemplates.length} templates`);
+                
+                renderTemplates();
+                setupBrowseListeners();
+                
+            } catch (error) {
+                console.error('Error loading templates:', error);
+                // Use mock data on error
+                allTemplates = getMockTemplates();
+                filteredTemplates = [...allTemplates];
+                console.log(`Using mock data: ${allTemplates.length} templates`);
+                renderTemplates();
+                setupBrowseListeners();
+            }
+        }
+
+        function getMockTemplates() {
+            return [
+                {
+                    slug: 'flowmetrics-saas',
+                    name: 'FlowMetrics - Analytics SaaS',
+                    description: 'Modern landing page perfect for SaaS products, with pricing tables, feature sections, and conversion-optimized design.',
+                    category: 'saas',
+                    price: 0,
+                    original_price: 69,
+                    is_popular: true,
+                    is_new: false,
+                    features: ['Responsive Design', 'Dark Mode', 'Animations', 'Pricing Tables'],
+                    downloads: 1247,
+                    demo_url: 'https://example.com/demo',
+                    tech_stack: ['HTML5', 'CSS3', 'JavaScript', 'GSAP'],
+                    created_at: '2024-01-15T00:00:00Z',
+                    updated_at: '2024-12-20T00:00:00Z'
+                },
+                {
+                    slug: 'alex-portfolio',
+                    name: 'Alex Chen - Creative Portfolio',
+                    description: 'Stunning dark-themed portfolio with custom cursor effects, scroll animations, and project showcases for creatives.',
+                    category: 'portfolio',
+                    price: 39,
+                    original_price: 69,
+                    is_popular: false,
+                    is_new: true,
+                    features: ['Dark Theme', 'Custom Cursor', 'Scroll Effects', 'Gallery'],
+                    downloads: 543,
+                    demo_url: 'https://example.com/demo',
+                    tech_stack: ['HTML5', 'CSS3', 'JavaScript'],
+                    created_at: '2024-12-01T00:00:00Z',
+                    updated_at: '2024-12-22T00:00:00Z'
+                },
+                {
+                    slug: 'bella-restaurant',
+                    name: 'Bella Vista - Restaurant',
+                    description: 'Elegant restaurant template with menu displays, reservation forms, and gallery sections. Perfect for local businesses.',
+                    category: 'business',
+                    price: 39,
+                    original_price: 69,
+                    is_popular: false,
+                    is_new: false,
+                    features: ['Menu System', 'Reservations', 'Gallery', 'Contact Forms'],
+                    downloads: 892,
+                    demo_url: null,
+                    tech_stack: ['HTML5', 'CSS3', 'JavaScript', 'PHP'],
+                    created_at: '2024-02-10T00:00:00Z',
+                    updated_at: '2024-11-15T00:00:00Z'
+                },
+                {
+                    slug: 'shopify-modern',
+                    name: 'Modern E-commerce Store',
+                    description: 'Complete e-commerce solution with product grids, shopping cart, checkout flow, and admin dashboard.',
+                    category: 'ecommerce',
+                    price: 79,
+                    original_price: 129,
+                    is_popular: true,
+                    is_new: false,
+                    features: ['Shopping Cart', 'Payment Integration', 'Product Filters', 'Admin Panel'],
+                    downloads: 2103,
+                    demo_url: 'https://example.com/demo',
+                    tech_stack: ['React', 'Node.js', 'Stripe', 'MongoDB'],
+                    created_at: '2024-03-20T00:00:00Z',
+                    updated_at: '2024-12-18T00:00:00Z'
+                },
+                {
+                    slug: 'agency-pro',
+                    name: 'Agency Pro - Digital Agency',
+                    description: 'Professional agency template with case studies, team section, service pages, and client testimonials.',
+                    category: 'business',
+                    price: 49,
+                    original_price: 89,
+                    is_popular: false,
+                    is_new: true,
+                    features: ['Portfolio Grid', 'Team Showcase', 'Case Studies', 'Contact Forms'],
+                    downloads: 678,
+                    demo_url: 'https://example.com/demo',
+                    tech_stack: ['HTML5', 'CSS3', 'JavaScript', 'Tailwind'],
+                    created_at: '2024-11-28T00:00:00Z',
+                    updated_at: '2024-12-24T00:00:00Z'
+                },
+                {
+                    slug: 'startup-launch',
+                    name: 'Startup Launch - Landing Page',
+                    description: 'High-converting landing page designed for product launches with email capture, countdown timer, and social proof.',
+                    category: 'landing',
+                    price: 29,
+                    original_price: 59,
+                    is_popular: true,
+                    is_new: false,
+                    features: ['Email Capture', 'Countdown Timer', 'Social Proof', 'Video Background'],
+                    downloads: 1556,
+                    demo_url: 'https://example.com/demo',
+                    tech_stack: ['HTML5', 'CSS3', 'JavaScript', 'Mailchimp'],
+                    created_at: '2024-04-12T00:00:00Z',
+                    updated_at: '2024-12-10T00:00:00Z'
+                }
+            ];
+        }
+
+        function renderTemplates() {
+            const grid = document.getElementById('browseTemplatesGrid');
+            const pagination = document.getElementById('browsePagination');
+            
+            if (filteredTemplates.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔍</div>
+                        <h3>No templates found</h3>
+                        <p>Try adjusting your search or filters</p>
+                    </div>
+                `;
+                pagination.style.display = 'none';
+                return;
+            }
+            
+            // Calculate pagination
+            const totalPages = Math.ceil(filteredTemplates.length / templatesPerPage);
+            const startIndex = (currentPage - 1) * templatesPerPage;
+            const endIndex = startIndex + templatesPerPage;
+            const paginatedTemplates = filteredTemplates.slice(startIndex, endIndex);
+            
+            // Render template cards
+            const gradients = ['gradient-1', 'gradient-2', 'gradient-3'];
+            grid.innerHTML = paginatedTemplates.map((template, index) => {
+                const randomGradient = gradients[index % gradients.length];
+                const price = template.price || 0;
+                const originalPrice = template.original_price || price;
+                
+                return `
+                    <div class="template-card" data-category="${template.category || 'all'}">
+                        <div class="template-image">
+                            <div class="preview-gradient ${randomGradient}"></div>
+                            <div class="template-overlay">
+                                <button class="btn btn-white" onclick="viewTemplateDetails('${template.slug}')">View Details</button>
+                                ${template.demo_url ? `<a href="${template.demo_url}" target="_blank" class="btn btn-outline-white">Live Preview</a>` : ''}
+                            </div>
+                            ${template.is_popular ? '<div class="template-badge">Most Popular</div>' : ''}
+                            ${template.is_new ? '<div class="template-badge badge-new">New</div>' : ''}
+                        </div>
+                        <div class="template-info">
+                            <div class="template-category">${template.category || 'Template'}</div>
+                            <h3 class="template-title">${template.name}</h3>
+                            <p class="template-description">${template.description || 'Professional template ready for your business'}</p>
+                            <div class="template-tags">
+                                ${template.features ? template.features.slice(0, 3).map(f => `<span class="tag">${f}</span>`).join('') : ''}
+                            </div>
+                            <div class="template-footer">
+                                <div class="template-price">
+                                    ${originalPrice > price ? `<span class="price-original">$${originalPrice}</span>` : ''}
+                                    <span class="price-current">${price === 0 ? 'FREE' : '$' + price}</span>
+                                </div>
+                                <button class="btn btn-small ${price === 0 ? 'btn-primary' : 'btn-secondary'}" 
+                                    onclick="buyTemplate('${template.slug}', '${template.name}', ${price})">
+                                    ${price === 0 ? 'Get Free Template →' : 'Buy Now →'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Render pagination
+            if (totalPages > 1) {
+                renderPagination(totalPages);
+                pagination.style.display = 'flex';
+            } else {
+                pagination.style.display = 'none';
+            }
+        }
+
+        function renderPagination(totalPages) {
+            const pagesContainer = document.getElementById('paginationPages');
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            
+            // Update prev/next buttons
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+            
+            // Render page numbers
+            let pagesHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    pagesHTML += `
+                        <div class="pagination-page ${i === currentPage ? 'active' : ''}" 
+                            onclick="goToPage(${i})">${i}</div>
+                    `;
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    pagesHTML += `<div class="pagination-page">...</div>`;
+                }
+            }
+            pagesContainer.innerHTML = pagesHTML;
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            renderTemplates();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function setupBrowseListeners() {
+            // Search
+            const searchInput = document.getElementById('templateSearch');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    filterTemplates();
+                });
+            }
+            
+            // Category filter
+            const categoryFilter = document.getElementById('categoryFilter');
+            if (categoryFilter) {
+                categoryFilter.addEventListener('change', filterTemplates);
+            }
+            
+            // Sort filter
+            const sortFilter = document.getElementById('sortFilter');
+            if (sortFilter) {
+                sortFilter.addEventListener('change', filterTemplates);
+            }
+            
+            // Pagination buttons
+            document.getElementById('prevPage')?.addEventListener('click', () => {
+                if (currentPage > 1) goToPage(currentPage - 1);
+            });
+            
+            document.getElementById('nextPage')?.addEventListener('click', () => {
+                const totalPages = Math.ceil(filteredTemplates.length / templatesPerPage);
+                if (currentPage < totalPages) goToPage(currentPage + 1);
+            });
+        }
+
+        function filterTemplates() {
+            const searchTerm = document.getElementById('templateSearch')?.value.toLowerCase() || '';
+            const category = document.getElementById('categoryFilter')?.value || 'all';
+            const sortBy = document.getElementById('sortFilter')?.value || 'newest';
+            
+            // Filter
+            filteredTemplates = allTemplates.filter(template => {
+                const matchesSearch = !searchTerm || 
+                    template.name.toLowerCase().includes(searchTerm) ||
+                    (template.description && template.description.toLowerCase().includes(searchTerm));
+                
+                const matchesCategory = category === 'all' || template.category === category;
+                
+                return matchesSearch && matchesCategory;
+            });
+            
+            // Sort
+            filteredTemplates.sort((a, b) => {
+                switch(sortBy) {
+                    case 'newest':
+                        return new Date(b.created_at) - new Date(a.created_at);
+                    case 'popular':
+                        return (b.downloads || 0) - (a.downloads || 0);
+                    case 'price-low':
+                        return (a.price || 0) - (b.price || 0);
+                    case 'price-high':
+                        return (b.price || 0) - (a.price || 0);
+                    default:
+                        return 0;
+                }
+            });
+            
+            currentPage = 1;
+            renderTemplates();
+        }
+
+        function viewTemplateDetails(slug) {
+            currentTemplateSlug = slug;
+            window.currentTemplateSlug = slug; // Also store on window for buyTemplateFromDetail
+            navigateTo('template-detail');
+            loadTemplateDetail(slug);
+        }
+
+        async function loadTemplateDetail(slug) {
+            try {
+                // Fetch template details
+                const { data: template, error } = await supabaseClient
+                    .from('templates')
+                    .select('*')
+                    .eq('slug', slug)
+                    .single();
+                
+                if (error) throw error;
+                if (!template) throw new Error('Template not found');
+                
+                // Populate header
+                if (template.is_popular) {
+                    document.getElementById('detailBadge').textContent = 'Most Popular';
+                    document.getElementById('detailBadge').style.display = 'inline-block';
+                } else if (template.is_new) {
+                    document.getElementById('detailBadge').textContent = 'New';
+                    document.getElementById('detailBadge').style.display = 'inline-block';
+                    document.getElementById('detailBadge').style.background = 'var(--secondary)';
+                } else {
+                    document.getElementById('detailBadge').style.display = 'none';
+                }
+                
+                document.getElementById('detailCategory').textContent = template.category || 'Template';
+                document.getElementById('detailTitle').textContent = template.name;
+                document.getElementById('detailDescription').textContent = template.description || 'Professional template ready for your business';
+                
+                // Meta info
+                document.getElementById('detailDownloads').textContent = `${template.downloads || 0} downloads`;
+                const updatedDate = new Date(template.updated_at || template.created_at);
+                document.getElementById('detailUpdated').textContent = `Updated ${updatedDate.toLocaleDateString()}`;
+                
+                // Price
+                const price = template.price || 0;
+                const originalPrice = template.original_price || price;
+                
+                if (originalPrice > price) {
+                    document.getElementById('detailPriceOriginal').textContent = `$${originalPrice}`;
+                    document.getElementById('detailPriceOriginal').style.display = 'inline';
+                } else {
+                    document.getElementById('detailPriceOriginal').style.display = 'none';
+                }
+                
+                document.getElementById('detailPriceCurrent').textContent = price === 0 ? 'FREE' : `$${price}`;
+                
+                // Buy button
+                const buyBtn = document.getElementById('detailBuyBtn');
+                buyBtn.textContent = price === 0 ? 'Get Free Template →' : 'Buy Now →';
+                buyBtn.onclick = () => buyTemplate(template.slug, template.name, price);
+                
+                // Preview button
+                const previewBtn = document.getElementById('detailPreviewBtn');
+                if (template.demo_url) {
+                    previewBtn.onclick = () => window.open(template.demo_url, '_blank');
+                    previewBtn.style.display = 'block';
+                } else {
+                    previewBtn.style.display = 'none';
+                }
+                
+                // Preview image
+                const gradients = ['gradient-1', 'gradient-2', 'gradient-3'];
+                const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+                document.getElementById('detailPreview').innerHTML = `
+                    <div class="detail-preview-image" style="background: var(--${randomGradient});"></div>
+                `;
+                
+                // Features
+                if (template.features && template.features.length > 0) {
+                    const featureIcons = ['🎨', '⚡', '📱', '🔒', '🚀', '💎', '🎯', '✨'];
+                    document.getElementById('detailFeatures').innerHTML = template.features.map((feature, index) => `
+                        <div class="feature-item">
+                            <div class="feature-icon">${featureIcons[index % featureIcons.length]}</div>
+                            <div class="feature-content">
+                                <h4>${feature}</h4>
+                                <p>Fully customizable and optimized for performance</p>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    document.getElementById('detailFeatures').innerHTML = `
+                        <div class="feature-item">
+                            <div class="feature-icon">🎨</div>
+                            <div class="feature-content">
+                                <h4>Modern Design</h4>
+                                <p>Clean, professional design that stands out</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📱</div>
+                            <div class="feature-content">
+                                <h4>Fully Responsive</h4>
+                                <p>Perfect on all devices and screen sizes</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <div class="feature-content">
+                                <h4>Fast Performance</h4>
+                                <p>Optimized for speed and user experience</p>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Screenshots (placeholder gradients for now)
+                document.getElementById('detailScreenshots').innerHTML = gradients.map(gradient => `
+                    <div class="screenshot-item">
+                        <div style="width: 100%; height: 300px; background: var(--${gradient});"></div>
+                    </div>
+                `).join('');
+                
+                // Tech stack
+                const techStack = template.tech_stack || ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'];
+                document.getElementById('detailTechStack').innerHTML = techStack.map(tech => `
+                    <div class="tech-item">${tech}</div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Error loading template details:', error);
+                showNotification('Error loading template details: ' + error.message, 'error');
+                navigateTo('browse');
+            }
+        }
+
+        function buyTemplateFromDetail() {
+            const slug = window.currentTemplateSlug;
+            const name = document.getElementById('detailTitle').textContent;
+            const priceText = document.getElementById('detailPriceCurrent').textContent;
+            const price = priceText === 'FREE' ? 0 : parseFloat(priceText.replace('$', ''));
+            buyTemplate(slug, name, price);
+        }
+
+        // ============================================
+        // SEARCH SUGGESTIONS
+        // ============================================
+        
+        let searchDebounceTimer = null;
+        
+        function setupSearchSuggestions() {
+            // Navbar search
+            const navSearch = document.getElementById('navSearch');
+            const navSuggestions = document.getElementById('navSearchSuggestions');
+            
+            if (navSearch) {
+                navSearch.addEventListener('input', (e) => {
+                    clearTimeout(searchDebounceTimer);
+                    searchDebounceTimer = setTimeout(() => {
+                        showSearchSuggestions(e.target.value, navSuggestions, navSearch);
+                    }, 300);
+                });
+                
+                navSearch.addEventListener('focus', (e) => {
+                    if (e.target.value) {
+                        showSearchSuggestions(e.target.value, navSuggestions, navSearch);
+                    }
+                });
+                
+                // Close on click outside
+                document.addEventListener('click', (e) => {
+                    if (!navSearch.contains(e.target) && !navSuggestions.contains(e.target)) {
+                        navSuggestions.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Browse page search
+            const browseSearch = document.getElementById('templateSearch');
+            const browseSuggestions = document.getElementById('browseSearchSuggestions');
+            
+            if (browseSearch) {
+                browseSearch.addEventListener('input', (e) => {
+                    clearTimeout(searchDebounceTimer);
+                    searchDebounceTimer = setTimeout(() => {
+                        showSearchSuggestions(e.target.value, browseSuggestions, browseSearch);
+                    }, 300);
+                });
+                
+                browseSearch.addEventListener('focus', (e) => {
+                    if (e.target.value) {
+                        showSearchSuggestions(e.target.value, browseSuggestions, browseSearch);
+                    }
+                });
+                
+                document.addEventListener('click', (e) => {
+                    if (!browseSearch.contains(e.target) && !browseSuggestions.contains(e.target)) {
+                        browseSuggestions.classList.remove('active');
+                    }
+                });
+            }
+        }
+        
+        function showSearchSuggestions(query, suggestionsContainer, inputElement) {
+            if (!query || query.length < 2) {
+                suggestionsContainer.classList.remove('active');
+                return;
+            }
+            
+            const searchTerm = query.toLowerCase();
+            
+            // Search through all templates
+            const matches = allTemplates.filter(template => {
+                return template.name.toLowerCase().includes(searchTerm) ||
+                       (template.description && template.description.toLowerCase().includes(searchTerm)) ||
+                       (template.category && template.category.toLowerCase().includes(searchTerm));
+            }).slice(0, 5); // Show max 5 suggestions
+            
+            if (matches.length === 0) {
+                suggestionsContainer.innerHTML = `
+                    <div class="suggestion-empty">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <p>No templates found for "${query}"</p>
+                    </div>
+                `;
+                suggestionsContainer.classList.add('active');
+                return;
+            }
+            
+            const gradients = ['gradient-1', 'gradient-2', 'gradient-3'];
+            suggestionsContainer.innerHTML = matches.map((template, index) => {
+                const gradient = gradients[index % gradients.length];
+                const price = template.price || 0;
+                
+                return `
+                    <div class="suggestion-item" onclick="selectTemplate('${template.slug}', '${inputElement.id}')">
+                        <div class="suggestion-icon" style="background: var(--${gradient});"></div>
+                        <div class="suggestion-content">
+                            <div class="suggestion-name">${template.name}</div>
+                            <div class="suggestion-category">${template.category || 'Template'}</div>
+                        </div>
+                        <div class="suggestion-price">${price === 0 ? 'FREE' : '$' + price}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            suggestionsContainer.classList.add('active');
+        }
+        
+        function selectTemplate(slug, inputId) {
+            // Close suggestions
+            document.querySelectorAll('.search-suggestions').forEach(s => s.classList.remove('active'));
+            
+            // Navigate to browse page and filter to this template
+            navigateTo('browse');
+            
+            setTimeout(() => {
+                const searchInput = document.getElementById('templateSearch');
+                const template = allTemplates.find(t => t.slug === slug);
+                if (searchInput && template) {
+                    searchInput.value = template.name;
+                    filterTemplates();
+                }
+            }, 300);
+        }
+
+        // ============================================
         // INITIALIZATION
         // ============================================
         
@@ -2796,6 +4253,27 @@
             
             // Check auth state
             await checkAuth();
+            
+            // Load templates for search suggestions
+            try {
+                const { data: templates, error } = await supabaseClient
+                    .from('templates')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (!error && templates && templates.length > 0) {
+                    allTemplates = templates;
+                } else {
+                    // Use mock data if DB is empty or error
+                    allTemplates = getMockTemplates();
+                }
+            } catch (error) {
+                console.error('Error loading templates:', error);
+                allTemplates = getMockTemplates();
+            }
+            
+            // Setup search suggestions
+            setupSearchSuggestions();
             
             // Listen for auth state changes
             supabaseClient.auth.onAuthStateChange(async (event, session) => {
