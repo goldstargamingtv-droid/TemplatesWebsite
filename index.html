@@ -2358,7 +2358,15 @@
             const navLinks = document.querySelector('.nav-links');
             const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
             
-            if (window.innerW
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                if (mobileMenuToggle) {
+                    mobileMenuToggle.classList.remove('active');
+                }
+            }
+        }, 250));
+    </script>
+    
     </div>
     <!-- END HOME PAGE SECTION -->
 
