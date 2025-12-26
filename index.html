@@ -14,10 +14,6 @@
     <!-- Supabase Client Library -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
-    <!-- Mobile Console Viewer -->
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script>
-    
     <style>
         /* ============================================
            DEPLOYTEMPLATE - ALL STYLES
@@ -3525,7 +3521,7 @@
                 closeModal('loginModal');
                 showNotification('Welcome back!', 'success');
                 updateNavigation();
-                navigateTo('dashboard');
+                navigateTo('home');
                 
             } catch (error) {
                 errorEl.textContent = error.message;
@@ -3609,6 +3605,7 @@
             if (currentUser) {
                 const initial = currentUser.email[0].toUpperCase();
                 const isAdmin = currentUser.email === CONFIG.ADMIN_EMAIL;
+                const adminButton = isAdmin ? '<a href="admin.html">⚙️ Admin Panel</a>' : '';
                 
                 navCta.innerHTML = `
                     <div class="user-menu">
@@ -3616,7 +3613,7 @@
                         <div class="user-dropdown" id="userDropdown">
                             <a onclick="navigateTo('dashboard')">📊 Dashboard</a>
                             <a onclick="navigateTo('dashboard')">📦 My Templates</a>
-                            ${isAdmin ? '<a href="admin.html">⚙️ Admin Panel</a>' : ''}
+                            ${adminButton}
                             <button onclick="signOut()">🚪 Sign Out</button>
                         </div>
                     </div>
@@ -3906,10 +3903,7 @@
             console.log('Loading browse templates...');
             const grid = document.getElementById('browseTemplatesGrid');
             
-            if (!grid) {
-                console.error('Browse grid element not found!');
-                return;
-            }
+            if (!grid) return;
             
             try {
                 // Fetch all templates from Supabase
@@ -3924,17 +3918,13 @@
                 allTemplates = (templates && templates.length > 0) ? templates : getMockTemplates();
                 filteredTemplates = [...allTemplates];
                 
-                console.log(`Loaded ${allTemplates.length} templates`);
-                
                 renderTemplates();
                 setupBrowseListeners();
                 
             } catch (error) {
-                console.error('Error loading templates:', error);
                 // Use mock data on error
                 allTemplates = getMockTemplates();
                 filteredTemplates = [...allTemplates];
-                console.log(`Using mock data: ${allTemplates.length} templates`);
                 renderTemplates();
                 setupBrowseListeners();
             }
@@ -4211,7 +4201,6 @@
         }
 
         function viewTemplateDetails(slug) {
-            console.log('viewTemplateDetails called with slug:', slug);
             currentTemplateSlug = slug;
             window.currentTemplateSlug = slug; // Also store on window for buyTemplateFromDetail
             navigateTo('template-detail');
@@ -4484,8 +4473,8 @@
         // ============================================
         
         document.addEventListener('DOMContentLoaded', async function() {
-            console.log('%c⚡ DeployTemplate', 'font-size: 24px; font-weight: bold; color: #6366f1;');
-            console.log('%cComplete single-file marketplace app', 'font-size: 12px; color: #64748b;');
+            console.log('%c⚡ DeployTemplate', 'font-size: 20px; font-weight: bold; color: #14B8A6;');
+            console.log('%cPremium website templates marketplace', 'font-size: 12px; color: #71717a;');
             
             // Set theme icon
             const themeIcon = document.getElementById('themeIcon');
@@ -4526,9 +4515,7 @@
                 updateNavigation();
                 
                 if (event === 'SIGNED_IN') {
-                    console.log('User signed in:', currentUser.email);
                 } else if (event === 'SIGNED_OUT') {
-                    console.log('User signed out');
                     navigateTo('home');
                 }
             });
@@ -4595,11 +4582,8 @@
                 const logoSpans = document.querySelectorAll('.logo-text-template-inner span');
                 const cursor = document.querySelector('.logo-text-template-cursor');
                 
-                console.log('Typewriter init - spans found:', logoSpans.length);
-                console.log('Cursor found:', !!cursor);
                 
                 if (logoSpans.length === 0) {
-                    console.log('Logo spans not found!');
                     return;
                 }
                 
@@ -4660,7 +4644,6 @@
                 }
                 
                 // Start the typewriter effect
-                console.log('Starting typewriter effect...');
                 typewriterEffect();
             }, 100);
         });
