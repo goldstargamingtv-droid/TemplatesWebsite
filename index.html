@@ -262,7 +262,7 @@
         .navbar::after {
             content: '';
             position: absolute;
-            bottom: -2px;
+            bottom: 0;
             left: 0;
             right: 0;
             height: 2px;
@@ -3308,6 +3308,75 @@
         </div>
     </div>
 
+    <!-- ADMIN MODAL -->
+    <div id="adminModal" class="modal-overlay">
+        <div class="modal" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+            <button class="modal-close" onclick="closeModal('adminModal')" aria-label="Close">&times;</button>
+            <h2>⚙️ Admin Panel</h2>
+            <p>Manage templates and uploads</p>
+            
+            <div style="margin-top: 2rem;">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Add New Template</h3>
+                <form id="adminAddTemplateForm" onsubmit="handleAdminAddTemplate(event)">
+                    <div class="form-group">
+                        <label>Template Name *</label>
+                        <input type="text" id="adminTemplateName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Slug *</label>
+                        <input type="text" id="adminTemplateSlug" required placeholder="e.g., modern-portfolio">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select id="adminTemplateCategory" required style="padding: 0.75rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
+                            <option value="">Select...</option>
+                            <option value="Portfolio">Portfolio</option>
+                            <option value="Business">Business</option>
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Landing Page">Landing Page</option>
+                            <option value="Blog">Blog</option>
+                            <option value="SaaS">SaaS</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description *</label>
+                        <textarea id="adminTemplateDescription" required style="min-height: 80px;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Price ($) *</label>
+                        <input type="number" id="adminTemplatePrice" required min="0" step="0.01" value="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preview Image *</label>
+                        <input type="file" id="adminTemplatePreviewImage" accept="image/*" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Template ZIP *</label>
+                        <input type="file" id="adminTemplateZipFile" accept=".zip" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="adminTemplateIsPopular" style="width: auto; margin: 0;">
+                            Mark as Popular
+                        </label>
+                    </div>
+
+                    <div class="form-error" id="adminError"></div>
+                    <button type="submit" class="btn btn-primary btn-block" id="adminAddBtn">
+                        Add Template
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- DASHBOARD PAGE SECTION -->
     <div id="dashboardPage" class="page-section">
         <div class="dashboard">
@@ -3640,7 +3709,7 @@
             if (currentUser) {
                 const initial = currentUser.email[0].toUpperCase();
                 const isAdmin = currentUser.email === CONFIG.ADMIN_EMAIL;
-                const adminButton = isAdmin ? '<a href="admin.html">⚙️ Admin Panel</a>' : '';
+                const adminButton = isAdmin ? '<a onclick="showAdminModal()">⚙️ Admin Panel</a>' : '';
                 
                 navCta.innerHTML = `
                     <div class="user-menu">
@@ -4682,6 +4751,90 @@
                 typewriterEffect();
             }, 100);
         });
+
+        // ============================================
+        // ADMIN FUNCTIONS
+        // ============================================
+        
+        function showAdminModal() {
+            document.getElementById('adminModal').classList.add('active');
+            // Auto-generate slug from name
+            document.getElementById('adminTemplateName').addEventListener('input', (e) => {
+                const slug = e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                document.getElementById('adminTemplateSlug').value = slug;
+            });
+        }
+
+        async function handleAdminAddTemplate(event) {
+            event.preventDefault();
+            
+            const btn = document.getElementById('adminAddBtn');
+            const errorEl = document.getElementById('adminError');
+            
+            btn.disabled = true;
+            btn.textContent = 'Uploading...';
+            errorEl.classList.remove('active');
+            
+            try {
+                const previewImage = document.getElementById('adminTemplatePreviewImage').files[0];
+                const zipFile = document.getElementById('adminTemplateZipFile').files[0];
+                const slug = document.getElementById('adminTemplateSlug').value;
+
+                // Upload preview image
+                const previewImageExt = previewImage.name.split('.').pop();
+                const previewImagePath = `previews/${slug}.${previewImageExt}`;
+                const { error: imageError } = await supabaseClient.storage
+                    .from('templates')
+                    .upload(previewImagePath, previewImage, { upsert: true });
+
+                if (imageError) throw imageError;
+
+                // Upload ZIP file
+                const zipPath = `files/${slug}.zip`;
+                const { error: zipError } = await supabaseClient.storage
+                    .from('templates')
+                    .upload(zipPath, zipFile, { upsert: true });
+
+                if (zipError) throw zipError;
+
+                // Get public URLs
+                const { data: previewUrlData } = supabaseClient.storage
+                    .from('templates')
+                    .getPublicUrl(previewImagePath);
+
+                const { data: zipUrlData } = supabaseClient.storage
+                    .from('templates')
+                    .getPublicUrl(zipPath);
+
+                // Insert into database
+                const { error: dbError } = await supabaseClient
+                    .from('templates')
+                    .insert({
+                        name: document.getElementById('adminTemplateName').value,
+                        slug: slug,
+                        category: document.getElementById('adminTemplateCategory').value,
+                        description: document.getElementById('adminTemplateDescription').value,
+                        price: parseFloat(document.getElementById('adminTemplatePrice').value),
+                        preview_image: previewUrlData.publicUrl,
+                        download_url: zipUrlData.publicUrl,
+                        is_popular: document.getElementById('adminTemplateIsPopular').checked,
+                        downloads: 0
+                    });
+
+                if (dbError) throw dbError;
+
+                showNotification('Template added successfully!', 'success');
+                document.getElementById('adminAddTemplateForm').reset();
+                closeModal('adminModal');
+                loadBrowseTemplates(); // Refresh template list
+            } catch (error) {
+                errorEl.textContent = error.message;
+                errorEl.classList.add('active');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Add Template';
+            }
+        }
     </script>
 </body>
 </html>
