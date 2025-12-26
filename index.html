@@ -288,6 +288,70 @@
             align-items: center;
         }
 
+        /* User Menu Styles */
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .user-avatar:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            padding: 0.5rem;
+            display: none;
+            flex-direction: column;
+            z-index: 1001;
+        }
+
+        .user-dropdown.active {
+            display: flex;
+        }
+
+        .user-dropdown a,
+        .user-dropdown button {
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+            background: none;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.95rem;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .user-dropdown a:hover,
+        .user-dropdown button:hover {
+            background: var(--card-hover);
+            color: var(--primary);
+        }
+
         /* Theme Toggle Button */
         .theme-toggle {
             width: 40px;
@@ -2531,7 +2595,7 @@
             container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 3rem;"><div class="loading"></div><p style="margin-top: 1rem; color: var(--text-secondary);">Loading your templates...</p></div>';
             
             try {
-                const { data: purchases, error } = await supabase
+                const { data: purchases, error } = await supabaseClient
                     .from('purchases')
                     .select(`
                         *,
@@ -2615,7 +2679,7 @@
             
             try {
                 // Get template info
-                const { data: template, error: templateError } = await supabase
+                const { data: template, error: templateError } = await supabaseClient
                     .from('templates')
                     .select('*')
                     .eq('slug', slug)
@@ -2647,7 +2711,7 @@
                 showNotification('Download started! 🎉', 'success');
                 
                 // Log the download
-                await supabase
+                await supabaseClient
                     .from('download_logs')
                     .insert({
                         user_id: currentUser.id,
