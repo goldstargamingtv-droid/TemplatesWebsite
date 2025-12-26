@@ -14,6 +14,10 @@
     <!-- Supabase Client Library -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
+    <!-- Mobile Console Viewer -->
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+    
     <style>
         /* ============================================
            DEPLOYTEMPLATE - ALL STYLES
@@ -454,6 +458,7 @@
             display: inline-block;
             position: relative;
             min-width: 5.5em;
+            margin-left: 0.2em;
         }
         
         .logo-text-template-inner {
@@ -464,19 +469,13 @@
             display: inline-block;
             opacity: 0;
             transition: opacity 0.05s ease;
-            /* Mobile fallback first */
-            color: #14B8A6;
-            /* Then gradient for desktop */
-            background: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
+            color: #14B8A6 !important;
+            -webkit-text-fill-color: #14B8A6 !important;
         }
         
-        /* Only make transparent if gradient is supported */
-        @supports (-webkit-background-clip: text) {
-            .logo-text-template-inner span {
-                -webkit-text-fill-color: transparent;
-            }
+        [data-theme="light"] .logo-text-template-inner span {
+            color: #0D9488 !important;
+            -webkit-text-fill-color: #0D9488 !important;
         }
         
         .logo-text-template-cursor {
@@ -4541,6 +4540,9 @@
                 const logoSpans = document.querySelectorAll('.logo-text-template-inner span');
                 const cursor = document.querySelector('.logo-text-template-cursor');
                 
+                console.log('Typewriter init - spans found:', logoSpans.length);
+                console.log('Cursor found:', !!cursor);
+                
                 if (logoSpans.length === 0) {
                     console.log('Logo spans not found!');
                     return;
@@ -4550,15 +4552,19 @@
                 let isTyping = true;
                 
                 // Set all to invisible first
-                logoSpans.forEach(span => span.style.opacity = '0');
+                logoSpans.forEach(span => {
+                    span.style.opacity = '0';
+                    span.style.visibility = 'visible';
+                });
                 
                 function updateCursorPosition() {
+                    if (!cursor) return;
                     // Position cursor after the last visible letter
                     if (currentIndex > 0 && currentIndex <= logoSpans.length) {
                         const lastVisibleSpan = logoSpans[currentIndex - 1];
                         const rect = lastVisibleSpan.getBoundingClientRect();
                         const parentRect = lastVisibleSpan.parentElement.getBoundingClientRect();
-                        cursor.style.left = (rect.right - parentRect.left + 2) + 'px';
+                        cursor.style.left = (rect.right - parentRect.left + 4) + 'px';
                     } else {
                         cursor.style.left = '0px';
                     }
@@ -4578,7 +4584,7 @@
                                 isTyping = false;
                                 currentIndex = logoSpans.length - 1;
                                 typewriterEffect();
-                            }, 3000); // Pause for 3 seconds
+                            }, 2000); // Pause for 2 seconds
                         }
                     } else {
                         // Deleting phase
@@ -4586,19 +4592,20 @@
                             logoSpans[currentIndex].style.opacity = '0';
                             currentIndex--;
                             updateCursorPosition();
-                            setTimeout(typewriterEffect, 100); // 100ms between deletions
+                            setTimeout(typewriterEffect, 50); // 50ms between deletions (faster)
                         } else {
                             // Pause when fully deleted, then start over
                             setTimeout(() => {
                                 isTyping = true;
                                 currentIndex = 0;
                                 typewriterEffect();
-                            }, 500); // Short pause before restarting
+                            }, 2000); // 2 second pause before restarting (matching typed pause)
                         }
                     }
                 }
                 
                 // Start the typewriter effect
+                console.log('Starting typewriter effect...');
                 typewriterEffect();
             }, 100);
         });
