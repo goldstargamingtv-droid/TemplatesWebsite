@@ -2387,7 +2387,7 @@
                 
                 // Create user profile
                 if (data.user) {
-                    await supabase
+                    await supabaseClient
                         .from('users')
                         .insert({
                             id: data.user.id,
