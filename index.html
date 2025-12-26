@@ -3250,13 +3250,19 @@
         
         async function checkAuth() {
             try {
-                const { data: { user }, error } = await supabaseClient.auth.getUser();
-                if (error) throw error;
-                currentUser = user;
+                const { data: { session }, error } = await supabaseClient.auth.getSession();
+                
+                if (error && error.name !== 'AuthSessionMissingError') {
+                    console.error('Auth check error:', error);
+                }
+                
+                currentUser = session?.user ?? null;
                 updateNavigation();
-                return user;
+                return currentUser;
             } catch (error) {
-                console.error('Auth check error:', error);
+                if (error.name !== 'AuthSessionMissingError') {
+                    console.error('Auth check error:', error);
+                }
                 currentUser = null;
                 updateNavigation();
                 return null;
@@ -3837,7 +3843,7 @@
                         <div class="template-image">
                             <div class="preview-gradient ${randomGradient}"></div>
                             <div class="template-overlay">
-                                <button class="btn btn-white" onclick="viewTemplateDetails('${template.slug}')">View Details</button>
+                                <button class="btn btn-white" onclick="event.preventDefault(); viewTemplateDetails('${template.slug}'); return false;">View Details</button>
                                 ${template.demo_url ? `<a href="${template.demo_url}" target="_blank" class="btn btn-outline-white">Live Preview</a>` : ''}
                             </div>
                             ${template.is_popular ? '<div class="template-badge">Most Popular</div>' : ''}
@@ -3973,6 +3979,7 @@
         }
 
         function viewTemplateDetails(slug) {
+            console.log('viewTemplateDetails called with slug:', slug);
             currentTemplateSlug = slug;
             window.currentTemplateSlug = slug; // Also store on window for buyTemplateFromDetail
             navigateTo('template-detail');
