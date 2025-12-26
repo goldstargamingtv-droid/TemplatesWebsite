@@ -434,6 +434,12 @@
             z-index: 2;
         }
         
+        .logo-text {
+            display: flex;
+            align-items: baseline;
+            gap: 0;
+        }
+        
         .logo-text-deploy {
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
@@ -445,10 +451,73 @@
         }
         
         .logo-text-template {
+            display: inline-block;
+            position: relative;
+            min-width: 5.5em;
+        }
+        
+        .logo-text-template-inner {
+            white-space: nowrap;
+        }
+        
+        .logo-text-template-inner span {
+            display: inline-block;
+            opacity: 0;
+            transition: opacity 0.05s ease;
             background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+        
+        .logo-text-template-cursor {
+            display: inline-block;
+            width: 0.6em;
+            height: 1.2em;
+            background-color: #ffffff;
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink-caret 0.9s step-end infinite;
+        }
+        
+        [data-theme="light"] .logo-text-template-cursor {
+            background-color: #000000;
+        }
+        
+        @keyframes typewriter-reveal {
+            0% {
+                opacity: 0;
+            }
+            0.1%, 20% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            80.1%, 100% {
+                opacity: 0;
+            }
+        }
+        
+        @keyframes reveal {
+            0%, 19.9% {
+                opacity: 0;
+            }
+            20%, 79.9% {
+                opacity: 1;
+            }
+            80%, 100% {
+                opacity: 0;
+            }
+        }
+        
+        @keyframes blink-caret {
+            0%, 49% {
+                opacity: 1;
+            }
+            50%, 100% {
+                opacity: 0;
+            }
         }
 
         .logo:hover {
@@ -2402,7 +2471,7 @@
         <div class="container">
             <a href="#" onclick="navigateTo('home'); return false;" class="logo">
                 <img src="data:image/png;base64,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" alt="DeployTemplate" class="logo-image" />
-                <span class="logo-text"><span class="logo-text-deploy">Deploy</span><span class="logo-text-template">Template</span></span>
+                <span class="logo-text"><span class="logo-text-deploy">Deploy</span><span class="logo-text-template"><span class="logo-text-template-inner"><span>T</span><span>e</span><span>m</span><span>p</span><span>l</span><span>a</span><span>t</span><span>e</span></span><span class="logo-text-template-cursor"></span></span></span>
             </a>
             
             <!-- Navbar Search -->
@@ -2418,11 +2487,10 @@
             </div>
             
             <ul class="nav-links" id="navLinks">
-                <li><a href="#" onclick="navigateTo('browse'); return false;">Browse</a></li>
-                <li><a href="#templates" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('templates').scrollIntoView({behavior:'smooth'}),100);}">Templates</a></li>
-                <li><a href="#features" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('features').scrollIntoView({behavior:'smooth'}),100);}">Features</a></li>
-                <li><a href="#showcase" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('showcase').scrollIntoView({behavior:'smooth'}),100);}">Showcase</a></li>
-                <li><a href="#pricing" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('pricing').scrollIntoView({behavior:'smooth'}),100);}">Pricing</a></li>
+                <li><a href="#templates" onclick="event.preventDefault(); scrollToSection('templates');">Templates</a></li>
+                <li><a href="#features" onclick="event.preventDefault(); scrollToSection('features');">Features</a></li>
+                <li><a href="#showcase" onclick="event.preventDefault(); scrollToSection('showcase');">Showcase</a></li>
+                <li><a href="#pricing" onclick="event.preventDefault(); scrollToSection('pricing');">Pricing</a></li>
                 <li>
                     <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" aria-label="Toggle theme">
                         <span class="theme-icon" id="themeIcon">🌙</span>
@@ -2539,118 +2607,50 @@
                 </p>
             </div>
 
-            <!-- Filter Buttons -->
-            <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">All Templates</button>
-                <button class="filter-btn" data-filter="saas">SaaS & Startups</button>
-                <button class="filter-btn" data-filter="portfolio">Portfolio & Creative</button>
-                <button class="filter-btn" data-filter="business">Business & Local</button>
-                <button class="filter-btn" data-filter="ecommerce">E-commerce</button>
-            </div>
-
-            <!-- Templates Grid -->
-            <div class="templates-grid">
-                <!-- SaaS Template -->
-                <div class="template-card" data-category="saas">
-                    <div class="template-image">
-                        <div class="preview-gradient gradient-1"></div>
-                        <div class="template-overlay">
-                            <a href="#" class="btn btn-white">View Details</a>
-                            <a href="#" target="_blank" class="btn btn-outline-white">Live Preview</a>
-                        </div>
-                        <div class="template-badge">Most Popular</div>
-                    </div>
-                    <div class="template-info">
-                        <div class="template-category">SaaS & Startups</div>
-                        <h3 class="template-title">FlowMetrics - Analytics SaaS</h3>
-                        <p class="template-description">
-                            Modern landing page perfect for SaaS products, with pricing tables, feature sections, and conversion-optimized design.
-                        </p>
-                        <div class="template-tags">
-                            <span class="tag">Responsive</span>
-                            <span class="tag">Animations</span>
-                            <span class="tag">Dark Mode</span>
-                        </div>
-                        <div class="template-footer">
-                            <div class="template-price">
-                                <span class="price-original">$69</span>
-                                <span class="price-current">FREE</span>
-                            </div>
-                            <button class="btn btn-small btn-primary" onclick="buyTemplate('test', 'FlowMetrics SaaS', 0)">
-                                Get Free Template →
-                            </button>
-                        </div>
-                    </div>
+            <!-- Search & Filter Bar (from Browse) -->
+            <div class="browse-controls">
+                <div class="search-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    <input type="text" id="templateSearch" placeholder="Search templates..." autocomplete="off">
+                    <div class="search-suggestions" id="browseSearchSuggestions"></div>
                 </div>
 
-                <!-- Portfolio Template -->
-                <div class="template-card" data-category="portfolio">
-                    <div class="template-image">
-                        <div class="preview-gradient gradient-2"></div>
-                        <div class="template-overlay">
-                            <a href="#" class="btn btn-white">View Details</a>
-                            <a href="#" target="_blank" class="btn btn-outline-white">Live Preview</a>
-                        </div>
-                        <div class="template-badge badge-new">New</div>
-                    </div>
-                    <div class="template-info">
-                        <div class="template-category">Portfolio & Creative</div>
-                        <h3 class="template-title">Alex Chen - Creative Portfolio</h3>
-                        <p class="template-description">
-                            Stunning dark-themed portfolio with custom cursor effects, scroll animations, and project showcases for creatives.
-                        </p>
-                        <div class="template-tags">
-                            <span class="tag">Dark Theme</span>
-                            <span class="tag">Custom Cursor</span>
-                            <span class="tag">Scroll Effects</span>
-                        </div>
-                        <div class="template-footer">
-                            <div class="template-price">
-                                <span class="price-original">$69</span>
-                                <span class="price-current">$39</span>
-                            </div>
-                            <button class="btn btn-small btn-secondary" disabled>
-                                Coming Soon
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <div class="filter-group">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="saas">SaaS & Startups</option>
+                        <option value="portfolio">Portfolio & Creative</option>
+                        <option value="business">Business & Local</option>
+                        <option value="ecommerce">E-commerce</option>
+                        <option value="landing">Landing Pages</option>
+                    </select>
 
-                <!-- Restaurant Template -->
-                <div class="template-card" data-category="business">
-                    <div class="template-image">
-                        <div class="preview-gradient gradient-3"></div>
-                        <div class="template-overlay">
-                            <a href="#" class="btn btn-white">View Details</a>
-                            <a href="#" target="_blank" class="btn btn-outline-white">Live Preview</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <div class="template-category">Business & Local</div>
-                        <h3 class="template-title">Bella Vista - Restaurant</h3>
-                        <p class="template-description">
-                            Elegant restaurant template with menu displays, reservation forms, and gallery sections. Perfect for local businesses.
-                        </p>
-                        <div class="template-tags">
-                            <span class="tag">Menu System</span>
-                            <span class="tag">Reservations</span>
-                            <span class="tag">Gallery</span>
-                        </div>
-                        <div class="template-footer">
-                            <div class="template-price">
-                                <span class="price-original">$69</span>
-                                <span class="price-current">$39</span>
-                            </div>
-                            <button class="btn btn-small btn-secondary" disabled>
-                                Coming Soon
-                            </button>
-                        </div>
-                    </div>
+                    <select id="sortFilter" class="filter-select">
+                        <option value="newest">Newest First</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="templates-cta">
-                <p>More templates coming soon! <a href="#newsletter">Get notified</a> when we launch new designs.</p>
+            <!-- Dynamic Templates Grid -->
+            <div id="browseTemplatesGrid" class="templates-grid">
+                <!-- Templates will be loaded here dynamically -->
+                <div class="loading-state">
+                    <div class="loader"></div>
+                    <p>Loading templates...</p>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="browsePagination" style="display: none;">
+                <button class="pagination-btn" id="prevPage">← Previous</button>
+                <div class="pagination-pages" id="paginationPages"></div>
+                <button class="pagination-btn" id="nextPage">Next →</button>
             </div>
         </div>
     </section>
@@ -3040,75 +3040,16 @@
     </div>
     <!-- END HOME PAGE SECTION -->
 
-    <!-- BROWSE TEMPLATES PAGE -->
-    <div id="browse-page" class="page-section">
-        <div class="browse-page">
-            <div class="container">
-                <div class="browse-header">
-                    <h1>Browse Templates</h1>
-                    <p>Find the perfect template for your next project</p>
-                </div>
-
-                <!-- Search & Filter Bar -->
-                <div class="browse-controls">
-                    <div class="search-box">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="m21 21-4.35-4.35"/>
-                        </svg>
-                        <input type="text" id="templateSearch" placeholder="Search templates..." autocomplete="off">
-                        <div class="search-suggestions" id="browseSearchSuggestions"></div>
-                    </div>
-
-                    <div class="filter-group">
-                        <select id="categoryFilter" class="filter-select">
-                            <option value="all">All Categories</option>
-                            <option value="saas">SaaS & Startups</option>
-                            <option value="portfolio">Portfolio & Creative</option>
-                            <option value="business">Business & Local</option>
-                            <option value="ecommerce">E-commerce</option>
-                            <option value="landing">Landing Pages</option>
-                        </select>
-
-                        <select id="sortFilter" class="filter-select">
-                            <option value="newest">Newest First</option>
-                            <option value="popular">Most Popular</option>
-                            <option value="price-low">Price: Low to High</option>
-                            <option value="price-high">Price: High to Low</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Templates Grid -->
-                <div id="browseTemplatesGrid" class="templates-grid">
-                    <!-- Templates will be loaded here dynamically -->
-                    <div class="loading-state">
-                        <div class="loader"></div>
-                        <p>Loading templates...</p>
-                    </div>
-                </div>
-
-                <!-- Pagination -->
-                <div class="pagination" id="browsePagination" style="display: none;">
-                    <button class="pagination-btn" id="prevPage">← Previous</button>
-                    <div class="pagination-pages" id="paginationPages"></div>
-                    <button class="pagination-btn" id="nextPage">Next →</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END BROWSE PAGE -->
-
     <!-- TEMPLATE DETAIL PAGE -->
     <div id="template-detail-page" class="page-section">
         <div class="template-detail">
             <div class="container">
                 <!-- Back Button -->
-                <button class="back-btn" onclick="navigateTo('browse')">
+                <button class="back-btn" onclick="navigateTo('home'); setTimeout(() => document.getElementById('templates').scrollIntoView({behavior:'smooth'}), 100);">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M19 12H5M12 19l-7-7 7-7"/>
                     </svg>
-                    Back to Browse
+                    Back to Templates
                 </button>
 
                 <!-- Template Header -->
@@ -3402,6 +3343,39 @@
         // NAVIGATION & ROUTING
         // ============================================
         
+        function scrollToSection(sectionId) {
+            // If we're not on home page, navigate to home first
+            if (currentRoute !== 'home') {
+                navigateTo('home');
+                setTimeout(() => {
+                    const element = document.getElementById(sectionId);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Manually set active state after scrolling
+                        setTimeout(() => setActiveNavLink(sectionId), 300);
+                    }
+                }, 100);
+            } else {
+                // We're already on home, just scroll
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Manually set active state after scrolling
+                    setTimeout(() => setActiveNavLink(sectionId), 300);
+                }
+            }
+        }
+        
+        function setActiveNavLink(sectionId) {
+            const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + sectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
         function navigateTo(page) {
             // Hide all page sections
             document.querySelectorAll('.page-section').forEach(section => {
@@ -3414,9 +3388,6 @@
                 pageElement = document.getElementById('homePage');
             } else if (page === 'dashboard') {
                 pageElement = document.getElementById('dashboardPage');
-            } else if (page === 'browse') {
-                pageElement = document.getElementById('browse-page');
-                loadBrowseTemplates(); // Load templates when browsing
             } else if (page === 'template-detail') {
                 pageElement = document.getElementById('template-detail-page');
             }
@@ -3697,7 +3668,7 @@
                             <div class="empty-state-icon">📦</div>
                             <h3>No templates yet</h3>
                             <p>Purchase your first template to get started building amazing websites!</p>
-                            <button class="btn btn-primary btn-lg" onclick="navigateTo('home')">Browse Templates</button>
+                            <button class="btn btn-primary btn-lg" onclick="navigateTo('home'); setTimeout(() => document.getElementById('templates').scrollIntoView({behavior:'smooth'}), 100);">Browse Templates</button>
                         </div>
                     `;
                     return;
@@ -4304,7 +4275,8 @@
             } catch (error) {
                 console.error('Error loading template details:', error);
                 showNotification('Error loading template details: ' + error.message, 'error');
-                navigateTo('browse');
+                navigateTo('home');
+                setTimeout(() => document.getElementById('templates').scrollIntoView({behavior:'smooth'}), 100);
             }
         }
 
@@ -4428,8 +4400,8 @@
             // Close suggestions
             document.querySelectorAll('.search-suggestions').forEach(s => s.classList.remove('active'));
             
-            // Navigate to browse page and filter to this template
-            navigateTo('browse');
+            // Scroll to templates section and filter to this template
+            navigateTo('home');
             
             setTimeout(() => {
                 const searchInput = document.getElementById('templateSearch');
@@ -4438,6 +4410,8 @@
                     searchInput.value = template.name;
                     filterTemplates();
                 }
+                // Scroll to templates section
+                document.getElementById('templates').scrollIntoView({behavior:'smooth'});
             }, 300);
         }
 
@@ -4479,6 +4453,9 @@
             // Setup search suggestions
             setupSearchSuggestions();
             
+            // Load templates into the integrated Templates section
+            loadBrowseTemplates();
+            
             // Listen for auth state changes
             supabaseClient.auth.onAuthStateChange(async (event, session) => {
                 currentUser = session?.user ?? null;
@@ -4498,21 +4475,49 @@
             
             function updateActiveLink() {
                 const scrollY = window.pageYOffset;
+                const windowHeight = window.innerHeight;
+                
+                // Clear all active states first
+                navLinks.forEach(link => link.classList.remove('active'));
+                
+                // Find the current section
+                let currentSection = null;
                 
                 sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
                     const sectionHeight = section.offsetHeight;
-                    const sectionTop = section.offsetTop - 100;
                     const sectionId = section.getAttribute('id');
                     
-                    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === '#' + sectionId) {
-                                link.classList.add('active');
-                            }
-                        });
+                    // Calculate when to activate this section
+                    // For templates during scroll spy, use higher threshold to avoid activating in hero
+                    // But if user is actually IN templates section (past the start), activate it
+                    let activationPoint;
+                    if (sectionId === 'templates') {
+                        // If we're past the section start, use a small offset
+                        // Otherwise use viewport-based threshold
+                        if (scrollY >= sectionTop) {
+                            activationPoint = sectionTop - 50; // Small offset when already in section
+                        } else {
+                            activationPoint = sectionTop + (windowHeight * 0.3); // Larger offset when approaching
+                        }
+                    } else {
+                        activationPoint = sectionTop - 150; // Standard offset for other sections
+                    }
+                    
+                    // Check if we're in this section
+                    if (scrollY >= activationPoint && scrollY < sectionTop + sectionHeight) {
+                        currentSection = sectionId;
                     }
                 });
+                
+                // Activate the matching nav link
+                if (currentSection) {
+                    navLinks.forEach(link => {
+                        if (link.getAttribute('href') === '#' + currentSection) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
             }
             
             window.addEventListener('scroll', updateActiveLink);
@@ -4520,6 +4525,64 @@
             
             // Initialize home page as active
             navigateTo('home');
+            
+            // Typewriter effect for logo - wait a bit for everything to load
+            setTimeout(() => {
+                console.log('Starting typewriter effect...');
+                const logoSpans = document.querySelectorAll('.logo-text-template-inner span');
+                console.log('Found spans:', logoSpans.length);
+                
+                if (logoSpans.length === 0) {
+                    console.log('Logo spans not found!');
+                    return;
+                }
+                
+                let currentIndex = 0;
+                let isTyping = true;
+                
+                // Set all to invisible first
+                logoSpans.forEach(span => span.style.opacity = '0');
+                
+                function typewriterEffect() {
+                    console.log('Typewriter tick - typing:', isTyping, 'index:', currentIndex);
+                    if (isTyping) {
+                        // Typing phase
+                        if (currentIndex < logoSpans.length) {
+                            console.log('Showing letter:', logoSpans[currentIndex].textContent);
+                            logoSpans[currentIndex].style.opacity = '1';
+                            currentIndex++;
+                            setTimeout(typewriterEffect, 150); // 150ms between letters
+                        } else {
+                            console.log('Fully typed, pausing...');
+                            // Pause when fully typed
+                            setTimeout(() => {
+                                isTyping = false;
+                                currentIndex = logoSpans.length - 1;
+                                typewriterEffect();
+                            }, 3000); // Pause for 3 seconds
+                        }
+                    } else {
+                        // Deleting phase
+                        if (currentIndex >= 0) {
+                            console.log('Hiding letter:', logoSpans[currentIndex].textContent);
+                            logoSpans[currentIndex].style.opacity = '0';
+                            currentIndex--;
+                            setTimeout(typewriterEffect, 100); // 100ms between deletions
+                        } else {
+                            console.log('Fully deleted, restarting...');
+                            // Pause when fully deleted, then start over
+                            setTimeout(() => {
+                                isTyping = true;
+                                currentIndex = 0;
+                                typewriterEffect();
+                            }, 500); // Short pause before restarting
+                        }
+                    }
+                }
+                
+                // Start the typewriter effect
+                typewriterEffect();
+            }, 100); // Small delay to ensure DOM is ready
         });
     </script>
 </body>
