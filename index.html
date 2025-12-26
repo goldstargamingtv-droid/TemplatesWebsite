@@ -464,19 +464,29 @@
             display: inline-block;
             opacity: 0;
             transition: opacity 0.05s ease;
-            background: var(--gradient-1);
+            /* Mobile fallback first */
+            color: #14B8A6;
+            /* Then gradient for desktop */
+            background: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         
+        /* Only make transparent if gradient is supported */
+        @supports (-webkit-background-clip: text) {
+            .logo-text-template-inner span {
+                -webkit-text-fill-color: transparent;
+            }
+        }
+        
         .logo-text-template-cursor {
-            display: inline-block;
-            width: 0.6em;
-            height: 1.2em;
+            position: absolute;
+            left: 0;
+            top: 0.3em;
+            width: 0.5em;
+            height: 1em;
             background-color: #ffffff;
-            margin-left: 2px;
-            vertical-align: text-bottom;
+            transition: left 0.1s ease;
             animation: blink-caret 0.9s step-end infinite;
         }
         
@@ -4526,11 +4536,10 @@
             // Initialize home page as active
             navigateTo('home');
             
-            // Typewriter effect for logo - wait a bit for everything to load
+            // Typewriter effect for logo
             setTimeout(() => {
-                console.log('Starting typewriter effect...');
                 const logoSpans = document.querySelectorAll('.logo-text-template-inner span');
-                console.log('Found spans:', logoSpans.length);
+                const cursor = document.querySelector('.logo-text-template-cursor');
                 
                 if (logoSpans.length === 0) {
                     console.log('Logo spans not found!');
@@ -4543,17 +4552,27 @@
                 // Set all to invisible first
                 logoSpans.forEach(span => span.style.opacity = '0');
                 
+                function updateCursorPosition() {
+                    // Position cursor after the last visible letter
+                    if (currentIndex > 0 && currentIndex <= logoSpans.length) {
+                        const lastVisibleSpan = logoSpans[currentIndex - 1];
+                        const rect = lastVisibleSpan.getBoundingClientRect();
+                        const parentRect = lastVisibleSpan.parentElement.getBoundingClientRect();
+                        cursor.style.left = (rect.right - parentRect.left + 2) + 'px';
+                    } else {
+                        cursor.style.left = '0px';
+                    }
+                }
+                
                 function typewriterEffect() {
-                    console.log('Typewriter tick - typing:', isTyping, 'index:', currentIndex);
                     if (isTyping) {
                         // Typing phase
                         if (currentIndex < logoSpans.length) {
-                            console.log('Showing letter:', logoSpans[currentIndex].textContent);
                             logoSpans[currentIndex].style.opacity = '1';
                             currentIndex++;
+                            updateCursorPosition();
                             setTimeout(typewriterEffect, 150); // 150ms between letters
                         } else {
-                            console.log('Fully typed, pausing...');
                             // Pause when fully typed
                             setTimeout(() => {
                                 isTyping = false;
@@ -4564,12 +4583,11 @@
                     } else {
                         // Deleting phase
                         if (currentIndex >= 0) {
-                            console.log('Hiding letter:', logoSpans[currentIndex].textContent);
                             logoSpans[currentIndex].style.opacity = '0';
                             currentIndex--;
+                            updateCursorPosition();
                             setTimeout(typewriterEffect, 100); // 100ms between deletions
                         } else {
-                            console.log('Fully deleted, restarting...');
                             // Pause when fully deleted, then start over
                             setTimeout(() => {
                                 isTyping = true;
@@ -4582,7 +4600,7 @@
                 
                 // Start the typewriter effect
                 typewriterEffect();
-            }, 100); // Small delay to ensure DOM is ready
+            }, 100);
         });
     </script>
 </body>
