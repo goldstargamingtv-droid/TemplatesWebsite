@@ -3321,7 +3321,17 @@
 
         // Initialize Supabase Client
         const { createClient } = window.supabase;
-        const supabaseClient = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+        const supabaseClient = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY, {
+            db: {
+                schema: 'public'
+            },
+            global: {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }
+        });
         
         // Global State
         let currentUser = null;
@@ -4210,7 +4220,7 @@
 
         async function loadTemplateDetail(slug) {
             try {
-                // Fetch template details
+                // Fetch template details with proper headers
                 const { data: template, error } = await supabaseClient
                     .from('templates')
                     .select('*')
