@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - DeployTemplate</title>
+    
+    <!-- Supabase Client Library -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #14B8A6;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: #14B8A6;
+            margin: 2rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        .admin-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .admin-card {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #a1a1aa;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="url"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            background: #27272a;
+            border: 1px solid #3f3f46;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #14B8A6;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background: #14B8A6;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #0D9488;
+            transform: translateY(-2px);
+        }
+
+        button.secondary {
+            background: #F97316;
+        }
+
+        button.secondary:hover {
+            background: #ea580c;
+        }
+
+        button.danger {
+            background: #dc2626;
+        }
+
+        button.danger:hover {
+            background: #b91c1c;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .template-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .template-item {
+            background: #27272a;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .template-info h3 {
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .template-info p {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+        }
+
+        .template-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .template-actions button {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .notification {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            background: #18181b;
+            border: 1px solid #27272a;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success {
+            border-color: #14B8A6;
+            color: #14B8A6;
+        }
+
+        .notification.error {
+            border-color: #dc2626;
+            color: #dc2626;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .file-preview {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: #3f3f46;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: #14B8A6;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .auth-check {
+            text-align: center;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="authCheck" class="auth-check">
+            <h2>Checking authentication...</h2>
+        </div>
+
+        <div id="adminContent" style="display: none;">
+            <h1>🛠️ DeployTemplate Admin</h1>
+
+            <div class="admin-grid">
+                <!-- Add New Template -->
+                <div class="admin-card">
+                    <h2>Add New Template</h2>
+                    <form id="addTemplateForm">
+                        <div class="form-group">
+                            <label>Template Name *</label>
+                            <input type="text" id="templateName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Slug (URL-friendly) *</label>
+                            <input type="text" id="templateSlug" required placeholder="e.g., modern-portfolio">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Category *</label>
+                            <select id="templateCategory" required>
+                                <option value="">Select category...</option>
+                                <option value="Portfolio">Portfolio</option>
+                                <option value="Business">Business</option>
+                                <option value="E-commerce">E-commerce</option>
+                                <option value="Landing Page">Landing Page</option>
+                                <option value="Blog">Blog</option>
+                                <option value="SaaS">SaaS</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description *</label>
+                            <textarea id="templateDescription" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Price ($) *</label>
+                            <input type="number" id="templatePrice" required min="0" step="0.01">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Original Price ($ - for sale badge)</label>
+                            <input type="number" id="templateOriginalPrice" min="0" step="0.01">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Demo URL</label>
+                            <input type="url" id="templateDemoUrl" placeholder="https://demo.example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Preview Image *</label>
+                            <input type="file" id="templatePreviewImage" accept="image/*" required>
+                            <div id="previewImageName" class="file-preview"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Template ZIP File *</label>
+                            <input type="file" id="templateZipFile" accept=".zip" required>
+                            <div id="zipFileName" class="file-preview"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Features (comma-separated)</label>
+                            <input type="text" id="templateFeatures" placeholder="Responsive Design, Modern UI, Fast Loading">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tech Stack (comma-separated)</label>
+                            <input type="text" id="templateTechStack" placeholder="HTML5, CSS3, JavaScript, React">
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="templateIsPopular">
+                            <label for="templateIsPopular">Mark as Popular</label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="templateIsNew">
+                            <label for="templateIsNew">Mark as New</label>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="submit">Add Template</button>
+                            <button type="button" onclick="document.getElementById('addTemplateForm').reset();" class="secondary">Clear Form</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Existing Templates -->
+                <div class="admin-card">
+                    <h2>Manage Templates</h2>
+                    <div id="loadingTemplates" class="loading">Loading templates...</div>
+                    <div id="templatesList" class="template-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            SUPABASE_URL: 'https://gkyzpehxdqoolomglpal.supabase.co',
+            SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdreXpwZWh4ZHFvb2xvbWdscGFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ1NzU5NzQsImV4cCI6MjA1MDE1MTk3NH0.kpN5dkPOwA3Wgzw1_1zESlrq9f5uJ7OxRyH6T8PgHdE',
+            ADMIN_EMAIL: 'tylern101@yahoo.com'
+        };
+
+        // Initialize Supabase
+        const { createClient } = window.supabase;
+        const supabase = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY, {
+            db: { schema: 'public' },
+            global: {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }
+        });
+
+        // Check admin authentication
+        async function checkAdmin() {
+            const { data: { user } } = await supabase.auth.getUser();
+            
+            if (!user || user.email !== CONFIG.ADMIN_EMAIL) {
+                document.getElementById('authCheck').innerHTML = `
+                    <h2>Access Denied</h2>
+                    <p>You must be logged in as ${CONFIG.ADMIN_EMAIL} to access this page.</p>
+                    <button onclick="window.location.href='index.html'">Go to Home</button>
+                `;
+                return false;
+            }
+
+            document.getElementById('authCheck').style.display = 'none';
+            document.getElementById('adminContent').style.display = 'block';
+            loadTemplates();
+            return true;
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        // File preview handlers
+        document.getElementById('templatePreviewImage').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            document.getElementById('previewImageName').textContent = file ? `Selected: ${file.name}` : '';
+        });
+
+        document.getElementById('templateZipFile').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            document.getElementById('zipFileName').textContent = file ? `Selected: ${file.name}` : '';
+        });
+
+        // Auto-generate slug from name
+        document.getElementById('templateName').addEventListener('input', (e) => {
+            const slug = e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            document.getElementById('templateSlug').value = slug;
+        });
+
+        // Add template form submission
+        document.getElementById('addTemplateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            try {
+                const previewImage = document.getElementById('templatePreviewImage').files[0];
+                const zipFile = document.getElementById('templateZipFile').files[0];
+                const slug = document.getElementById('templateSlug').value;
+
+                // Upload preview image
+                const previewImageExt = previewImage.name.split('.').pop();
+                const previewImagePath = `previews/${slug}.${previewImageExt}`;
+                const { error: imageError } = await supabase.storage
+                    .from('templates')
+                    .upload(previewImagePath, previewImage, { upsert: true });
+
+                if (imageError) throw imageError;
+
+                // Upload ZIP file
+                const zipPath = `files/${slug}.zip`;
+                const { error: zipError } = await supabase.storage
+                    .from('templates')
+                    .upload(zipPath, zipFile, { upsert: true });
+
+                if (zipError) throw zipError;
+
+                // Get public URLs
+                const { data: previewUrlData } = supabase.storage
+                    .from('templates')
+                    .getPublicUrl(previewImagePath);
+
+                const { data: zipUrlData } = supabase.storage
+                    .from('templates')
+                    .getPublicUrl(zipPath);
+
+                // Parse features and tech stack
+                const features = document.getElementById('templateFeatures').value
+                    .split(',')
+                    .map(f => f.trim())
+                    .filter(f => f);
+
+                const techStack = document.getElementById('templateTechStack').value
+                    .split(',')
+                    .map(t => t.trim())
+                    .filter(t => t);
+
+                // Insert into database
+                const { error: dbError } = await supabase
+                    .from('templates')
+                    .insert({
+                        name: document.getElementById('templateName').value,
+                        slug: slug,
+                        category: document.getElementById('templateCategory').value,
+                        description: document.getElementById('templateDescription').value,
+                        price: parseFloat(document.getElementById('templatePrice').value),
+                        original_price: document.getElementById('templateOriginalPrice').value 
+                            ? parseFloat(document.getElementById('templateOriginalPrice').value) 
+                            : null,
+                        preview_image: previewUrlData.publicUrl,
+                        demo_url: document.getElementById('templateDemoUrl').value || null,
+                        download_url: zipUrlData.publicUrl,
+                        features: features.length > 0 ? features : null,
+                        tech_stack: techStack.length > 0 ? techStack : null,
+                        is_popular: document.getElementById('templateIsPopular').checked,
+                        is_new: document.getElementById('templateIsNew').checked,
+                        downloads: 0
+                    });
+
+                if (dbError) throw dbError;
+
+                showNotification('Template added successfully!', 'success');
+                document.getElementById('addTemplateForm').reset();
+                loadTemplates();
+            } catch (error) {
+                console.error('Error adding template:', error);
+                showNotification('Error adding template: ' + error.message, 'error');
+            }
+        });
+
+        // Load templates
+        async function loadTemplates() {
+            const loading = document.getElementById('loadingTemplates');
+            const list = document.getElementById('templatesList');
+            
+            loading.classList.add('active');
+            
+            try {
+                const { data: templates, error } = await supabase
+                    .from('templates')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                list.innerHTML = templates.map(template => `
+                    <div class="template-item">
+                        <div class="template-info">
+                            <h3>${template.name}</h3>
+                            <p>${template.category} • $${template.price} • ${template.downloads || 0} downloads</p>
+                        </div>
+                        <div class="template-actions">
+                            <button onclick="editTemplate('${template.id}')" class="secondary">Edit</button>
+                            <button onclick="deleteTemplate('${template.id}', '${template.name}')" class="danger">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading templates:', error);
+                showNotification('Error loading templates: ' + error.message, 'error');
+            } finally {
+                loading.classList.remove('active');
+            }
+        }
+
+        // Delete template
+        async function deleteTemplate(id, name) {
+            if (!confirm(`Are you sure you want to delete "${name}"?`)) return;
+
+            try {
+                const { error } = await supabase
+                    .from('templates')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+
+                showNotification('Template deleted successfully!', 'success');
+                loadTemplates();
+            } catch (error) {
+                console.error('Error deleting template:', error);
+                showNotification('Error deleting template: ' + error.message, 'error');
+            }
+        }
+
+        // Edit template (simplified - just navigate to edit)
+        function editTemplate(id) {
+            showNotification('Edit functionality - to be implemented', 'error');
+            // TODO: Implement edit modal or separate edit page
+        }
+
+        // Initialize
+        checkAdmin();
+    </script>
+</body>
+</html>
