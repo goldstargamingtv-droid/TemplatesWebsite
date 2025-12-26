@@ -7,11 +7,11 @@
     <meta name="description" content="Beautiful, professional website templates ready to launch your business. No coding required.">
     
     <!-- Supabase Client Library -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
     <style>
         /* ============================================
-           TEMPLATE FORGE - ALL STYLES
+           DEPLOYTEMPLATE - ALL STYLES
            ============================================ */
 
         /* CSS Variables */
@@ -279,6 +279,13 @@
             background: var(--text-primary);
             border-radius: 2px;
             transition: var(--transition);
+        }
+
+        /* Nav CTA */
+        .nav-cta {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
         }
 
         /* Theme Toggle Button */
@@ -2222,7 +2229,7 @@
 
         // CONFIGURATION
         const CONFIG = {
-            SUPABASE_URL: 'https://gkyzpehxdqoolomglpal.supabase.co',
+            SUPABASE_URL: 'https://gkyzpehxdqoolomglpal.supabaseClient.co',
             SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdreXpwZWh4ZHFvb2xvbWdscGFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3MjU0NzAsImV4cCI6MjA4MjMwMTQ3MH0.mdhXZZXFTWnSrdtIMTYAIR47LcCZXAz9ofxQmVCxnmc',
             GUMROAD_SELLER_ID: 'goldstar06',
             ADMIN_EMAIL: 'tylercollects06@gmail.com',
@@ -2237,7 +2244,8 @@
         };
 
         // Initialize Supabase Client
-        const supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+        const { createClient } = window.supabase;
+        const supabaseClient = createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
         
         // Global State
         let currentUser = null;
@@ -2303,7 +2311,7 @@
         
         async function checkAuth() {
             try {
-                const { data: { user }, error } = await supabase.auth.getUser();
+                const { data: { user }, error } = await supabaseClient.auth.getUser();
                 if (error) throw error;
                 currentUser = user;
                 updateNavigation();
@@ -2329,7 +2337,7 @@
             errorEl.classList.remove('active');
             
             try {
-                const { data, error } = await supabase.auth.signInWithPassword({
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
                     email: email,
                     password: password
                 });
@@ -2365,7 +2373,7 @@
             errorEl.classList.remove('active');
             
             try {
-                const { data, error } = await supabase.auth.signUp({
+                const { data, error } = await supabaseClient.auth.signUp({
                     email: email,
                     password: password,
                     options: {
@@ -2406,7 +2414,7 @@
 
         async function signOut() {
             try {
-                await supabase.auth.signOut();
+                await supabaseClient.auth.signOut();
                 currentUser = null;
                 updateNavigation();
                 navigateTo('home');
@@ -2618,7 +2626,7 @@
                 
                 // Create signed URL for download
                 const filePath = `${slug}/${slug}-v${version}.zip`;
-                const { data: urlData, error: urlError } = await supabase.storage
+                const { data: urlData, error: urlError } = await supabaseClient.storage
                     .from('templates')
                     .createSignedUrl(filePath, 3600); // 1 hour expiry
                 
@@ -2726,7 +2734,7 @@
             await checkAuth();
             
             // Listen for auth state changes
-            supabase.auth.onAuthStateChange(async (event, session) => {
+            supabaseClient.auth.onAuthStateChange(async (event, session) => {
                 currentUser = session?.user ?? null;
                 updateNavigation();
                 
