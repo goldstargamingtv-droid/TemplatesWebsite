@@ -1,0 +1,2975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TemplateForge - Premium Website Templates</title>
+    <meta name="description" content="Beautiful, professional website templates ready to launch your business. No coding required.">
+    
+    <style>
+        /* ============================================
+           TEMPLATE FORGE - ALL STYLES
+           ============================================ */
+
+        /* CSS Variables */
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #06b6d4;
+            --accent: #ec4899;
+            
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            
+            --border-radius: 8px;
+            --border-radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Dark Mode (Default) */
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border-color: #27272a;
+            --card-bg: #18181b;
+            --card-hover: #27272a;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.6);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.7);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.8);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Light Mode */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f1f5f9;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --card-bg: #ffffff;
+            --card-hover: #f8fafc;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .gradient-text {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--dark);
+            border: 2px solid var(--gray-light);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        .btn-white:hover {
+            background: var(--light);
+        }
+
+        .btn-outline-white {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-outline-white:hover {
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .navbar {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 1.75rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 0.3rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.25rem;
+        }
+
+        .theme-toggle:hover {
+            background: var(--card-hover);
+            border-color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .template-showcase {
+            display: grid;
+            gap: 1.5rem;
+            transform: perspective(1000px) rotateY(-5deg);
+        }
+
+        .showcase-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            animation: floatIn 0.8s ease-out;
+            animation-delay: var(--delay);
+            animation-fill-mode: backwards;
+            border: 1px solid var(--border-color);
+        }
+
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-header {
+            padding: 1rem;
+            background: var(--bg-tertiary);
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .browser-dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-color);
+        }
+
+        [data-theme="light"] .browser-dots span:nth-child(1) {
+            background: #ff5f56;
+        }
+
+        [data-theme="light"] .browser-dots span:nth-child(2) {
+            background: #ffbd2e;
+        }
+
+        [data-theme="light"] .browser-dots span:nth-child(3) {
+            background: #27c93f;
+        }
+
+        .card-preview {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .preview-gradient {
+            width: 100%;
+            height: 100%;
+        }
+
+        .gradient-1 {
+            background: var(--gradient-1);
+        }
+
+        .gradient-2 {
+            background: var(--gradient-2);
+        }
+
+        .gradient-3 {
+            background: var(--gradient-3);
+        }
+
+        .hero-background {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .bg-gradient {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+
+        .bg-gradient-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--gradient-1);
+            top: -200px;
+            right: -100px;
+        }
+
+        .bg-gradient-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--gradient-2);
+            bottom: -150px;
+            left: -100px;
+        }
+
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(var(--gray-light) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--gray-light) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.1;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* Templates Section */
+        .templates-section {
+            background: var(--bg-secondary);
+        }
+
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .template-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+
+        .template-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+
+        .template-image {
+            position: relative;
+            height: 300px;
+            background: var(--gradient-1);
+            overflow: hidden;
+        }
+
+        .template-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .template-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .template-card:hover .template-overlay {
+            opacity: 1;
+        }
+
+        .template-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--accent);
+            color: var(--white);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-new {
+            background: var(--secondary);
+        }
+
+        .template-info {
+            padding: 1.5rem;
+        }
+
+        .template-category {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .template-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .template-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .template-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-tertiary);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .template-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .template-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .price-original {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .price-current {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .templates-cta {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .templates-cta a {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            background: var(--bg-secondary);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--border-color);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            background: var(--gradient-1);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .pricing-card.featured * {
+            color: white;
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.5rem 1rem;
+            background: var(--accent);
+            color: var(--white);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-header h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-header p {
+            color: var(--text-secondary);
+        }
+
+        .pricing-card.featured .pricing-header p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .pricing-price {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .price-original {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card.featured .price-original {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .price-current {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .currency {
+            font-size: 2rem;
+        }
+
+        .price-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .pricing-card.featured .price-label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .pricing-features {
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .pricing-card.featured .pricing-features li {
+            border-bottom-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features svg {
+            color: var(--secondary);
+            flex-shrink: 0;
+        }
+
+        /* Showcase Section */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .showcase-item {
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+        }
+
+        .showcase-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .showcase-image {
+            height: 250px;
+            background: var(--bg-tertiary);
+        }
+
+        .showcase-placeholder {
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+        }
+
+        .showcase-info {
+            padding: 1.5rem;
+        }
+
+        .showcase-info h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .showcase-info p {
+            color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--gradient-1);
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .cta-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .cta-content p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .footer-column p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: var(--text-primary);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .footer-column h4 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-visual {
+                order: -1;
+            }
+            
+            .template-showcase {
+                transform: none;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            
+            .pricing-card.featured:hover {
+                transform: translateY(-5px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links,
+            .nav-cta {
+                display: none;
+            }
+            
+            .nav-cta {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-description {
+                font-size: 1.1rem;
+            }
+            
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+            
+            .templates-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* ============================================
+           MODAL, DASHBOARD & AUTH STYLES
+           ============================================ */
+
+        /* Page routing */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            animation: slideUpModal 0.3s ease-out;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+            background: var(--card-hover);
+        }
+
+        .modal h2 {
+            margin-bottom: 0.5rem;
+            font-size: 1.75rem;
+        }
+
+        .modal > p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--border-color);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--bg-secondary);
+        }
+
+        .form-error {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.75rem;
+            padding: 0.5rem;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .form-error.active {
+            display: block;
+        }
+
+        .form-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .form-link a {
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .form-link a:hover {
+            color: var(--primary-light);
+            text-decoration: underline;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            padding: 8rem 0 4rem;
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .dashboard-header p {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .dashboard-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+
+        .card-image {
+            height: 220px;
+            background: var(--gradient-1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-content {
+            padding: 1.75rem;
+        }
+
+        .card-content h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.35rem;
+        }
+
+        .card-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            font-size: 0.925rem;
+            line-height: 1.6;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .card-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 5rem 2rem;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.4;
+        }
+
+        .empty-state h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUpModal {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Notification Toast */
+        .notification {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-xl);
+            z-index: 10000;
+            animation: slideInRight 0.3s ease-out;
+            max-width: 400px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .notification.success {
+            background: #10b981;
+            color: white;
+        }
+
+        .notification.error {
+            background: #ef4444;
+            color: white;
+        }
+
+        .notification.info {
+            background: #3b82f6;
+            color: white;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(120%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .modal {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            .dashboard-header h1 {
+                font-size: 2rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .notification {
+                right: 1rem;
+                left: 1rem;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" onclick="navigateTo('home'); return false;" class="logo">
+                <span class="logo-icon">⚡</span>
+                TemplateForge
+            </a>
+            <ul class="nav-links">
+                <li><a href="#templates" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('templates').scrollIntoView({behavior:'smooth'}),100);}">Templates</a></li>
+                <li><a href="#features" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('features').scrollIntoView({behavior:'smooth'}),100);}">Features</a></li>
+                <li><a href="#pricing" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('pricing').scrollIntoView({behavior:'smooth'}),100);}">Pricing</a></li>
+                <li><a href="#showcase" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('showcase').scrollIntoView({behavior:'smooth'}),100);}">Showcase</a></li>
+                <li><a href="about.html">About</a></li>
+                <li>
+                    <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" aria-label="Toggle theme">
+                        <span class="theme-icon" id="themeIcon">🌙</span>
+                    </button>
+                </li>
+            </ul>
+            <div class="nav-cta" id="navCta">
+                <button class="btn btn-secondary" onclick="showLogin()">Sign In</button>
+                <button class="btn btn-primary" onclick="showSignup()">Get Started</button>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE SECTION -->
+    <div id="homePage" class="page-section active">
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    New templates added monthly
+                </div>
+                <h1 class="hero-title">
+                    Launch Your Website in
+                    <span class="gradient-text">Minutes, Not Months</span>
+                </h1>
+                <p class="hero-description">
+                    Premium, production-ready templates built with modern design principles. 
+                    Simply customize, deploy, and start growing your business today.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#templates" class="btn btn-primary btn-lg">
+                        Explore Templates
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="#preview" class="btn btn-secondary btn-lg">
+                        See Live Demo
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Happy Customers</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Premium Templates</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4.9★</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="template-showcase">
+                    <div class="showcase-card" style="--delay: 0s">
+                        <div class="card-header">
+                            <div class="browser-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="card-preview">
+                            <div class="preview-gradient gradient-1"></div>
+                        </div>
+                    </div>
+                    <div class="showcase-card" style="--delay: 0.2s">
+                        <div class="card-header">
+                            <div class="browser-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="card-preview">
+                            <div class="preview-gradient gradient-2"></div>
+                        </div>
+                    </div>
+                    <div class="showcase-card" style="--delay: 0.4s">
+                        <div class="card-header">
+                            <div class="browser-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="card-preview">
+                            <div class="preview-gradient gradient-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-background">
+            <div class="bg-gradient bg-gradient-1"></div>
+            <div class="bg-gradient bg-gradient-2"></div>
+            <div class="bg-grid"></div>
+        </div>
+    </section>
+
+    <!-- Templates Grid Section -->
+    <section class="templates-section" id="templates">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    Choose Your Perfect Template
+                </h2>
+                <p class="section-description">
+                    Each template is carefully crafted with modern design, optimized performance, and mobile-first approach
+                </p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">All Templates</button>
+                <button class="filter-btn" data-filter="saas">SaaS & Startups</button>
+                <button class="filter-btn" data-filter="portfolio">Portfolio & Creative</button>
+                <button class="filter-btn" data-filter="business">Business & Local</button>
+                <button class="filter-btn" data-filter="ecommerce">E-commerce</button>
+            </div>
+
+            <!-- Templates Grid -->
+            <div class="templates-grid">
+                <!-- SaaS Template -->
+                <div class="template-card" data-category="saas">
+                    <div class="template-image">
+                        <div class="preview-gradient gradient-1"></div>
+                        <div class="template-overlay">
+                            <a href="#" class="btn btn-white">View Details</a>
+                            <a href="#" target="_blank" class="btn btn-outline-white">Live Preview</a>
+                        </div>
+                        <div class="template-badge">Most Popular</div>
+                    </div>
+                    <div class="template-info">
+                        <div class="template-category">SaaS & Startups</div>
+                        <h3 class="template-title">FlowMetrics - Analytics SaaS</h3>
+                        <p class="template-description">
+                            Modern landing page perfect for SaaS products, with pricing tables, feature sections, and conversion-optimized design.
+                        </p>
+                        <div class="template-tags">
+                            <span class="tag">Responsive</span>
+                            <span class="tag">Animations</span>
+                            <span class="tag">Dark Mode</span>
+                        </div>
+                        <div class="template-footer">
+                            <div class="template-price">
+                                <span class="price-original">$69</span>
+                                <span class="price-current">FREE</span>
+                            </div>
+                            <button class="btn btn-small btn-primary" onclick="buyTemplate('test', 'FlowMetrics SaaS', 0)">
+                                Get Free Template →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Template -->
+                <div class="template-card" data-category="portfolio">
+                    <div class="template-image">
+                        <div class="preview-gradient gradient-2"></div>
+                        <div class="template-overlay">
+                            <a href="#" class="btn btn-white">View Details</a>
+                            <a href="#" target="_blank" class="btn btn-outline-white">Live Preview</a>
+                        </div>
+                        <div class="template-badge badge-new">New</div>
+                    </div>
+                    <div class="template-info">
+                        <div class="template-category">Portfolio & Creative</div>
+                        <h3 class="template-title">Alex Chen - Creative Portfolio</h3>
+                        <p class="template-description">
+                            Stunning dark-themed portfolio with custom cursor effects, scroll animations, and project showcases for creatives.
+                        </p>
+                        <div class="template-tags">
+                            <span class="tag">Dark Theme</span>
+                            <span class="tag">Custom Cursor</span>
+                            <span class="tag">Scroll Effects</span>
+                        </div>
+                        <div class="template-footer">
+                            <div class="template-price">
+                                <span class="price-original">$69</span>
+                                <span class="price-current">$39</span>
+                            </div>
+                            <button class="btn btn-small btn-secondary" disabled>
+                                Coming Soon
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Restaurant Template -->
+                <div class="template-card" data-category="business">
+                    <div class="template-image">
+                        <div class="preview-gradient gradient-3"></div>
+                        <div class="template-overlay">
+                            <a href="#" class="btn btn-white">View Details</a>
+                            <a href="#" target="_blank" class="btn btn-outline-white">Live Preview</a>
+                        </div>
+                    </div>
+                    <div class="template-info">
+                        <div class="template-category">Business & Local</div>
+                        <h3 class="template-title">Bella Vista - Restaurant</h3>
+                        <p class="template-description">
+                            Elegant restaurant template with menu displays, reservation forms, and gallery sections. Perfect for local businesses.
+                        </p>
+                        <div class="template-tags">
+                            <span class="tag">Menu System</span>
+                            <span class="tag">Reservations</span>
+                            <span class="tag">Gallery</span>
+                        </div>
+                        <div class="template-footer">
+                            <div class="template-price">
+                                <span class="price-original">$69</span>
+                                <span class="price-current">$39</span>
+                            </div>
+                            <button class="btn btn-small btn-secondary" disabled>
+                                Coming Soon
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="templates-cta">
+                <p>More templates coming soon! <a href="#newsletter">Get notified</a> when we launch new designs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Everything You Need to Succeed</h2>
+                <p class="section-description">
+                    Our templates come packed with features that help you launch faster and grow bigger
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2"/>
+                            <path d="M8 21h8M12 17v4"/>
+                        </svg>
+                    </div>
+                    <h3>Fully Responsive</h3>
+                    <p>Every template looks perfect on desktop, tablet, and mobile devices. Your visitors get a great experience everywhere.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3>Launch in Minutes</h3>
+                    <p>Download, customize your content, and deploy. No complex setup or technical knowledge required.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <h3>Blazing Fast</h3>
+                    <p>Optimized code and lightweight design ensures your site loads instantly. Better SEO, better conversions.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M2 12h20"/>
+                        </svg>
+                    </div>
+                    <h3>Easy to Customize</h3>
+                    <p>Clean, well-organized code with helpful comments. Change colors, fonts, and content with ease.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                    </div>
+                    <h3>Complete Documentation</h3>
+                    <p>Step-by-step guides and video tutorials help you get started and customize your template perfectly.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Premium Support</h3>
+                    <p>Stuck on something? We're here to help. Email support included with every purchase.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <p class="section-description">
+                    Launch sale: Get 43% off all templates. Limited time offer!
+                </p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Single Template</h3>
+                        <p>Perfect for one project</p>
+                    </div>
+                    <div class="pricing-price">
+                        <div class="price-original">$69</div>
+                        <div class="price-current">
+                            <span class="currency">$</span>39
+                        </div>
+                        <div class="price-label">per template</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Complete template files
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Setup documentation
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Lifetime updates
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Commercial license
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Email support
+                        </li>
+                    </ul>
+                    <a href="#templates" class="btn btn-outline btn-block">Choose Template</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Best Value</div>
+                    <div class="pricing-header">
+                        <h3>Complete Bundle</h3>
+                        <p>All current + future templates</p>
+                    </div>
+                    <div class="pricing-price">
+                        <div class="price-original">$179</div>
+                        <div class="price-current">
+                            <span class="currency">$</span>99
+                        </div>
+                        <div class="price-label">one-time payment</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            All 15+ templates
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Access to new templates
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Priority email support
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Lifetime updates
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Commercial license
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Video tutorials
+                        </li>
+                    </ul>
+                    <a href="#" class="btn btn-primary btn-block">Get All Templates</a>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Custom Development</h3>
+                        <p>Need something unique?</p>
+                    </div>
+                    <div class="pricing-price">
+                        <div class="price-current" style="font-size: 2.5rem;">
+                            Custom
+                        </div>
+                        <div class="price-label">starting at $299</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Template customization
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Brand integration
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Content writing
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Deployment assistance
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Dedicated support
+                        </li>
+                    </ul>
+                    <a href="/cdn-cgi/l/email-protection#f5969a9b81949681b58190988599948190939a879290db969a98" class="btn btn-outline btn-block">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase Section -->
+    <section class="showcase-section" id="showcase">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Built with TemplateForge</h2>
+                <p class="section-description">
+                    See how businesses are using our templates to create stunning websites
+                </p>
+            </div>
+
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <div class="showcase-placeholder"></div>
+                    </div>
+                    <div class="showcase-info">
+                        <h4>TechFlow Analytics</h4>
+                        <p>SaaS Landing Template</p>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <div class="showcase-placeholder"></div>
+                    </div>
+                    <div class="showcase-info">
+                        <h4>Sarah Chen Design</h4>
+                        <p>Portfolio Template</p>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <div class="showcase-placeholder"></div>
+                    </div>
+                    <div class="showcase-info">
+                        <h4>Bistro 42</h4>
+                        <p>Restaurant Template</p>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <div class="showcase-placeholder"></div>
+                    </div>
+                    <div class="showcase-info">
+                        <h4>FitLife Coaching</h4>
+                        <p>SaaS Landing Template</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Launch Your Website?</h2>
+                <p>Join hundreds of businesses who chose TemplateForge to bring their vision to life</p>
+                <div class="cta-buttons">
+                    <a href="#templates" class="btn btn-primary btn-lg">Browse Templates</a>
+                    <a href="#pricing" class="btn btn-white btn-lg">View Pricing</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <span class="logo-icon">⚡</span>
+                        TemplateForge
+                    </div>
+                    <p>Premium website templates for modern businesses. Launch faster, grow bigger.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="GitHub">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Templates</h4>
+                    <ul>
+                        <li><a href="#templates">All Templates</a></li>
+                        <li><a href="#templates">SaaS & Startups</a></li>
+                        <li><a href="#templates">Portfolio</a></li>
+                        <li><a href="#templates">Business</a></li>
+                        <li><a href="#templates">E-commerce</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="#showcase">Showcase</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="/cdn-cgi/l/email-protection#94f7fbfae0f5f7e0d4e0f1f9e4f8f5e0f1f2fbe6f3f1baf7fbf9">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">License</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="/cdn-cgi/l/email-protection#1b686e6b6b74696f5b6f7e766b777a6f7e7d74697c7e35787476">Get Help</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 TemplateForge. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // ============================================
+        // TEMPLATE FORGE - ALL JAVASCRIPT
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Theme Toggle Functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            
+            // Check for saved theme preference or default to dark mode
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            html.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
+            
+            function updateThemeIcon(theme) {
+                const icons = document.querySelectorAll('.theme-icon');
+                icons.forEach(icon => {
+                    icon.textContent = theme === 'light' ? '🌙' : '☀️';
+                });
+            }
+            
+            function toggleTheme() {
+                const currentTheme = html.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            }
+            
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            // Mobile Menu Toggle
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+            
+            // Template Filter Functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const templateCards = document.querySelectorAll('.template-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get filter category
+                    const filterCategory = this.getAttribute('data-filter');
+                    
+                    // Filter templates
+                    templateCards.forEach(card => {
+                        const cardCategory = card.getAttribute('data-category');
+                        
+                        if (filterCategory === 'all' || cardCategory === filterCategory) {
+                            card.style.display = 'block';
+                            // Trigger animation
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 10);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+            
+            // Smooth Scroll for Anchor Links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    // Only prevent default for internal anchors
+                    if (href !== '#' && href !== '') {
+                        e.preventDefault();
+                        
+                        const target = document.querySelector(href);
+                        if (target) {
+                            const offsetTop = target.offsetTop - 80; // Account for fixed navbar
+                            
+                            window.scrollTo({
+                                top: offsetTop,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Close mobile menu if open
+                            if (navLinks.classList.contains('active')) {
+                                navLinks.classList.remove('active');
+                                mobileMenuToggle.classList.remove('active');
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // Navbar Scroll Effect
+            const navbar = document.querySelector('.navbar');
+            let lastScroll = 0;
+            
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 100) {
+                    navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                } else {
+                    navbar.style.boxShadow = 'none';
+                }
+                
+                lastScroll = currentScroll;
+            });
+            
+            // Intersection Observer for Fade-in Animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe elements for animation
+            const animateElements = document.querySelectorAll('.template-card, .feature-card, .pricing-card, .showcase-item');
+            
+            // Set initial state for animations
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            });
+            
+            // Start observing
+            animateElements.forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Stats Counter Animation
+            const statNumbers = document.querySelectorAll('.stat-number');
+            let statsAnimated = false;
+            
+            function animateStats() {
+                if (statsAnimated) return;
+                
+                statNumbers.forEach(stat => {
+                    const text = stat.textContent;
+                    const hasPlus = text.includes('+');
+                    const hasStar = text.includes('★');
+                    const numericValue = parseFloat(text.replace(/[^0-9.]/g, ''));
+                    
+                    if (!isNaN(numericValue)) {
+                        let current = 0;
+                        const increment = numericValue / 50;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= numericValue) {
+                                current = numericValue;
+                                clearInterval(timer);
+                            }
+                            
+                            let displayValue = hasStar ? current.toFixed(1) : Math.floor(current);
+                            if (hasPlus) displayValue += '+';
+                            if (hasStar) displayValue += '★';
+                            
+                            stat.textContent = displayValue;
+                        }, 30);
+                    }
+                });
+                
+                statsAnimated = true;
+            }
+            
+            // Trigger stats animation when hero is visible
+            const heroObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                heroObserver.observe(heroSection);
+            }
+            
+            // Console branding
+            console.log('%c⚡ TemplateForge', 'font-size: 24px; font-weight: bold; color: #6366f1;');
+            console.log('%cBuilt with passion for developers', 'font-size: 12px; color: #64748b;');
+        });
+
+        // Utility function for debouncing
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', debounce(function() {
+            // Close mobile menu on resize
+            const navLinks = document.querySelector('.nav-links');
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (window.innerW
+    </div>
+    <!-- END HOME PAGE SECTION -->
+
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('loginModal')" aria-label="Close">&times;</button>
+            <h2>Welcome Back</h2>
+            <p>Sign in to access your templates</p>
+            
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="you@example.com" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••" autocomplete="current-password">
+                </div>
+                <div class="form-error" id="loginError"></div>
+                <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
+                    Sign In
+                </button>
+            </form>
+            
+            <div class="form-link">
+                Don't have an account? <a onclick="closeModal('loginModal'); showSignup()">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGNUP MODAL -->
+    <div id="signupModal" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('signupModal')" aria-label="Close">&times;</button>
+            <h2>Get Started</h2>
+            <p>Create your account to access premium templates</p>
+            
+            <form onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required placeholder="John Doe" autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required placeholder="you@example.com" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required placeholder="••••••••" minlength="6" autocomplete="new-password">
+                    <small style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem; display: block;">Minimum 6 characters</small>
+                </div>
+                <div class="form-error" id="signupError"></div>
+                <button type="submit" class="btn btn-primary btn-block" id="signupBtn">
+                    Create Account
+                </button>
+            </form>
+            
+            <div class="form-link">
+                Already have an account? <a onclick="closeModal('signupModal'); showLogin()">Sign in</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD PAGE SECTION -->
+    <div id="dashboardPage" class="page-section">
+        <div class="dashboard">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h1>My Templates</h1>
+                    <p>Download and manage your purchased templates</p>
+                </div>
+                
+                <div id="dashboardContent" class="dashboard-grid">
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <div class="loading"></div>
+                        <p style="margin-top: 1rem; color: var(--text-secondary);">Loading your templates...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // ============================================
+        // TEMPLATEFORGE COMPLETE - SINGLE FILE APP
+        // Configuration + Authentication + App Logic
+        // ============================================
+
+        // CONFIGURATION
+        const CONFIG = {
+            SUPABASE_URL: 'https://gkyzpehxdqoolomglpal.supabase.co',
+            SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdreXpwZWh4ZHFvb2xvbWdscGFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3MjU0NzAsImV4cCI6MjA4MjMwMTQ3MH0.mdhXZZXFTWnSrdtIMTYAIR47LcCZXAz9ofxQmVCxnmc',
+            GUMROAD_SELLER_ID: 'goldstar06',
+            ADMIN_EMAIL: 'tylercollects06@gmail.com',
+            SITE_URL: window.location.origin,
+            SITE_NAME: 'TemplateForge',
+            GUMROAD_PRODUCTS: {
+                'test': 'tf-test',
+                'saas-landing': 'tf-saas-landing',
+                'portfolio': 'tf-portfolio',
+                'restaurant': 'tf-restaurant'
+            }
+        };
+
+        // Initialize Supabase Client
+        const supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+        
+        // Global State
+        let currentUser = null;
+        let currentRoute = 'home';
+
+        // ============================================
+        // THEME TOGGLE
+        // ============================================
+        
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            const icon = document.getElementById('themeIcon');
+            if (icon) icon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // ============================================
+        // NAVIGATION & ROUTING
+        // ============================================
+        
+        function navigateTo(page) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected page
+            const pageId = page === 'home' ? 'homePage' : page === 'dashboard' ? 'dashboardPage' : 'homePage';
+            const pageElement = document.getElementById(pageId);
+            
+            if (pageElement) {
+                pageElement.classList.add('active');
+                currentRoute = page;
+                
+                // Load dashboard data if needed
+                if (page === 'dashboard') {
+                    if (!currentUser) {
+                        showNotification('Please sign in to view your dashboard', 'info');
+                        showLogin();
+                        navigateTo('home');
+                        return;
+                    }
+                    loadDashboard();
+                }
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // ============================================
+        // AUTHENTICATION
+        // ============================================
+        
+        async function checkAuth() {
+            try {
+                const { data: { user }, error } = await supabase.auth.getUser();
+                if (error) throw error;
+                currentUser = user;
+                updateNavigation();
+                return user;
+            } catch (error) {
+                console.error('Auth check error:', error);
+                currentUser = null;
+                updateNavigation();
+                return null;
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const btn = document.getElementById('loginBtn');
+            const errorEl = document.getElementById('loginError');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Signing in...';
+            errorEl.classList.remove('active');
+            
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                
+                if (error) throw error;
+                
+                currentUser = data.user;
+                closeModal('loginModal');
+                showNotification('Welcome back!', 'success');
+                updateNavigation();
+                navigateTo('dashboard');
+                
+            } catch (error) {
+                errorEl.textContent = error.message;
+                errorEl.classList.add('active');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Sign In';
+            }
+        }
+
+        async function handleSignup(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const btn = document.getElementById('signupBtn');
+            const errorEl = document.getElementById('signupError');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> Creating account...';
+            errorEl.classList.remove('active');
+            
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: name
+                        }
+                    }
+                });
+                
+                if (error) throw error;
+                
+                // Create user profile
+                if (data.user) {
+                    await supabase
+                        .from('users')
+                        .insert({
+                            id: data.user.id,
+                            email: email,
+                            full_name: name
+                        })
+                        .select();
+                }
+                
+                currentUser = data.user;
+                closeModal('signupModal');
+                showNotification('Account created! Welcome to TemplateForge! 🎉', 'success');
+                updateNavigation();
+                navigateTo('dashboard');
+                
+            } catch (error) {
+                errorEl.textContent = error.message;
+                errorEl.classList.add('active');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Create Account';
+            }
+        }
+
+        async function signOut() {
+            try {
+                await supabase.auth.signOut();
+                currentUser = null;
+                updateNavigation();
+                navigateTo('home');
+                showNotification('Signed out successfully', 'info');
+            } catch (error) {
+                console.error('Sign out error:', error);
+                showNotification('Error signing out', 'error');
+            }
+        }
+
+        function updateNavigation() {
+            const navCta = document.getElementById('navCta');
+            if (!navCta) return;
+            
+            if (currentUser) {
+                const initial = currentUser.email[0].toUpperCase();
+                const isAdmin = currentUser.email === CONFIG.ADMIN_EMAIL;
+                
+                navCta.innerHTML = `
+                    <div class="user-menu">
+                        <div class="user-avatar" onclick="toggleUserMenu(event)">${initial}</div>
+                        <div class="user-dropdown" id="userDropdown">
+                            <a onclick="navigateTo('dashboard')">📊 Dashboard</a>
+                            <a onclick="navigateTo('dashboard')">📦 My Templates</a>
+                            ${isAdmin ? '<a href="#admin">⚙️ Admin Panel</a>' : ''}
+                            <button onclick="signOut()">🚪 Sign Out</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                navCta.innerHTML = `
+                    <button class="btn btn-secondary" onclick="showLogin()">Sign In</button>
+                    <button class="btn btn-primary" onclick="showSignup()">Get Started</button>
+                `;
+            }
+        }
+
+        function toggleUserMenu(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('active');
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const userMenu = document.querySelector('.user-menu');
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown && userMenu && !userMenu.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // ============================================
+        // MODAL MANAGEMENT
+        // ============================================
+        
+        function showLogin() {
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.classList.add('active');
+                // Clear form
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+                document.getElementById('loginError').classList.remove('active');
+            }
+        }
+
+        function showSignup() {
+            const modal = document.getElementById('signupModal');
+            if (modal) {
+                modal.classList.add('active');
+                // Clear form
+                document.getElementById('signupName').value = '';
+                document.getElementById('signupEmail').value = '';
+                document.getElementById('signupPassword').value = '';
+                document.getElementById('signupError').classList.remove('active');
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        // Close modal on overlay click
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) {
+                        overlay.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // ============================================
+        // DASHBOARD
+        // ============================================
+        
+        async function loadDashboard() {
+            if (!currentUser) {
+                navigateTo('home');
+                showLogin();
+                return;
+            }
+            
+            const container = document.getElementById('dashboardContent');
+            if (!container) return;
+            
+            container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 3rem;"><div class="loading"></div><p style="margin-top: 1rem; color: var(--text-secondary);">Loading your templates...</p></div>';
+            
+            try {
+                const { data: purchases, error } = await supabase
+                    .from('purchases')
+                    .select(`
+                        *,
+                        templates (
+                            id,
+                            name,
+                            slug,
+                            thumbnail_url,
+                            current_version,
+                            category
+                        )
+                    `)
+                    .eq('user_id', currentUser.id)
+                    .order('purchased_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                if (!purchases || purchases.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📦</div>
+                            <h3>No templates yet</h3>
+                            <p>Purchase your first template to get started building amazing websites!</p>
+                            <button class="btn btn-primary btn-lg" onclick="navigateTo('home')">Browse Templates</button>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = purchases.map(purchase => {
+                    const template = purchase.templates;
+                    const gradients = ['gradient-1', 'gradient-2', 'gradient-3'];
+                    const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+                    
+                    return `
+                        <div class="dashboard-card">
+                            <div class="card-image" style="background: var(--${randomGradient});">
+                                <div class="card-badge">v${template.current_version}</div>
+                            </div>
+                            <div class="card-content">
+                                <h3>${template.name}</h3>
+                                <p>${template.category || 'Template'}</p>
+                                <div class="card-meta">
+                                    <div class="card-meta-item">
+                                        <span>📅</span>
+                                        ${new Date(purchase.purchased_at).toLocaleDateString()}
+                                    </div>
+                                    <div class="card-meta-item">
+                                        <span>✓</span>
+                                        Lifetime Access
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-primary btn-small" onclick="downloadTemplate('${template.slug}', '${template.current_version}')">
+                                        ⬇️ Download
+                                    </button>
+                                    <button class="btn btn-secondary btn-small" onclick="showNotification('Updates coming soon!', 'info')">
+                                        🔔 Updates
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                console.error('Dashboard load error:', error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <h3>Error loading templates</h3>
+                        <p>${error.message}</p>
+                        <button class="btn btn-primary" onclick="loadDashboard()">Try Again</button>
+                    </div>
+                `;
+            }
+        }
+
+        async function downloadTemplate(slug, version) {
+            showNotification('Preparing your download...', 'info');
+            
+            try {
+                // Get template info
+                const { data: template, error: templateError } = await supabase
+                    .from('templates')
+                    .select('*')
+                    .eq('slug', slug)
+                    .single();
+                
+                if (templateError) throw templateError;
+                if (!template) throw new Error('Template not found');
+                
+                // Create signed URL for download
+                const filePath = `${slug}/${slug}-v${version}.zip`;
+                const { data: urlData, error: urlError } = await supabase.storage
+                    .from('templates')
+                    .createSignedUrl(filePath, 3600); // 1 hour expiry
+                
+                if (urlError) {
+                    // File doesn't exist yet - show friendly message
+                    showNotification('Template file is being prepared by admin. Check back soon!', 'info');
+                    return;
+                }
+                
+                // Trigger download
+                const link = document.createElement('a');
+                link.href = urlData.signedUrl;
+                link.download = `${slug}-v${version}.zip`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showNotification('Download started! 🎉', 'success');
+                
+                // Log the download
+                await supabase
+                    .from('download_logs')
+                    .insert({
+                        user_id: currentUser.id,
+                        template_id: template.id,
+                        version: version
+                    });
+                
+            } catch (error) {
+                console.error('Download error:', error);
+                showNotification('Download failed: ' + error.message, 'error');
+            }
+        }
+
+        // ============================================
+        // PURCHASE FLOW
+        // ============================================
+        
+        function buyTemplate(templateSlug, templateName, price) {
+            if (!currentUser) {
+                showNotification('Please sign up to purchase templates!', 'info');
+                setTimeout(() => showSignup(), 500);
+                return;
+            }
+            
+            // Get Gumroad product permalink
+            const gumroadPermalink = CONFIG.GUMROAD_PRODUCTS[templateSlug];
+            if (!gumroadPermalink) {
+                console.error('No Gumroad product found for:', templateSlug);
+                showNotification('Product configuration error. Please contact support.', 'error');
+                return;
+            }
+            
+            // Open Gumroad with user email pre-filled
+            const gumroadUrl = `https://gumroad.com/l/${gumroadPermalink}?email=${encodeURIComponent(currentUser.email)}&wanted=true`;
+            
+            // Try popup first
+            const popup = window.open(gumroadUrl, 'gumroad', 'width=600,height=800,scrollbars=yes');
+            
+            if (popup) {
+                showNotification('Complete your purchase in the popup window. Your template will appear in your dashboard once payment is confirmed!', 'info');
+            } else {
+                // Popup blocked, redirect instead
+                window.location.href = gumroadUrl;
+            }
+        }
+
+        // ============================================
+        // NOTIFICATIONS
+        // ============================================
+        
+        function showNotification(message, type = 'success') {
+            // Remove any existing notifications
+            document.querySelectorAll('.notification').forEach(n => n.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+            notification.innerHTML = `<span style="font-size: 1.25rem;">${icon}</span><span>${message}</span>`;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideInRight 0.3s ease-out reverse';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('%c⚡ TemplateForge', 'font-size: 24px; font-weight: bold; color: #6366f1;');
+            console.log('%cComplete single-file marketplace app', 'font-size: 12px; color: #64748b;');
+            
+            // Set theme icon
+            const themeIcon = document.getElementById('themeIcon');
+            if (themeIcon) {
+                themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+            }
+            
+            // Check auth state
+            await checkAuth();
+            
+            // Listen for auth state changes
+            supabase.auth.onAuthStateChange(async (event, session) => {
+                currentUser = session?.user ?? null;
+                updateNavigation();
+                
+                if (event === 'SIGNED_IN') {
+                    console.log('User signed in:', currentUser.email);
+                } else if (event === 'SIGNED_OUT') {
+                    console.log('User signed out');
+                    navigateTo('home');
+                }
+            });
+            
+            // Initialize home page as active
+            navigateTo('home');
+        });
+    </script>
+</body>
+</html>
