@@ -364,7 +364,7 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            gap: 1.5rem;
+            gap: 0.5rem;
             max-width: 100%;
             padding: 0 1.5rem;
         }
@@ -509,12 +509,6 @@
             border-radius: 2px;
         }
 
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
         .logo {
             font-size: 1.65rem;
             font-weight: 800;
@@ -528,7 +522,7 @@
             transition: var(--transition);
             flex-shrink: 0;
             margin: -20px -3rem -20px -3rem;
-            margin-right: auto;
+            margin-right: 0;
         }
 
         .logo-image {
@@ -649,7 +643,7 @@
 
         .nav-links {
             display: flex;
-            gap: 0.5rem;
+            gap: 0;
             align-items: center;
             flex-shrink: 0;
             margin-left: auto;
@@ -659,7 +653,7 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.875rem 0.75rem;
+            padding: 0.75rem 0.5rem;
             color: var(--text-secondary);
             text-decoration: none;
             border-radius: var(--border-radius);
@@ -679,7 +673,12 @@
             width: 3px;
             background: var(--primary);
             transform: scaleY(0);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        
+        @keyframes gradientShiftVertical {
+            0%, 100% { background-position: 0% 0%; }
+            50% { background-position: 0% 100%; }
         }
         
         .nav-links a::after {
@@ -702,6 +701,9 @@
 
         .nav-links a:hover::before {
             transform: scaleY(1);
+            background: linear-gradient(180deg, #14B8A6, #F97316, #06B6D4, #14B8A6);
+            background-size: 100% 300%;
+            animation: gradientShiftVertical 5s ease infinite;
         }
         
         .nav-links a:hover::after {
@@ -716,6 +718,13 @@
 
         .nav-links a.active::before {
             transform: scaleY(1);
+            background: var(--primary);
+        }
+
+        .nav-links a.active:hover::before {
+            background: linear-gradient(180deg, #14B8A6, #F97316, #06B6D4, #14B8A6);
+            background-size: 100% 300%;
+            animation: gradientShiftVertical 5s ease infinite;
         }
 
         .mobile-menu-toggle {
@@ -752,24 +761,25 @@
         /* Nav CTA */
         .nav-cta {
             display: flex;
-            gap: 0.75rem;
+            gap: 0.5rem;
             align-items: center;
-            margin-top: -3px;
+            margin-top: 1px;
         }
 
         /* User Menu Styles */
         .user-menu {
             position: relative;
             z-index: 10002;
-            padding: 0.5rem;
+            padding: 0.25rem;
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%);
-            color: white;
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -777,22 +787,35 @@
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
-            z-index: 1;
-            box-shadow: 0 2px 8px rgba(20, 184, 166, 0.3);
+            margin-top: 4px;
         }
 
         .user-avatar::before {
             content: '';
             position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
             border-radius: 50%;
             background: linear-gradient(45deg, #14B8A6, #F97316, #06B6D4, #14B8A6);
-            z-index: -1;
+            background-size: 300% 300%;
+            z-index: -2;
             opacity: 0;
             transition: opacity 0.3s ease;
+            animation: gradientShift 5s ease infinite;
+        }
+
+        .user-avatar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: var(--card-bg);
+            z-index: -1;
         }
 
         .user-avatar:hover::before {
@@ -801,19 +824,8 @@
 
         .user-avatar:hover {
             transform: scale(1.1);
-            box-shadow: 0 4px 16px rgba(20, 184, 166, 0.5);
-        }
-
-        .user-avatar::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 50%;
-            background: var(--bg-primary);
-            z-index: -1;
+            border-color: transparent;
+            box-shadow: 0 4px 16px rgba(20, 184, 166, 0.3);
         }
 
         .user-dropdown {
@@ -901,52 +913,62 @@
             color: #F97316;
         }
 
-        /* Theme Toggle Button */
-        .theme-toggle {
-            position: relative;
-            width: 60px;
-            height: 30px;
-            border-radius: 15px;
-            background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
-            border: 2px solid var(--border-color);
+        /* Theme Toggle - Icon Button */
+        .theme-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
-            padding: 0;
-        }
-
-        .theme-toggle:hover {
-            border-color: var(--primary);
-            transform: scale(1.05);
-        }
-        
-        .theme-toggle-slider {
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #27272a 0%, #3f3f46 100%);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+            color: var(--text-secondary);
+            margin-top: 2px;
         }
-        
-        .theme-toggle-slider svg {
-            width: 14px;
-            height: 14px;
-            fill: var(--accent);
+
+        .theme-btn::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #14B8A6, #F97316, #06B6D4, #14B8A6);
+            background-size: 300% 300%;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: gradientShift 5s ease infinite;
         }
-        
-        [data-theme="light"] .theme-toggle {
-            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+
+        .theme-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 6px;
+            background: var(--card-bg);
+            z-index: -1;
         }
-        
-        [data-theme="light"] .theme-toggle-slider {
-            left: 32px;
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+
+        .theme-btn:hover::before {
+            opacity: 1;
+        }
+
+        .theme-btn:hover {
+            border-color: transparent;
+        }
+
+        .theme-btn svg {
+            width: 16px;
+            height: 16px;
         }
 
         /* Left Sidebar Navigation */
@@ -1067,7 +1089,7 @@
             width: 3px;
             background: var(--primary);
             transform: scaleY(0);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, background 0.3s ease;
         }
         
         .sidebar-menu-item::after {
@@ -1090,6 +1112,9 @@
 
         .sidebar-menu-item:hover::before {
             transform: scaleY(1);
+            background: linear-gradient(180deg, #14B8A6, #F97316, #06B6D4, #14B8A6);
+            background-size: 100% 300%;
+            animation: gradientShiftVertical 5s ease infinite;
         }
         
         .sidebar-menu-item:hover::after {
@@ -1104,6 +1129,13 @@
 
         .sidebar-menu-item.active::before {
             transform: scaleY(1);
+            background: var(--primary);
+        }
+
+        .sidebar-menu-item.active:hover::before {
+            background: linear-gradient(180deg, #14B8A6, #F97316, #06B6D4, #14B8A6);
+            background-size: 100% 300%;
+            animation: gradientShiftVertical 5s ease infinite;
         }
 
         .sidebar-menu-item svg {
@@ -1172,33 +1204,128 @@
         .cart-icon-wrapper {
             position: relative;
             cursor: pointer;
-            padding: 1rem;
+            padding: 0.25rem;
             transition: var(--transition);
             z-index: 10002;
         }
 
-        .cart-icon-wrapper:hover {
-            transform: scale(1.05);
+        .cart-icon-container {
+            position: relative;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1.5px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: visible;
+            margin-top: 1px;
+            margin-left: 5px;
+        }
+
+        .cart-icon-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 14px;
+            background: linear-gradient(45deg, #14B8A6, #F97316, #06B6D4, #14B8A6);
+            background-size: 300% 300%;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: gradientShift 5s ease infinite;
+        }
+
+        .cart-icon-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 12px;
+            background: var(--card-bg);
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .cart-icon-wrapper:hover .cart-icon-container::before {
+            opacity: 1;
+        }
+
+        .cart-icon-wrapper:hover .cart-icon-container {
+            transform: translateY(-2px);
+            border-color: transparent;
+            box-shadow: 0 8px 25px rgba(13, 148, 136, 0.3);
         }
 
         .cart-icon {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             color: var(--text-primary);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
+        .cart-icon-wrapper:hover .cart-icon {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* Stylish animated badge */
         .cart-badge {
             position: absolute;
-            top: 0;
-            right: 0;
-            background: #F97316;
+            top: -6px;
+            right: -6px;
+            min-width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #F97316 0%, #ea580c 100%);
             color: white;
             font-size: 0.7rem;
             font-weight: 700;
-            padding: 0.15rem 0.4rem;
+            padding: 0 0.4rem;
             border-radius: 10px;
-            min-width: 18px;
             text-align: center;
+            line-height: 20px;
+            box-shadow: 0 2px 8px rgba(249, 115, 22, 0.5);
+            border: 2px solid var(--bg-primary);
+            z-index: 2;
+            animation: badgePop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .cart-badge::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #F97316 0%, #ea580c 100%);
+            opacity: 0;
+            z-index: -1;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { opacity: 0; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.3); }
         }
 
         .cart-dropdown {
@@ -3848,21 +3975,13 @@
                 <li><a href="#showcase" onclick="event.preventDefault(); scrollToSection('showcase');">Showcase</a></li>
                 <li><a href="#pricing" onclick="event.preventDefault(); scrollToSection('pricing');">Pricing</a></li>
                 <li>
-                    <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" aria-label="Toggle theme">
-                        <span class="theme-toggle-slider" id="themeIcon">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                            </svg>
-                        </span>
-                    </button>
-                </li>
-                <li>
                     <div class="cart-icon-wrapper" onmouseenter="showCartDropdown()" onmouseleave="hideCartDropdown()">
-                        <div onclick="toggleCartModal(); event.stopPropagation();">
-                            <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2">
-                                <circle cx="9" cy="21" r="1"/>
-                                <circle cx="20" cy="21" r="1"/>
-                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        <div class="cart-icon-container" onclick="toggleCartModal(); event.stopPropagation();">
+                            <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Shopping bag icon -->
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 10a4 4 0 0 1-8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                             <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
                         </div>
@@ -3872,7 +3991,7 @@
                             <div class="cart-dropdown-header">Shopping Cart</div>
                             <div id="cartDropdownItems">
                                 <div class="cart-empty">
-                                    <div class="cart-empty-icon">🛒</div>
+                                    <div class="cart-empty-icon">🛍️</div>
                                     <div class="cart-empty-text">Your cart is empty</div>
                                     <div class="cart-empty-subtext">Any templates you add to your cart will be displayed here.</div>
                                 </div>
@@ -5071,27 +5190,28 @@
             
             html.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            
-            const icon = document.getElementById('themeIcon');
-            if (icon) {
-                icon.innerHTML = newTheme === 'light' 
-                    ? '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
-                    : '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
-            }
+            updateThemeIcons(newTheme);
         }
 
-        // Load saved theme and set icon
+        function updateThemeIcons(theme) {
+            const icons = document.querySelectorAll('#themeIconDropdown, #themeIconNav');
+            const sunIcon = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+            const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+            
+            icons.forEach(icon => {
+                if (icon) {
+                    icon.innerHTML = theme === 'light' ? moonIcon : sunIcon;
+                }
+            });
+        }
+
+        // Load saved theme
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
         
-        // Set initial icon based on saved theme
+        // Set initial state based on saved theme
         window.addEventListener('DOMContentLoaded', () => {
-            const icon = document.getElementById('themeIcon');
-            if (icon) {
-                icon.innerHTML = savedTheme === 'light' 
-                    ? '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
-                    : '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
-            }
+            updateThemeIcons(savedTheme);
             
             // ============================================
             // HERO ANIMATED PARTICLES
@@ -5406,6 +5526,13 @@
                             </a>
                             ${adminButton}
                             <div class="user-dropdown-divider"></div>
+                            <a onclick="toggleTheme(); event.stopPropagation();" style="cursor: pointer;">
+                                <svg id="themeIconDropdown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                                </svg>
+                                Theme
+                            </a>
+                            <div class="user-dropdown-divider"></div>
                             <button onclick="signOut()" class="sign-out">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -5426,7 +5553,13 @@
                 navCta.innerHTML = `
                     <button class="btn btn-secondary" onclick="showLogin()">Sign In</button>
                     <button class="btn btn-primary" onclick="showSignup()">Get Started</button>
+                    <button class="theme-btn" onclick="toggleTheme()" id="themeBtnNav" aria-label="Toggle theme">
+                        <svg id="themeIconNav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
                 `;
+                updateThemeIcons(savedTheme);
             }
         }
 
