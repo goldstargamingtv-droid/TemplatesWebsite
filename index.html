@@ -92,7 +92,23 @@
             background: var(--bg-primary);
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
         }
+        
+        /* Global Background - Simplified */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at top, rgba(13, 148, 136, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Global Grid - Disabled for performance */
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
@@ -147,6 +163,8 @@
         .main-content {
             margin-left: 0;
             transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
         }
         
         @media (min-width: 1025px) {
@@ -163,7 +181,7 @@
         }
 
         .gradient-text {
-            background: var(--gradient-1);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -246,33 +264,39 @@
 
         .btn-outline {
             background: transparent;
-            color: var(--dark);
-            border: 2px solid var(--gray-light);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
         }
 
         .btn-outline:hover {
             border-color: var(--primary);
             color: var(--primary);
+            background: rgba(13, 148, 136, 0.1);
         }
 
         .btn-white {
-            background: var(--white);
-            color: var(--dark);
+            background: rgba(255, 255, 255, 0.95);
+            color: #0a0a0a;
+            border: none;
+            font-weight: 600;
         }
 
         .btn-white:hover {
-            background: var(--light);
+            background: #ffffff;
+            transform: scale(1.05);
         }
 
         .btn-outline-white {
-            background: transparent;
-            color: var(--white);
-            border: 2px solid var(--white);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         .btn-outline-white:hover {
-            background: var(--white);
-            color: var(--dark);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
         }
 
         .btn-lg {
@@ -281,8 +305,9 @@
         }
 
         .btn-small {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         .btn-block {
@@ -296,13 +321,11 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 2px solid transparent;
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 2px solid #2a2a2a;
             z-index: 1000;
             padding: 0;
             transition: var(--transition);
-            box-shadow: 0 4px 20px rgba(13, 148, 136, 0.1);
         }
         
         .navbar::after {
@@ -310,44 +333,31 @@
             position: absolute;
             bottom: -2px;
             left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, 
-                #0D9488 0%, 
-                #14B8A6 22.5%, 
-                #F97316 25%, 
-                #14B8A6 27.5%,
-                #0D9488 50%,
-                #14B8A6 72.5%, 
-                #F97316 75%, 
-                #14B8A6 77.5%,
-                #0D9488 100%);
-            background-size: 200% 100%;
-            animation: shimmer 15s linear infinite;
+            height: 3px;
+            width: 0%;
+            background: #14B8A6;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
         }
         
-        @keyframes shimmer {
-            0% {
-                background-position: 0% 0;
-            }
-            100% {
-                background-position: 300% 0;
-            }
+        .navbar.loading::after {
+            width: var(--load-progress, 0%);
+        }
+        
+        .navbar.loaded::after {
+            width: 100%;
+            opacity: 0;
+            transition: width 0.2s ease-out, opacity 0.3s ease-out 0.2s;
         }
 
         [data-theme="light"] .navbar {
             background: rgba(255, 255, 255, 0.85);
             box-shadow: 0 4px 20px rgba(249, 115, 22, 0.08);
+            border-bottom-color: #d1d5db;
         }
         
         [data-theme="light"] .navbar::after {
-            background: linear-gradient(90deg, 
-                #0D9488 0%, 
-                #14B8A6 25%, 
-                #F97316 50%, 
-                #14B8A6 75%, 
-                #0D9488 100%);
-            background-size: 200% 100%;
+            background: #14B8A6;
         }
 
         .navbar .container {
@@ -434,7 +444,8 @@
             border-bottom: none;
         }
 
-        .suggestion-item:hover {
+        .suggestion-item:hover,
+        .suggestion-item.active {
             background: var(--card-hover);
         }
 
@@ -478,6 +489,24 @@
             height: 48px;
             margin: 0 auto 0.75rem;
             opacity: 0.3;
+        }
+        
+        .suggestion-header {
+            padding: 0.75rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .suggestion-name mark {
+            background: rgba(13, 148, 136, 0.3);
+            color: var(--primary);
+            padding: 0 2px;
+            border-radius: 2px;
         }
 
         .navbar .container {
@@ -732,6 +761,7 @@
         .user-menu {
             position: relative;
             z-index: 10002;
+            padding: 0.5rem;
         }
 
         .user-avatar {
@@ -760,11 +790,9 @@
             bottom: -3px;
             border-radius: 50%;
             background: linear-gradient(45deg, #14B8A6, #F97316, #06B6D4, #14B8A6);
-            background-size: 300% 300%;
             z-index: -1;
             opacity: 0;
             transition: opacity 0.3s ease;
-            animation: gradientRotate 3s ease infinite;
         }
 
         .user-avatar:hover::before {
@@ -788,21 +816,9 @@
             z-index: -1;
         }
 
-        @keyframes gradientRotate {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
         .user-dropdown {
             position: absolute;
-            top: calc(100% + 0.25rem);
+            top: 100%;
             right: 0;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -819,13 +835,14 @@
         .user-dropdown::before {
             content: '';
             position: absolute;
-            top: -8px;
+            top: -15px;
             right: 0;
             left: 0;
-            height: 8px;
+            height: 15px;
             background: transparent;
         }
 
+        .user-menu:hover .user-dropdown,
         .user-dropdown.active {
             display: flex;
         }
@@ -935,16 +952,33 @@
         /* Left Sidebar Navigation */
         .sidebar {
             position: fixed;
-            top: 70px; /* Height of navbar */
+            top: 82px; /* Height of navbar + gap */
             left: 0;
             width: 280px;
-            height: calc(100vh - 70px);
+            height: calc(100vh - 82px);
             background: var(--bg-secondary);
             border-right: 1px solid var(--border-color);
             z-index: 100;
             overflow-y: auto;
             overflow-x: hidden;
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+        
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
 
         /* Hide sidebar on mobile by default */
@@ -964,8 +998,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.7);
             z-index: 99;
             opacity: 0;
             visibility: hidden;
@@ -987,6 +1020,7 @@
 
         .sidebar-content {
             padding: 1.5rem;
+            padding-top: 2rem;
         }
 
         .sidebar-section {
@@ -1138,7 +1172,7 @@
         .cart-icon-wrapper {
             position: relative;
             cursor: pointer;
-            padding: 0.75rem;
+            padding: 1rem;
             transition: var(--transition);
             z-index: 10002;
         }
@@ -1169,7 +1203,7 @@
 
         .cart-dropdown {
             position: absolute;
-            top: calc(100% + 0.25rem);
+            top: 100%;
             right: 0;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -1188,13 +1222,14 @@
         .cart-dropdown::before {
             content: '';
             position: absolute;
-            top: -8px;
+            top: -15px;
             right: 0;
             left: 0;
-            height: 8px;
+            height: 15px;
             background: transparent;
         }
 
+        .cart-icon-wrapper:hover .cart-dropdown,
         .cart-dropdown.active {
             display: flex;
         }
@@ -1406,8 +1441,17 @@
             align-items: center;
             padding: 6rem 0 2rem;
             position: relative;
-            overflow: visible;
             z-index: 1;
+        }
+        
+        /* Floating Particles - Disabled for performance */
+        .hero-particle {
+            display: none;
+        }
+        
+        /* Glowing Orbs - Disabled for performance */
+        .hero-orb {
+            display: none;
         }
         
         section {
@@ -1437,6 +1481,18 @@
             font-weight: 600;
             color: var(--text-secondary);
             margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease-out backwards;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .badge-dot {
@@ -1444,16 +1500,6 @@
             height: 8px;
             background: var(--accent);
             border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
         }
 
         .hero-title {
@@ -1462,6 +1508,18 @@
             line-height: 1.1;
             margin-bottom: 1.5rem;
             letter-spacing: -2px;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-description {
@@ -1469,6 +1527,7 @@
             color: var(--text-secondary);
             margin-bottom: 2rem;
             line-height: 1.8;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
         }
 
         .hero-buttons {
@@ -1476,6 +1535,7 @@
             gap: 1rem;
             flex-wrap: wrap;
             margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
         }
 
         .hero-stats {
@@ -1484,10 +1544,35 @@
             gap: 3rem;
             padding-top: 2rem;
             border-top: 1px solid var(--border-color);
+            animation: fadeInUp 1s ease-out 0.8s backwards;
         }
 
         .stat-item {
             text-align: center;
+            animation: scaleIn 0.6s ease-out backwards;
+        }
+        
+        .stat-item:nth-child(1) {
+            animation-delay: 1s;
+        }
+        
+        .stat-item:nth-child(2) {
+            animation-delay: 1.15s;
+        }
+        
+        .stat-item:nth-child(3) {
+            animation-delay: 1.3s;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .stat-number {
@@ -1504,33 +1589,303 @@
 
         .hero-visual {
             position: relative;
+            animation: fadeInRight 1.2s ease-out 0.4s backwards;
+            min-height: 500px;
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
-        .template-showcase {
+        .device-mockups {
+            position: relative;
+            width: 100%;
+            height: 650px;
             display: grid;
-            gap: 1.5rem;
-            transform: perspective(1000px) rotateY(-5deg);
+            place-items: center;
+        }
+        
+        /* Main Device Container - Stacked Layout */
+        .device {
+            position: absolute;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        
+        .device:hover {
+            transform: translateY(-20px) scale(1.03);
+        }
+        
+        /* Laptop - Top center, larger */
+        .laptop {
+            width: 650px;
+            top: -30px;
+            left: 45%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+        
+        .laptop:hover {
+            transform: translateX(-50%) translateY(-20px) scale(1.03);
+        }
+        
+        /* Tablet - Bottom right, angled outward */
+        .tablet {
+            width: 340px;
+            bottom: -50px;
+            right: 5%;
+            transform: perspective(1000px) rotateY(-18deg) rotateX(8deg);
+            z-index: 3;
+        }
+        
+        .tablet:hover {
+            transform: perspective(1000px) rotateY(-18deg) rotateX(8deg) translateY(-20px) scale(1.03);
+        }
+        
+        /* Phone - Left side, prominent and on top */
+        .phone {
+            width: 280px;
+            bottom: -10px;
+            left: -8%;
+            transform: perspective(1000px) rotateY(20deg) rotateX(5deg);
+            z-index: 4;
+        }
+        
+        .phone:hover {
+            transform: perspective(1000px) rotateY(20deg) rotateX(5deg) translateY(-20px) scale(1.03);
+        }
+        
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        /* Device Frame - Premium Effect */
+        .device-frame {
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        .device:hover .device-frame {
+            border-color: rgba(13, 148, 136, 0.4);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(13, 148, 136, 0.2);
+        }
+        
+        /* Laptop Specific */
+        .laptop .device-frame {
+            padding: 10px;
+            border-radius: 12px;
+        }
+        
+        .laptop .device-screen {
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .laptop .device-base {
+            display: none;
+        }
+        
+
+        
+        /* Tablet Specific */
+        .tablet .device-frame {
+            padding: 12px;
+            border-radius: 20px;
+        }
+        
+        .tablet .device-screen {
+            aspect-ratio: 3/4;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Phone Specific */
+        .phone .device-frame {
+            padding: 10px;
+            border-radius: 28px;
+        }
+        
+        .phone .device-screen {
+            aspect-ratio: 9/19.5;
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .phone .device-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 25px;
+            background: #000;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+        }
+        
+        /* Screen Header - Only on Laptop */
+        .screen-header {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .browser-dots {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .browser-dots span {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+        
+        .browser-dots span:nth-child(1) {
+            background: #ff5f57;
+        }
+        
+        .browser-dots span:nth-child(2) {
+            background: #febc2e;
+        }
+        
+        .browser-dots span:nth-child(3) {
+            background: #28c840;
+        }
+        
+        /* Screen Content with Gradients */
+        .screen-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .gradient-1 {
+            background: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%);
+        }
+        
+        .gradient-2 {
+            background: linear-gradient(135deg, #14B8A6 0%, #06B6D4 100%);
+        }
+        
+        .gradient-3 {
+            background: linear-gradient(135deg, #06B6D4 0%, #0EA5E9 100%);
+        }
+        
+        /* Floating Animation */
+        .laptop {
+            animation: floatInLaptop 0.8s ease-out 0.4s backwards;
+        }
+        
+        .tablet {
+            animation: floatInTablet 0.8s ease-out 0.5s backwards;
+        }
+        
+        .phone {
+            animation: floatInPhone 0.8s ease-out 0.6s backwards;
+        }
+        
+        @keyframes floatInLaptop {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.9) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) scale(1) translateY(0);
+            }
+        }
+        
+        @keyframes floatInTablet {
+            from {
+                opacity: 0;
+                transform: perspective(1000px) rotateY(-18deg) rotateX(8deg) scale(0.9) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: perspective(1000px) rotateY(-18deg) rotateX(8deg) scale(1) translateY(0);
+            }
+        }
+        
+        @keyframes floatInPhone {
+            from {
+                opacity: 0;
+                transform: perspective(1000px) rotateY(20deg) rotateX(5deg) scale(0.9) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: perspective(1000px) rotateY(20deg) rotateX(5deg) scale(1) translateY(0);
+            }
+        }
+        
+
+        
+        /* Deploy Particles - Disabled for performance */
+        .deploy-particle {
+            display: none;
+        }
+        
+        /* Launch Trails - Removed for cleaner look */
+        .launch-trail {
+            display: none;
         }
 
         .showcase-card {
             background: var(--card-bg);
             border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-xl);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
             overflow: hidden;
-            animation: floatIn 0.8s ease-out;
+            animation: floatIn 0.8s ease-out backwards;
             animation-delay: var(--delay);
-            animation-fill-mode: backwards;
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .showcase-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
         }
 
         @keyframes floatIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(30px) scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
@@ -1596,22 +1951,7 @@
         }
 
         .bg-gradient {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-            animation: gradientPulse 8s ease-in-out infinite;
-        }
-        
-        @keyframes gradientPulse {
-            0%, 100% {
-                opacity: 0.3;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.5;
-                transform: scale(1.1);
-            }
+            display: none;
         }
 
         .bg-gradient-1 {
@@ -1705,13 +2045,14 @@
             border-radius: var(--border-radius-lg);
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: var(--transition);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
             border: 1px solid var(--border-color);
+            cursor: pointer;
         }
 
         .template-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(13, 148, 136, 0.15);
             border-color: var(--primary);
         }
 
@@ -1720,6 +2061,22 @@
             height: 300px;
             background: var(--gradient-1);
             overflow: hidden;
+        }
+        
+        .template-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .template-card:hover .template-image::after {
+            left: 150%;
         }
 
         .template-image img {
@@ -1731,17 +2088,33 @@
         .template-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.3) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 1rem;
             opacity: 0;
-            transition: var(--transition);
+            transition: opacity 0.3s ease;
         }
 
         .template-card:hover .template-overlay {
             opacity: 1;
+        }
+        
+        .template-overlay .btn {
+            backdrop-filter: blur(10px);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .template-card:hover .template-overlay .btn {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .template-card:hover .template-overlay .btn:nth-child(2) {
+            transition-delay: 0.1s;
         }
 
         .template-badge {
@@ -1806,6 +2179,12 @@
             align-items: center;
             padding-top: 1rem;
             border-top: 1px solid var(--border-color);
+            gap: 1rem;
+        }
+        
+        .template-actions {
+            display: flex;
+            gap: 0.5rem;
         }
 
         .template-price {
@@ -2068,8 +2447,7 @@
 
         /* CTA Section */
         .cta-section {
-            background: rgba(10, 10, 10, 0.6);
-            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.9);
             border: 2px solid transparent;
             border-image: var(--gradient-1) 1;
             color: white;
@@ -2379,8 +2757,7 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.9);
             display: none;
             align-items: center;
             justify-content: center;
@@ -2767,64 +3144,27 @@
             font-size: 1.1rem;
         }
 
-        .pagination {
+        /* Load More Button */
+        .load-more-container {
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 4rem;
+            margin-top: 3rem;
         }
-
-        .pagination-btn {
-            padding: 0.75rem 1.5rem;
+        
+        .load-more-container .btn {
+            min-width: 250px;
+            transition: all 0.3s ease;
+        }
+        
+        .load-more-container .btn.back-to-top {
             background: var(--card-bg);
-            border: 2px solid var(--border-color);
-            border-radius: var(--border-radius);
-            color: var(--text-primary);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
+            border: 2px solid var(--primary);
+            color: var(--primary);
         }
-
-        .pagination-btn:hover:not(:disabled) {
+        
+        .load-more-container .btn.back-to-top:hover {
             background: var(--primary);
-            border-color: var(--primary);
-            color: #ffffff;
-        }
-
-        .pagination-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .pagination-pages {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .pagination-page {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--card-bg);
-            border: 2px solid var(--border-color);
-            border-radius: var(--border-radius);
-            color: var(--text-primary);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .pagination-page:hover {
-            border-color: var(--primary);
-        }
-
-        .pagination-page.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: #ffffff;
+            color: white;
         }
 
         .page-content {
@@ -3207,6 +3547,47 @@
     </style>
 </head>
 <body>
+    <script>
+        // Loading bar animation
+        (function() {
+            let progress = 0;
+            let interval;
+            
+            function updateProgress(value) {
+                progress = Math.min(value, 100);
+                document.documentElement.style.setProperty('--load-progress', progress + '%');
+            }
+            
+            // Simulate smooth progress
+            interval = setInterval(() => {
+                if (progress < 30) {
+                    updateProgress(progress + 3);
+                } else if (progress < 60) {
+                    updateProgress(progress + 2);
+                } else if (progress < 85) {
+                    updateProgress(progress + 0.5);
+                }
+            }, 50);
+            
+            // Jump to 90% when DOM ready
+            document.addEventListener('DOMContentLoaded', () => {
+                updateProgress(90);
+            });
+            
+            // Complete on full load
+            window.addEventListener('load', () => {
+                clearInterval(interval);
+                updateProgress(100);
+                setTimeout(() => {
+                    const navbar = document.querySelector('.navbar');
+                    if (navbar) {
+                        navbar.classList.remove('loading');
+                        navbar.classList.add('loaded');
+                    }
+                }, 100);
+            });
+        })();
+    </script>
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     
@@ -3262,28 +3643,20 @@
                         </svg>
                         <span>All Templates</span>
                     </a>
-                    <a class="sidebar-menu-item" onclick="filterByCategory('business')">
+                    <a class="sidebar-menu-item" onclick="filterByCategory('saas')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            <rect x="2" y="3" width="20" height="14" rx="2"/>
+                            <path d="M8 21h8M12 17v4"/>
                         </svg>
-                        <span>Business</span>
+                        <span>SaaS & Software</span>
                     </a>
-                    <a class="sidebar-menu-item" onclick="filterByCategory('portfolio')">
+                    <a class="sidebar-menu-item" onclick="filterByCategory('startup')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                            <circle cx="8.5" cy="8.5" r="1.5"/>
-                            <polyline points="21 15 16 10 5 21"/>
+                            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+                            <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+                            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
                         </svg>
-                        <span>Portfolio</span>
-                    </a>
-                    <a class="sidebar-menu-item" onclick="filterByCategory('ecommerce')">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="9" cy="21" r="1"/>
-                            <circle cx="20" cy="21" r="1"/>
-                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                        </svg>
-                        <span>E-commerce</span>
+                        <span>Startup & Tech</span>
                     </a>
                     <a class="sidebar-menu-item" onclick="filterByCategory('landing')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3292,19 +3665,13 @@
                         </svg>
                         <span>Landing Pages</span>
                     </a>
-                    <a class="sidebar-menu-item" onclick="filterByCategory('saas')">
+                    <a class="sidebar-menu-item" onclick="filterByCategory('portfolio')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
                         </svg>
-                        <span>SaaS</span>
-                    </a>
-                    <a class="sidebar-menu-item" onclick="filterByCategory('blog')">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                        </svg>
-                        <span>Blog & Magazine</span>
+                        <span>Portfolio & Creative</span>
                     </a>
                     <a class="sidebar-menu-item" onclick="filterByCategory('agency')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3313,7 +3680,29 @@
                             <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
                             <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                         </svg>
-                        <span>Agency</span>
+                        <span>Agency & Studio</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('business')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                        </svg>
+                        <span>Business & Corporate</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('ecommerce')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"/>
+                            <circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                        <span>E-commerce & Retail</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('blog')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                        <span>Blog & Magazine</span>
                     </a>
                     <a class="sidebar-menu-item" onclick="filterByCategory('restaurant')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3325,12 +3714,75 @@
                         </svg>
                         <span>Restaurant & Food</span>
                     </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('healthcare')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                        <span>Healthcare & Medical</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('realestate')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                        <span>Real Estate</span>
+                    </a>
                     <a class="sidebar-menu-item" onclick="filterByCategory('education')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
                             <path d="M6 12v5c3 3 9 3 12 0v-5"/>
                         </svg>
-                        <span>Education</span>
+                        <span>Education & Courses</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('events')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        <span>Events & Entertainment</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('travel')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                        <span>Travel & Hospitality</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('finance')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                        <span>Finance & Fintech</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('fitness')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/>
+                            <line x1="16" y1="8" x2="2" y2="22"/>
+                            <line x1="17.5" y1="15" x2="9" y2="15"/>
+                        </svg>
+                        <span>Fitness & Wellness</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('nft')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                        <span>NFT & Web3</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('photography')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                        <span>Photography & Video</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('nonprofit')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        <span>Non-profit & Charity</span>
                     </a>
                 </div>
             </div>
@@ -3364,7 +3816,7 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar loading" id="navbar">
         <div class="container">
             <!-- Sidebar Toggle -->
             <button class="sidebar-toggle" onclick="toggleSidebar()" id="sidebarToggle" aria-label="Toggle sidebar">
@@ -3458,6 +3910,11 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <!-- Animated Background Elements -->
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
+        
         <div class="container">
             <div class="hero-content">
                 <div class="hero-badge">
@@ -3499,37 +3956,50 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="template-showcase">
-                    <div class="showcase-card" style="--delay: 0s">
-                        <div class="card-header">
-                            <div class="browser-dots">
-                                <span></span><span></span><span></span>
+                <div class="device-mockups">
+                    <!-- Laptop Mockup -->
+                    <div class="device laptop" style="--delay: 0.6s">
+                        <div class="device-frame">
+                            <div class="device-screen">
+                                <div class="screen-header">
+                                    <div class="browser-dots">
+                                        <span></span><span></span><span></span>
+                                    </div>
+                                </div>
+                                <div class="screen-content gradient-1"></div>
                             </div>
                         </div>
-                        <div class="card-preview">
-                            <div class="preview-gradient gradient-1"></div>
-                        </div>
+                        <div class="device-base"></div>
+                        <div class="launch-trail trail-1"></div>
+                        <div class="launch-trail trail-2"></div>
                     </div>
-                    <div class="showcase-card" style="--delay: 0.2s">
-                        <div class="card-header">
-                            <div class="browser-dots">
-                                <span></span><span></span><span></span>
+                    
+                    <!-- Tablet Mockup -->
+                    <div class="device tablet" style="--delay: 0.8s">
+                        <div class="device-frame">
+                            <div class="device-screen">
+                                <div class="screen-content gradient-2"></div>
                             </div>
                         </div>
-                        <div class="card-preview">
-                            <div class="preview-gradient gradient-2"></div>
-                        </div>
+                        <div class="launch-trail trail-1"></div>
                     </div>
-                    <div class="showcase-card" style="--delay: 0.4s">
-                        <div class="card-header">
-                            <div class="browser-dots">
-                                <span></span><span></span><span></span>
+                    
+                    <!-- Phone Mockup -->
+                    <div class="device phone" style="--delay: 1s">
+                        <div class="device-frame">
+                            <div class="device-screen">
+                                <div class="screen-content gradient-3"></div>
                             </div>
                         </div>
-                        <div class="card-preview">
-                            <div class="preview-gradient gradient-3"></div>
-                        </div>
+                        <div class="launch-trail trail-2"></div>
                     </div>
+                    
+                    <!-- Deploy Particles -->
+                    <div class="deploy-particle" style="--x: 10%; --y: 20%; --delay: 0s"></div>
+                    <div class="deploy-particle" style="--x: 80%; --y: 30%; --delay: 0.5s"></div>
+                    <div class="deploy-particle" style="--x: 50%; --y: 60%; --delay: 1s"></div>
+                    <div class="deploy-particle" style="--x: 20%; --y: 80%; --delay: 1.5s"></div>
+                    <div class="deploy-particle" style="--x: 90%; --y: 70%; --delay: 2s"></div>
                 </div>
             </div>
         </div>
@@ -3566,11 +4036,25 @@
                 <div class="filter-group">
                     <select id="categoryFilter" class="filter-select">
                         <option value="all">All Categories</option>
-                        <option value="saas">SaaS & Startups</option>
-                        <option value="portfolio">Portfolio & Creative</option>
-                        <option value="business">Business & Local</option>
-                        <option value="ecommerce">E-commerce</option>
+                        <option value="saas">SaaS & Software</option>
+                        <option value="startup">Startup & Tech</option>
                         <option value="landing">Landing Pages</option>
+                        <option value="portfolio">Portfolio & Creative</option>
+                        <option value="agency">Agency & Studio</option>
+                        <option value="business">Business & Corporate</option>
+                        <option value="ecommerce">E-commerce & Retail</option>
+                        <option value="blog">Blog & Magazine</option>
+                        <option value="restaurant">Restaurant & Food</option>
+                        <option value="healthcare">Healthcare & Medical</option>
+                        <option value="realestate">Real Estate</option>
+                        <option value="education">Education & Courses</option>
+                        <option value="events">Events & Entertainment</option>
+                        <option value="travel">Travel & Hospitality</option>
+                        <option value="finance">Finance & Fintech</option>
+                        <option value="fitness">Fitness & Wellness</option>
+                        <option value="nft">NFT & Web3</option>
+                        <option value="photography">Photography & Video</option>
+                        <option value="nonprofit">Non-profit & Charity</option>
                     </select>
 
                     <select id="sortFilter" class="filter-select">
@@ -3591,11 +4075,11 @@
                 </div>
             </div>
 
-            <!-- Pagination -->
-            <div class="pagination" id="browsePagination" style="display: none;">
-                <button class="pagination-btn" id="prevPage">← Previous</button>
-                <div class="pagination-pages" id="paginationPages"></div>
-                <button class="pagination-btn" id="nextPage">Next →</button>
+            <!-- Load More / Back to Top Button -->
+            <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+                <button class="btn btn-primary btn-lg" id="loadMoreBtn" onclick="loadMoreTemplates()">
+                    Load More Templates
+                </button>
             </div>
         </div>
     </section>
@@ -3940,11 +4424,11 @@
                 <div class="footer-column">
                     <h4>Templates</h4>
                     <ul>
-                        <li><a href="#templates">All Templates</a></li>
-                        <li><a href="#templates">SaaS & Startups</a></li>
-                        <li><a href="#templates">Portfolio</a></li>
-                        <li><a href="#templates">Business</a></li>
-                        <li><a href="#templates">E-commerce</a></li>
+                        <li><a href="#templates" onclick="filterByCategory('all')">All Templates</a></li>
+                        <li><a href="#templates" onclick="filterByCategory('saas')">SaaS & Software</a></li>
+                        <li><a href="#templates" onclick="filterByCategory('startup')">Startup & Tech</a></li>
+                        <li><a href="#templates" onclick="filterByCategory('portfolio')">Portfolio & Creative</a></li>
+                        <li><a href="#templates" onclick="filterByCategory('ecommerce')">E-commerce & Retail</a></li>
                     </ul>
                 </div>
 
@@ -4214,12 +4698,25 @@
                         <label>Category *</label>
                         <select id="adminTemplateCategory" required style="padding: 0.75rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
                             <option value="">Select...</option>
-                            <option value="Portfolio">Portfolio</option>
-                            <option value="Business">Business</option>
-                            <option value="E-commerce">E-commerce</option>
-                            <option value="Landing Page">Landing Page</option>
-                            <option value="Blog">Blog</option>
-                            <option value="SaaS">SaaS</option>
+                            <option value="saas">SaaS & Software</option>
+                            <option value="startup">Startup & Tech</option>
+                            <option value="landing">Landing Pages</option>
+                            <option value="portfolio">Portfolio & Creative</option>
+                            <option value="agency">Agency & Studio</option>
+                            <option value="business">Business & Corporate</option>
+                            <option value="ecommerce">E-commerce & Retail</option>
+                            <option value="blog">Blog & Magazine</option>
+                            <option value="restaurant">Restaurant & Food</option>
+                            <option value="healthcare">Healthcare & Medical</option>
+                            <option value="realestate">Real Estate</option>
+                            <option value="education">Education & Courses</option>
+                            <option value="events">Events & Entertainment</option>
+                            <option value="travel">Travel & Hospitality</option>
+                            <option value="finance">Finance & Fintech</option>
+                            <option value="fitness">Fitness & Wellness</option>
+                            <option value="nft">NFT & Web3</option>
+                            <option value="photography">Photography & Video</option>
+                            <option value="nonprofit">Non-profit & Charity</option>
                         </select>
                     </div>
 
@@ -4302,12 +4799,25 @@
                 <div class="form-group">
                     <label>Category *</label>
                     <select id="editTemplateCategory" required style="padding: 0.75rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
-                        <option value="Portfolio">Portfolio</option>
-                        <option value="Business">Business</option>
-                        <option value="E-commerce">E-commerce</option>
-                        <option value="Landing Page">Landing Page</option>
-                        <option value="Blog">Blog</option>
-                        <option value="SaaS">SaaS</option>
+                        <option value="saas">SaaS & Software</option>
+                        <option value="startup">Startup & Tech</option>
+                        <option value="landing">Landing Pages</option>
+                        <option value="portfolio">Portfolio & Creative</option>
+                        <option value="agency">Agency & Studio</option>
+                        <option value="business">Business & Corporate</option>
+                        <option value="ecommerce">E-commerce & Retail</option>
+                        <option value="blog">Blog & Magazine</option>
+                        <option value="restaurant">Restaurant & Food</option>
+                        <option value="healthcare">Healthcare & Medical</option>
+                        <option value="realestate">Real Estate</option>
+                        <option value="education">Education & Courses</option>
+                        <option value="events">Events & Entertainment</option>
+                        <option value="travel">Travel & Hospitality</option>
+                        <option value="finance">Finance & Fintech</option>
+                        <option value="fitness">Fitness & Wellness</option>
+                        <option value="nft">NFT & Web3</option>
+                        <option value="photography">Photography & Video</option>
+                        <option value="nonprofit">Non-profit & Charity</option>
                     </select>
                 </div>
 
@@ -4362,6 +4872,63 @@
 
 
     <script>
+        // ============================================
+        // GLOBAL LOADING BAR
+        // ============================================
+        const LoadingBar = {
+            navbar: null,
+            interval: null,
+            progress: 0,
+            
+            init() {
+                this.navbar = document.querySelector('.navbar');
+                if (!this.navbar) return;
+                
+                // Initial page load
+                this.start();
+                window.addEventListener('load', () => this.complete());
+                
+                // Listen for link clicks
+                document.addEventListener('click', (e) => {
+                    const link = e.target.closest('a[href], button[onclick*="showPage"], button[onclick*="scrollToSection"], .sidebar-menu-item, .template-card');
+                    if (link) this.start();
+                });
+                
+                // Listen for hash changes
+                window.addEventListener('hashchange', () => this.start());
+            },
+            
+            start() {
+                if (!this.navbar) return;
+                this.progress = 0;
+                this.navbar.classList.remove('loaded');
+                this.navbar.classList.add('loading');
+                this.navbar.style.setProperty('--load-progress', '0%');
+                
+                clearInterval(this.interval);
+                this.interval = setInterval(() => {
+                    const increment = this.progress < 30 ? 10 : this.progress < 60 ? 5 : this.progress < 85 ? 2 : 0.5;
+                    this.progress = Math.min(this.progress + increment, 90);
+                    this.navbar.style.setProperty('--load-progress', this.progress + '%');
+                }, 80);
+                
+                // Auto-complete after short delay for quick actions
+                setTimeout(() => this.complete(), 600);
+            },
+            
+            complete() {
+                if (!this.navbar) return;
+                clearInterval(this.interval);
+                this.navbar.style.setProperty('--load-progress', '100%');
+                setTimeout(() => {
+                    this.navbar.classList.remove('loading');
+                    this.navbar.classList.add('loaded');
+                }, 150);
+            }
+        };
+        
+        LoadingBar.init();
+
         // ============================================
         // DEPLOYTEMPLATE COMPLETE - SINGLE FILE APP
         // Configuration + Authentication + App Logic
@@ -4524,6 +5091,52 @@
                 icon.innerHTML = savedTheme === 'light' 
                     ? '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
                     : '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+            }
+            
+            // ============================================
+            // HERO ANIMATED PARTICLES
+            // ============================================
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                // Create floating particles
+                function createParticle() {
+                    const particle = document.createElement('div');
+                    particle.className = 'hero-particle';
+                    
+                    // Random size between 2-6px
+                    const size = Math.random() * 4 + 2;
+                    particle.style.width = size + 'px';
+                    particle.style.height = size + 'px';
+                    
+                    // Random horizontal position
+                    particle.style.left = Math.random() * 100 + '%';
+                    
+                    // Random animation duration between 10-20s
+                    const duration = Math.random() * 10 + 10;
+                    particle.style.animationDuration = duration + 's';
+                    
+                    // Random delay
+                    particle.style.animationDelay = Math.random() * 5 + 's';
+                    
+                    // Random color (teal or cyan only)
+                    const colors = ['rgba(13, 148, 136, 0.6)', 'rgba(20, 184, 166, 0.5)', 'rgba(6, 182, 212, 0.5)'];
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    hero.appendChild(particle);
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        particle.remove();
+                    }, duration * 1000);
+                }
+                
+                // Create initial particles
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => createParticle(), i * 500);
+                }
+                
+                // Continuously create new particles
+                setInterval(() => createParticle(), 2000);
             }
         });
 
@@ -4825,12 +5438,10 @@
         }
 
         function hideUserDropdown() {
-            setTimeout(() => {
-                const dropdown = document.getElementById('userDropdown');
-                if (dropdown && !dropdown.matches(':hover')) {
-                    dropdown.classList.remove('active');
-                }
-            }, 300);
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown) {
+                dropdown.classList.remove('active');
+            }
         }
 
         function toggleUserMenu(event) {
@@ -4900,14 +5511,19 @@
         // ============================================
         
         async function loadDashboard() {
+            LoadingBar.start();
             if (!currentUser) {
+                LoadingBar.complete();
                 navigateTo('home');
                 showLogin();
                 return;
             }
             
             const container = document.getElementById('dashboardContent');
-            if (!container) return;
+            if (!container) {
+                LoadingBar.complete();
+                return;
+            }
             
             container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 3rem;"><div class="loading"></div><p style="margin-top: 1rem; color: var(--text-secondary);">Loading your templates...</p></div>';
             
@@ -4939,6 +5555,7 @@
                             <button class="btn btn-primary btn-lg" onclick="navigateTo('home'); setTimeout(() => document.getElementById('templates').scrollIntoView({behavior:'smooth'}), 100);">Browse Templates</button>
                         </div>
                     `;
+                    LoadingBar.complete();
                     return;
                 }
                 
@@ -4978,7 +5595,9 @@
                     `;
                 }).join('');
                 
+                LoadingBar.complete();
             } catch (error) {
+                LoadingBar.complete();
                 console.error('Dashboard load error:', error);
                 container.innerHTML = `
                     <div class="empty-state">
@@ -5102,11 +5721,14 @@
         // ============================================
         
         let currentPage = 1;
-        let templatesPerPage = 9;
+        let templatesPerPage = 6;
+        let displayedTemplates = 0;
+        const maxTemplatesBeforeBackToTop = 18;
         let allTemplates = [];
         let filteredTemplates = [];
 
         async function loadBrowseTemplates() {
+            LoadingBar.start();
             console.log('Loading browse templates...');
             const grid = document.getElementById('browseTemplatesGrid');
             
@@ -5124,16 +5746,20 @@
                 // Use templates from DB, or fallback to mock data if empty
                 allTemplates = (templates && templates.length > 0) ? templates : getMockTemplates();
                 filteredTemplates = [...allTemplates];
+                displayedTemplates = 0;
                 
                 renderTemplates();
                 setupBrowseListeners();
+                LoadingBar.complete();
                 
             } catch (error) {
                 // Use mock data on error
                 allTemplates = getMockTemplates();
                 filteredTemplates = [...allTemplates];
+                displayedTemplates = 0;
                 renderTemplates();
                 setupBrowseListeners();
+                LoadingBar.complete();
             }
         }
 
@@ -5175,7 +5801,7 @@
                     slug: 'bella-restaurant',
                     name: 'Bella Vista - Restaurant',
                     description: 'Elegant restaurant template with menu displays, reservation forms, and gallery sections. Perfect for local businesses.',
-                    category: 'business',
+                    category: 'restaurant',
                     price: 39,
                     original_price: 69,
                     is_popular: false,
@@ -5207,7 +5833,7 @@
                     slug: 'agency-pro',
                     name: 'Agency Pro - Digital Agency',
                     description: 'Professional agency template with case studies, team section, service pages, and client testimonials.',
-                    category: 'business',
+                    category: 'agency',
                     price: 49,
                     original_price: 89,
                     is_popular: false,
@@ -5238,9 +5864,10 @@
             ];
         }
 
-        function renderTemplates() {
+        function renderTemplates(append = false) {
             const grid = document.getElementById('browseTemplatesGrid');
-            const pagination = document.getElementById('browsePagination');
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
             
             if (filteredTemplates.length === 0) {
                 grid.innerHTML = `
@@ -5250,20 +5877,19 @@
                         <p>Try adjusting your search or filters</p>
                     </div>
                 `;
-                pagination.style.display = 'none';
+                loadMoreContainer.style.display = 'none';
                 return;
             }
             
-            // Calculate pagination
-            const totalPages = Math.ceil(filteredTemplates.length / templatesPerPage);
-            const startIndex = (currentPage - 1) * templatesPerPage;
-            const endIndex = startIndex + templatesPerPage;
-            const paginatedTemplates = filteredTemplates.slice(startIndex, endIndex);
+            // Calculate which templates to show
+            const endIndex = append ? displayedTemplates + templatesPerPage : templatesPerPage;
+            const templatesToShow = filteredTemplates.slice(append ? displayedTemplates : 0, endIndex);
+            displayedTemplates = endIndex;
             
             // Render template cards
             const gradients = ['gradient-1', 'gradient-2', 'gradient-3'];
-            grid.innerHTML = paginatedTemplates.map((template, index) => {
-                const randomGradient = gradients[index % gradients.length];
+            const newCardsHTML = templatesToShow.map((template, index) => {
+                const randomGradient = gradients[(displayedTemplates - templatesToShow.length + index) % gradients.length];
                 const price = template.price || 0;
                 const originalPrice = template.original_price || price;
                 
@@ -5290,16 +5916,13 @@
                                     ${originalPrice > price ? `<span class="price-original">$${originalPrice}</span>` : ''}
                                     <span class="price-current">${price === 0 ? 'FREE' : '$' + price}</span>
                                 </div>
-                                <div style="display: flex; gap: 0.5rem;">
+                                <div class="template-actions">
                                     <button class="btn btn-small btn-outline" 
-                                        onclick="addToCart('${template.slug}', '${template.name}', ${price}, '${template.preview_image || ''}'); event.stopPropagation();"
-                                        title="Add to Cart"
-                                        style="flex: 1;">
+                                        onclick="addToCart('${template.slug}', '${template.name}', ${price}, '${template.preview_image || ''}'); event.stopPropagation();">
                                         Add to Cart
                                     </button>
                                     <button class="btn btn-small ${price === 0 ? 'btn-primary' : 'btn-secondary'}" 
-                                        onclick="buyTemplate('${template.slug}', '${template.name}', ${price})"
-                                        style="flex: 1;">
+                                        onclick="buyTemplate('${template.slug}', '${template.name}', ${price})">
                                         ${price === 0 ? 'Get Free →' : 'Buy Now →'}
                                     </button>
                                 </div>
@@ -5309,43 +5932,44 @@
                 `;
             }).join('');
             
-            // Render pagination
-            if (totalPages > 1) {
-                renderPagination(totalPages);
-                pagination.style.display = 'flex';
+            if (append) {
+                grid.insertAdjacentHTML('beforeend', newCardsHTML);
             } else {
-                pagination.style.display = 'none';
+                grid.innerHTML = newCardsHTML;
+            }
+            
+            // Update load more button
+            updateLoadMoreButton();
+        }
+        
+        function updateLoadMoreButton() {
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const hasMore = displayedTemplates < filteredTemplates.length;
+            
+            if (hasMore) {
+                loadMoreContainer.style.display = 'flex';
+                loadMoreBtn.className = 'btn btn-primary btn-lg';
+                loadMoreBtn.innerHTML = 'Load More Templates';
+                loadMoreBtn.onclick = loadMoreTemplates;
+            } else if (displayedTemplates >= maxTemplatesBeforeBackToTop) {
+                loadMoreContainer.style.display = 'flex';
+                loadMoreBtn.className = 'btn btn-lg back-to-top';
+                loadMoreBtn.innerHTML = '↑ Back to Top';
+                loadMoreBtn.onclick = scrollToTop;
+            } else {
+                loadMoreContainer.style.display = 'none';
             }
         }
-
-        function renderPagination(totalPages) {
-            const pagesContainer = document.getElementById('paginationPages');
-            const prevBtn = document.getElementById('prevPage');
-            const nextBtn = document.getElementById('nextPage');
-            
-            // Update prev/next buttons
-            prevBtn.disabled = currentPage === 1;
-            nextBtn.disabled = currentPage === totalPages;
-            
-            // Render page numbers
-            let pagesHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
-                    pagesHTML += `
-                        <div class="pagination-page ${i === currentPage ? 'active' : ''}" 
-                            onclick="goToPage(${i})">${i}</div>
-                    `;
-                } else if (i === currentPage - 2 || i === currentPage + 2) {
-                    pagesHTML += `<div class="pagination-page">...</div>`;
-                }
-            }
-            pagesContainer.innerHTML = pagesHTML;
+        
+        function loadMoreTemplates() {
+            LoadingBar.start();
+            renderTemplates(true);
+            LoadingBar.complete();
         }
-
-        function goToPage(page) {
-            currentPage = page;
-            renderTemplates();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        function scrollToTop() {
+            document.getElementById('templates').scrollIntoView({ behavior: 'smooth' });
         }
 
         function setupBrowseListeners() {
@@ -5368,16 +5992,6 @@
             if (sortFilter) {
                 sortFilter.addEventListener('change', filterTemplates);
             }
-            
-            // Pagination buttons
-            document.getElementById('prevPage')?.addEventListener('click', () => {
-                if (currentPage > 1) goToPage(currentPage - 1);
-            });
-            
-            document.getElementById('nextPage')?.addEventListener('click', () => {
-                const totalPages = Math.ceil(filteredTemplates.length / templatesPerPage);
-                if (currentPage < totalPages) goToPage(currentPage + 1);
-            });
         }
 
         function filterTemplates() {
@@ -5413,6 +6027,7 @@
             });
             
             currentPage = 1;
+            displayedTemplates = 0;
             renderTemplates();
         }
 
@@ -5424,6 +6039,7 @@
         }
 
         async function loadTemplateDetail(slug) {
+            LoadingBar.start();
             try {
                 // Fetch template details with proper headers
                 const { data: template, error } = await supabaseClient
@@ -5541,7 +6157,9 @@
                     <div class="tech-item">${tech}</div>
                 `).join('');
                 
+                LoadingBar.complete();
             } catch (error) {
+                LoadingBar.complete();
                 console.error('Error loading template details:', error);
                 showNotification('Error loading template details: ' + error.message, 'error');
                 navigateTo('home');
@@ -5573,13 +6191,15 @@
                     clearTimeout(searchDebounceTimer);
                     searchDebounceTimer = setTimeout(() => {
                         showSearchSuggestions(e.target.value, navSuggestions, navSearch);
-                    }, 300);
+                    }, 150);
                 });
                 
                 navSearch.addEventListener('focus', (e) => {
-                    if (e.target.value) {
-                        showSearchSuggestions(e.target.value, navSuggestions, navSearch);
-                    }
+                    showSearchSuggestions(e.target.value, navSuggestions, navSearch);
+                });
+                
+                navSearch.addEventListener('keydown', (e) => {
+                    handleSearchKeydown(e, navSuggestions);
                 });
                 
                 // Close on click outside
@@ -5599,13 +6219,15 @@
                     clearTimeout(searchDebounceTimer);
                     searchDebounceTimer = setTimeout(() => {
                         showSearchSuggestions(e.target.value, browseSuggestions, browseSearch);
-                    }, 300);
+                    }, 150);
                 });
                 
                 browseSearch.addEventListener('focus', (e) => {
-                    if (e.target.value) {
-                        showSearchSuggestions(e.target.value, browseSuggestions, browseSearch);
-                    }
+                    showSearchSuggestions(e.target.value, browseSuggestions, browseSearch);
+                });
+                
+                browseSearch.addEventListener('keydown', (e) => {
+                    handleSearchKeydown(e, browseSuggestions);
                 });
                 
                 document.addEventListener('click', (e) => {
@@ -5617,8 +6239,36 @@
         }
         
         function showSearchSuggestions(query, suggestionsContainer, inputElement) {
-            if (!query || query.length < 2) {
-                suggestionsContainer.classList.remove('active');
+            // Show recent/popular templates on focus even without query
+            if (!query || query.length < 1) {
+                // Show top 5 popular/recent templates
+                const popularTemplates = allTemplates.slice(0, 5);
+                
+                if (popularTemplates.length === 0) {
+                    suggestionsContainer.classList.remove('active');
+                    return;
+                }
+                
+                const gradients = ['gradient-1', 'gradient-2', 'gradient-3'];
+                suggestionsContainer.innerHTML = `
+                    <div class="suggestion-header">Popular Templates</div>
+                    ${popularTemplates.map((template, index) => {
+                        const gradient = gradients[index % gradients.length];
+                        const price = template.price || 0;
+                        
+                        return `
+                            <div class="suggestion-item" onclick="selectTemplate('${template.slug}', '${inputElement.id}')">
+                                <div class="suggestion-icon ${gradient}"></div>
+                                <div class="suggestion-content">
+                                    <div class="suggestion-name">${template.name}</div>
+                                    <div class="suggestion-category">${template.category || 'Template'}</div>
+                                </div>
+                                <div class="suggestion-price">${price === 0 ? 'FREE' : '$' + price}</div>
+                            </div>
+                        `;
+                    }).join('')}
+                `;
+                suggestionsContainer.classList.add('active');
                 return;
             }
             
@@ -5628,8 +6278,9 @@
             const matches = allTemplates.filter(template => {
                 return template.name.toLowerCase().includes(searchTerm) ||
                        (template.description && template.description.toLowerCase().includes(searchTerm)) ||
-                       (template.category && template.category.toLowerCase().includes(searchTerm));
-            }).slice(0, 5); // Show max 5 suggestions
+                       (template.category && template.category.toLowerCase().includes(searchTerm)) ||
+                       (template.tags && template.tags.some(tag => tag.toLowerCase().includes(searchTerm)));
+            }).slice(0, 6); // Show max 6 suggestions
             
             if (matches.length === 0) {
                 suggestionsContainer.innerHTML = `
@@ -5650,11 +6301,18 @@
                 const gradient = gradients[index % gradients.length];
                 const price = template.price || 0;
                 
+                // Highlight matching text (escape special regex chars)
+                const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const highlightedName = template.name.replace(
+                    new RegExp(`(${escapedQuery})`, 'gi'),
+                    '<mark>$1</mark>'
+                );
+                
                 return `
                     <div class="suggestion-item" onclick="selectTemplate('${template.slug}', '${inputElement.id}')">
-                        <div class="suggestion-icon" style="background: var(--${gradient});"></div>
+                        <div class="suggestion-icon ${gradient}"></div>
                         <div class="suggestion-content">
-                            <div class="suggestion-name">${template.name}</div>
+                            <div class="suggestion-name">${highlightedName}</div>
                             <div class="suggestion-category">${template.category || 'Template'}</div>
                         </div>
                         <div class="suggestion-price">${price === 0 ? 'FREE' : '$' + price}</div>
@@ -5682,6 +6340,35 @@
                 // Scroll to templates section
                 document.getElementById('templates').scrollIntoView({behavior:'smooth'});
             }, 300);
+        }
+        
+        function handleSearchKeydown(e, suggestionsContainer) {
+            const items = suggestionsContainer.querySelectorAll('.suggestion-item');
+            const activeItem = suggestionsContainer.querySelector('.suggestion-item.active');
+            let currentIndex = Array.from(items).indexOf(activeItem);
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (currentIndex < items.length - 1) {
+                    items.forEach(i => i.classList.remove('active'));
+                    items[currentIndex + 1].classList.add('active');
+                    items[currentIndex + 1].scrollIntoView({ block: 'nearest' });
+                } else if (currentIndex === -1 && items.length > 0) {
+                    items[0].classList.add('active');
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (currentIndex > 0) {
+                    items.forEach(i => i.classList.remove('active'));
+                    items[currentIndex - 1].classList.add('active');
+                    items[currentIndex - 1].scrollIntoView({ block: 'nearest' });
+                }
+            } else if (e.key === 'Enter' && activeItem) {
+                e.preventDefault();
+                activeItem.click();
+            } else if (e.key === 'Escape') {
+                suggestionsContainer.classList.remove('active');
+            }
         }
 
         // ============================================
@@ -6054,12 +6741,7 @@
         }
 
         function hideCartDropdown() {
-            setTimeout(() => {
-                const dropdown = document.getElementById('cartDropdown');
-                if (dropdown && !dropdown.matches(':hover')) {
-                    dropdown.classList.remove('active');
-                }
-            }, 300);
+            document.getElementById('cartDropdown').classList.remove('active');
         }
 
         function toggleCartModal() {
