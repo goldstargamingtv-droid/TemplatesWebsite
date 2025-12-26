@@ -6,6 +6,11 @@
     <title>DeployTemplate - Premium Website Templates</title>
     <meta name="description" content="Beautiful, professional website templates ready to launch your business. No coding required.">
     
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <!-- Supabase Client Library -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
@@ -81,7 +86,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
             color: var(--text-primary);
             background: var(--bg-primary);
@@ -250,7 +255,7 @@
             border-bottom: 2px solid transparent;
             border-image: var(--gradient-1) 1;
             z-index: 1000;
-            padding: 1rem 0;
+            padding: 0.25rem 0;
             transition: var(--transition);
             box-shadow: 0 4px 20px rgba(13, 148, 136, 0.1);
         }
@@ -262,16 +267,18 @@
 
         .navbar .container {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
-            gap: 2rem;
+            gap: 1.5rem;
+            max-width: 100%;
+            padding: 0 1.5rem;
         }
 
         /* Navbar Search */
         .nav-search-wrapper {
             position: relative;
             flex: 1;
-            max-width: 400px;
+            max-width: none;
         }
 
         .nav-search {
@@ -395,7 +402,7 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.65rem;
             font-weight: 800;
             background: var(--gradient-1);
             -webkit-background-clip: text;
@@ -403,13 +410,48 @@
             background-clip: text;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            filter: drop-shadow(0 0 8px rgba(13, 148, 136, 0.3));
+            gap: 0;
             transition: var(--transition);
+            flex-shrink: 0;
+            margin: -20px -3rem -20px -3rem;
+            margin-right: auto;
+        }
+
+        .logo-image {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-right: -30px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .logo-text {
+            white-space: nowrap;
+            display: inline;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo-text-deploy {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+        
+        [data-theme="light"] .logo-text-deploy {
+            color: #000000 !important;
+            -webkit-text-fill-color: #000000 !important;
+        }
+        
+        .logo-text-template {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .logo:hover {
-            filter: drop-shadow(0 0 12px rgba(13, 148, 136, 0.5));
             transform: translateY(-1px);
         }
 
@@ -419,8 +461,10 @@
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: center;
+            flex-shrink: 0;
+            margin-left: auto;
         }
 
         .nav-links a {
@@ -438,7 +482,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--gradient-1);
+            background: var(--accent);
             transition: width 0.3s ease;
         }
 
@@ -446,7 +490,8 @@
             color: var(--primary);
         }
 
-        .nav-links a:hover::after {
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
         }
 
@@ -458,6 +503,7 @@
             border: none;
             cursor: pointer;
             padding: 0.5rem;
+            z-index: 1001;
         }
 
         .mobile-menu-toggle span {
@@ -466,6 +512,18 @@
             background: var(--primary);
             border-radius: 2px;
             transition: var(--transition);
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
         }
 
         /* Nav CTA */
@@ -566,7 +624,14 @@
             align-items: center;
             padding: 8rem 0 4rem;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            z-index: 1;
+        }
+        
+        section {
+            position: relative;
+            z-index: 1;
+            background: transparent;
         }
 
         .hero .container {
@@ -739,9 +804,12 @@
         }
 
         .hero-background {
-            position: absolute;
-            inset: 0;
-            z-index: 1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
             overflow: hidden;
         }
 
@@ -750,6 +818,18 @@
             border-radius: 50%;
             filter: blur(80px);
             opacity: 0.3;
+            animation: gradientPulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes gradientPulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1);
+            }
         }
 
         .bg-gradient-1 {
@@ -758,6 +838,7 @@
             background: var(--gradient-1);
             top: -200px;
             right: -100px;
+            animation-delay: 0s;
         }
 
         .bg-gradient-2 {
@@ -766,6 +847,7 @@
             background: var(--gradient-2);
             bottom: -150px;
             left: -100px;
+            animation-delay: 2s;
         }
 
         .bg-grid {
@@ -800,7 +882,7 @@
 
         /* Templates Section */
         .templates-section {
-            background: var(--bg-secondary);
+            background: transparent;
         }
 
         .filter-bar {
@@ -1204,16 +1286,47 @@
 
         /* CTA Section */
         .cta-section {
-            background: var(--gradient-1);
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(20px);
+            border: 2px solid transparent;
+            border-image: var(--gradient-1) 1;
             color: white;
             text-align: center;
             padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-1);
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        [data-theme="light"] .cta-section {
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--text-primary);
         }
 
         .cta-content h2 {
             font-size: 3rem;
             margin-bottom: 1rem;
             color: white;
+        }
+        
+        [data-theme="light"] .cta-content h2 {
+            color: var(--text-primary);
         }
 
         .cta-content p {
@@ -1231,10 +1344,16 @@
 
         /* Footer */
         .footer {
-            background: var(--bg-secondary);
+            background: #0a0a0a;
             color: var(--text-primary);
             padding: 4rem 0 2rem;
             border-top: 1px solid var(--border-color);
+            position: relative;
+            z-index: 1;
+        }
+        
+        [data-theme="light"] .footer {
+            background: #f8f8f8;
         }
 
         .footer-content {
@@ -1352,19 +1471,64 @@
         }
 
         @media (max-width: 768px) {
-            .nav-links,
-            .nav-cta {
-                display: none;
-            }
-            
             .nav-cta {
                 display: flex;
                 gap: 0.5rem;
                 align-items: center;
             }
             
+            .nav-links {
+                display: flex;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 80%;
+                max-width: 300px;
+                background: var(--bg-primary);
+                flex-direction: column;
+                padding: 6rem 2rem 2rem;
+                gap: 2rem;
+                box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+                transition: right 0.3s ease;
+                z-index: 1000;
+                overflow-y: auto;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                width: 100%;
+            }
+            
+            .nav-links a {
+                display: block;
+                padding: 1rem;
+                font-size: 1.1rem;
+            }
+            
             .mobile-menu-toggle {
                 display: flex;
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+                margin: -15px -2rem -15px -2rem;
+            }
+            
+            .logo-image {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .navbar .container {
+                gap: 0.5rem;
+            }
+            
+            .nav-search-wrapper {
+                display: none;
             }
             
             .hero-title {
@@ -2237,8 +2401,8 @@
     <nav class="navbar">
         <div class="container">
             <a href="#" onclick="navigateTo('home'); return false;" class="logo">
-                <span class="logo-icon">⚡</span>
-                DeployTemplate
+                <img src="data:image/png;base64,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" alt="DeployTemplate" class="logo-image" />
+                <span class="logo-text"><span class="logo-text-deploy">Deploy</span><span class="logo-text-template">Template</span></span>
             </a>
             
             <!-- Navbar Search -->
@@ -2253,12 +2417,12 @@
                 <div class="search-suggestions" id="navSearchSuggestions"></div>
             </div>
             
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#" onclick="navigateTo('browse'); return false;">Browse</a></li>
                 <li><a href="#templates" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('templates').scrollIntoView({behavior:'smooth'}),100);}">Templates</a></li>
                 <li><a href="#features" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('features').scrollIntoView({behavior:'smooth'}),100);}">Features</a></li>
-                <li><a href="#pricing" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('pricing').scrollIntoView({behavior:'smooth'}),100);}">Pricing</a></li>
                 <li><a href="#showcase" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('showcase').scrollIntoView({behavior:'smooth'}),100);}">Showcase</a></li>
+                <li><a href="#pricing" onclick="if(currentRoute!=='home'){navigateTo('home');setTimeout(()=>document.getElementById('pricing').scrollIntoView({behavior:'smooth'}),100);}">Pricing</a></li>
                 <li>
                     <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" aria-label="Toggle theme">
                         <span class="theme-icon" id="themeIcon">🌙</span>
@@ -2268,7 +2432,7 @@
             <div class="nav-cta" id="navCta">
                 <!-- Buttons added by JavaScript -->
             </div>
-            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -2568,6 +2732,76 @@
         </div>
     </section>
 
+    <!-- Showcase Section -->
+    <section class="showcase-section" id="showcase">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Built with DeployTemplate</h2>
+                <p class="section-description">
+                    See how businesses are using our templates to create stunning websites
+                </p>
+            </div>
+
+            <div class="showcase-grid">
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <div class="showcase-placeholder"></div>
+                    </div>
+                    <div class="showcase-info">
+                        <h4>TechFlow Analytics</h4>
+                        <p>SaaS Landing Template</p>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <div class="showcase-placeholder"></div>
+                    </div>
+                    <div class="showcase-info">
+                        <h4>Sarah Chen Design</h4>
+                        <p>Portfolio Template</p>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <div class="showcase-placeholder"></div>
+                    </div>
+                    <div class="showcase-info">
+                        <h4>Bistro 42</h4>
+                        <p>Restaurant Template</p>
+                    </div>
+                </div>
+
+                <div class="showcase-item">
+                    <div class="showcase-image">
+                        <div class="showcase-placeholder"></div>
+                    </div>
+                    <div class="showcase-info">
+                        <h4>FitLife Coaching</h4>
+                        <p>SaaS Landing Template</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Launch Your Website?</h2>
+                <p>Join hundreds of businesses who chose DeployTemplate to bring their vision to life</p>
+                <div class="cta-buttons">
+                    <a href="#templates" class="btn btn-primary btn-lg">Browse Templates</a>
+                    <a href="#pricing" class="btn btn-white btn-lg">View Pricing</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <!-- Pricing Section -->
     <section class="pricing-section" id="pricing">
         <div class="container">
@@ -2729,82 +2963,14 @@
         </div>
     </section>
 
-    <!-- Showcase Section -->
-    <section class="showcase-section" id="showcase">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Built with DeployTemplate</h2>
-                <p class="section-description">
-                    See how businesses are using our templates to create stunning websites
-                </p>
-            </div>
-
-            <div class="showcase-grid">
-                <div class="showcase-item">
-                    <div class="showcase-image">
-                        <div class="showcase-placeholder"></div>
-                    </div>
-                    <div class="showcase-info">
-                        <h4>TechFlow Analytics</h4>
-                        <p>SaaS Landing Template</p>
-                    </div>
-                </div>
-
-                <div class="showcase-item">
-                    <div class="showcase-image">
-                        <div class="showcase-placeholder"></div>
-                    </div>
-                    <div class="showcase-info">
-                        <h4>Sarah Chen Design</h4>
-                        <p>Portfolio Template</p>
-                    </div>
-                </div>
-
-                <div class="showcase-item">
-                    <div class="showcase-image">
-                        <div class="showcase-placeholder"></div>
-                    </div>
-                    <div class="showcase-info">
-                        <h4>Bistro 42</h4>
-                        <p>Restaurant Template</p>
-                    </div>
-                </div>
-
-                <div class="showcase-item">
-                    <div class="showcase-image">
-                        <div class="showcase-placeholder"></div>
-                    </div>
-                    <div class="showcase-info">
-                        <h4>FitLife Coaching</h4>
-                        <p>SaaS Landing Template</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Launch Your Website?</h2>
-                <p>Join hundreds of businesses who chose DeployTemplate to bring their vision to life</p>
-                <div class="cta-buttons">
-                    <a href="#templates" class="btn btn-primary btn-lg">Browse Templates</a>
-                    <a href="#pricing" class="btn btn-white btn-lg">View Pricing</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
                     <div class="footer-logo">
-                        <span class="logo-icon">⚡</span>
-                        DeployTemplate
+                        <img src="data:image/avif;base64,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" alt="DeployTemplate" style="width: 32px; height: 32px; object-fit: contain;" />
+                        <span>DeployTemplate</span>
                     </div>
                     <p>Premium website templates for modern businesses. Launch faster, grow bigger.</p>
                     <div class="social-links">
@@ -3180,6 +3346,37 @@
         let currentUser = null;
         let currentRoute = 'home';
         let currentTemplateSlug = null;
+
+        // ============================================
+        // MOBILE MENU
+        // ============================================
+        
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            navLinks.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (navLinks.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Close mobile menu when clicking nav link
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    const navLinks = document.getElementById('navLinks');
+                    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+                    navLinks.classList.remove('active');
+                    mobileToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+        });
 
         // ============================================
         // THEME TOGGLE
@@ -4294,6 +4491,32 @@
                     navigateTo('home');
                 }
             });
+            
+            // Scroll spy for nav links
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+            
+            function updateActiveLink() {
+                const scrollY = window.pageYOffset;
+                
+                sections.forEach(section => {
+                    const sectionHeight = section.offsetHeight;
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === '#' + sectionId) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink(); // Initial check
             
             // Initialize home page as active
             navigateTo('home');
