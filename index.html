@@ -138,9 +138,21 @@
 
         /* Container */
         .container {
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 3rem;
+        }
+        
+        /* Main content wrapper - pushes content right on desktop */
+        .main-content {
+            margin-left: 0;
+            transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @media (min-width: 1025px) {
+            .main-content {
+                margin-left: 280px;
+            }
         }
 
         /* Typography */
@@ -574,38 +586,57 @@
 
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 0.5rem;
             align-items: center;
             flex-shrink: 0;
             margin-left: auto;
         }
 
         .nav-links a {
-            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 0.75rem;
             color: var(--text-secondary);
-            transition: var(--transition);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 500;
             position: relative;
-            padding: 0.5rem 0;
+            overflow: hidden;
         }
 
-        .nav-links a::after {
+        .nav-links a::before {
             content: '';
             position: absolute;
-            bottom: 0;
             left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s ease;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--primary);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: #14B8A6;
+            background: var(--card-hover);
+            color: var(--text-primary);
+            padding-left: 1rem;
         }
 
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 100%;
+        .nav-links a:hover::before {
+            transform: scaleY(1);
+        }
+
+        .nav-links a.active {
+            background: rgba(20, 184, 166, 0.1);
+            color: var(--primary);
+            padding-left: 1rem;
+        }
+
+        .nav-links a.active::before {
+            transform: scaleY(1);
         }
 
         .mobile-menu-toggle {
@@ -849,6 +880,192 @@
         [data-theme="light"] .theme-toggle-slider {
             left: 32px;
             background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        }
+
+        /* Left Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            top: 70px; /* Height of navbar */
+            left: 0;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            z-index: 100;
+            overflow-y: auto;
+            overflow-x: hidden;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Hide sidebar on mobile by default */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: none;
+        }
+        
+        /* Only show overlay on mobile */
+        @media (max-width: 1024px) {
+            .sidebar-overlay {
+                display: block;
+            }
+            
+            .sidebar-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        .sidebar-content {
+            padding: 1.5rem;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-section-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            padding: 0 0.75rem;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .sidebar-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-menu-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--primary);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-menu-item:hover {
+            background: var(--card-hover);
+            color: var(--text-primary);
+            padding-left: 1rem;
+        }
+
+        .sidebar-menu-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .sidebar-menu-item.active {
+            background: rgba(20, 184, 166, 0.1);
+            color: var(--primary);
+            padding-left: 1rem;
+        }
+
+        .sidebar-menu-item.active::before {
+            transform: scaleY(1);
+        }
+
+        .sidebar-menu-item svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-menu-item .badge {
+            margin-left: auto;
+            background: var(--primary);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+        }
+
+        .sidebar-toggle {
+            position: relative;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            z-index: 10001;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+        }
+        
+        /* Hide on desktop, show on mobile */
+        @media (min-width: 1025px) {
+            .sidebar-toggle {
+                display: none;
+            }
+        }
+
+        .sidebar-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .sidebar-toggle span {
+            width: 26px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: block;
+        }
+
+        .sidebar-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .sidebar-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .sidebar-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
         }
 
         /* Cart System */
@@ -1121,7 +1338,7 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 8rem 0 4rem;
+            padding: 6rem 0 2rem;
             position: relative;
             overflow: visible;
             z-index: 1;
@@ -1136,7 +1353,7 @@
         .hero .container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 5rem;
             align-items: center;
             position: relative;
             z-index: 10;
@@ -1198,7 +1415,7 @@
         .hero-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+            gap: 3rem;
             padding-top: 2rem;
             border-top: 1px solid var(--border-color);
         }
@@ -1360,13 +1577,13 @@
 
         /* Section Styles */
         section {
-            padding: 6rem 0;
+            padding: 8rem 0;
         }
 
         .section-header {
             text-align: center;
             max-width: 700px;
-            margin: 0 auto 4rem;
+            margin: 0 auto 5rem;
         }
 
         .section-title {
@@ -1413,7 +1630,7 @@
         .templates-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
             margin-bottom: 3rem;
         }
 
@@ -1561,7 +1778,7 @@
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
         }
 
         .feature-card {
@@ -1609,7 +1826,7 @@
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
             max-width: 1000px;
             margin: 0 auto;
         }
@@ -1741,7 +1958,7 @@
         .showcase-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
         }
 
         .showcase-item {
@@ -1930,7 +2147,7 @@
 
         .footer-links {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
         }
 
         .footer-links a {
@@ -1985,7 +2202,7 @@
                 background: var(--bg-primary);
                 flex-direction: column;
                 padding: 6rem 2rem 2rem;
-                gap: 2rem;
+                gap: 3rem;
                 box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
                 transition: right 0.3s ease;
                 z-index: 1000;
@@ -2242,7 +2459,7 @@
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
             margin-top: 3rem;
         }
 
@@ -2622,7 +2839,7 @@
 
         .detail-meta {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             flex-wrap: wrap;
             margin-bottom: 2rem;
             padding-bottom: 2rem;
@@ -2737,7 +2954,7 @@
         .screenshots-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
         }
 
         .screenshot-item {
@@ -2924,9 +3141,172 @@
     </style>
 </head>
 <body>
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    
+    <!-- Left Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+
+            <!-- Quick Filters -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Quick Filters</div>
+                <div class="sidebar-menu">
+                    <a class="sidebar-menu-item" onclick="filterTemplates('new')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        <span>New Releases</span>
+                        <span class="badge">12</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterTemplates('popular')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <span>Popular</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterTemplates('premium')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                        <span>Premium</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterTemplates('free')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/>
+                            <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/>
+                            <line x1="2" y1="12" x2="22" y2="12"/>
+                        </svg>
+                        <span>Free Templates</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Categories</div>
+                <div class="sidebar-menu">
+                    <a class="sidebar-menu-item active" onclick="filterByCategory('all')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"/>
+                            <rect x="14" y="3" width="7" height="7"/>
+                            <rect x="14" y="14" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/>
+                        </svg>
+                        <span>All Templates</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('business')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                        </svg>
+                        <span>Business</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('portfolio')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span>Portfolio</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('ecommerce')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"/>
+                            <circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                        <span>E-commerce</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('landing')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                        <span>Landing Pages</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('saas')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+                        <span>SaaS</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('blog')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                        <span>Blog & Magazine</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('agency')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        <span>Agency</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('restaurant')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                            <line x1="6" y1="1" x2="6" y2="4"/>
+                            <line x1="10" y1="1" x2="10" y2="4"/>
+                            <line x1="14" y1="1" x2="14" y2="4"/>
+                        </svg>
+                        <span>Restaurant & Food</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="filterByCategory('education')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                        </svg>
+                        <span>Education</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- My Account (shown when logged in) -->
+            <div class="sidebar-section" id="sidebarAccountSection" style="display: none;">
+                <div class="sidebar-section-title">My Account</div>
+                <div class="sidebar-menu">
+                    <a class="sidebar-menu-item" onclick="navigateTo('dashboard')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"/>
+                            <rect x="14" y="3" width="7" height="7"/>
+                            <rect x="14" y="14" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/>
+                        </svg>
+                        <span>My Library</span>
+                    </a>
+                    <a class="sidebar-menu-item" onclick="navigateTo('dashboard')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v6m0 6v6"/>
+                            <path d="m4.93 4.93 4.24 4.24m5.66 5.66 4.24 4.24"/>
+                            <path d="M1 12h6m6 0h6"/>
+                            <path d="m4.93 19.07 4.24-4.24m5.66-5.66 4.24-4.24"/>
+                        </svg>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
+            <!-- Sidebar Toggle -->
+            <button class="sidebar-toggle" onclick="toggleSidebar()" id="sidebarToggle" aria-label="Toggle sidebar">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
             <a href="#" onclick="navigateTo('home'); return false;" class="logo">
                 <img src="data:image/png;base64,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" alt="DeployTemplate" class="logo-image" />
                 <span class="logo-text"><span class="logo-text-deploy">Deploy</span><span class="logo-text-template"><span class="logo-text-template-inner"><span>T</span><span>e</span><span>m</span><span>p</span><span>l</span><span>a</span><span>t</span><span>e</span></span><span class="logo-text-template-cursor"></span></span></span>
@@ -3003,6 +3383,9 @@
             </button>
         </div>
     </nav>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-content">
 
     <!-- HOME PAGE SECTION -->
     <div id="homePage" class="page-section active">
@@ -3985,6 +4368,66 @@
         });
 
         // ============================================
+        // SIDEBAR TOGGLE
+        // ============================================
+        
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+            sidebarToggle.classList.toggle('active');
+            
+            // Prevent body scroll when sidebar is open
+            if (sidebar.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Filter templates by quick filter
+        function filterTemplates(filter) {
+            console.log('Filtering by:', filter);
+            toggleSidebar();
+            scrollToSection('templates');
+            
+            // Add your filtering logic here
+            // This would filter the template grid based on the selected filter
+        }
+        
+        // Filter templates by category
+        function filterByCategory(category) {
+            console.log('Filtering category:', category);
+            
+            // Update active state
+            document.querySelectorAll('.sidebar-menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.sidebar-menu-item').classList.add('active');
+            
+            toggleSidebar();
+            scrollToSection('templates');
+            
+            // Add your category filtering logic here
+            // This would filter the template grid based on the selected category
+        }
+        
+        // Sidebar search functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarSearch = document.getElementById('sidebarSearch');
+            if (sidebarSearch) {
+                sidebarSearch.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    console.log('Searching for:', searchTerm);
+                    // Add your search logic here
+                });
+            }
+        });
+
+        // ============================================
         // THEME TOGGLE
         // ============================================
         
@@ -4219,9 +4662,16 @@
 
         function updateNavigation() {
             const navCta = document.getElementById('navCta');
+            const sidebarAccountSection = document.getElementById('sidebarAccountSection');
+            
             if (!navCta) return;
             
             if (currentUser) {
+                // Show sidebar account section when logged in
+                if (sidebarAccountSection) {
+                    sidebarAccountSection.style.display = 'block';
+                }
+                
                 const initial = currentUser.email[0].toUpperCase();
                 const isAdmin = currentUser.email === CONFIG.ADMIN_EMAIL;
                 const adminButton = isAdmin ? `<a onclick="showAdminModal()">
@@ -4289,6 +4739,11 @@
                     </div>
                 `;
             } else {
+                // Hide sidebar account section when logged out
+                if (sidebarAccountSection) {
+                    sidebarAccountSection.style.display = 'none';
+                }
+                
                 navCta.innerHTML = `
                     <button class="btn btn-secondary" onclick="showLogin()">Sign In</button>
                     <button class="btn btn-primary" onclick="showSignup()">Get Started</button>
@@ -5901,5 +6356,7 @@
             </div>
         </div>
     </div>
+    
+    </div><!-- End main-content -->
 </body>
 </html>
