@@ -8191,6 +8191,10 @@
             const existing = document.getElementById('checkoutModal');
             if (existing) existing.remove();
             
+            // Add redirect URL so Gumroad sends user back after purchase
+            const redirectUrl = `${window.location.origin}?purchase_success=${templateSlug}`;
+            const fullGumroadUrl = `${gumroadUrl}&redirect_url=${encodeURIComponent(redirectUrl)}`;
+            
             const modal = document.createElement('div');
             modal.className = 'modal-overlay';
             modal.id = 'checkoutModal';
@@ -8206,7 +8210,7 @@
                         <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">$${price}</div>
                         <div style="color: var(--text-muted); font-size: 0.9rem;">One-time payment</div>
                     </div>
-                    <button id="checkoutBtn" onclick="openGumroadPopup('${gumroadUrl}', '${templateSlug}')"
+                    <button id="checkoutBtn" onclick="openGumroadPopup('${fullGumroadUrl}', '${templateSlug}')"
                        style="display: block; width: 100%; padding: 1rem 2rem; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">
                         Complete Purchase →
                     </button>
@@ -8271,14 +8275,23 @@
             const left = (screen.width - width) / 2;
             const top = (screen.height - height) / 2;
             
-            const popup = window.open(
+            gumroadPopup = window.open(
                 gumroadUrl,
                 'GumroadCheckout',
                 `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
             );
             
-            // Start polling for purchase
-            startPurchasePolling(templateSlug, popup);
+            // Monitor popup - when it closes (after redirect back to our site), check for success
+            const popupMonitor = setInterval(() => {
+                if (gumroadPopup && gumroadPopup.closed) {
+                    clearInterval(popupMonitor);
+                    closeCheckoutModal();
+                    // The redirect will trigger checkPurchaseSuccess via URL params
+                }
+            }, 500);
+            
+            // Start polling for purchase (backup method)
+            startPurchasePolling(templateSlug, gumroadPopup);
         }
         
         function closeCheckoutModal() {
@@ -9076,10 +9089,93 @@
                 updateNavigation();
                 
                 if (event === 'SIGNED_IN') {
+                    // Check if returning from Gumroad purchase
+                    checkPurchaseSuccess();
                 } else if (event === 'SIGNED_OUT') {
                     navigateTo('home');
                 }
             });
+            
+            // Check URL for purchase success (returning from Gumroad)
+            function checkPurchaseSuccess() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const purchaseSuccess = urlParams.get('purchase_success');
+                
+                if (purchaseSuccess) {
+                    // Clear the URL parameter
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    
+                    // Check if we're in a popup (opened by parent window)
+                    if (window.opener && !window.opener.closed) {
+                        // We're in the Gumroad redirect popup - tell parent window and close
+                        try {
+                            window.opener.postMessage({ 
+                                type: 'PURCHASE_SUCCESS', 
+                                templateSlug: purchaseSuccess 
+                            }, window.location.origin);
+                        } catch (e) {
+                            console.log('Could not message parent:', e);
+                        }
+                        window.close();
+                        return;
+                    }
+                    
+                    // We're in the main window
+                    if (currentUser) {
+                        // Close any open popups
+                        if (gumroadPopup && !gumroadPopup.closed) {
+                            gumroadPopup.close();
+                        }
+                        
+                        // Get template name from slug
+                        const templateNames = {
+                            'saas-landing': 'FlowMetrics - SaaS Landing',
+                            'portfolio': 'Creative Portfolio',
+                            'restaurant': 'Bella Vista - Restaurant'
+                        };
+                        
+                        const templateName = templateNames[purchaseSuccess] || 'Your Template';
+                        
+                        // Show success modal
+                        showPurchaseSuccessModal({ slug: purchaseSuccess, name: templateName });
+                        
+                        // Refresh dashboard data
+                        loadDashboard();
+                    }
+                }
+            }
+            
+            // Listen for messages from popup window
+            window.addEventListener('message', (event) => {
+                if (event.origin !== window.location.origin) return;
+                
+                if (event.data.type === 'PURCHASE_SUCCESS') {
+                    const templateSlug = event.data.templateSlug;
+                    
+                    // Close checkout modal
+                    closeCheckoutModal();
+                    
+                    // Get template name from slug
+                    const templateNames = {
+                        'saas-landing': 'FlowMetrics - SaaS Landing',
+                        'portfolio': 'Creative Portfolio',
+                        'restaurant': 'Bella Vista - Restaurant'
+                    };
+                    
+                    const templateName = templateNames[templateSlug] || 'Your Template';
+                    
+                    // Show success modal
+                    showPurchaseSuccessModal({ slug: templateSlug, name: templateName });
+                    
+                    // Refresh dashboard data
+                    loadDashboard();
+                }
+            });
+            
+            // Also check on initial page load (in case direct navigation)
+            setTimeout(() => {
+                checkPurchaseSuccess();
+            }, 500);
             
             // Scroll spy for nav links
             const sections = document.querySelectorAll('section[id]');
