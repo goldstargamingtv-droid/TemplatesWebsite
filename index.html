@@ -8452,10 +8452,8 @@
                     .select('*')
                     .order('created_at', { ascending: false });
                 
-                if (error) throw error;
-                
-                // Use templates from DB, or fallback to mock data if empty
-                allTemplates = (templates && templates.length > 0) ? templates : getMockTemplates();
+                // Always use templates for now (until admin panel is set up)
+                allTemplates = getTemplates();
                 filteredTemplates = [...allTemplates];
                 displayedTemplates = 0;
                 
@@ -8464,8 +8462,8 @@
                 LoadingBar.complete();
                 
             } catch (error) {
-                // Use mock data on error
-                allTemplates = getMockTemplates();
+                // Use template data on error
+                allTemplates = getTemplates();
                 filteredTemplates = [...allTemplates];
                 displayedTemplates = 0;
                 renderTemplates();
@@ -8474,7 +8472,7 @@
             }
         }
 
-        function getMockTemplates() {
+        function getTemplates() {
             return [
                 {
                     slug: 'saas-landing',
@@ -9069,12 +9067,12 @@
                 if (!error && templates && templates.length > 0) {
                     allTemplates = templates;
                 } else {
-                    // Use mock data if DB is empty or error
-                    allTemplates = getMockTemplates();
+                    // Use template data if DB is empty or error
+                    allTemplates = getTemplates();
                 }
             } catch (error) {
                 console.error('Error loading templates:', error);
-                allTemplates = getMockTemplates();
+                allTemplates = getTemplates();
             }
             
             // Setup search suggestions
