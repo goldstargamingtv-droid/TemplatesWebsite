@@ -162,14 +162,14 @@
         /* Main content wrapper - pushes content right on desktop */
         .main-content {
             margin-left: 0;
-            transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             z-index: 1;
         }
         
         @media (min-width: 1025px) {
             .main-content {
-                margin-left: 280px;
+                margin-left: 70px; /* Match collapsed sidebar width */
             }
         }
 
@@ -261,6 +261,150 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(249, 115, 22, 0.5);
         }
+        
+        /* Glassmorphism Navbar Buttons */
+        .btn-nav-glass {
+            padding: 0.6rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: visible;
+        }
+        
+        .btn-nav-glass-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-primary);
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.2),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-nav-glass-secondary::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #14B8A6, #F97316, #06B6D4, #14B8A6);
+            background-size: 300% 300%;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: gradientShift 5s ease infinite;
+        }
+        
+        .btn-nav-glass-secondary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 10px;
+            background: rgba(10, 10, 10, 0.9);
+            z-index: -1;
+        }
+        
+        [data-theme="light"] .btn-nav-glass-secondary::after {
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .btn-nav-glass-secondary:hover::before {
+            opacity: 1;
+        }
+        
+        .btn-nav-glass-secondary:hover {
+            transform: translateY(-2px);
+            border-color: transparent;
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(13, 148, 136, 0.3);
+        }
+        
+        [data-theme="light"] .btn-nav-glass-secondary {
+            background: rgba(0, 0, 0, 0.03);
+            border: 1.5px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.05),
+                inset 0 1px 1px rgba(255, 255, 255, 0.5);
+        }
+        
+        [data-theme="light"] .btn-nav-glass-secondary:hover {
+            color: var(--text-primary);
+        }
+        
+        .btn-nav-glass-primary {
+            background: rgba(20, 184, 166, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1.5px solid rgba(20, 184, 166, 0.4);
+            color: var(--primary);
+            box-shadow: 
+                0 4px 16px rgba(20, 184, 166, 0.15),
+                inset 0 1px 1px rgba(20, 184, 166, 0.2);
+        }
+        
+        .btn-nav-glass-primary::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #14B8A6, #F97316, #06B6D4, #14B8A6);
+            background-size: 300% 300%;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: gradientShift 5s ease infinite;
+        }
+        
+        .btn-nav-glass-primary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 10px;
+            background: rgba(10, 10, 10, 0.9);
+            z-index: -1;
+        }
+        
+        [data-theme="light"] .btn-nav-glass-primary::after {
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .btn-nav-glass-primary:hover::before {
+            opacity: 1;
+        }
+        
+        .btn-nav-glass-primary:hover {
+            transform: translateY(-2px);
+            border-color: transparent;
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(20, 184, 166, 0.3);
+        }
+        
+        [data-theme="light"] .btn-nav-glass-primary {
+            background: rgba(13, 148, 136, 0.1);
+            border: 1.5px solid rgba(13, 148, 136, 0.4);
+            box-shadow: 
+                0 4px 16px rgba(13, 148, 136, 0.1),
+                inset 0 1px 1px rgba(13, 148, 136, 0.15);
+        }
+        
+        [data-theme="light"] .btn-nav-glass-primary:hover {
+            color: var(--text-primary);
+        }
 
         .btn-outline {
             background: transparent;
@@ -321,11 +465,29 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(10, 10, 10, 0.95);
-            border-bottom: 2px solid #2a2a2a;
+            background: transparent;
+            border-bottom: 1px solid rgba(20, 184, 166, 0.2);
             z-index: 1000;
             padding: 0;
             transition: var(--transition);
+        }
+        
+        /* Glass effect via pseudo-element to avoid blocking dropdown backdrop-filters */
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            z-index: -1;
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 -1px 1px rgba(20, 184, 166, 0.1),
+                0 0 40px rgba(20, 184, 166, 0.05);
         }
         
         .navbar::after {
@@ -351,9 +513,17 @@
         }
 
         [data-theme="light"] .navbar {
-            background: rgba(255, 255, 255, 0.85);
-            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.08);
-            border-bottom-color: #d1d5db;
+            border-bottom: 1px solid rgba(13, 148, 136, 0.2);
+        }
+        
+        [data-theme="light"] .navbar::before {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.08),
+                inset 0 -1px 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
         }
         
         [data-theme="light"] .navbar::after {
@@ -392,12 +562,30 @@
         .nav-search input {
             width: 100%;
             padding: 0.625rem 0.875rem 0.625rem 2.5rem;
-            background: var(--card-bg);
-            border: 1.5px solid var(--border-color);
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 2px solid rgba(20, 184, 166, 0.2); /* Match templates search */
             border-radius: var(--border-radius);
             color: var(--text-primary);
             font-size: 0.9rem;
             transition: var(--transition);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(20, 184, 166, 0.1),
+                0 0 40px rgba(20, 184, 166, 0.05);
+        }
+        
+        /* Light mode glassmorphism for search input */
+        [data-theme="light"] .nav-search input {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 2px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
         }
 
         .nav-search input:focus {
@@ -416,14 +604,37 @@
             top: calc(100% + 0.5rem);
             left: 0;
             right: 0;
-            background: var(--card-bg);
-            border: 2px solid var(--border-color);
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(20, 184, 166, 0.2); /* Fixed to 1px */
             border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(20, 184, 166, 0.1),
+                0 0 40px rgba(20, 184, 166, 0.05);
             max-height: 400px;
             overflow-y: auto;
             z-index: 10000;
             display: none;
+        }
+        
+        /* Specific fix for nav search to break out of navbar stacking context */
+        #navSearchSuggestions {
+            position: fixed;
+            z-index: 100000; /* Much higher to ensure it's above navbar */
+        }
+        
+        /* Light mode glassmorphism for search suggestions */
+        [data-theme="light"] .search-suggestions {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
         }
 
         .search-suggestions.active {
@@ -551,6 +762,8 @@
         .logo-text-deploy {
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
+            position: relative;
+            top: -5px;
         }
         
         [data-theme="light"] .logo-text-deploy {
@@ -561,6 +774,7 @@
         .logo-text-template {
             display: inline-block;
             position: relative;
+            top: -5px;
             min-width: 5.5em;
             margin-left: 0.15em;
         }
@@ -829,28 +1043,43 @@
         }
 
         .user-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            position: fixed; /* Changed to fixed to break out of navbar */
+            z-index: 100000; /* Much higher */
+            background: rgba(10, 10, 10, 0.7); /* Exact match */
+            backdrop-filter: blur(20px) saturate(180%); /* Exact match */
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(20, 184, 166, 0.2);
             border-radius: var(--border-radius-lg);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(20, 184, 166, 0.1),
+                0 0 40px rgba(20, 184, 166, 0.05);
             min-width: 240px;
             padding: 0.75rem;
             display: none;
             flex-direction: column;
             gap: 0.25rem;
-            z-index: 10001;
+        }
+        
+        /* Light mode glassmorphism for user dropdown */
+        [data-theme="light"] .user-dropdown {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
         }
 
         .user-dropdown::before {
             content: '';
             position: absolute;
-            top: -15px;
+            top: -20px;
             right: 0;
             left: 0;
-            height: 15px;
+            height: 25px;
             background: transparent;
         }
 
@@ -918,8 +1147,10 @@
             width: 28px;
             height: 28px;
             border-radius: 6px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            background: rgba(10, 10, 10, 0.7); /* Exact match */
+            backdrop-filter: blur(20px) saturate(180%); /* Exact match */
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(20, 184, 166, 0.2);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -928,6 +1159,22 @@
             position: relative;
             color: var(--text-secondary);
             margin-top: 2px;
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(20, 184, 166, 0.1),
+                0 0 40px rgba(20, 184, 166, 0.05);
+        }
+        
+        /* Light mode glassmorphism for theme button */
+        [data-theme="light"] .theme-btn {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
         }
 
         .theme-btn::before {
@@ -954,8 +1201,12 @@
             right: 0;
             bottom: 0;
             border-radius: 6px;
-            background: var(--card-bg);
+            background: rgba(10, 10, 10, 0.7); /* Match glassmorphism */
             z-index: -1;
+        }
+        
+        [data-theme="light"] .theme-btn::after {
+            background: rgba(255, 255, 255, 0.7);
         }
 
         .theme-btn:hover::before {
@@ -974,20 +1225,132 @@
         /* Left Sidebar Navigation */
         .sidebar {
             position: fixed;
-            top: 82px; /* Height of navbar + gap */
+            top: 53px; /* Moved up 1px more */
             left: 0;
-            width: 280px;
-            height: calc(100vh - 82px);
-            background: var(--bg-secondary);
+            width: 70px; /* Collapsed width - just icons */
+            height: calc(100vh - 53px); /* Adjust height */
+            background: rgba(10, 10, 10, 0.9); /* Match navbar's darker grey */
+            backdrop-filter: blur(5px) saturate(120%); /* Subtle glass effect when collapsed */
+            -webkit-backdrop-filter: blur(5px) saturate(120%);
             border-right: 1px solid var(--border-color);
             z-index: 100;
             overflow-y: auto;
-            overflow-x: hidden;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden; /* Hide overflowing text */
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); /* Elastic bounce effect */
+            scrollbar-width: none; /* Hide scrollbar in Firefox when collapsed */
+        }
+        
+        /* Professional Glassmorphism Effect on Hover/Expansion */
+        .sidebar:hover {
+            width: 280px; /* Expanded width on hover */
+            background: rgba(10, 10, 10, 0.7); /* More transparent for full glass effect */
+            backdrop-filter: blur(20px) saturate(180%); /* Full glassmorphism */
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-right: 1px solid rgba(20, 184, 166, 0.2);
+            box-shadow: 
+                4px 0 24px rgba(0, 0, 0, 0.4),
+                inset -1px 0 1px rgba(20, 184, 166, 0.1),
+                0 0 40px rgba(20, 184, 166, 0.05);
+            scrollbar-width: thin; /* Show scrollbar in Firefox when expanded */
+        }
+        
+        /* Light mode glassmorphism */
+        [data-theme="light"] .sidebar {
+            background: rgba(255, 255, 255, 0.85); /* Subtle glass when collapsed */
+            backdrop-filter: blur(5px) saturate(120%);
+            -webkit-backdrop-filter: blur(5px) saturate(120%);
+        }
+        
+        [data-theme="light"] .sidebar:hover {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-right: 1px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 
+                4px 0 24px rgba(0, 0, 0, 0.08),
+                inset -1px 0 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
+        }
+        
+        /* Animated gradient overlay for expansion effect */
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg,
+                transparent 0%,
+                rgba(20, 184, 166, 0.03) 50%,
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .sidebar:hover::before {
+            opacity: 1;
+            animation: shimmerSlide 2s ease-in-out infinite;
+        }
+        
+        /* Glowing border effect */
+        .sidebar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(20, 184, 166, 0.4) 20%,
+                rgba(20, 184, 166, 0.6) 50%,
+                rgba(20, 184, 166, 0.4) 80%,
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+            z-index: 3;
+        }
+        
+        .sidebar:hover::after {
+            opacity: 1;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes borderGlow {
+            0%, 100% {
+                opacity: 0.4;
+                filter: blur(1px);
+            }
+            50% {
+                opacity: 0.8;
+                filter: blur(2px);
+            }
+        }
+        
+        @keyframes shimmerSlide {
+            0% {
+                background-position: -200% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
         }
         
         .sidebar::-webkit-scrollbar {
-            width: 8px;
+            width: 0; /* Hidden when collapsed */
+            transition: width 0.3s ease;
+        }
+        
+        .sidebar:hover::-webkit-scrollbar {
+            width: 8px; /* Show when expanded */
         }
         
         .sidebar::-webkit-scrollbar-track {
@@ -1041,12 +1404,23 @@
         }
 
         .sidebar-content {
-            padding: 1.5rem;
-            padding-top: 2rem;
+            padding: 0 0.5rem; /* No top/bottom padding, minimal horizontal when collapsed */
+            transition: padding 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            z-index: 2; /* Above the shimmer effect */
+        }
+        
+        .sidebar:hover .sidebar-content {
+            padding: 1.5rem; /* Full padding when expanded */
         }
 
         .sidebar-section {
-            margin-bottom: 2rem;
+            margin-bottom: 0; /* No gaps between sections */
+            transition: margin-bottom 0.2s ease;
+        }
+        
+        .sidebar:hover .sidebar-section {
+            margin-bottom: 0; /* Consistent gaps controlled by menu gap */
         }
 
         .sidebar-section-title {
@@ -1062,14 +1436,19 @@
         .sidebar-menu {
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
+            gap: 0; /* No gap when collapsed */
+            transition: gap 0.2s ease;
+        }
+        
+        .sidebar:hover .sidebar-menu {
+            gap: 0.25rem; /* Small gap when expanded */
         }
 
         .sidebar-menu-item {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.875rem 0.75rem;
+            gap: 0; /* No gap when collapsed */
+            padding: 0.75rem 0; /* Slightly less vertical padding when collapsed */
             color: var(--text-secondary);
             text-decoration: none;
             border-radius: var(--border-radius);
@@ -1077,7 +1456,81 @@
             cursor: pointer;
             font-weight: 500;
             position: relative;
+            overflow: visible; /* Allow icons to be fully visible */
+            justify-content: center; /* Center icons when collapsed */
+        }
+        
+        .sidebar:hover .sidebar-menu-item {
+            justify-content: flex-start; /* Left align when expanded */
+            padding: 0.875rem 0.75rem; /* Full padding when expanded */
+            gap: 0.75rem; /* Add gap when expanded */
+            overflow: hidden; /* Restore overflow hidden when expanded */
+        }
+        
+        /* Hide text when sidebar is collapsed */
+        .sidebar-menu-item > span:not(.badge) {
+            opacity: 0;
+            white-space: nowrap;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-width: 0; /* Collapse text space */
             overflow: hidden;
+            transform: translateX(-10px); /* Slide from left effect */
+        }
+        
+        .sidebar:hover .sidebar-menu-item > span:not(.badge) {
+            opacity: 1;
+            max-width: 200px; /* Allow text to show */
+            transform: translateX(0); /* Slide to position */
+        }
+        
+        /* Staggered animation delays for cascading effect */
+        .sidebar:hover .sidebar-menu-item:nth-child(1) > span:not(.badge) {
+            transition-delay: 0.1s;
+        }
+        .sidebar:hover .sidebar-menu-item:nth-child(2) > span:not(.badge) {
+            transition-delay: 0.15s;
+        }
+        .sidebar:hover .sidebar-menu-item:nth-child(3) > span:not(.badge) {
+            transition-delay: 0.2s;
+        }
+        .sidebar:hover .sidebar-menu-item:nth-child(4) > span:not(.badge) {
+            transition-delay: 0.25s;
+        }
+        .sidebar:hover .sidebar-menu-item:nth-child(5) > span:not(.badge) {
+            transition-delay: 0.3s;
+        }
+        .sidebar:hover .sidebar-menu-item:nth-child(6) > span:not(.badge) {
+            transition-delay: 0.35s;
+        }
+        .sidebar:hover .sidebar-menu-item:nth-child(7) > span:not(.badge) {
+            transition-delay: 0.4s;
+        }
+        .sidebar:hover .sidebar-menu-item:nth-child(8) > span:not(.badge) {
+            transition-delay: 0.45s;
+        }
+        .sidebar:hover .sidebar-menu-item:nth-child(9) > span:not(.badge) {
+            transition-delay: 0.5s;
+        }
+        .sidebar:hover .sidebar-menu-item:nth-child(10) > span:not(.badge) {
+            transition-delay: 0.55s;
+        }
+        
+        /* Hide section titles when collapsed */
+        .sidebar-section-title {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            margin-bottom: 0;
+            transform: translateX(-15px);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .sidebar:hover .sidebar-section-title {
+            opacity: 1;
+            max-height: 50px;
+            margin-bottom: 0.75rem;
+            transform: translateX(0);
+            transition-delay: 0.05s;
         }
 
         .sidebar-menu-item::before {
@@ -1139,9 +1592,23 @@
         }
 
         .sidebar-menu-item svg {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             flex-shrink: 0;
+            min-width: 24px; /* Ensure icons don't shrink */
+            display: block; /* Ensure proper rendering */
+            opacity: 1 !important; /* Always visible */
+            visibility: visible !important; /* Force visibility */
+        }
+        
+        /* Fix New Releases icon alignment when collapsed */
+        .sidebar-menu-item:has(.badge) svg {
+            margin-left: 20px; /* Shift icon right when collapsed */
+            transition: margin-left 0.3s ease;
+        }
+        
+        .sidebar:hover .sidebar-menu-item:has(.badge) svg {
+            margin-left: 0; /* Reset margin when expanded */
         }
 
         .sidebar-menu-item .badge {
@@ -1152,6 +1619,18 @@
             font-weight: 700;
             padding: 0.15rem 0.5rem;
             border-radius: 12px;
+            opacity: 0;
+            max-width: 0; /* Collapse badge space */
+            overflow: hidden;
+            transform: scale(0.8);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .sidebar:hover .sidebar-menu-item .badge {
+            opacity: 1;
+            max-width: 50px; /* Allow badge to show */
+            transform: scale(1);
+            transition-delay: 0.15s;
         }
 
         .sidebar-toggle {
@@ -1211,18 +1690,36 @@
 
         .cart-icon-container {
             position: relative;
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 12px;
-            background: var(--card-bg);
-            border: 1.5px solid var(--border-color);
+            background: rgba(10, 10, 10, 0.7); /* Exact match */
+            backdrop-filter: blur(20px) saturate(180%); /* Exact match */
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1.5px solid rgba(20, 184, 166, 0.2);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: visible;
-            margin-top: 1px;
+            margin-top: 3px;
             margin-left: 5px;
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(20, 184, 166, 0.1),
+                0 0 40px rgba(20, 184, 166, 0.05);
+        }
+        
+        /* Light mode glassmorphism for cart icon */
+        [data-theme="light"] .cart-icon-container {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1.5px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
         }
 
         .cart-icon-container::before {
@@ -1249,8 +1746,12 @@
             right: 0;
             bottom: 0;
             border-radius: 12px;
-            background: var(--card-bg);
+            background: rgba(10, 10, 10, 0.7); /* Match glassmorphism */
             z-index: -1;
+        }
+        
+        [data-theme="light"] .cart-icon-container::after {
+            background: rgba(255, 255, 255, 0.7);
         }
 
         @keyframes gradientShift {
@@ -1278,8 +1779,12 @@
         }
 
         .cart-icon-wrapper:hover .cart-icon {
-            color: var(--primary);
+            color: #ffffff;
             transform: scale(1.1);
+        }
+        
+        [data-theme="light"] .cart-icon-wrapper:hover .cart-icon {
+            color: var(--text-primary);
         }
 
         /* Stylish animated badge */
@@ -1329,36 +1834,58 @@
         }
 
         .cart-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            position: fixed; /* Changed to fixed to break out of navbar */
+            z-index: 100000; /* Much higher */
+            background: rgba(10, 10, 10, 0.7); /* Exact match */
+            backdrop-filter: blur(20px) saturate(180%); /* Exact match */
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(20, 184, 166, 0.2);
             border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-xl);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(20, 184, 166, 0.1),
+                0 0 40px rgba(20, 184, 166, 0.05);
             min-width: 320px;
             max-width: 400px;
             padding: 1rem;
             display: none;
             flex-direction: column;
             gap: 1rem;
-            z-index: 10001;
             max-height: 500px;
+        }
+        
+        /* Light mode glassmorphism for cart dropdown */
+        [data-theme="light"] .cart-dropdown {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
         }
 
         .cart-dropdown::before {
             content: '';
             position: absolute;
-            top: -15px;
+            top: -20px;
             right: 0;
             left: 0;
-            height: 15px;
+            height: 25px;
             background: transparent;
         }
 
         .cart-icon-wrapper:hover .cart-dropdown,
         .cart-dropdown.active {
             display: flex;
+        }
+        
+        /* Hide cart dropdown when modal is open */
+        body.cart-modal-open .cart-icon-wrapper:hover .cart-dropdown,
+        body.cart-modal-open .cart-dropdown.active {
+            display: none !important;
+            pointer-events: none;
         }
 
         .cart-dropdown-header {
@@ -1436,30 +1963,147 @@
 
         .cart-empty {
             text-align: center;
-            padding: 3rem 1rem;
+            padding: 4rem 2rem;
             color: var(--text-muted);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
+            flex: 1;
+            justify-content: center;
         }
 
         .cart-empty-icon {
-            font-size: 4rem;
-            opacity: 0.3;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(20, 184, 166, 0.1);
+            border: 2px solid rgba(20, 184, 166, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        [data-theme="light"] .cart-empty-icon {
+            background: rgba(13, 148, 136, 0.1);
+            border: 2px solid rgba(13, 148, 136, 0.2);
         }
 
         .cart-empty-text {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
         .cart-empty-subtext {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
             max-width: 280px;
+            line-height: 1.6;
+        }
+        
+        .cart-empty-btn {
+            margin-top: 1rem;
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-empty-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(13, 148, 136, 0.4);
+        }
+        
+        /* Cart Items */
+        .cart-modal-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .cart-modal-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(20, 184, 166, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-modal-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(20, 184, 166, 0.2);
+        }
+        
+        [data-theme="light"] .cart-modal-item {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(13, 148, 136, 0.1);
+        }
+        
+        [data-theme="light"] .cart-modal-item:hover {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(13, 148, 136, 0.2);
+        }
+        
+        .cart-modal-item-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            background: var(--gradient-1);
+            flex-shrink: 0;
+        }
+        
+        .cart-modal-item-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+        
+        .cart-modal-item-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        
+        .cart-modal-item-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .cart-modal-item-remove {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            align-self: center;
+        }
+        
+        .cart-modal-item-remove:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+        
+        [data-theme="light"] .cart-modal-item-remove {
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .cart-total {
@@ -1480,17 +2124,36 @@
         /* Cart Modal */
         .cart-modal {
             position: fixed;
-            top: 0;
+            top: 51px;
             right: -100%;
             width: 100%;
-            max-width: 500px;
-            height: 100vh;
-            background: var(--bg-primary);
-            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
-            z-index: 10000;
-            transition: right 0.3s ease;
+            max-width: 480px;
+            height: calc(100vh - 51px);
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border-left: 1px solid rgba(20, 184, 166, 0.3);
+            box-shadow: 
+                -8px 0 40px rgba(0, 0, 0, 0.5),
+                inset 1px 0 1px rgba(20, 184, 166, 0.15),
+                0 0 80px rgba(20, 184, 166, 0.08);
+            z-index: 20000;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+        }
+        
+        /* Light mode glassmorphism for cart modal */
+        [data-theme="light"] .cart-modal {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border-left: 1px solid rgba(13, 148, 136, 0.3);
+            box-shadow: 
+                -8px 0 40px rgba(0, 0, 0, 0.15),
+                inset 1px 0 1px rgba(13, 148, 136, 0.15),
+                0 0 80px rgba(13, 148, 136, 0.05);
         }
 
         .cart-modal.active {
@@ -1498,62 +2161,649 @@
         }
 
         .cart-modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(20, 184, 166, 0.15);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
         }
-
+        
+        [data-theme="light"] .cart-modal-header {
+            border-bottom: 1px solid rgba(13, 148, 136, 0.15);
+        }
+        
+        .cart-modal-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .cart-modal-logo svg {
+            width: 28px;
+            height: 28px;
+            color: var(--primary);
+        }
+        
         .cart-modal-title {
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 700;
-            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .cart-modal-close {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            color: var(--text-muted);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
             cursor: pointer;
-            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
             padding: 0;
-            transition: var(--transition);
         }
 
         .cart-modal-close:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            transform: rotate(90deg);
+        }
+        
+        [data-theme="light"] .cart-modal-close {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* ============================================
+           AUTH PANEL - Slide-out Login/Signup
+           ============================================ */
+        
+        .auth-overlay {
+            position: fixed;
+            top: 51px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 19999;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .auth-panel {
+            position: fixed;
+            top: 51px;
+            right: -100%;
+            width: 100%;
+            max-width: 480px;
+            height: calc(100vh - 51px);
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border-left: 1px solid rgba(20, 184, 166, 0.3);
+            box-shadow: 
+                -8px 0 40px rgba(0, 0, 0, 0.5),
+                inset 1px 0 1px rgba(20, 184, 166, 0.15),
+                0 0 80px rgba(20, 184, 166, 0.08);
+            z-index: 25000;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .auth-panel.active {
+            right: 0;
+        }
+        
+        /* Light mode */
+        [data-theme="light"] .auth-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border-left: 1px solid rgba(13, 148, 136, 0.3);
+            box-shadow: 
+                -8px 0 40px rgba(0, 0, 0, 0.15),
+                inset 1px 0 1px rgba(13, 148, 136, 0.15),
+                0 0 80px rgba(13, 148, 136, 0.05);
+        }
+        
+        [data-theme="light"] .auth-overlay {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Auth Panel Header */
+        .auth-panel-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(20, 184, 166, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        [data-theme="light"] .auth-panel-header {
+            border-bottom: 1px solid rgba(13, 148, 136, 0.15);
+        }
+        
+        .auth-panel-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .auth-panel-logo svg {
+            width: 32px;
+            height: 32px;
+            color: var(--primary);
+        }
+        
+        .auth-panel-logo span {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .auth-panel-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.25rem;
+        }
+        
+        .auth-panel-close:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            transform: rotate(90deg);
+        }
+        
+        [data-theme="light"] .auth-panel-close {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Auth Panel Content */
+        .auth-panel-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Auth Tabs */
+        .auth-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(20, 184, 166, 0.1);
+        }
+        
+        [data-theme="light"] .auth-tabs {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(13, 148, 136, 0.1);
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 0.875rem 1.5rem;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .auth-tab.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
+        }
+        
+        .auth-tab:not(.active):hover {
             color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Auth Forms Container */
+        .auth-forms {
+            flex: 1;
+            position: relative;
+        }
+        
+        .auth-form {
+            display: none;
+            flex-direction: column;
+            gap: 1.5rem;
+            animation: authFormFadeIn 0.3s ease;
+        }
+        
+        .auth-form.active {
+            display: flex;
+        }
+        
+        @keyframes authFormFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Auth Form Header */
+        .auth-form-header {
+            margin-bottom: 0.5rem;
+        }
+        
+        .auth-form-header h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .auth-form-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        
+        /* Auth Input Groups */
+        .auth-input-group {
+            position: relative;
+        }
+        
+        .auth-input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .auth-input-wrapper {
+            position: relative;
+        }
+        
+        .auth-input-wrapper > svg:first-of-type {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .auth-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(20, 184, 166, 0.15);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        /* Password inputs need extra right padding for toggle button */
+        .auth-input[type="password"],
+        .auth-input.has-toggle {
+            padding-right: 3.5rem;
+        }
+        
+        [data-theme="light"] .auth-input {
+            background: rgba(0, 0, 0, 0.03);
+            border: 2px solid rgba(13, 148, 136, 0.15);
+        }
+        
+        .auth-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(20, 184, 166, 0.05);
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+        }
+        
+        .auth-input:focus + svg,
+        .auth-input-wrapper:focus-within svg {
+            color: var(--primary);
+        }
+        
+        .auth-input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        /* Password Toggle */
+        .auth-password-toggle {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+            z-index: 10;
+            border-radius: 6px;
+        }
+        
+        .auth-password-toggle:hover {
+            color: var(--primary);
+            background: rgba(20, 184, 166, 0.1);
+        }
+        
+        .auth-password-toggle svg {
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+        }
+        
+        /* Auth Submit Button */
+        .auth-submit {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        
+        .auth-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .auth-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(13, 148, 136, 0.4);
+        }
+        
+        .auth-submit:hover::before {
+            left: 100%;
+        }
+        
+        .auth-submit:active {
+            transform: translateY(0);
+        }
+        
+        .auth-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Auth Error */
+        .auth-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 10px;
+            padding: 0.875rem 1rem;
+            color: #ef4444;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .auth-error.active {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: authFormFadeIn 0.3s ease;
+        }
+        
+        /* Auth Divider */
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.3), transparent);
+        }
+        
+        .auth-divider span {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Auth Footer */
+        .auth-panel-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid rgba(20, 184, 166, 0.15);
+            text-align: center;
+            flex-shrink: 0;
+        }
+        
+        [data-theme="light"] .auth-panel-footer {
+            border-top: 1px solid rgba(13, 148, 136, 0.15);
+        }
+        
+        .auth-panel-footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .auth-panel-footer a {
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .auth-panel-footer a:hover {
+            color: var(--primary-light);
+            text-decoration: underline;
+        }
+        
+        /* Password Requirements */
+        .auth-password-hint {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .auth-password-hint svg {
+            width: 14px;
+            height: 14px;
+        }
+        
+        /* Auth Panel Mobile */
+        @media (max-width: 480px) {
+            .auth-panel {
+                max-width: 100%;
+            }
+            
+            .auth-panel-content {
+                padding: 1.5rem;
+            }
+            
+            .auth-tabs {
+                border-radius: 10px;
+            }
+            
+            .auth-tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
         }
 
         .cart-modal-body {
             flex: 1;
             overflow-y: auto;
-            padding: 1.5rem;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
         }
 
         .cart-modal-footer {
-            padding: 1.5rem;
-            border-top: 1px solid var(--border-color);
-            background: var(--bg-secondary);
+            padding: 1.5rem 2rem;
+            border-top: 1px solid rgba(20, 184, 166, 0.15);
+            flex-shrink: 0;
+        }
+        
+        [data-theme="light"] .cart-modal-footer {
+            border-top: 1px solid rgba(13, 148, 136, 0.15);
         }
 
         .cart-modal-total {
             display: flex;
             justify-content: space-between;
-            font-size: 1.3rem;
+            align-items: center;
+            font-size: 1.25rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(20, 184, 166, 0.1);
+        }
+        
+        .cart-modal-total span:last-child {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .cart-modal-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .cart-modal-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .cart-modal-btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(20, 184, 166, 0.3);
+            color: var(--text-secondary);
+        }
+        
+        .cart-modal-btn-outline:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.5);
+            color: #ef4444;
+        }
+        
+        [data-theme="light"] .cart-modal-btn-outline {
+            background: rgba(0, 0, 0, 0.03);
+            border: 2px solid rgba(13, 148, 136, 0.3);
+        }
+        
+        .cart-modal-btn-primary {
+            flex: 2;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cart-modal-btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .cart-modal-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(13, 148, 136, 0.4);
+        }
+        
+        .cart-modal-btn-primary:hover::before {
+            left: 100%;
         }
 
         .cart-overlay {
             position: fixed;
-            top: 0;
+            top: 51px;
             left: 0;
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.5);
-            z-index: 9999;
+            z-index: 19999; /* Just below cart modal */
             display: none;
         }
 
@@ -2229,7 +3479,8 @@
         }
         
         .template-overlay .btn {
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             transform: translateY(20px);
             opacity: 0;
             transition: all 0.3s ease;
@@ -2898,15 +4149,32 @@
         }
 
         .modal {
-            background: var(--card-bg);
+            background: rgba(10, 10, 10, 0.7); /* Exact match */
+            backdrop-filter: blur(20px) saturate(180%); /* Exact match */
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-radius: var(--border-radius-lg);
             padding: 2.5rem;
             max-width: 450px;
             width: 100%;
-            box-shadow: var(--shadow-xl);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(20, 184, 166, 0.1),
+                0 0 40px rgba(20, 184, 166, 0.05);
             position: relative;
             animation: slideUpModal 0.3s ease-out;
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+        
+        /* Light mode glassmorphism for modal */
+        [data-theme="light"] .modal {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
         }
 
         .modal-close {
@@ -3204,12 +4472,30 @@
         .search-box input {
             width: 100%;
             padding: 0.875rem 1rem 0.875rem 3rem;
-            background: var(--card-bg);
-            border: 2px solid var(--border-color);
+            background: rgba(10, 10, 10, 0.7); /* Exact match */
+            backdrop-filter: blur(20px) saturate(180%); /* Exact match */
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 2px solid rgba(20, 184, 166, 0.2);
             border-radius: var(--border-radius);
             color: var(--text-primary);
             font-size: 1rem;
             transition: var(--transition);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(20, 184, 166, 0.1),
+                0 0 40px rgba(20, 184, 166, 0.05);
+        }
+        
+        /* Light mode glassmorphism for search box input */
+        [data-theme="light"] .search-box input {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 2px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
         }
 
         .search-box input:focus {
@@ -3226,24 +4512,47 @@
 
         .filter-select {
             padding: 0.875rem 1.25rem;
-            background: var(--card-bg);
-            border: 2px solid var(--border-color);
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(20, 184, 166, 0.2);
             border-radius: var(--border-radius);
             color: var(--text-primary);
             font-size: 0.95rem;
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.2),
+                inset 0 1px 1px rgba(20, 184, 166, 0.1);
+        }
+        
+        [data-theme="light"] .filter-select {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.05),
+                inset 0 1px 1px rgba(13, 148, 136, 0.1);
         }
 
         .filter-select:hover {
             border-color: var(--primary);
+            box-shadow: 
+                0 4px 20px rgba(20, 184, 166, 0.15),
+                inset 0 1px 1px rgba(20, 184, 166, 0.1);
         }
 
         .filter-select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+        }
+        
+        .filter-select option {
+            background: var(--bg-primary);
+            color: var(--text-primary);
         }
 
         .loading-state {
@@ -3570,7 +4879,10 @@
             right: 24px;
             padding: 1rem 1.5rem;
             border-radius: var(--border-radius-lg);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(20, 184, 166, 0.1),
+                0 0 40px rgba(20, 184, 166, 0.05);
             z-index: 10000;
             animation: slideInRight 0.3s ease-out;
             max-width: 400px;
@@ -3578,13 +4890,26 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            background: rgba(10, 10, 10, 0.7); /* Exact match */
+            backdrop-filter: blur(20px) saturate(180%); /* Exact match */
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+        
+        /* Light mode glassmorphism for notifications */
+        [data-theme="light"] .notification {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
         }
 
         .notification.success {
             border-left: 4px solid #14B8A6;
-            background: var(--card-bg);
             color: var(--text-primary);
         }
 
@@ -3603,7 +4928,6 @@
 
         .notification.error {
             border-left: 4px solid #F97316;
-            background: var(--card-bg);
             color: var(--text-primary);
         }
 
@@ -3622,7 +4946,6 @@
 
         .notification.info {
             border-left: 4px solid #06B6D4;
-            background: var(--card-bg);
             color: var(--text-primary);
         }
 
@@ -4114,6 +5437,135 @@
                 padding: 2rem 0;
             }
         }
+
+        /* ============================================
+           MOBILE OPTIMIZATIONS
+           ============================================ */
+        
+        .mobile-bottom-nav {
+            display: none;
+        }
+        
+        @media (max-width: 1024px) {
+            /* Mobile Bottom Nav */
+            .mobile-bottom-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 70px;
+                background: var(--card-bg);
+                border-top: 1px solid var(--border-color);
+                z-index: 999;
+                justify-content: space-around;
+                align-items: center;
+                padding: 0.5rem 1rem;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+            }
+            
+            .mobile-nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 0.25rem;
+                flex: 1;
+                cursor: pointer;
+                transition: var(--transition);
+                position: relative;
+                padding: 0.5rem;
+            }
+            
+            .mobile-nav-item svg {
+                width: 24px;
+                height: 24px;
+                stroke: var(--text-muted);
+                transition: var(--transition);
+            }
+            
+            .mobile-nav-item span {
+                font-size: 0.6875rem;
+                color: var(--text-muted);
+                transition: var(--transition);
+                font-weight: 500;
+            }
+            
+            .mobile-nav-item.active svg {
+                stroke: var(--primary);
+            }
+            
+            .mobile-nav-item.active span {
+                color: var(--primary);
+            }
+            
+            .mobile-nav-badge {
+                position: absolute;
+                top: 0.25rem;
+                right: 0.75rem;
+                background: var(--accent);
+                color: white;
+                font-size: 0.625rem;
+                font-weight: 700;
+                padding: 0.125rem 0.375rem;
+                border-radius: 10px;
+                min-width: 18px;
+                text-align: center;
+            }
+            
+            /* Add padding for bottom nav */
+            body {
+                padding-bottom: 70px;
+            }
+            
+            /* Hide desktop nav on mobile */
+            .navbar {
+                display: none;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 0 !important;
+            }
+            
+            /* Mobile layout fixes */
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .hero {
+                padding: 4rem 0 3rem;
+            }
+            
+            .hero-visual {
+                display: none;
+            }
+            
+            .templates-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .template-card-footer {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .template-card-footer .btn {
+                width: 100%;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
     </style>
 </head>
 <body>
@@ -4202,9 +5654,8 @@
 
             <!-- Categories -->
             <div class="sidebar-section">
-                <div class="sidebar-section-title">Categories</div>
                 <div class="sidebar-menu">
-                    <a class="sidebar-menu-item active" onclick="filterByCategory('all')">
+                    <a class="sidebar-menu-item" onclick="filterByCategory('all')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="3" y="3" width="7" height="7"/>
                             <rect x="14" y="3" width="7" height="7"/>
@@ -4396,8 +5847,7 @@
             </button>
             
             <a href="#" onclick="navigateTo('home'); return false;" class="logo">
-                <img src="data:image/png;base64,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" alt="DeployTemplate" class="logo-image" />
-                <span class="logo-text"><span class="logo-text-deploy">Deploy</span><span class="logo-text-template"><span class="logo-text-template-inner"><span>T</span><span>e</span><span>m</span><span>p</span><span>l</span><span>a</span><span>t</span><span>e</span></span><span class="logo-text-template-cursor"></span></span></span>
+                <span class="logo-text"><img src="https://raw.githubusercontent.com/goldstargamingtv-droid/TemplatesWebsite/main/logo.png" alt="Logo" style="width: 42px; height: 42px; margin: 0 0.25rem 0 2.375rem; vertical-align: middle; position: relative; top: 6px;" /><span class="logo-text-deploy">Deploy</span><span class="logo-text-template"><span class="logo-text-template-inner"><span>T</span><span>e</span><span>m</span><span>p</span><span>l</span><span>a</span><span>t</span><span>e</span></span><span class="logo-text-template-cursor"></span></span></span>
             </a>
             
             <!-- Navbar Search -->
@@ -5167,64 +6617,172 @@
     </div>
     <!-- END TEMPLATE DETAIL PAGE -->
 
-    <!-- LOGIN MODAL -->
-    <div id="loginModal" class="modal-overlay">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('loginModal')" aria-label="Close">&times;</button>
-            <h2>Welcome Back</h2>
-            <p>Sign in to access your templates</p>
+    <!-- AUTH PANEL - Slide-out Login/Signup -->
+    <div class="auth-overlay" id="authOverlay" onclick="closeAuthPanel()"></div>
+    <div class="auth-panel" id="authPanel">
+        <div class="auth-panel-header">
+            <div class="auth-panel-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
+                <span>DeployTemplate</span>
+            </div>
+            <button class="auth-panel-close" onclick="closeAuthPanel()" aria-label="Close">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="auth-panel-content">
+            <!-- Auth Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="loginTab" onclick="switchAuthTab('login')">Sign In</button>
+                <button class="auth-tab" id="signupTab" onclick="switchAuthTab('signup')">Create Account</button>
+            </div>
             
-            <form onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label for="loginEmail">Email</label>
-                    <input type="email" id="loginEmail" required placeholder="you@example.com" autocomplete="email">
-                </div>
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••" autocomplete="current-password">
-                </div>
-                <div class="form-error" id="loginError"></div>
-                <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
-                    Sign In
-                </button>
-            </form>
-            
-            <div class="form-link">
-                Don't have an account? <a onclick="closeModal('loginModal'); showSignup()">Sign up</a>
+            <div class="auth-forms">
+                <!-- Login Form -->
+                <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="auth-form-header">
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to access your premium templates</p>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="authLoginEmail">Email Address</label>
+                        <div class="auth-input-wrapper">
+                            <input type="email" class="auth-input" id="authLoginEmail" required placeholder="you@example.com" autocomplete="email">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="authLoginPassword">Password</label>
+                        <div class="auth-input-wrapper">
+                            <input type="password" class="auth-input has-toggle" id="authLoginPassword" required placeholder="••••••••" autocomplete="current-password">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <button type="button" class="auth-password-toggle" onclick="togglePasswordVisibility('authLoginPassword', this)">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="auth-error" id="authLoginError">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <span id="authLoginErrorText"></span>
+                    </div>
+                    
+                    <button type="submit" class="auth-submit" id="authLoginBtn">
+                        Sign In
+                    </button>
+                </form>
+                
+                <!-- Signup Form -->
+                <form class="auth-form" id="signupForm" onsubmit="handleSignup(event)">
+                    <div class="auth-form-header">
+                        <h2>Get Started</h2>
+                        <p>Create your account to access premium templates</p>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="authSignupName">Full Name</label>
+                        <div class="auth-input-wrapper">
+                            <input type="text" class="auth-input" id="authSignupName" required placeholder="John Doe" autocomplete="name">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="authSignupEmail">Email Address</label>
+                        <div class="auth-input-wrapper">
+                            <input type="email" class="auth-input" id="authSignupEmail" required placeholder="you@example.com" autocomplete="email">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="authSignupPassword">Password</label>
+                        <div class="auth-input-wrapper">
+                            <input type="password" class="auth-input has-toggle" id="authSignupPassword" required placeholder="••••••••" minlength="6" autocomplete="new-password">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <button type="button" class="auth-password-toggle" onclick="togglePasswordVisibility('authSignupPassword', this)">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="auth-password-hint">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <span>Minimum 6 characters required</span>
+                        </div>
+                    </div>
+                    
+                    <div class="auth-input-group">
+                        <label for="authSignupConfirmPassword">Confirm Password</label>
+                        <div class="auth-input-wrapper">
+                            <input type="password" class="auth-input has-toggle" id="authSignupConfirmPassword" required placeholder="••••••••" minlength="6" autocomplete="new-password">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <button type="button" class="auth-password-toggle" onclick="togglePasswordVisibility('authSignupConfirmPassword', this)">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="auth-error" id="authSignupError">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <span id="authSignupErrorText"></span>
+                    </div>
+                    
+                    <button type="submit" class="auth-submit" id="authSignupBtn">
+                        Create Account
+                    </button>
+                </form>
             </div>
         </div>
-    </div>
-
-    <!-- SIGNUP MODAL -->
-    <div id="signupModal" class="modal-overlay">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal('signupModal')" aria-label="Close">&times;</button>
-            <h2>Get Started</h2>
-            <p>Create your account to access premium templates</p>
-            
-            <form onsubmit="handleSignup(event)">
-                <div class="form-group">
-                    <label for="signupName">Full Name</label>
-                    <input type="text" id="signupName" required placeholder="John Doe" autocomplete="name">
-                </div>
-                <div class="form-group">
-                    <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" required placeholder="you@example.com" autocomplete="email">
-                </div>
-                <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" required placeholder="••••••••" minlength="6" autocomplete="new-password">
-                    <small style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem; display: block;">Minimum 6 characters</small>
-                </div>
-                <div class="form-error" id="signupError"></div>
-                <button type="submit" class="btn btn-primary btn-block" id="signupBtn">
-                    Create Account
-                </button>
-            </form>
-            
-            <div class="form-link">
-                Already have an account? <a onclick="closeModal('signupModal'); showLogin()">Sign in</a>
-            </div>
+        
+        <div class="auth-panel-footer">
+            <p id="authFooterText">Don't have an account? <a onclick="switchAuthTab('signup')">Create one</a></p>
         </div>
     </div>
 
@@ -5804,10 +7362,11 @@
         async function handleLogin(event) {
             event.preventDefault();
             
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            const btn = document.getElementById('loginBtn');
-            const errorEl = document.getElementById('loginError');
+            const email = document.getElementById('authLoginEmail').value;
+            const password = document.getElementById('authLoginPassword').value;
+            const btn = document.getElementById('authLoginBtn');
+            const errorEl = document.getElementById('authLoginError');
+            const errorText = document.getElementById('authLoginErrorText');
             
             btn.disabled = true;
             btn.innerHTML = '<span class="loading"></span> Signing in...';
@@ -5822,13 +7381,13 @@
                 if (error) throw error;
                 
                 currentUser = data.user;
-                closeModal('loginModal');
+                closeAuthPanel();
                 showNotification('Welcome back!', 'success');
                 updateNavigation();
                 navigateTo('home');
                 
             } catch (error) {
-                errorEl.textContent = error.message;
+                errorText.textContent = error.message;
                 errorEl.classList.add('active');
             } finally {
                 btn.disabled = false;
@@ -5839,15 +7398,26 @@
         async function handleSignup(event) {
             event.preventDefault();
             
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const btn = document.getElementById('signupBtn');
-            const errorEl = document.getElementById('signupError');
+            const name = document.getElementById('authSignupName').value;
+            const email = document.getElementById('authSignupEmail').value;
+            const password = document.getElementById('authSignupPassword').value;
+            const confirmPassword = document.getElementById('authSignupConfirmPassword').value;
+            const btn = document.getElementById('authSignupBtn');
+            const errorEl = document.getElementById('authSignupError');
+            const errorText = document.getElementById('authSignupErrorText');
             
             btn.disabled = true;
             btn.innerHTML = '<span class="loading"></span> Creating account...';
             errorEl.classList.remove('active');
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                errorText.textContent = 'Passwords do not match';
+                errorEl.classList.add('active');
+                btn.disabled = false;
+                btn.textContent = 'Create Account';
+                return;
+            }
             
             try {
                 const { data, error } = await supabaseClient.auth.signUp({
@@ -5875,13 +7445,13 @@
                 }
                 
                 currentUser = data.user;
-                closeModal('signupModal');
+                closeAuthPanel();
                 showNotification('Account created! Welcome to DeployTemplate! 🎉', 'success');
                 updateNavigation();
                 navigateTo('dashboard');
                 
             } catch (error) {
-                errorEl.textContent = error.message;
+                errorText.textContent = error.message;
                 errorEl.classList.add('active');
             } finally {
                 btn.disabled = false;
@@ -5994,8 +7564,8 @@
                 }
                 
                 navCta.innerHTML = `
-                    <button class="btn btn-secondary" onclick="showLogin()">Sign In</button>
-                    <button class="btn btn-primary" onclick="showSignup()">Get Started</button>
+                    <button class="btn-nav-glass btn-nav-glass-secondary" onclick="showLogin()">Sign In</button>
+                    <button class="btn-nav-glass btn-nav-glass-primary" onclick="showSignup()">Get Started</button>
                     <button class="theme-btn" onclick="toggleTheme()" id="themeBtnNav" aria-label="Toggle theme">
                         <svg id="themeIconNav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -6008,7 +7578,13 @@
 
         function showUserDropdown() {
             const dropdown = document.getElementById('userDropdown');
-            if (dropdown) {
+            const userMenu = document.querySelector('.user-menu');
+            
+            if (dropdown && userMenu) {
+                // Position the dropdown since it's using fixed positioning
+                const rect = userMenu.getBoundingClientRect();
+                dropdown.style.top = `${rect.bottom + 2}px`;
+                dropdown.style.right = `${window.innerWidth - rect.right}px`;
                 dropdown.classList.add('active');
             }
         }
@@ -6041,30 +7617,108 @@
         // MODAL MANAGEMENT
         // ============================================
         
-        function showLogin() {
-            const modal = document.getElementById('loginModal');
-            if (modal) {
-                modal.classList.add('active');
-                // Clear form
-                document.getElementById('loginEmail').value = '';
-                document.getElementById('loginPassword').value = '';
-                document.getElementById('loginError').classList.remove('active');
+        // Auth Panel Functions
+        function openAuthPanel(tab = 'login') {
+            const panel = document.getElementById('authPanel');
+            const overlay = document.getElementById('authOverlay');
+            
+            if (panel && overlay) {
+                overlay.classList.add('active');
+                panel.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                switchAuthTab(tab);
             }
+        }
+        
+        function closeAuthPanel() {
+            const panel = document.getElementById('authPanel');
+            const overlay = document.getElementById('authOverlay');
+            
+            if (panel && overlay) {
+                panel.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                
+                // Clear forms
+                clearAuthForms();
+            }
+        }
+        
+        function switchAuthTab(tab) {
+            const loginTab = document.getElementById('loginTab');
+            const signupTab = document.getElementById('signupTab');
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const footerText = document.getElementById('authFooterText');
+            
+            if (tab === 'login') {
+                loginTab.classList.add('active');
+                signupTab.classList.remove('active');
+                loginForm.classList.add('active');
+                signupForm.classList.remove('active');
+                footerText.innerHTML = "Don't have an account? <a onclick=\"switchAuthTab('signup')\">Create one</a>";
+            } else {
+                loginTab.classList.remove('active');
+                signupTab.classList.add('active');
+                loginForm.classList.remove('active');
+                signupForm.classList.add('active');
+                footerText.innerHTML = "Already have an account? <a onclick=\"switchAuthTab('login')\">Sign in</a>";
+            }
+            
+            // Clear errors when switching
+            document.getElementById('authLoginError').classList.remove('active');
+            document.getElementById('authSignupError').classList.remove('active');
+        }
+        
+        function clearAuthForms() {
+            // Clear login form
+            const loginEmail = document.getElementById('authLoginEmail');
+            const loginPassword = document.getElementById('authLoginPassword');
+            if (loginEmail) loginEmail.value = '';
+            if (loginPassword) loginPassword.value = '';
+            
+            // Clear signup form
+            const signupName = document.getElementById('authSignupName');
+            const signupEmail = document.getElementById('authSignupEmail');
+            const signupPassword = document.getElementById('authSignupPassword');
+            const signupConfirmPassword = document.getElementById('authSignupConfirmPassword');
+            if (signupName) signupName.value = '';
+            if (signupEmail) signupEmail.value = '';
+            if (signupPassword) signupPassword.value = '';
+            if (signupConfirmPassword) signupConfirmPassword.value = '';
+            
+            // Clear errors
+            document.getElementById('authLoginError').classList.remove('active');
+            document.getElementById('authSignupError').classList.remove('active');
+        }
+        
+        function togglePasswordVisibility(inputId, button) {
+            const input = document.getElementById(inputId);
+            const svg = button.querySelector('svg');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                svg.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+            } else {
+                input.type = 'password';
+                svg.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+            }
+        }
+        
+        // Legacy functions that now redirect to auth panel
+        function showLogin() {
+            openAuthPanel('login');
         }
 
         function showSignup() {
-            const modal = document.getElementById('signupModal');
-            if (modal) {
-                modal.classList.add('active');
-                // Clear form
-                document.getElementById('signupName').value = '';
-                document.getElementById('signupEmail').value = '';
-                document.getElementById('signupPassword').value = '';
-                document.getElementById('signupError').classList.remove('active');
-            }
+            openAuthPanel('signup');
         }
 
         function closeModal(modalId) {
+            if (modalId === 'loginModal' || modalId === 'signupModal') {
+                closeAuthPanel();
+                return;
+            }
             const modal = document.getElementById(modalId);
             if (modal) {
                 modal.classList.remove('active');
@@ -6815,6 +8469,14 @@
         }
         
         function showSearchSuggestions(query, suggestionsContainer, inputElement) {
+            // Position nav search suggestions if using fixed positioning
+            if (suggestionsContainer.id === 'navSearchSuggestions') {
+                const rect = inputElement.getBoundingClientRect();
+                suggestionsContainer.style.top = `${rect.bottom + 8}px`;
+                suggestionsContainer.style.left = `${rect.left}px`;
+                suggestionsContainer.style.width = `${rect.width}px`;
+            }
+            
             // Show recent/popular templates on focus even without query
             if (!query || query.length < 1) {
                 // Show top 5 popular/recent templates
@@ -7313,7 +8975,17 @@
         }
 
         function showCartDropdown() {
-            document.getElementById('cartDropdown').classList.add('active');
+            const dropdown = document.getElementById('cartDropdown');
+            const cartIcon = document.querySelector('.cart-icon-wrapper');
+            
+            // Position the dropdown since it's using fixed positioning
+            if (cartIcon && dropdown) {
+                const rect = cartIcon.getBoundingClientRect();
+                dropdown.style.top = `${rect.bottom + 2}px`;
+                dropdown.style.right = `${window.innerWidth - rect.right}px`;
+            }
+            
+            dropdown.classList.add('active');
         }
 
         function hideCartDropdown() {
@@ -7329,8 +9001,10 @@
             
             if (modal.classList.contains('active')) {
                 document.body.style.overflow = 'hidden';
+                document.body.classList.add('cart-modal-open'); // Add class to disable cart dropdown
             } else {
                 document.body.style.overflow = '';
+                document.body.classList.remove('cart-modal-open'); // Remove class to re-enable cart dropdown
             }
         }
 
@@ -7659,28 +9333,152 @@
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCartModal()"></div>
     <div class="cart-modal" id="cartModal">
         <div class="cart-modal-header">
-            <h2 class="cart-modal-title">Shopping Cart</h2>
-            <button class="cart-modal-close" onclick="toggleCartModal()">&times;</button>
+            <div class="cart-modal-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <h2 class="cart-modal-title">Shopping Cart</h2>
+            </div>
+            <button class="cart-modal-close" onclick="toggleCartModal()" aria-label="Close">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
         </div>
         <div class="cart-modal-body" id="cartModalBody">
             <div class="cart-empty">
                 <div class="cart-empty-icon">🛒</div>
                 <div class="cart-empty-text">Your cart is empty</div>
-                <div class="cart-empty-subtext">Any templates you add to your cart will be displayed here.</div>
+                <div class="cart-empty-subtext">Discover amazing templates and add them to your cart to get started.</div>
+                <button class="cart-empty-btn" onclick="toggleCartModal(); showPage('browse');">Browse Templates</button>
             </div>
         </div>
         <div class="cart-modal-footer" id="cartModalFooter" style="display: none;">
             <div class="cart-modal-total">
-                <span>Total:</span>
+                <span>Total</span>
                 <span id="cartModalTotal">$0</span>
             </div>
-            <div style="display: flex; gap: 0.5rem;">
-                <button class="btn btn-outline btn-block" onclick="clearCart()" style="flex: 1;">Clear Cart</button>
-                <button class="btn btn-primary btn-block" onclick="proceedToCheckout()" style="flex: 2;">Proceed to Checkout</button>
+            <div class="cart-modal-actions">
+                <button class="cart-modal-btn cart-modal-btn-outline" onclick="clearCart()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    Clear
+                </button>
+                <button class="cart-modal-btn cart-modal-btn-primary" onclick="proceedToCheckout()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                        <line x1="1" y1="10" x2="23" y2="10"></line>
+                    </svg>
+                    Checkout
+                </button>
             </div>
         </div>
     </div>
     
     </div><!-- End main-content -->
+    
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <div class="mobile-nav-item active" onclick="navigateToSection('home')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Home</span>
+        </div>
+        
+        <div class="mobile-nav-item" onclick="navigateToSection('browse')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Browse</span>
+        </div>
+        
+        <div class="mobile-nav-item" onclick="toggleCartModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span id="mobileCartBadge" class="mobile-nav-badge" style="display: none;">0</span>
+            <span>Cart</span>
+        </div>
+        
+        <div class="mobile-nav-item" onclick="navigateToSection('account')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>Account</span>
+        </div>
+    </nav>
+    
+    <script>
+        function navigateToSection(section) {
+            document.querySelectorAll('.mobile-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            if (section === 'home') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                showPage('home');
+            } else if (section === 'browse') {
+                showPage('browse');
+            } else if (section === 'account') {
+                if (currentUser) {
+                    showPage('dashboard');
+                } else {
+                    showPage('login');
+                }
+            }
+        }
+        
+        function updateMobileCartBadge() {
+            const badge = document.getElementById('mobileCartBadge');
+            if (badge && cart.length > 0) {
+                badge.textContent = cart.length;
+                badge.style.display = 'block';
+            } else if (badge) {
+                badge.style.display = 'none';
+            }
+        }
+        
+        // Hook into cart functions
+        if (typeof addToCart !== 'undefined') {
+            const origAdd = addToCart;
+            addToCart = function(...args) {
+                origAdd(...args);
+                updateMobileCartBadge();
+            };
+        }
+        
+        if (typeof removeFromCart !== 'undefined') {
+            const origRemove = removeFromCart;
+            removeFromCart = function(...args) {
+                origRemove(...args);
+                updateMobileCartBadge();
+            };
+        }
+        
+        if (typeof clearCart !== 'undefined') {
+            const origClear = clearCart;
+            clearCart = function(...args) {
+                origClear(...args);
+                updateMobileCartBadge();
+            };
+        }
+        
+        setTimeout(updateMobileCartBadge, 500);
+    </script>
 </body>
+</html>
 </html>
