@@ -8191,34 +8191,24 @@
             const existing = document.getElementById('checkoutModal');
             if (existing) existing.remove();
             
-            // Update the pre-created Gumroad button with user email
-            const gumroadBtn = document.getElementById(`gumroad-btn-${templateSlug}`);
-            if (gumroadBtn) {
-                gumroadBtn.href = gumroadUrl;
-            }
+            // Add embed=true to Gumroad URL for iframe
+            const embedUrl = gumroadUrl + '&embed=true';
             
             const modal = document.createElement('div');
             modal.className = 'modal-overlay';
             modal.id = 'checkoutModal';
             modal.innerHTML = `
-                <div class="modal" style="max-width: 450px; text-align: center;">
-                    <button class="modal-close" onclick="closeCheckoutModal()">×</button>
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛒</div>
-                    <h2 style="color: var(--text-primary); margin-bottom: 0.5rem;">Checkout</h2>
-                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
-                        <strong>${templateName}</strong>
-                    </p>
-                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
-                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">$${price}</div>
-                        <div style="color: var(--text-muted); font-size: 0.9rem;">One-time payment</div>
+                <div class="modal" style="max-width: 500px; padding: 0; overflow: hidden;">
+                    <button class="modal-close" onclick="closeCheckoutModal()" style="position: absolute; top: 10px; right: 10px; z-index: 10; background: rgba(0,0,0,0.5); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.2rem;">×</button>
+                    <div style="background: var(--bg-secondary); padding: 1rem; text-align: center; border-bottom: 1px solid var(--border-color);">
+                        <strong style="color: var(--text-primary);">${templateName}</strong>
+                        <span style="color: var(--text-muted);"> - $${price}</span>
                     </div>
-                    <button onclick="triggerGumroadCheckout('${templateSlug}')"
-                       style="display: block; width: 100%; padding: 1rem 2rem; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">
-                        Complete Purchase →
-                    </button>
-                    <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 1rem;">
-                        🔒 Secure checkout powered by Gumroad
-                    </p>
+                    <iframe 
+                        src="${embedUrl}" 
+                        style="width: 100%; height: 500px; border: none; background: white;"
+                        allowfullscreen>
+                    </iframe>
                 </div>
             `;
             
@@ -9874,14 +9864,7 @@
         })();
     </script>
     
-    <!-- Pre-created Gumroad buttons - must exist on page load for overlay to work -->
-    <div id="gumroadButtons" style="display:none;">
-        <a href="https://goldstar06.gumroad.com/l/tf-test" class="gumroad-button" data-gumroad-overlay-checkout="true" id="gumroad-btn-saas-landing">Buy</a>
-        <a href="https://goldstar06.gumroad.com/l/tf-test" class="gumroad-button" data-gumroad-overlay-checkout="true" id="gumroad-btn-portfolio">Buy</a>
-        <a href="https://goldstar06.gumroad.com/l/tf-test" class="gumroad-button" data-gumroad-overlay-checkout="true" id="gumroad-btn-restaurant">Buy</a>
-    </div>
-    
-    <!-- Gumroad Overlay Script -->
+    <!-- Gumroad Script (kept for potential future use) -->
     <script src="https://gumroad.com/js/gumroad.js"></script>
 </body>
 </html>
