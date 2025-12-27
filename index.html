@@ -8117,7 +8117,7 @@
                 if (!template) throw new Error('Template not found');
                 
                 // Create signed URL for download
-                const filePath = `${slug}/${slug}-v${version}.zip`;
+                const filePath = `files/${slug}/${slug}-v${version}.zip`;
                 const { data: urlData, error: urlError } = await supabaseClient.storage
                     .from('templates')
                     .createSignedUrl(filePath, 3600); // 1 hour expiry
