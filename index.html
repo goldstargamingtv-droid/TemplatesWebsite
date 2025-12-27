@@ -8191,6 +8191,12 @@
             const existing = document.getElementById('checkoutModal');
             if (existing) existing.remove();
             
+            // Update the pre-created Gumroad button with user email
+            const gumroadBtn = document.getElementById(`gumroad-btn-${templateSlug}`);
+            if (gumroadBtn) {
+                gumroadBtn.href = gumroadUrl;
+            }
+            
             const modal = document.createElement('div');
             modal.className = 'modal-overlay';
             modal.id = 'checkoutModal';
@@ -8206,12 +8212,10 @@
                         <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">$${price}</div>
                         <div style="color: var(--text-muted); font-size: 0.9rem;">One-time payment</div>
                     </div>
-                    <a href="${gumroadUrl}" 
-                       class="gumroad-button" 
-                       data-gumroad-overlay-checkout="true"
-                       style="display: block; width: 100%; padding: 1rem 2rem; background: var(--primary); color: white; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 1.1rem; transition: all 0.3s;">
+                    <button onclick="triggerGumroadCheckout('${templateSlug}')"
+                       style="display: block; width: 100%; padding: 1rem 2rem; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">
                         Complete Purchase →
-                    </a>
+                    </button>
                     <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 1rem;">
                         🔒 Secure checkout powered by Gumroad
                     </p>
@@ -8226,13 +8230,15 @@
                 if (e.target === modal) closeCheckoutModal();
             });
             
-            // Reinitialize Gumroad to attach to new button
-            if (window.GumroadOverlay) {
-                window.GumroadOverlay.init();
-            }
-            
             // Start polling for purchase
             startPurchasePolling(templateSlug);
+        }
+        
+        function triggerGumroadCheckout(templateSlug) {
+            const gumroadBtn = document.getElementById(`gumroad-btn-${templateSlug}`);
+            if (gumroadBtn) {
+                gumroadBtn.click();
+            }
         }
         
         function closeCheckoutModal() {
@@ -9867,6 +9873,13 @@
             }, 2000);
         })();
     </script>
+    
+    <!-- Pre-created Gumroad buttons - must exist on page load for overlay to work -->
+    <div id="gumroadButtons" style="display:none;">
+        <a href="https://goldstar06.gumroad.com/l/tf-test" class="gumroad-button" data-gumroad-overlay-checkout="true" id="gumroad-btn-saas-landing">Buy</a>
+        <a href="https://goldstar06.gumroad.com/l/tf-test" class="gumroad-button" data-gumroad-overlay-checkout="true" id="gumroad-btn-portfolio">Buy</a>
+        <a href="https://goldstar06.gumroad.com/l/tf-test" class="gumroad-button" data-gumroad-overlay-checkout="true" id="gumroad-btn-restaurant">Buy</a>
+    </div>
     
     <!-- Gumroad Overlay Script -->
     <script src="https://gumroad.com/js/gumroad.js"></script>
