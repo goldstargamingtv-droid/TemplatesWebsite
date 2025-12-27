@@ -8117,7 +8117,7 @@
                 if (!template) throw new Error('Template not found');
                 
                 // Create signed URL for download
-                const filePath = `files/${slug}/${slug}-v${version}.zip`;
+                const filePath = `${slug}/${slug}-v${version}.zip`;
                 const { data: urlData, error: urlError } = await supabaseClient.storage
                     .from('templates')
                     .createSignedUrl(filePath, 3600); // 1 hour expiry
@@ -9797,7 +9797,7 @@
                 if (imageError) throw imageError;
 
                 // Upload ZIP file
-                const zipPath = `files/${slug}.zip`;
+                const zipPath = `${slug}/${slug}-v1.0.0.zip`;
                 const { error: zipError } = await supabaseClient.storage
                     .from('templates')
                     .upload(zipPath, zipFile, { upsert: true });
