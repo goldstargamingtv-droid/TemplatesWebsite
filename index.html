@@ -6,6 +6,13 @@
     <title>DeployTemplate - Premium Website Templates</title>
     <meta name="description" content="Beautiful, professional website templates ready to launch your business. No coding required.">
     
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" href="/favicon.ico">
+    
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -5834,6 +5841,8 @@
             }
         }
     </style>
+    <!-- Gumroad Overlay Script -->
+    <script src="https://gumroad.com/js/gumroad.js"></script>
 </head>
 <body>
     <script>
@@ -7320,10 +7329,9 @@
             SITE_URL: window.location.origin,
             SITE_NAME: 'DeployTemplate',
             GUMROAD_PRODUCTS: {
-                'test': 'tf-test',
-                'saas-landing': 'tf-saas-landing',
-                'portfolio': 'tf-portfolio',
-                'restaurant': 'tf-restaurant'
+                'saas-landing': 'tf-test',    // UPDATE: Change to real Gumroad product ID
+                'portfolio': 'tf-test',        // UPDATE: Change to real Gumroad product ID
+                'restaurant': 'tf-test'        // UPDATE: Change to real Gumroad product ID
             }
         };
 
@@ -8152,6 +8160,9 @@
         // PURCHASE FLOW
         // ============================================
         
+        // Track pending purchase for post-checkout flow
+        let pendingPurchase = null;
+
         function buyTemplate(templateSlug, templateName, price) {
             if (!currentUser) {
                 showNotification('Please sign up to purchase templates!', 'info');
@@ -8167,18 +8178,101 @@
                 return;
             }
             
-            // Open Gumroad with user email pre-filled
-            const gumroadUrl = `https://gumroad.com/l/${gumroadPermalink}?email=${encodeURIComponent(currentUser.email)}&wanted=true`;
+            // Store pending purchase info
+            pendingPurchase = { slug: templateSlug, name: templateName, price: price };
             
-            // Try popup first
-            const popup = window.open(gumroadUrl, 'gumroad', 'width=600,height=800,scrollbars=yes');
+            // Build Gumroad URL with user email and custom field for template slug
+            const gumroadUrl = `https://goldstar06.gumroad.com/l/${gumroadPermalink}?email=${encodeURIComponent(currentUser.email)}&template_slug=${templateSlug}`;
             
-            if (popup) {
-                showNotification('Complete your purchase in the popup window. Your template will appear in your dashboard once payment is confirmed!', 'info');
-            } else {
-                // Popup blocked, redirect instead
-                window.location.href = gumroadUrl;
+            // Create temporary link and trigger Gumroad overlay
+            const tempLink = document.createElement('a');
+            tempLink.href = gumroadUrl;
+            tempLink.classList.add('gumroad-button');
+            tempLink.style.display = 'none';
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            document.body.removeChild(tempLink);
+            
+            // Listen for Gumroad overlay close and check for purchase
+            startPurchasePolling(templateSlug);
+        }
+        
+        // Poll for purchase completion after Gumroad checkout
+        async function startPurchasePolling(templateSlug) {
+            let attempts = 0;
+            const maxAttempts = 30; // Poll for 60 seconds max
+            
+            const pollInterval = setInterval(async () => {
+                attempts++;
+                
+                // Check if purchase exists
+                const { data: purchase, error } = await supabaseClient
+                    .from('purchases')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .eq('template_slug', templateSlug)
+                    .single();
+                
+                if (purchase && !error) {
+                    clearInterval(pollInterval);
+                    showPurchaseSuccessModal(pendingPurchase);
+                    pendingPurchase = null;
+                    loadDashboard(); // Refresh dashboard
+                }
+                
+                if (attempts >= maxAttempts) {
+                    clearInterval(pollInterval);
+                    pendingPurchase = null;
+                }
+            }, 2000); // Check every 2 seconds
+            
+            // Stop polling if user navigates away
+            window.addEventListener('beforeunload', () => clearInterval(pollInterval), { once: true });
+        }
+        
+        // Show purchase success modal
+        function showPurchaseSuccessModal(purchaseInfo) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.id = 'purchaseSuccessModal';
+            modal.innerHTML = `
+                <div class="modal" style="max-width: 500px; text-align: center;">
+                    <button class="modal-close" onclick="closePurchaseSuccessModal()">×</button>
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+                    <h2 style="color: var(--text-primary); margin-bottom: 1rem;">Purchase Complete!</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                        Thank you for purchasing <strong>${purchaseInfo.name}</strong>!<br>
+                        Your template is ready to download.
+                    </p>
+                    <button class="btn btn-primary btn-lg" onclick="downloadAfterPurchase('${purchaseInfo.slug}')" style="width: 100%; margin-bottom: 1rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                        </svg>
+                        Download Now
+                    </button>
+                    <button class="btn btn-secondary" onclick="closePurchaseSuccessModal(); showDashboard();" style="width: 100%;">
+                        Go to Dashboard
+                    </button>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1.5rem;">
+                        You can re-download anytime from your dashboard.
+                    </p>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            setTimeout(() => modal.classList.add('active'), 10);
+        }
+        
+        function closePurchaseSuccessModal() {
+            const modal = document.getElementById('purchaseSuccessModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
             }
+        }
+        
+        async function downloadAfterPurchase(slug) {
+            closePurchaseSuccessModal();
+            await downloadTemplate(slug, '1.0.0');
         }
 
         // ============================================
@@ -8253,100 +8347,52 @@
         function getMockTemplates() {
             return [
                 {
-                    slug: 'flowmetrics-saas',
-                    name: 'FlowMetrics - Analytics SaaS',
-                    description: 'Modern landing page perfect for SaaS products, with pricing tables, feature sections, and conversion-optimized design.',
+                    slug: 'saas-landing',
+                    name: 'FlowMetrics - SaaS Landing',
+                    description: 'Modern landing page perfect for SaaS products, with pricing tables, feature sections, dark mode, and conversion-optimized design.',
                     category: 'saas',
-                    price: 0,
-                    original_price: 69,
-                    is_popular: true,
-                    is_new: false,
-                    features: ['Responsive Design', 'Dark Mode', 'Animations', 'Pricing Tables'],
-                    downloads: 1247,
-                    demo_url: 'https://example.com/demo',
-                    tech_stack: ['HTML5', 'CSS3', 'JavaScript', 'GSAP'],
-                    created_at: '2024-01-15T00:00:00Z',
-                    updated_at: '2024-12-20T00:00:00Z'
-                },
-                {
-                    slug: 'alex-portfolio',
-                    name: 'Alex Chen - Creative Portfolio',
-                    description: 'Stunning dark-themed portfolio with custom cursor effects, scroll animations, and project showcases for creatives.',
-                    category: 'portfolio',
-                    price: 39,
-                    original_price: 69,
-                    is_popular: false,
-                    is_new: true,
-                    features: ['Dark Theme', 'Custom Cursor', 'Scroll Effects', 'Gallery'],
-                    downloads: 543,
-                    demo_url: 'https://example.com/demo',
-                    tech_stack: ['HTML5', 'CSS3', 'JavaScript'],
-                    created_at: '2024-12-01T00:00:00Z',
-                    updated_at: '2024-12-22T00:00:00Z'
-                },
-                {
-                    slug: 'bella-restaurant',
-                    name: 'Bella Vista - Restaurant',
-                    description: 'Elegant restaurant template with menu displays, reservation forms, and gallery sections. Perfect for local businesses.',
-                    category: 'restaurant',
-                    price: 39,
-                    original_price: 69,
-                    is_popular: false,
-                    is_new: false,
-                    features: ['Menu System', 'Reservations', 'Gallery', 'Contact Forms'],
-                    downloads: 892,
-                    demo_url: null,
-                    tech_stack: ['HTML5', 'CSS3', 'JavaScript', 'PHP'],
-                    created_at: '2024-02-10T00:00:00Z',
-                    updated_at: '2024-11-15T00:00:00Z'
-                },
-                {
-                    slug: 'shopify-modern',
-                    name: 'Modern E-commerce Store',
-                    description: 'Complete e-commerce solution with product grids, shopping cart, checkout flow, and admin dashboard.',
-                    category: 'ecommerce',
-                    price: 79,
-                    original_price: 129,
-                    is_popular: true,
-                    is_new: false,
-                    features: ['Shopping Cart', 'Payment Integration', 'Product Filters', 'Admin Panel'],
-                    downloads: 2103,
-                    demo_url: 'https://example.com/demo',
-                    tech_stack: ['React', 'Node.js', 'Stripe', 'MongoDB'],
-                    created_at: '2024-03-20T00:00:00Z',
-                    updated_at: '2024-12-18T00:00:00Z'
-                },
-                {
-                    slug: 'agency-pro',
-                    name: 'Agency Pro - Digital Agency',
-                    description: 'Professional agency template with case studies, team section, service pages, and client testimonials.',
-                    category: 'agency',
-                    price: 49,
-                    original_price: 89,
-                    is_popular: false,
-                    is_new: true,
-                    features: ['Portfolio Grid', 'Team Showcase', 'Case Studies', 'Contact Forms'],
-                    downloads: 678,
-                    demo_url: 'https://example.com/demo',
-                    tech_stack: ['HTML5', 'CSS3', 'JavaScript', 'Tailwind'],
-                    created_at: '2024-11-28T00:00:00Z',
-                    updated_at: '2024-12-24T00:00:00Z'
-                },
-                {
-                    slug: 'startup-launch',
-                    name: 'Startup Launch - Landing Page',
-                    description: 'High-converting landing page designed for product launches with email capture, countdown timer, and social proof.',
-                    category: 'landing',
                     price: 29,
-                    original_price: 59,
+                    original_price: 49,
                     is_popular: true,
-                    is_new: false,
-                    features: ['Email Capture', 'Countdown Timer', 'Social Proof', 'Video Background'],
-                    downloads: 1556,
-                    demo_url: 'https://example.com/demo',
-                    tech_stack: ['HTML5', 'CSS3', 'JavaScript', 'Mailchimp'],
-                    created_at: '2024-04-12T00:00:00Z',
-                    updated_at: '2024-12-10T00:00:00Z'
+                    is_new: true,
+                    features: ['Responsive Design', 'Dark/Light Mode', 'Pricing Tables', 'Scroll Animations', 'SEO Optimized', 'Mobile Menu'],
+                    downloads: 0,
+                    demo_url: 'https://www.deploytemplate.com/demos/saas',
+                    tech_stack: ['HTML5', 'CSS3', 'JavaScript'],
+                    created_at: '2024-12-27T00:00:00Z',
+                    updated_at: '2024-12-27T00:00:00Z'
+                },
+                {
+                    slug: 'portfolio',
+                    name: 'Creative Portfolio',
+                    description: 'Stunning dark-themed portfolio with custom cursor effects, scroll animations, skill bars, and project showcases for developers and designers.',
+                    category: 'portfolio',
+                    price: 29,
+                    original_price: 49,
+                    is_popular: false,
+                    is_new: true,
+                    features: ['Dark/Light Mode', 'Custom Cursor', 'Scroll Animations', 'Contact Form', 'Skill Bars', 'Mobile Menu'],
+                    downloads: 0,
+                    demo_url: 'https://www.deploytemplate.com/demos/portfolio',
+                    tech_stack: ['HTML5', 'CSS3', 'JavaScript'],
+                    created_at: '2024-12-27T00:00:00Z',
+                    updated_at: '2024-12-27T00:00:00Z'
+                },
+                {
+                    slug: 'restaurant',
+                    name: 'Bella Vista - Restaurant',
+                    description: 'Elegant restaurant template with menu displays, reservation forms, image gallery, and contact sections. Perfect for restaurants, cafes, and bistros.',
+                    category: 'restaurant',
+                    price: 29,
+                    original_price: 49,
+                    is_popular: false,
+                    is_new: true,
+                    features: ['Menu Display', 'Reservation Form', 'Image Gallery', 'Dark/Light Mode', 'Mobile Menu', 'SEO Optimized'],
+                    downloads: 0,
+                    demo_url: 'https://www.deploytemplate.com/demos/restaurant',
+                    tech_stack: ['HTML5', 'CSS3', 'JavaScript'],
+                    created_at: '2024-12-27T00:00:00Z',
+                    updated_at: '2024-12-27T00:00:00Z'
                 }
             ];
         }
