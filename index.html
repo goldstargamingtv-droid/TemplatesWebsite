@@ -8116,7 +8116,7 @@
                 console.log('File path:', filePath);
                 
                 const { data: urlData, error: urlError } = await supabaseClient.storage
-                    .from('templates')
+                    .from('Templates')
                     .createSignedUrl(filePath, 3600); // 1 hour expiry
                 
                 console.log('URL Data:', urlData);
@@ -8452,7 +8452,7 @@
             try {
                 // Fetch all templates from Supabase
                 const { data: templates, error } = await supabaseClient
-                    .from('templates')
+                    .from('Templates')
                     .select('*')
                     .order('created_at', { ascending: false });
                 
@@ -8708,7 +8708,7 @@
             try {
                 // Fetch template details with proper headers
                 const { data: template, error } = await supabaseClient
-                    .from('templates')
+                    .from('Templates')
                     .select('*')
                     .eq('slug', slug)
                     .single();
@@ -9064,7 +9064,7 @@
             // Load templates for search suggestions
             try {
                 const { data: templates, error } = await supabaseClient
-                    .from('templates')
+                    .from('Templates')
                     .select('*')
                     .order('created_at', { ascending: false });
                 
@@ -9576,7 +9576,7 @@
             
             try {
                 const { data: templates, error } = await supabaseClient
-                    .from('templates')
+                    .from('Templates')
                     .select('*')
                     .order('created_at', { ascending: false });
 
@@ -9602,7 +9602,7 @@
         async function editAdminTemplate(id) {
             try {
                 const { data: template, error } = await supabaseClient
-                    .from('templates')
+                    .from('Templates')
                     .select('*')
                     .eq('id', id)
                     .single();
@@ -9646,22 +9646,22 @@
 
                 // Upload new preview image if provided
                 if (previewImageFile) {
-                    const { data: template } = await supabaseClient.from('templates').select('slug').eq('id', id).single();
+                    const { data: template } = await supabaseClient.from('Templates').select('slug').eq('id', id).single();
                     const ext = previewImageFile.name.split('.').pop();
                     const path = `previews/${template.slug}.${ext}`;
                     
                     const { error: uploadError } = await supabaseClient.storage
-                        .from('templates')
+                        .from('Templates')
                         .upload(path, previewImageFile, { upsert: true });
 
                     if (uploadError) throw uploadError;
 
-                    const { data: urlData } = supabaseClient.storage.from('templates').getPublicUrl(path);
+                    const { data: urlData } = supabaseClient.storage.from('Templates').getPublicUrl(path);
                     updateData.preview_image = urlData.publicUrl;
                 }
 
                 const { error } = await supabaseClient
-                    .from('templates')
+                    .from('Templates')
                     .update(updateData)
                     .eq('id', id);
 
@@ -9685,7 +9685,7 @@
 
             try {
                 const { error } = await supabaseClient
-                    .from('templates')
+                    .from('Templates')
                     .delete()
                     .eq('id', id);
 
@@ -9704,7 +9704,7 @@
             
             try {
                 const { data: files, error } = await supabaseClient.storage
-                    .from('templates')
+                    .from('Templates')
                     .list('hero', { limit: 100 });
 
                 if (error) throw error;
@@ -9715,7 +9715,7 @@
                 }
 
                 list.innerHTML = files.filter(f => f.name !== '.emptyFolderPlaceholder').map(file => {
-                    const { data } = supabaseClient.storage.from('templates').getPublicUrl(`hero/${file.name}`);
+                    const { data } = supabaseClient.storage.from('Templates').getPublicUrl(`hero/${file.name}`);
                     return `
                         <div style="position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 16/9;">
                             <img src="${data.publicUrl}" style="width: 100%; height: 100%; object-fit: cover;" />
@@ -9743,7 +9743,7 @@
                 const path = `hero/hero-${timestamp}.${ext}`;
 
                 const { error } = await supabaseClient.storage
-                    .from('templates')
+                    .from('Templates')
                     .upload(path, file);
 
                 if (error) throw error;
@@ -9764,7 +9764,7 @@
 
             try {
                 const { error } = await supabaseClient.storage
-                    .from('templates')
+                    .from('Templates')
                     .remove([`hero/${filename}`]);
 
                 if (error) throw error;
@@ -9795,7 +9795,7 @@
                 const previewImageExt = previewImage.name.split('.').pop();
                 const previewImagePath = `previews/${slug}.${previewImageExt}`;
                 const { error: imageError } = await supabaseClient.storage
-                    .from('templates')
+                    .from('Templates')
                     .upload(previewImagePath, previewImage, { upsert: true });
 
                 if (imageError) throw imageError;
@@ -9803,23 +9803,23 @@
                 // Upload ZIP file
                 const zipPath = `${slug}/${slug}-v1.0.0.zip`;
                 const { error: zipError } = await supabaseClient.storage
-                    .from('templates')
+                    .from('Templates')
                     .upload(zipPath, zipFile, { upsert: true });
 
                 if (zipError) throw zipError;
 
                 // Get public URLs
                 const { data: previewUrlData } = supabaseClient.storage
-                    .from('templates')
+                    .from('Templates')
                     .getPublicUrl(previewImagePath);
 
                 const { data: zipUrlData } = supabaseClient.storage
-                    .from('templates')
+                    .from('Templates')
                     .getPublicUrl(zipPath);
 
                 // Insert into database
                 const { error: dbError } = await supabaseClient
-                    .from('templates')
+                    .from('Templates')
                     .insert({
                         name: document.getElementById('adminTemplateName').value,
                         slug: slug,
