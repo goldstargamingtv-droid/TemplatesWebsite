@@ -1,10 +1,3 @@
-const { createClient } = require('@supabase/supabase-js');
-
-const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-);
-
 const PRODUCT_MAP = {
     'tf-test': 'saas-landing',
     'saas-landing': 'saas-landing',
@@ -13,9 +6,8 @@ const PRODUCT_MAP = {
 };
 
 module.exports = async function handler(req, res) {
-    // Handle CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
     
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
@@ -29,6 +21,9 @@ module.exports = async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
+    const SUPABASE_URL = process.env.SUPABASE_URL;
+    const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
     try {
         const { sale_id, product_id, product_permalink, email, price, currency } = req.body;
         
@@ -36,58 +31,72 @@ module.exports = async function handler(req, res) {
 
         const templateSlug = PRODUCT_MAP[product_permalink] || product_permalink;
 
-        // Find user by email
-        const { data: { users }, error: usersError } = await supabase.auth.admin.listUsers();
+        // Find user by email using Supabase REST API
+        const usersResponse = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
+            headers: {
+                'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+                'apikey': SUPABASE_SERVICE_KEY
+            }
+        });
         
-        if (usersError) {
-            console.error('Error listing users:', usersError);
-            return res.status(200).json({ success: false, error: 'Failed to list users' });
-        }
-        
-        const user = users?.find(u => u.email?.toLowerCase() === email?.toLowerCase());
+        const usersData = await usersResponse.json();
+        const user = usersData.users?.find(u => u.email?.toLowerCase() === email?.toLowerCase());
 
         if (!user) {
             console.log('User not found for email:', email);
-            return res.status(200).json({ success: false, error: 'User not found' });
+            return res.status(200).json({ success: false, error: 'User not found', email });
         }
 
         console.log('Found user:', user.id);
 
         // Find template
-        const { data: template, error: templateError } = await supabase
-            .from('templates')
-            .select('id')
-            .eq('slug', templateSlug)
-            .single();
+        const templateResponse = await fetch(
+            `${SUPABASE_URL}/rest/v1/templates?slug=eq.${templateSlug}&select=id`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+                    'apikey': SUPABASE_SERVICE_KEY
+                }
+            }
+        );
+        
+        const templates = await templateResponse.json();
+        const template = templates?.[0];
 
-        if (templateError) {
-            console.error('Template error:', templateError);
+        // Insert purchase using upsert
+        const purchaseData = {
+            user_id: user.id,
+            template_id: template?.id || null,
+            template_slug: templateSlug,
+            gumroad_sale_id: sale_id,
+            gumroad_product_id: product_id,
+            price_paid: price ? parseFloat(price) / 100 : 0,
+            currency: currency || 'usd',
+            purchased_at: new Date().toISOString()
+        };
+
+        const purchaseResponse = await fetch(
+            `${SUPABASE_URL}/rest/v1/purchases`,
+            {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+                    'apikey': SUPABASE_SERVICE_KEY,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'resolution=merge-duplicates'
+                },
+                body: JSON.stringify(purchaseData)
+            }
+        );
+
+        if (!purchaseResponse.ok) {
+            const errorText = await purchaseResponse.text();
+            console.error('Purchase insert error:', errorText);
+            return res.status(200).json({ success: false, error: errorText });
         }
 
-        // Insert purchase
-        const { data: purchase, error: purchaseError } = await supabase
-            .from('purchases')
-            .upsert({
-                user_id: user.id,
-                template_id: template?.id || null,
-                template_slug: templateSlug,
-                gumroad_sale_id: sale_id,
-                gumroad_product_id: product_id,
-                price_paid: price ? parseFloat(price) / 100 : 0,
-                currency: currency || 'usd',
-                purchased_at: new Date().toISOString()
-            }, { 
-                onConflict: 'user_id,template_slug' 
-            })
-            .select();
-
-        if (purchaseError) {
-            console.error('Purchase insert error:', purchaseError);
-            return res.status(200).json({ success: false, error: purchaseError.message });
-        }
-
-        console.log('Purchase recorded:', purchase);
-        return res.status(200).json({ success: true, purchase });
+        console.log('Purchase recorded for user:', user.id);
+        return res.status(200).json({ success: true, userId: user.id, templateSlug });
 
     } catch (error) {
         console.error('Webhook error:', error);
