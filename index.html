@@ -8500,7 +8500,7 @@
             try {
                 // Fetch all templates from Supabase
                 const { data: templates, error } = await supabaseClient
-                    .from('Templates')
+                    .from('templates')
                     .select('*')
                     .order('created_at', { ascending: false });
                 
@@ -8756,7 +8756,7 @@
             try {
                 // Fetch template details with proper headers
                 const { data: template, error } = await supabaseClient
-                    .from('Templates')
+                    .from('templates')
                     .select('*')
                     .eq('slug', slug)
                     .single();
@@ -9112,7 +9112,7 @@
             // Load templates for search suggestions
             try {
                 const { data: templates, error } = await supabaseClient
-                    .from('Templates')
+                    .from('templates')
                     .select('*')
                     .order('created_at', { ascending: false });
                 
@@ -9573,6 +9573,16 @@
                 document.body.classList.remove('cart-modal-open'); // Remove class to re-enable cart dropdown
             }
         }
+        
+        function closeCartModal() {
+            const modal = document.getElementById('cartModal');
+            const overlay = document.getElementById('cartOverlay');
+            
+            if (modal) modal.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            document.body.classList.remove('cart-modal-open');
+        }
 
         function proceedToCheckout() {
             if (cart.length === 0) {
@@ -9736,7 +9746,7 @@
             
             try {
                 const { data: templates, error } = await supabaseClient
-                    .from('Templates')
+                    .from('templates')
                     .select('*')
                     .order('created_at', { ascending: false });
 
@@ -9762,7 +9772,7 @@
         async function editAdminTemplate(id) {
             try {
                 const { data: template, error } = await supabaseClient
-                    .from('Templates')
+                    .from('templates')
                     .select('*')
                     .eq('id', id)
                     .single();
@@ -9806,12 +9816,12 @@
 
                 // Upload new preview image if provided
                 if (previewImageFile) {
-                    const { data: template } = await supabaseClient.from('Templates').select('slug').eq('id', id).single();
+                    const { data: template } = await supabaseClient.from('templates').select('slug').eq('id', id).single();
                     const ext = previewImageFile.name.split('.').pop();
                     const path = `previews/${template.slug}.${ext}`;
                     
                     const { error: uploadError } = await supabaseClient.storage
-                        .from('Templates')
+                    .from('Templates')
                         .upload(path, previewImageFile, { upsert: true });
 
                     if (uploadError) throw uploadError;
@@ -9821,7 +9831,7 @@
                 }
 
                 const { error } = await supabaseClient
-                    .from('Templates')
+                    .from('templates')
                     .update(updateData)
                     .eq('id', id);
 
@@ -9845,7 +9855,7 @@
 
             try {
                 const { error } = await supabaseClient
-                    .from('Templates')
+                    .from('templates')
                     .delete()
                     .eq('id', id);
 
@@ -9979,7 +9989,7 @@
 
                 // Insert into database
                 const { error: dbError } = await supabaseClient
-                    .from('Templates')
+                    .from('templates')
                     .insert({
                         name: document.getElementById('adminTemplateName').value,
                         slug: slug,
