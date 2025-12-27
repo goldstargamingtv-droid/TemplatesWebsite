@@ -8105,25 +8105,25 @@
         async function downloadTemplate(slug, version) {
             showNotification('Preparing your download...', 'info');
             
+            console.log('=== DOWNLOAD DEBUG ===');
+            console.log('Slug:', slug);
+            console.log('Version:', version);
+            console.log('User:', currentUser?.id);
+            
             try {
-                // Get template info
-                const { data: template, error: templateError } = await supabaseClient
-                    .from('templates')
-                    .select('*')
-                    .eq('slug', slug)
-                    .single();
-                
-                if (templateError) throw templateError;
-                if (!template) throw new Error('Template not found');
-                
                 // Create signed URL for download
                 const filePath = `files/${slug}/${slug}-v${version}.zip`;
+                console.log('File path:', filePath);
+                
                 const { data: urlData, error: urlError } = await supabaseClient.storage
                     .from('templates')
                     .createSignedUrl(filePath, 3600); // 1 hour expiry
                 
+                console.log('URL Data:', urlData);
+                console.log('URL Error:', urlError);
+                
                 if (urlError) {
-                    // File doesn't exist yet - show friendly message
+                    console.error('Signed URL error:', urlError);
                     showNotification('Template file is being prepared by admin. Check back soon!', 'info');
                     return;
                 }
@@ -8139,13 +8139,17 @@
                 showNotification('Download started! 🎉', 'success');
                 
                 // Log the download
-                await supabaseClient
-                    .from('download_logs')
-                    .insert({
-                        user_id: currentUser.id,
-                        template_id: template.id,
-                        version: version
-                    });
+                try {
+                    await supabaseClient
+                        .from('download_logs')
+                        .insert({
+                            user_id: currentUser.id,
+                            template_slug: slug,
+                            version: version
+                        });
+                } catch (logError) {
+                    console.log('Download log error (non-critical):', logError);
+                }
                 
             } catch (error) {
                 console.error('Download error:', error);
