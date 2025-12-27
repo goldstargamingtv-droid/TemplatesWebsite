@@ -2783,19 +2783,7 @@
 
         .hero-visual {
             position: relative;
-            animation: fadeInRight 1.2s ease-out 0.4s backwards;
             min-height: 500px;
-        }
-        
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
         }
 
         .device-mockups {
@@ -2807,46 +2795,23 @@
             perspective: 2000px;
         }
         
-        /* Reflection/Glow beneath devices - Multi-colored */
+        /* Reflection/Glow beneath devices - simplified */
         .device-mockups::after {
             content: '';
             position: absolute;
             bottom: -50px;
-            left: 0;
-            right: 0;
-            height: 150px;
-            background: 
-                radial-gradient(ellipse at 45% 0%, rgba(180, 180, 180, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 85% 0%, rgba(249, 115, 22, 0.12) 0%, transparent 40%),
-                radial-gradient(ellipse at 10% 0%, rgba(6, 182, 212, 0.18) 0%, transparent 45%);
-            filter: blur(40px);
+            left: 10%;
+            right: 10%;
+            height: 100px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(20, 184, 166, 0.15) 0%, transparent 70%);
+            filter: blur(30px);
             pointer-events: none;
             z-index: 0;
         }
         
-        /* Floating Particles Container - Multi-colored */
+        /* Remove particle pseudo-element for performance */
         .device-mockups::before {
-            content: '';
-            position: absolute;
-            inset: -50px;
-            background: 
-                radial-gradient(2px 2px at 20% 20%, rgba(200, 200, 200, 0.6), transparent),
-                radial-gradient(2px 2px at 45% 15%, rgba(180, 180, 180, 0.5), transparent),
-                radial-gradient(3px 3px at 85% 25%, rgba(249, 115, 22, 0.6), transparent),
-                radial-gradient(2px 2px at 90% 40%, rgba(236, 72, 153, 0.5), transparent),
-                radial-gradient(2px 2px at 80% 60%, rgba(249, 115, 22, 0.4), transparent),
-                radial-gradient(2px 2px at 5% 45%, rgba(34, 211, 238, 0.7), transparent),
-                radial-gradient(3px 3px at 10% 65%, rgba(6, 182, 212, 0.6), transparent),
-                radial-gradient(2px 2px at 15% 35%, rgba(20, 184, 166, 0.5), transparent);
-            background-size: 100% 100%;
-            animation: particleFloat 8s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        @keyframes particleFloat {
-            0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
-            50% { transform: translateY(-30px) scale(1.1); opacity: 1; }
+            display: none;
         }
         
         /* Main Device Container - Stacked Layout */
@@ -2859,7 +2824,7 @@
         }
         
         /* ============================================
-           LAPTOP - Same glow as tablet
+           LAPTOP - Multi-color animated glow
            ============================================ */
         .laptop::before {
             content: '';
@@ -2882,7 +2847,7 @@
         }
         
         /* ============================================
-           TABLET - Creative, Artistic, Paint Splash
+           TABLET - Multi-color animated glow
            ============================================ */
         .tablet::before {
             content: '';
@@ -2921,7 +2886,7 @@
         }
         
         /* ============================================
-           PHONE - Same glow as tablet
+           PHONE - Multi-color animated glow
            ============================================ */
         .phone::before {
             content: '';
@@ -2944,7 +2909,7 @@
         }
         
         .device:hover {
-            filter: brightness(1.1);
+            filter: brightness(1.05);
         }
         
         /* Laptop - Top center, larger with float */
@@ -2952,20 +2917,24 @@
             width: 650px;
             top: -30px;
             left: 55%;
-            transform: translateX(-50%) translateZ(0);
+            transform: translateX(-50%);
             z-index: 2;
-            animation: floatLaptop 6s ease-in-out infinite, zoomInLaptop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
-            animation-delay: 0s, 0.2s;
+            animation: zoomInLaptop 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, orbitLaptop 20s ease-in-out infinite 1.5s;
+            transform-style: preserve-3d;
+            will-change: transform, opacity;
+            opacity: 0;
         }
         
-        @keyframes floatLaptop {
-            0%, 100% { transform: translateX(-50%) translateY(0) rotateX(2deg); }
-            50% { transform: translateX(-50%) translateY(-15px) rotateX(-2deg); }
+        @keyframes orbitLaptop {
+            0%, 100% { transform: translateX(-50%) perspective(1000px) rotateY(0deg) rotateX(5deg); }
+            25% { transform: translateX(-50%) perspective(1000px) rotateY(6deg) rotateX(3deg); }
+            50% { transform: translateX(-50%) perspective(1000px) rotateY(0deg) rotateX(-2deg); }
+            75% { transform: translateX(-50%) perspective(1000px) rotateY(-6deg) rotateX(3deg); }
         }
         
         .laptop:hover {
             animation-play-state: paused;
-            transform: translateX(-50%) translateY(-25px) scale(1.03) rotateX(5deg);
+            z-index: 10;
         }
         
         /* Tablet - Bottom right, angled with float */
@@ -2973,41 +2942,45 @@
             width: 340px;
             bottom: -50px;
             right: -5%;
-            transform: perspective(1000px) rotateY(-18deg) rotateX(8deg);
             z-index: 3;
-            animation: floatTablet 5s ease-in-out infinite, zoomInTablet 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
-            animation-delay: 0.5s, 0.5s;
+            animation: zoomInTablet 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s forwards, orbitTablet 25s ease-in-out infinite 1.8s;
+            transform-style: preserve-3d;
+            will-change: transform, opacity;
+            opacity: 0;
         }
         
-        @keyframes floatTablet {
-            0%, 100% { transform: perspective(1000px) rotateY(-18deg) rotateX(8deg) translateY(0); }
-            50% { transform: perspective(1000px) rotateY(-15deg) rotateX(10deg) translateY(-12px); }
+        @keyframes orbitTablet {
+            0%, 100% { transform: perspective(1000px) rotateY(-15deg) rotateX(8deg); }
+            25% { transform: perspective(1000px) rotateY(-10deg) rotateX(10deg); }
+            50% { transform: perspective(1000px) rotateY(-18deg) rotateX(5deg); }
+            75% { transform: perspective(1000px) rotateY(-22deg) rotateX(8deg); }
         }
         
         .tablet:hover {
             animation-play-state: paused;
-            transform: perspective(1000px) rotateY(-12deg) rotateX(5deg) translateY(-25px) scale(1.05);
         }
         
         /* Phone - Left side, prominent with float */
         .phone {
             width: 280px;
             bottom: -10px;
-            left: 2%;
-            transform: perspective(1000px) rotateY(20deg) rotateX(5deg);
+            left: -2%;
             z-index: 4;
-            animation: floatPhone 4s ease-in-out infinite, zoomInPhone 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
-            animation-delay: 1s, 0.8s;
+            animation: zoomInPhone 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards, orbitPhone 18s ease-in-out infinite 2s;
+            transform-style: preserve-3d;
+            will-change: transform, opacity;
+            opacity: 0;
         }
         
-        @keyframes floatPhone {
-            0%, 100% { transform: perspective(1000px) rotateY(20deg) rotateX(5deg) translateY(0); }
-            50% { transform: perspective(1000px) rotateY(18deg) rotateX(8deg) translateY(-18px); }
+        @keyframes orbitPhone {
+            0%, 100% { transform: perspective(1000px) rotateY(18deg) rotateX(5deg); }
+            25% { transform: perspective(1000px) rotateY(24deg) rotateX(2deg); }
+            50% { transform: perspective(1000px) rotateY(18deg) rotateX(-3deg); }
+            75% { transform: perspective(1000px) rotateY(12deg) rotateX(4deg); }
         }
         
         .phone:hover {
             animation-play-state: paused;
-            transform: perspective(1000px) rotateY(15deg) rotateX(3deg) translateY(-30px) scale(1.05);
         }
         
         @keyframes floatIn {
@@ -3021,55 +2994,49 @@
             }
         }
         
-        /* Zoom from far away entry animations */
+        /* Zoom from background entry animations */
         @keyframes zoomInLaptop {
             0% {
                 opacity: 0;
-                transform: translateX(-50%) scale(0.1) translateZ(-1000px) rotateX(30deg);
-                filter: blur(10px);
+                transform: translateX(-50%) scale(0.3);
             }
-            60% {
+            70% {
                 opacity: 1;
-                filter: blur(2px);
+                transform: translateX(-50%) scale(1.05);
             }
             100% {
                 opacity: 1;
-                transform: translateX(-50%) scale(1) translateZ(0) rotateX(0deg);
-                filter: blur(0);
+                transform: translateX(-50%) perspective(1000px) rotateY(0deg) rotateX(5deg) scale(1);
             }
         }
         
         @keyframes zoomInTablet {
             0% {
                 opacity: 0;
-                transform: perspective(1000px) rotateY(-18deg) rotateX(8deg) scale(0.1) translateZ(-800px);
-                filter: blur(10px);
+                transform: perspective(1000px) rotateY(-15deg) rotateX(8deg) scale(0.3);
             }
-            60% {
+            70% {
                 opacity: 1;
-                filter: blur(2px);
+                transform: perspective(1000px) rotateY(-15deg) rotateX(8deg) scale(1.08);
             }
             100% {
                 opacity: 1;
-                transform: perspective(1000px) rotateY(-18deg) rotateX(8deg) scale(1) translateZ(0);
-                filter: blur(0);
+                transform: perspective(1000px) rotateY(-15deg) rotateX(8deg) scale(1);
             }
         }
         
         @keyframes zoomInPhone {
             0% {
                 opacity: 0;
-                transform: perspective(1000px) rotateY(20deg) rotateX(5deg) scale(0.1) translateZ(-600px);
-                filter: blur(10px);
+                transform: perspective(1000px) rotateY(18deg) rotateX(5deg) scale(0.3);
             }
-            60% {
+            70% {
                 opacity: 1;
-                filter: blur(2px);
+                transform: perspective(1000px) rotateY(18deg) rotateX(5deg) scale(1.1);
             }
             100% {
                 opacity: 1;
-                transform: perspective(1000px) rotateY(20deg) rotateX(5deg) scale(1) translateZ(0);
-                filter: blur(0);
+                transform: perspective(1000px) rotateY(18deg) rotateX(5deg) scale(1);
             }
         }
         
@@ -3081,22 +3048,19 @@
         }
         
         /* ============================================
-           LAPTOP - Premium Silver MacBook Style
+           LAPTOP - Premium Silver MacBook Style with Glassmorphism
            ============================================ */
         .laptop .device-frame {
             padding: 12px 12px 0 12px;
             border-radius: 16px 16px 0 0;
-            background: linear-gradient(180deg, 
-                #e8e8e8 0%, 
-                #c0c0c0 2%, 
-                #d8d8d8 5%,
-                #a8a8a8 100%);
-            border: none;
+            background: rgba(220, 220, 220, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.4),
-                0 15px 30px rgba(0, 0, 0, 0.3),
-                inset 0 2px 3px rgba(255, 255, 255, 0.8),
-                inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 3px rgba(255, 255, 255, 0.7),
+                0 0 40px rgba(20, 184, 166, 0.2);
         }
         
         /* Laptop lid reflection */
@@ -3135,16 +3099,17 @@
         .laptop .device-base {
             display: block !important;
             height: 18px;
-            background: linear-gradient(180deg, 
-                #b0b0b0 0%, 
-                #888888 50%,
-                #666666 100%);
+            background: rgba(180, 180, 180, 0.55);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 0 0 16px 16px;
             margin-top: -1px;
             box-shadow: 
-                inset 0 2px 4px rgba(0, 0, 0, 0.3),
+                inset 0 2px 4px rgba(0, 0, 0, 0.2),
                 0 4px 8px rgba(0, 0, 0, 0.2);
             position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-top: none;
         }
         
         /* Keyboard trackpad hint */
@@ -3165,7 +3130,8 @@
             box-shadow: 
                 0 40px 80px rgba(0, 0, 0, 0.5),
                 0 20px 40px rgba(0, 0, 0, 0.3),
-                0 0 60px rgba(20, 184, 166, 0.2),
+                0 0 80px rgba(20, 184, 166, 0.35),
+                0 0 120px rgba(20, 184, 166, 0.15),
                 inset 0 2px 3px rgba(255, 255, 255, 0.8);
         }
         
@@ -3175,21 +3141,16 @@
         .tablet .device-frame {
             padding: 16px;
             border-radius: 24px;
-            background: linear-gradient(145deg, 
-                #f5d0c5 0%, 
-                #e8b4a8 20%,
-                #d4968a 50%,
-                #c27f73 100%);
-            border: none;
+            background: rgba(240, 200, 190, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 220, 200, 0.6);
             box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.35),
-                0 10px 20px rgba(0, 0, 0, 0.25),
-                inset 0 2px 4px rgba(255, 255, 255, 0.5),
-                inset 0 -2px 4px rgba(0, 0, 0, 0.15),
-                0 0 0 3px rgba(212, 150, 138, 0.3);
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 3px rgba(255, 255, 255, 0.5),
+                0 0 40px rgba(249, 115, 22, 0.25);
         }
         
-        /* Tablet glossy reflection */
         /* Side button */
         .tablet .device-frame::before {
             content: '';
@@ -3198,7 +3159,7 @@
             right: -4px;
             width: 4px;
             height: 40px;
-            background: linear-gradient(90deg, #a06a5e 0%, #c08878 50%, #a06a5e 100%);
+            background: rgba(200, 150, 140, 0.7);
             border-radius: 0 3px 3px 0;
             box-shadow: 2px 0 4px rgba(0,0,0,0.2);
         }
@@ -3222,59 +3183,43 @@
             box-shadow: 
                 0 35px 70px rgba(0, 0, 0, 0.4),
                 0 15px 30px rgba(0, 0, 0, 0.25),
-                0 0 50px rgba(249, 115, 22, 0.25),
-                0 0 80px rgba(236, 72, 153, 0.15),
+                0 0 60px rgba(249, 115, 22, 0.35),
+                0 0 100px rgba(236, 72, 153, 0.2),
                 inset 0 2px 4px rgba(255, 255, 255, 0.5);
         }
         
         /* ============================================
-           PHONE - Cyberpunk Neon Futuristic
+           PHONE - Cyberpunk Neon Futuristic with Glassmorphism
            ============================================ */
         .phone .device-frame {
             padding: 8px;
             border-radius: 32px;
-            background: linear-gradient(180deg, 
-                #0f0f0f 0%, 
-                #1a1a2e 30%,
-                #16213e 70%,
-                #0f0f0f 100%);
-            border: 2px solid transparent;
-            background-clip: padding-box;
+            background: rgba(140, 160, 180, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(34, 211, 238, 0.6);
             box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.5),
-                0 10px 20px rgba(0, 0, 0, 0.4),
-                inset 0 1px 1px rgba(255, 255, 255, 0.1),
-                0 0 0 2px rgba(6, 182, 212, 0.5),
-                0 0 20px rgba(6, 182, 212, 0.3),
-                0 0 40px rgba(6, 182, 212, 0.1);
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 3px rgba(255, 255, 255, 0.3),
+                0 0 40px rgba(6, 182, 212, 0.4);
             position: relative;
         }
         
-        /* Neon edge glow */
+        /* Neon edge glow - simplified */
         .phone .device-frame::before {
             content: '';
             position: absolute;
-            inset: -3px;
-            border-radius: 35px;
+            inset: -2px;
+            border-radius: 34px;
             background: linear-gradient(45deg, 
-                #06b6d4 0%, 
-                #22d3ee 25%, 
-                #14b8a6 50%,
-                #22d3ee 75%,
-                #06b6d4 100%);
-            background-size: 300% 300%;
+                rgba(6, 182, 212, 0.6) 0%, 
+                rgba(34, 211, 238, 0.8) 50%,
+                rgba(6, 182, 212, 0.6) 100%);
             z-index: -1;
-            animation: neonBorder 3s linear infinite;
-            opacity: 0.8;
+            opacity: 0.7;
         }
         
-        @keyframes neonBorder {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* Side buttons with neon */
+        /* Side buttons */
         .phone .device-frame::after {
             content: '';
             position: absolute;
@@ -3282,14 +3227,9 @@
             left: -4px;
             width: 4px;
             height: 60px;
-            background: linear-gradient(180deg, 
-                rgba(6, 182, 212, 0.8) 0%,
-                rgba(34, 211, 238, 1) 50%,
-                rgba(6, 182, 212, 0.8) 100%);
+            background: rgba(34, 211, 238, 0.6);
             border-radius: 3px 0 0 3px;
-            box-shadow: 
-                -3px 0 10px rgba(6, 182, 212, 0.6),
-                -5px 0 20px rgba(6, 182, 212, 0.3);
+            box-shadow: -3px 0 10px rgba(6, 182, 212, 0.5);
         }
         
         .phone .device-screen {
@@ -3298,7 +3238,7 @@
             border-radius: 26px;
             overflow: hidden;
             position: relative;
-            box-shadow: inset 0 0 20px rgba(6, 182, 212, 0.2);
+            box-shadow: inset 0 0 15px rgba(6, 182, 212, 0.2);
         }
         
         /* Dynamic Island style notch */
@@ -3322,9 +3262,9 @@
             box-shadow: 
                 0 35px 70px rgba(0, 0, 0, 0.5),
                 0 15px 30px rgba(0, 0, 0, 0.4),
-                0 0 0 2px rgba(34, 211, 238, 0.8),
-                0 0 40px rgba(34, 211, 238, 0.5),
-                0 0 80px rgba(34, 211, 238, 0.2);
+                0 0 50px rgba(34, 211, 238, 0.6),
+                0 0 100px rgba(34, 211, 238, 0.3),
+                0 0 150px rgba(6, 182, 212, 0.15);
         }
         
         .phone:hover .device-frame::before {
@@ -3400,150 +3340,91 @@
             display: none;
         }
         
-        /* Floating Orbs - Unique for each device theme */
+        /* Floating Orbs - Simplified for performance */
         .teal-orb {
             position: absolute;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 15;
         }
         
-        /* Silver orbs near laptop */
+        /* Silver orb - laptop area */
         .orb-1 {
-            width: 8px;
-            height: 8px;
-            top: 5%;
-            left: 40%;
-            background: radial-gradient(circle at 30% 30%, rgba(200, 200, 200, 0.9), rgba(150, 150, 150, 0.4));
-            box-shadow: 
-                0 0 15px rgba(200, 200, 200, 0.6),
-                0 0 30px rgba(200, 200, 200, 0.3);
-            animation: orbFloat1 7s ease-in-out infinite;
-        }
-        
-        /* Rose gold orbs near tablet */
-        .orb-2 {
             width: 12px;
             height: 12px;
-            bottom: 25%;
-            right: 10%;
-            background: radial-gradient(circle at 30% 30%, rgba(245, 208, 197, 0.9), rgba(212, 150, 138, 0.5));
-            box-shadow: 
-                0 0 20px rgba(249, 115, 22, 0.5),
-                0 0 40px rgba(236, 72, 153, 0.3);
-            animation: orbFloat2 9s ease-in-out infinite 1s;
+            top: -5%;
+            left: 35%;
+            background: rgba(230, 230, 230, 0.95);
+            box-shadow: 0 0 20px rgba(220, 220, 220, 0.7);
+            animation: orbFloat1 6s ease-in-out infinite;
         }
         
+        /* Rose gold orb - tablet area */
+        .orb-2 {
+            width: 14px;
+            height: 14px;
+            bottom: 5%;
+            right: -2%;
+            background: rgba(255, 200, 180, 0.95);
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.6);
+            animation: orbFloat2 7s ease-in-out infinite 1s;
+        }
+        
+        /* Pink orb - tablet area */
         .orb-3 {
-            width: 6px;
-            height: 6px;
-            bottom: 40%;
-            right: 20%;
-            background: radial-gradient(circle at 30% 30%, rgba(236, 72, 153, 0.8), rgba(249, 115, 22, 0.4));
-            box-shadow: 
-                0 0 15px rgba(236, 72, 153, 0.6),
-                0 0 30px rgba(236, 72, 153, 0.3);
-            animation: orbFloat3 6s ease-in-out infinite 0.5s;
-        }
-        
-        /* Cyan neon orbs near phone */
-        .orb-4 {
             width: 10px;
             height: 10px;
-            bottom: 30%;
-            left: 5%;
-            background: radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 1), rgba(6, 182, 212, 0.5));
-            box-shadow: 
-                0 0 20px rgba(34, 211, 238, 0.8),
-                0 0 40px rgba(34, 211, 238, 0.4),
-                0 0 60px rgba(6, 182, 212, 0.2);
-            animation: orbFloat1 5s ease-in-out infinite 2s;
+            bottom: 60%;
+            right: -5%;
+            background: rgba(255, 100, 180, 0.9);
+            box-shadow: 0 0 18px rgba(236, 72, 153, 0.7);
+            animation: orbFloat1 5s ease-in-out infinite 0.5s;
         }
         
+        /* Cyan orb - phone area */
+        .orb-4 {
+            width: 12px;
+            height: 12px;
+            bottom: 70%;
+            left: -3%;
+            background: rgba(34, 211, 238, 1);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.8);
+            animation: orbFloat2 5s ease-in-out infinite 2s;
+        }
+        
+        /* Teal orb - phone area */
         .orb-5 {
-            width: 5px;
-            height: 5px;
-            bottom: 50%;
-            left: 0%;
-            background: radial-gradient(circle at 30% 30%, rgba(20, 184, 166, 1), rgba(6, 182, 212, 0.6));
-            box-shadow: 
-                0 0 15px rgba(20, 184, 166, 0.9),
-                0 0 30px rgba(20, 184, 166, 0.5);
-            animation: orbFloat2 4s ease-in-out infinite 1.5s;
+            width: 9px;
+            height: 9px;
+            bottom: 20%;
+            left: -5%;
+            background: rgba(20, 184, 166, 1);
+            box-shadow: 0 0 18px rgba(20, 184, 166, 0.8);
+            animation: orbFloat1 4s ease-in-out infinite 1.5s;
         }
         
-        /* Extra silver orb for laptop */
+        /* Silver orb - laptop area */
         .orb-6 {
-            width: 6px;
-            height: 6px;
-            top: 15%;
-            left: 55%;
-            background: radial-gradient(circle at 30% 30%, rgba(220, 220, 220, 0.9), rgba(180, 180, 180, 0.5));
-            box-shadow: 
-                0 0 12px rgba(200, 200, 200, 0.7),
-                0 0 25px rgba(200, 200, 200, 0.3);
-            animation: orbFloat3 6s ease-in-out infinite 0.8s;
-        }
-        
-        /* Extra neon orb for phone */
-        .orb-7 {
-            width: 7px;
-            height: 7px;
-            bottom: 15%;
-            left: 8%;
-            background: radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.9), rgba(6, 182, 212, 0.5));
-            box-shadow: 
-                0 0 18px rgba(34, 211, 238, 0.8),
-                0 0 35px rgba(6, 182, 212, 0.4);
-            animation: orbFloat1 5.5s ease-in-out infinite 1s;
+            width: 10px;
+            height: 10px;
+            top: -8%;
+            left: 75%;
+            background: rgba(240, 240, 240, 0.95);
+            box-shadow: 0 0 18px rgba(220, 220, 220, 0.7);
+            animation: orbFloat2 6s ease-in-out infinite 0.8s;
         }
         
         @keyframes orbFloat1 {
-            0%, 100% { 
-                transform: translateY(0) translateX(0) scale(1); 
-                opacity: 0.8;
-            }
-            25% { 
-                transform: translateY(-30px) translateX(15px) scale(1.2); 
-                opacity: 1;
-            }
-            50% { 
-                transform: translateY(-50px) translateX(-10px) scale(0.9); 
-                opacity: 0.6;
-            }
-            75% { 
-                transform: translateY(-20px) translateX(20px) scale(1.1); 
-                opacity: 0.9;
-            }
+            0%, 100% { transform: translateY(0); opacity: 0.85; }
+            50% { transform: translateY(-15px); opacity: 1; }
         }
         
         @keyframes orbFloat2 {
-            0%, 100% { 
-                transform: translateY(0) translateX(0) scale(1); 
-                opacity: 0.7;
-            }
-            33% { 
-                transform: translateY(-40px) translateX(-20px) scale(1.3); 
-                opacity: 1;
-            }
-            66% { 
-                transform: translateY(-60px) translateX(10px) scale(0.8); 
-                opacity: 0.5;
-            }
+            0%, 100% { transform: translateY(0); opacity: 0.8; }
+            50% { transform: translateY(-20px); opacity: 1; }
         }
         
-        @keyframes orbFloat3 {
-            0%, 100% { 
-                transform: translateY(0) translateX(0) scale(1); 
-                opacity: 0.9;
-            }
-            50% { 
-                transform: translateY(-45px) translateX(-25px) scale(1.4); 
-                opacity: 0.6;
-            }
-        }
-        
-        /* Launch Trails - Removed for cleaner look */
+        /* Launch Trails - Removed */
         .launch-trail {
             display: none;
         }
@@ -3962,17 +3843,32 @@
 
         .feature-card {
             padding: 2rem;
-            background: var(--card-bg);
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+        
+        [data-theme="light"] .feature-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(20, 184, 166, 0.4);
+        }
+        
+        [data-theme="light"] .feature-card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            border-color: rgba(13, 148, 136, 0.4);
         }
 
         .feature-icon {
@@ -4143,16 +4039,31 @@
         .showcase-item {
             border-radius: var(--border-radius-lg);
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+        
+        [data-theme="light"] .showcase-item {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(13, 148, 136, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         .showcase-item:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(20, 184, 166, 0.4);
+        }
+        
+        [data-theme="light"] .showcase-item:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            border-color: rgba(13, 148, 136, 0.4);
         }
 
         .showcase-image {
@@ -5801,13 +5712,24 @@
                 left: 0;
                 right: 0;
                 height: 70px;
-                background: var(--card-bg);
-                border-top: 1px solid var(--border-color);
+                background: rgba(10, 10, 10, 0.85);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border-top: 1px solid rgba(20, 184, 166, 0.2);
                 z-index: 999;
                 justify-content: space-around;
                 align-items: center;
                 padding: 0.5rem 1rem;
                 box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+            }
+            
+            /* Light mode glassmorphism for mobile nav */
+            [data-theme="light"] .mobile-bottom-nav {
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border-top: 1px solid rgba(13, 148, 136, 0.2);
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
             }
             
             .mobile-nav-item {
@@ -6315,16 +6237,8 @@
             <div class="hero-visual">
                 <div class="device-mockups">
                     <!-- Floating Orbs - Different colors for each device zone -->
-                    <div class="teal-orb orb-1"></div>
-                    <div class="teal-orb orb-2"></div>
-                    <div class="teal-orb orb-3"></div>
-                    <div class="teal-orb orb-4"></div>
-                    <div class="teal-orb orb-5"></div>
-                    <div class="teal-orb orb-6"></div>
-                    <div class="teal-orb orb-7"></div>
-                    
                     <!-- Laptop Mockup - Silver MacBook -->
-                    <div class="device laptop" style="--delay: 0.6s">
+                    <div class="device laptop">
                         <div class="device-frame">
                             <div class="device-screen">
                                 <div class="screen-header">
@@ -6336,36 +6250,25 @@
                             </div>
                         </div>
                         <div class="device-base"></div>
-                        <div class="launch-trail trail-1"></div>
-                        <div class="launch-trail trail-2"></div>
                     </div>
                     
                     <!-- Tablet Mockup -->
-                    <div class="device tablet" style="--delay: 0.8s">
+                    <div class="device tablet">
                         <div class="device-frame">
                             <div class="device-screen">
                                 <div class="screen-content gradient-2"></div>
                             </div>
                         </div>
-                        <div class="launch-trail trail-1"></div>
                     </div>
                     
                     <!-- Phone Mockup -->
-                    <div class="device phone" style="--delay: 1s">
+                    <div class="device phone">
                         <div class="device-frame">
                             <div class="device-screen">
                                 <div class="screen-content gradient-3"></div>
                             </div>
                         </div>
-                        <div class="launch-trail trail-2"></div>
                     </div>
-                    
-                    <!-- Deploy Particles -->
-                    <div class="deploy-particle" style="--x: 10%; --y: 20%; --delay: 0s"></div>
-                    <div class="deploy-particle" style="--x: 80%; --y: 30%; --delay: 0.5s"></div>
-                    <div class="deploy-particle" style="--x: 50%; --y: 60%; --delay: 1s"></div>
-                    <div class="deploy-particle" style="--x: 20%; --y: 80%; --delay: 1.5s"></div>
-                    <div class="deploy-particle" style="--x: 90%; --y: 70%; --delay: 2s"></div>
                 </div>
             </div>
         </div>
@@ -9834,94 +9737,38 @@
         setTimeout(updateMobileCartBadge, 500);
     </script>
     
-    <!-- Device Scroll Parallax Animation -->
+    <!-- Device Scroll Parallax Animation - Optimized -->
     <script>
         (function() {
-            // Wait for DOM to be ready
-            document.addEventListener('DOMContentLoaded', function() {
-                const laptop = document.querySelector('.device.laptop');
-                const tablet = document.querySelector('.device.tablet');
-                const phone = document.querySelector('.device.phone');
-                const hero = document.querySelector('.hero');
-                
-                if (!laptop || !tablet || !phone || !hero) return;
-                
-                // Store original positions
-                const heroRect = hero.getBoundingClientRect();
-                const heroHeight = heroRect.height;
-                
-                // Parallax speeds (different for each device)
-                const speeds = {
-                    laptop: 0.3,   // Moves slowest
-                    tablet: 0.5,   // Medium speed
-                    phone: 0.7    // Moves fastest
-                };
-                
-                // Direction multipliers (spread apart as you scroll)
-                const directions = {
-                    laptop: { x: 0, y: -1, rotate: 0.02, scale: -0.0002 },
-                    tablet: { x: 1.2, y: 0.8, rotate: -0.03, scale: -0.0003 },
-                    phone: { x: -1.5, y: 1, rotate: 0.04, scale: -0.0004 }
-                };
-                
+            let scrollTimeout;
+            const devices = document.querySelectorAll('.device');
+            
+            // Delay parallax until after entry animation completes
+            setTimeout(function() {
                 let ticking = false;
-                let lastScrollY = 0;
                 
                 function updateParallax() {
                     const scrollY = window.scrollY;
-                    const scrollProgress = Math.min(scrollY / heroHeight, 1);
-                    
-                    // Only animate when hero is in view
-                    if (scrollY > heroHeight * 1.5) {
+                    if (scrollY > 800) {
                         ticking = false;
                         return;
                     }
                     
-                    // Laptop parallax
-                    const laptopY = scrollY * speeds.laptop * directions.laptop.y;
-                    const laptopX = scrollY * speeds.laptop * directions.laptop.x;
-                    const laptopRotate = scrollY * directions.laptop.rotate;
-                    const laptopScale = 1 + (scrollY * directions.laptop.scale);
-                    laptop.style.transform = `translateX(calc(-50% + ${laptopX}px)) translateY(${laptopY}px) rotateX(${2 + laptopRotate}deg) scale(${Math.max(laptopScale, 0.7)})`;
-                    laptop.style.opacity = Math.max(1 - (scrollProgress * 0.8), 0.2);
-                    
-                    // Tablet parallax (moves right and down)
-                    const tabletY = scrollY * speeds.tablet * directions.tablet.y;
-                    const tabletX = scrollY * speeds.tablet * directions.tablet.x;
-                    const tabletRotate = scrollY * directions.tablet.rotate;
-                    const tabletScale = 1 + (scrollY * directions.tablet.scale);
-                    tablet.style.transform = `perspective(1000px) rotateY(${-18 + tabletRotate * 10}deg) rotateX(${8 + tabletRotate * 5}deg) translateX(${tabletX}px) translateY(${tabletY}px) scale(${Math.max(tabletScale, 0.6)})`;
-                    tablet.style.opacity = Math.max(1 - (scrollProgress * 0.9), 0.1);
-                    
-                    // Phone parallax (moves left and down faster)
-                    const phoneY = scrollY * speeds.phone * directions.phone.y;
-                    const phoneX = scrollY * speeds.phone * directions.phone.x;
-                    const phoneRotate = scrollY * directions.phone.rotate;
-                    const phoneScale = 1 + (scrollY * directions.phone.scale);
-                    phone.style.transform = `perspective(1000px) rotateY(${20 + phoneRotate * 8}deg) rotateX(${5 + phoneRotate * 3}deg) translateX(${phoneX}px) translateY(${phoneY}px) scale(${Math.max(phoneScale, 0.5)})`;
-                    phone.style.opacity = Math.max(1 - (scrollProgress * 1), 0);
+                    const progress = Math.min(scrollY / 600, 1);
+                    devices.forEach(device => {
+                        device.style.opacity = Math.max(1 - progress * 0.9, 0.1);
+                    });
                     
                     ticking = false;
                 }
                 
-                function onScroll() {
-                    lastScrollY = window.scrollY;
+                window.addEventListener('scroll', function() {
                     if (!ticking) {
                         requestAnimationFrame(updateParallax);
                         ticking = true;
                     }
-                }
-                
-                // Add scroll listener
-                window.addEventListener('scroll', onScroll, { passive: true });
-                
-                // Reset on page load/refresh
-                window.addEventListener('beforeunload', function() {
-                    laptop.style.transform = '';
-                    tablet.style.transform = '';
-                    phone.style.transform = '';
-                });
-            });
+                }, { passive: true });
+            }, 2000);
         })();
     </script>
 </body>
