@@ -25,11 +25,26 @@ module.exports = async function handler(req, res) {
     const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     try {
-        const { sale_id, product_id, product_permalink, email, price, currency } = req.body;
+        const { sale_id, product_id, product_permalink, email, price, currency, short_product_id } = req.body;
         
-        console.log('Gumroad Ping received:', { sale_id, product_permalink, email, price });
+        console.log('Gumroad Ping received:', { sale_id, product_permalink, short_product_id, email, price });
 
-        const templateSlug = PRODUCT_MAP[product_permalink] || product_permalink;
+        // Extract permalink slug - handle both full URL and short form
+        let permalinkKey = short_product_id || product_permalink || '';
+        
+        // If it's a URL, extract the last part
+        if (permalinkKey.includes('/')) {
+            permalinkKey = permalinkKey.split('/').pop();
+        }
+        
+        // Remove any query params
+        if (permalinkKey.includes('?')) {
+            permalinkKey = permalinkKey.split('?')[0];
+        }
+        
+        console.log('Extracted permalink key:', permalinkKey);
+        
+        const templateSlug = PRODUCT_MAP[permalinkKey] || permalinkKey;
 
         // Find user by email using Supabase REST API
         const usersResponse = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
