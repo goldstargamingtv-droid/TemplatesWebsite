@@ -8401,8 +8401,8 @@
         function showPurchaseSuccessModal(purchaseInfo) {
             // Remove purchased item from cart
             cart = cart.filter(item => item.slug !== purchaseInfo.slug);
-            saveCart();
-            updateCartUI();
+            localStorage.setItem('cart', JSON.stringify(cart));
+            try { updateCartUI(); } catch(e) { console.log('Cart UI update skipped'); }
             
             const modal = document.createElement('div');
             modal.className = 'modal-overlay';
@@ -9693,8 +9693,8 @@
             if (purchaseQueue.length === 0) {
                 // All done - clear cart
                 cart = [];
-                saveCart();
-                updateCartUI();
+                localStorage.setItem('cart', JSON.stringify(cart));
+                try { updateCartUI(); } catch(e) { console.log('Cart UI update skipped'); }
                 showNotification('All purchases complete! 🎉', 'success');
                 return;
             }
