@@ -8206,18 +8206,21 @@
                         <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">$${price}</div>
                         <div style="color: var(--text-muted); font-size: 0.9rem;">One-time payment</div>
                     </div>
-                    <button onclick="openGumroadPopup('${gumroadUrl}', '${templateSlug}')"
+                    <button id="checkoutBtn" onclick="openGumroadPopup('${gumroadUrl}', '${templateSlug}')"
                        style="display: block; width: 100%; padding: 1rem 2rem; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">
                         Complete Purchase →
                     </button>
                     <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 1rem;">
                         🔒 Secure checkout powered by Gumroad
                     </p>
-                    <div id="checkoutWaiting" style="display: none; margin-top: 1rem; padding: 1rem; background: rgba(29, 154, 155, 0.1); border-radius: 8px;">
-                        <p style="color: var(--text-secondary); margin: 0;">
-                            ⏳ Waiting for payment completion...<br>
-                            <small>Complete your purchase in the popup window</small>
+                    <div id="checkoutWaiting" style="display: none; margin-top: 1.5rem; padding: 1rem; background: rgba(29, 154, 155, 0.1); border-radius: 8px;">
+                        <p style="color: var(--text-secondary); margin: 0 0 1rem 0;">
+                            ⏳ Complete your purchase in the popup window
                         </p>
+                        <button onclick="checkPurchaseManually('${templateSlug}', '${templateName}')"
+                            style="padding: 0.75rem 1.5rem; background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-size: 0.9rem;">
+                            I've completed payment ✓
+                        </button>
                     </div>
                 </div>
             `;
@@ -8231,10 +8234,36 @@
             });
         }
         
+        async function checkPurchaseManually(templateSlug, templateName) {
+            showNotification('Checking purchase status...', 'info');
+            
+            try {
+                const { data: purchases, error } = await supabaseClient
+                    .from('purchases')
+                    .select('id, template_slug')
+                    .eq('user_id', currentUser.id)
+                    .eq('template_slug', templateSlug);
+                
+                if (!error && purchases && purchases.length > 0) {
+                    closeCheckoutModal();
+                    showPurchaseSuccessModal({ slug: templateSlug, name: templateName });
+                    loadDashboard();
+                } else {
+                    showNotification('Purchase not found yet. Please wait a moment and try again, or contact support if the issue persists.', 'error');
+                }
+            } catch (e) {
+                showNotification('Error checking purchase. Please try again.', 'error');
+            }
+        }
+        
         function openGumroadPopup(gumroadUrl, templateSlug) {
             // Show waiting message
             const waitingDiv = document.getElementById('checkoutWaiting');
             if (waitingDiv) waitingDiv.style.display = 'block';
+            
+            // Hide checkout button
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            if (checkoutBtn) checkoutBtn.style.display = 'none';
             
             // Open popup
             const width = 500;
@@ -8260,18 +8289,17 @@
             }
         }
         
+        // Store popup reference globally so we can close it
+        let gumroadPopup = null;
+        
         // Poll for purchase completion after Gumroad checkout
         async function startPurchasePolling(templateSlug, popup = null) {
+            gumroadPopup = popup;
             let attempts = 0;
-            const maxAttempts = 60; // Poll for 2 minutes max
+            const maxAttempts = 90; // Poll for 3 minutes max
             
             const pollInterval = setInterval(async () => {
                 attempts++;
-                
-                // Check if popup was closed without purchase
-                if (popup && popup.closed && attempts < 10) {
-                    // Give a few more seconds in case webhook is processing
-                }
                 
                 try {
                     // Check if purchase exists
@@ -8281,21 +8309,37 @@
                         .eq('user_id', currentUser.id)
                         .eq('template_slug', templateSlug);
                     
+                    console.log('Polling attempt', attempts, '- Purchases:', purchases, 'Error:', error);
+                    
                     if (!error && purchases && purchases.length > 0) {
                         clearInterval(pollInterval);
-                        if (popup && !popup.closed) popup.close();
+                        
+                        // Close popup
+                        if (gumroadPopup && !gumroadPopup.closed) {
+                            gumroadPopup.close();
+                        }
+                        
+                        // Close checkout modal
                         closeCheckoutModal();
-                        showPurchaseSuccessModal(pendingPurchase);
-                        pendingPurchase = null;
-                        loadDashboard(); // Refresh dashboard
+                        
+                        // Show success modal
+                        if (pendingPurchase) {
+                            showPurchaseSuccessModal(pendingPurchase);
+                            pendingPurchase = null;
+                        } else {
+                            showPurchaseSuccessModal({ slug: templateSlug, name: 'Your Template' });
+                        }
+                        
+                        loadDashboard();
+                        return;
                     }
                 } catch (e) {
-                    console.log('Polling check:', e);
+                    console.log('Polling error:', e);
                 }
                 
                 if (attempts >= maxAttempts) {
                     clearInterval(pollInterval);
-                    pendingPurchase = null;
+                    console.log('Polling timed out');
                 }
             }, 2000); // Check every 2 seconds
             
