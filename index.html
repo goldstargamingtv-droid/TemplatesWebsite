@@ -8021,19 +8021,10 @@
             container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 3rem;"><div class="loading"></div><p style="margin-top: 1rem; color: var(--text-secondary);">Loading your templates...</p></div>';
             
             try {
+                // Get purchases
                 const { data: purchases, error } = await supabaseClient
                     .from('purchases')
-                    .select(`
-                        *,
-                        templates (
-                            id,
-                            name,
-                            slug,
-                            thumbnail_url,
-                            current_version,
-                            category
-                        )
-                    `)
+                    .select('*')
                     .eq('user_id', currentUser.id)
                     .order('purchased_at', { ascending: false });
                 
@@ -8052,8 +8043,16 @@
                     return;
                 }
                 
+                // Template info lookup by slug
+                const templateInfo = {
+                    'saas-landing': { name: 'FlowMetrics - SaaS Landing', category: 'SaaS', current_version: '1.0.0' },
+                    'portfolio': { name: 'Creative Portfolio', category: 'Portfolio', current_version: '1.0.0' },
+                    'restaurant': { name: 'Bella Vista - Restaurant', category: 'Restaurant', current_version: '1.0.0' }
+                };
+                
                 container.innerHTML = purchases.map(purchase => {
-                    const template = purchase.templates;
+                    const slug = purchase.template_slug;
+                    const template = templateInfo[slug] || { name: slug, category: 'Template', current_version: '1.0.0' };
                     const gradients = ['gradient-1', 'gradient-2', 'gradient-3'];
                     const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
                     
@@ -8076,7 +8075,7 @@
                                     </div>
                                 </div>
                                 <div class="card-actions">
-                                    <button class="btn btn-primary btn-small" onclick="downloadTemplate('${template.slug}', '${template.current_version}')">
+                                    <button class="btn btn-primary btn-small" onclick="downloadTemplate('${slug}', '${template.current_version}')">
                                         ⬇️ Download
                                     </button>
                                     <button class="btn btn-secondary btn-small" onclick="showNotification('Updates coming soon!', 'info')">
@@ -8118,7 +8117,7 @@
                 if (!template) throw new Error('Template not found');
                 
                 // Create signed URL for download
-                const filePath = `${slug}/${slug}-v${version}.zip`;
+                const filePath = `files/${slug}/${slug}-v${version}.zip`;
                 const { data: urlData, error: urlError } = await supabaseClient.storage
                     .from('templates')
                     .createSignedUrl(filePath, 3600); // 1 hour expiry
@@ -8191,10 +8190,6 @@
             const existing = document.getElementById('checkoutModal');
             if (existing) existing.remove();
             
-            // Add redirect URL so Gumroad sends user back after purchase
-            const redirectUrl = `${window.location.origin}?purchase_success=${templateSlug}`;
-            const fullGumroadUrl = `${gumroadUrl}&redirect_url=${encodeURIComponent(redirectUrl)}`;
-            
             const modal = document.createElement('div');
             modal.className = 'modal-overlay';
             modal.id = 'checkoutModal';
@@ -8210,7 +8205,7 @@
                         <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">$${price}</div>
                         <div style="color: var(--text-muted); font-size: 0.9rem;">One-time payment</div>
                     </div>
-                    <button id="checkoutBtn" onclick="openGumroadPopup('${fullGumroadUrl}', '${templateSlug}')"
+                    <button id="checkoutBtn" onclick="openGumroadPopup('${gumroadUrl}', '${templateSlug}')"
                        style="display: block; width: 100%; padding: 1rem 2rem; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">
                         Complete Purchase →
                     </button>
@@ -8218,13 +8213,10 @@
                         🔒 Secure checkout powered by Gumroad
                     </p>
                     <div id="checkoutWaiting" style="display: none; margin-top: 1.5rem; padding: 1rem; background: rgba(29, 154, 155, 0.1); border-radius: 8px;">
-                        <p style="color: var(--text-secondary); margin: 0 0 1rem 0;">
-                            ⏳ Complete your purchase in the popup window
+                        <p style="color: var(--text-secondary); margin: 0;">
+                            ⏳ Complete your purchase in the popup window<br>
+                            <small>Close the popup when finished</small>
                         </p>
-                        <button onclick="checkPurchaseManually('${templateSlug}', '${templateName}')"
-                            style="padding: 0.75rem 1.5rem; background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-size: 0.9rem;">
-                            I've completed payment ✓
-                        </button>
                     </div>
                 </div>
             `;
@@ -8269,6 +8261,14 @@
             const checkoutBtn = document.getElementById('checkoutBtn');
             if (checkoutBtn) checkoutBtn.style.display = 'none';
             
+            // Store template info for later
+            const templateNames = {
+                'saas-landing': 'FlowMetrics - SaaS Landing',
+                'portfolio': 'Creative Portfolio',
+                'restaurant': 'Bella Vista - Restaurant'
+            };
+            const templateName = templateNames[templateSlug] || 'Your Template';
+            
             // Open popup
             const width = 500;
             const height = 700;
@@ -8281,17 +8281,17 @@
                 `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
             );
             
-            // Monitor popup - when it closes (after redirect back to our site), check for success
+            // Monitor popup - when user closes it, assume purchase complete and show success
             const popupMonitor = setInterval(() => {
                 if (gumroadPopup && gumroadPopup.closed) {
                     clearInterval(popupMonitor);
                     closeCheckoutModal();
-                    // The redirect will trigger checkPurchaseSuccess via URL params
+                    
+                    // Show success modal (user closed popup, likely completed purchase)
+                    showPurchaseSuccessModal({ slug: templateSlug, name: templateName });
+                    loadDashboard();
                 }
             }, 500);
-            
-            // Start polling for purchase (backup method)
-            startPurchasePolling(templateSlug, gumroadPopup);
         }
         
         function closeCheckoutModal() {
