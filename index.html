@@ -2846,9 +2846,11 @@
             opacity: 0.8;
             animation: tabletPulse 4s ease-in-out infinite;
             z-index: -1;
+            pointer-events: none;
         }
         
-        .laptop:hover::before {
+        .laptop:has(.device-frame:hover)::before,
+        .laptop:has(.device-base:hover)::before {
             opacity: 1;
             animation: tabletPulseHover 2s ease-in-out infinite;
         }
@@ -2869,6 +2871,7 @@
             opacity: 0.8;
             animation: tabletPulse 4s ease-in-out infinite;
             z-index: -1;
+            pointer-events: none;
         }
         
         @keyframes tabletPulse {
@@ -2882,7 +2885,7 @@
             }
         }
         
-        .tablet:hover::before {
+        .tablet:has(.device-frame:hover)::before {
             opacity: 1;
             animation: tabletPulseHover 2s ease-in-out infinite;
         }
@@ -2908,14 +2911,15 @@
             opacity: 0.8;
             animation: tabletPulse 4s ease-in-out infinite;
             z-index: -1;
+            pointer-events: none;
         }
         
-        .phone:hover::before {
+        .phone:has(.device-frame:hover)::before {
             opacity: 1;
             animation: tabletPulseHover 2s ease-in-out infinite;
         }
         
-        .device:hover {
+        .device .device-frame:hover {
             filter: brightness(1.05);
         }
         
@@ -2930,6 +2934,18 @@
             transform-style: preserve-3d;
             will-change: transform, opacity;
             opacity: 0;
+            pointer-events: none;
+        }
+        
+        .laptop .device-frame,
+        .laptop .device-base {
+            pointer-events: auto;
+        }
+        
+        .laptop:has(.device-frame:hover),
+        .laptop:has(.device-base:hover) {
+            animation-play-state: paused;
+            z-index: 10;
         }
         
         @keyframes orbitLaptop {
@@ -2937,11 +2953,6 @@
             25% { transform: translateX(-50%) perspective(1000px) rotateY(6deg) rotateX(3deg); }
             50% { transform: translateX(-50%) perspective(1000px) rotateY(0deg) rotateX(-2deg); }
             75% { transform: translateX(-50%) perspective(1000px) rotateY(-6deg) rotateX(3deg); }
-        }
-        
-        .laptop:hover {
-            animation-play-state: paused;
-            z-index: 10;
         }
         
         /* Tablet - Bottom right, angled with float */
@@ -2954,6 +2965,11 @@
             transform-style: preserve-3d;
             will-change: transform, opacity;
             opacity: 0;
+            pointer-events: none;
+        }
+        
+        .tablet .device-frame {
+            pointer-events: auto;
         }
         
         @keyframes orbitTablet {
@@ -2963,8 +2979,9 @@
             75% { transform: perspective(1000px) rotateY(-22deg) rotateX(8deg); }
         }
         
-        .tablet:hover {
+        .tablet:has(.device-frame:hover) {
             animation-play-state: paused;
+            z-index: 10;
         }
         
         /* Phone - Left side, prominent with float */
@@ -2977,17 +2994,23 @@
             transform-style: preserve-3d;
             will-change: transform, opacity;
             opacity: 0;
+            pointer-events: none;
+        }
+        
+        .phone .device-frame {
+            pointer-events: auto;
         }
         
         @keyframes orbitPhone {
-            0%, 100% { transform: perspective(1000px) rotateY(18deg) rotateX(5deg); }
-            25% { transform: perspective(1000px) rotateY(24deg) rotateX(2deg); }
-            50% { transform: perspective(1000px) rotateY(18deg) rotateX(-3deg); }
-            75% { transform: perspective(1000px) rotateY(12deg) rotateX(4deg); }
+            0%, 100% { transform: perspective(1000px) rotateY(18deg) rotateX(12deg) rotateZ(-8deg); }
+            25% { transform: perspective(1000px) rotateY(24deg) rotateX(9deg) rotateZ(-8deg); }
+            50% { transform: perspective(1000px) rotateY(18deg) rotateX(4deg) rotateZ(-8deg); }
+            75% { transform: perspective(1000px) rotateY(12deg) rotateX(10deg) rotateZ(-8deg); }
         }
         
-        .phone:hover {
+        .phone:has(.device-frame:hover) {
             animation-play-state: paused;
+            z-index: 10;
         }
         
         @keyframes floatIn {
@@ -3035,15 +3058,15 @@
         @keyframes zoomInPhone {
             0% {
                 opacity: 0;
-                transform: perspective(1000px) rotateY(18deg) rotateX(5deg) scale(0.3);
+                transform: perspective(1000px) rotateY(18deg) rotateX(12deg) rotateZ(-8deg) scale(0.3);
             }
             70% {
                 opacity: 1;
-                transform: perspective(1000px) rotateY(18deg) rotateX(5deg) scale(1.1);
+                transform: perspective(1000px) rotateY(18deg) rotateX(12deg) rotateZ(-8deg) scale(1.1);
             }
             100% {
                 opacity: 1;
-                transform: perspective(1000px) rotateY(18deg) rotateX(5deg) scale(1);
+                transform: perspective(1000px) rotateY(18deg) rotateX(12deg) rotateZ(-8deg) scale(1);
             }
         }
         
@@ -3117,6 +3140,7 @@
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.5);
             border-top: none;
+            transition: transform 0.4s ease;
         }
         
         /* Keyboard trackpad hint */
@@ -3133,13 +3157,20 @@
             box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
         }
         
-        .laptop:hover .device-frame {
+        .laptop:has(.device-frame:hover) .device-frame,
+        .laptop:has(.device-base:hover) .device-frame {
+            transform: scale(1.05) translateY(-10px);
             box-shadow: 
                 0 40px 80px rgba(0, 0, 0, 0.5),
                 0 20px 40px rgba(0, 0, 0, 0.3),
                 0 0 80px rgba(29, 154, 155, 0.35),
                 0 0 120px rgba(29, 154, 155, 0.15),
                 inset 0 2px 3px rgba(255, 255, 255, 0.8);
+        }
+        
+        .laptop:has(.device-frame:hover) .device-base,
+        .laptop:has(.device-base:hover) .device-base {
+            transform: scale(1.05) translateY(-10px);
         }
         
         /* ============================================
@@ -3186,7 +3217,8 @@
                 0 0 0 2px rgba(0, 0, 0, 0.3);
         }
         
-        .tablet:hover .device-frame {
+        .tablet:has(.device-frame:hover) .device-frame {
+            transform: scale(1.08) translateY(-10px);
             box-shadow: 
                 0 35px 70px rgba(0, 0, 0, 0.4),
                 0 15px 30px rgba(0, 0, 0, 0.25),
@@ -3265,7 +3297,8 @@
                 inset 0 0 5px rgba(29, 154, 155, 0.2);
         }
         
-        .phone:hover .device-frame {
+        .phone:has(.device-frame:hover) .device-frame {
+            transform: scale(1.08) translateY(-10px);
             box-shadow: 
                 0 35px 70px rgba(0, 0, 0, 0.5),
                 0 15px 30px rgba(0, 0, 0, 0.4),
@@ -3274,7 +3307,7 @@
                 0 0 150px rgba(29, 154, 155, 0.15);
         }
         
-        .phone:hover .device-frame::before {
+        .phone:has(.device-frame:hover) .device-frame::before {
             opacity: 1;
             animation: neonBorder 1.5s linear infinite;
         }
@@ -8366,6 +8399,11 @@
         
         // Show purchase success modal
         function showPurchaseSuccessModal(purchaseInfo) {
+            // Remove purchased item from cart
+            cart = cart.filter(item => item.slug !== purchaseInfo.slug);
+            saveCart();
+            updateCartUI();
+            
             const modal = document.createElement('div');
             modal.className = 'modal-overlay';
             modal.id = 'purchaseSuccessModal';
@@ -8401,6 +8439,16 @@
             if (modal) {
                 modal.classList.remove('active');
                 setTimeout(() => modal.remove(), 300);
+            }
+            
+            // Check if there are more items in the purchase queue
+            if (purchaseQueue && purchaseQueue.length > 0) {
+                const templateInfo = {
+                    'saas-landing': { name: 'FlowMetrics - SaaS Landing', price: 29 },
+                    'portfolio': { name: 'Creative Portfolio', price: 29 },
+                    'restaurant': { name: 'Bella Vista - Restaurant', price: 29 }
+                };
+                setTimeout(() => processNextPurchase(templateInfo), 500);
             }
         }
         
@@ -9532,8 +9580,120 @@
                 return;
             }
             
-            // TODO: Implement checkout process
-            showNotification('Checkout coming soon!', 'error');
+            if (!currentUser) {
+                showNotification('Please sign up to purchase templates!', 'info');
+                setTimeout(() => showSignup(), 500);
+                return;
+            }
+            
+            // Close cart modal
+            closeCartModal();
+            
+            // Get template info lookup
+            const templateInfo = {
+                'saas-landing': { name: 'FlowMetrics - SaaS Landing', price: 29 },
+                'portfolio': { name: 'Creative Portfolio', price: 29 },
+                'restaurant': { name: 'Bella Vista - Restaurant', price: 29 }
+            };
+            
+            if (cart.length === 1) {
+                // Single item - just buy it
+                const item = cart[0];
+                const info = templateInfo[item.slug] || { name: item.slug, price: 29 };
+                buyTemplate(item.slug, info.name, info.price);
+            } else {
+                // Multiple items - show combined checkout
+                showMultiItemCheckout(cart, templateInfo);
+            }
+        }
+        
+        function showMultiItemCheckout(items, templateInfo) {
+            const existing = document.getElementById('checkoutModal');
+            if (existing) existing.remove();
+            
+            const total = items.reduce((sum, item) => {
+                const info = templateInfo[item.slug] || { price: 29 };
+                return sum + info.price;
+            }, 0);
+            
+            const itemsHtml = items.map(item => {
+                const info = templateInfo[item.slug] || { name: item.slug, price: 29 };
+                return `<div style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid var(--border-color);">
+                    <span style="color: var(--text-primary);">${info.name}</span>
+                    <span style="color: var(--primary); font-weight: 600;">$${info.price}</span>
+                </div>`;
+            }).join('');
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.id = 'checkoutModal';
+            modal.innerHTML = `
+                <div class="modal" style="max-width: 450px; text-align: center;">
+                    <button class="modal-close" onclick="closeCheckoutModal()">×</button>
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛒</div>
+                    <h2 style="color: var(--text-primary); margin-bottom: 0.5rem;">Checkout</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        ${items.length} templates in your cart
+                    </p>
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; text-align: left;">
+                        ${itemsHtml}
+                        <div style="display: flex; justify-content: space-between; padding-top: 0.75rem; font-weight: 700;">
+                            <span style="color: var(--text-primary);">Total</span>
+                            <span style="color: var(--primary);">$${total}</span>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+                        Each template will be purchased separately via Gumroad
+                    </p>
+                    <button onclick="startMultiPurchase()" class="btn btn-primary btn-lg" style="width: 100%;">
+                        Purchase All Templates
+                    </button>
+                    <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 1rem;">
+                        🔒 Secure checkout powered by Gumroad
+                    </p>
+                </div>
+            `;
+            
+            modal.querySelector('.modal-overlay')?.addEventListener('click', (e) => {
+                if (e.target === modal) closeCheckoutModal();
+            });
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeCheckoutModal();
+            });
+            
+            document.body.appendChild(modal);
+            setTimeout(() => modal.classList.add('active'), 10);
+        }
+        
+        let purchaseQueue = [];
+        
+        function startMultiPurchase() {
+            const templateInfo = {
+                'saas-landing': { name: 'FlowMetrics - SaaS Landing', price: 29 },
+                'portfolio': { name: 'Creative Portfolio', price: 29 },
+                'restaurant': { name: 'Bella Vista - Restaurant', price: 29 }
+            };
+            
+            purchaseQueue = [...cart];
+            closeCheckoutModal();
+            processNextPurchase(templateInfo);
+        }
+        
+        function processNextPurchase(templateInfo) {
+            if (purchaseQueue.length === 0) {
+                // All done - clear cart
+                cart = [];
+                saveCart();
+                updateCartUI();
+                showNotification('All purchases complete! 🎉', 'success');
+                return;
+            }
+            
+            const item = purchaseQueue.shift();
+            const info = templateInfo[item.slug] || { name: item.slug, price: 29 };
+            
+            // Buy this template
+            buyTemplate(item.slug, info.name, info.price);
         }
 
         // Initialize cart on page load
