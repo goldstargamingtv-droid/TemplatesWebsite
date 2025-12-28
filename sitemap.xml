@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://deploytemplate.com/</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/og-image.png</image:loc>
+      <image:title>DeployTemplate - Premium Website Templates</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Templates Section -->
+  <url>
+    <loc>https://deploytemplate.com/#browse</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Pricing Section -->
+  <url>
+    <loc>https://deploytemplate.com/#pricing</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Individual Templates -->
+  <url>
+    <loc>https://deploytemplate.com/#template-saas-landing</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/templates/saas-landing/preview.png</image:loc>
+      <image:title>FlowMetrics - SaaS Landing Page Template</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://deploytemplate.com/#template-portfolio</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/templates/portfolio/preview.png</image:loc>
+      <image:title>Creative Portfolio Template</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://deploytemplate.com/#template-restaurant</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/templates/restaurant/preview.png</image:loc>
+      <image:title>Bella Vista - Restaurant Template</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Features Section -->
+  <url>
+    <loc>https://deploytemplate.com/#features</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Showcase Section -->
+  <url>
+    <loc>https://deploytemplate.com/#showcase</loc>
+    <lastmod>2025-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>

@@ -1,0 +1,38 @@
+# robots.txt for DeployTemplate
+# https://deploytemplate.com
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://deploytemplate.com/sitemap.xml
+
+# Crawl-delay (optional, be nice to servers)
+Crawl-delay: 1
+
+# Block common non-content paths
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /admin
+
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /

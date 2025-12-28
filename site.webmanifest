@@ -1,19 +1,66 @@
 {
-    "name": "DeployTemplate",
-    "short_name": "DeployTemplate",
-    "icons": [
-        {
-            "src": "/android-chrome-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "/android-chrome-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ],
-    "theme_color": "#0d9488",
-    "background_color": "#0a0a0a",
-    "display": "standalone"
+  "name": "DeployTemplate - Premium Website Templates",
+  "short_name": "DeployTemplate",
+  "description": "Launch your website in minutes with premium, hand-crafted templates. No coding required.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#1d9a9b",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "categories": ["business", "productivity", "shopping"],
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "label": "DeployTemplate Homepage"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Browse Templates",
+      "short_name": "Templates",
+      "description": "Browse all premium templates",
+      "url": "/#browse",
+      "icons": [{ "src": "/favicon-32x32.png", "sizes": "32x32" }]
+    },
+    {
+      "name": "View Pricing",
+      "short_name": "Pricing",
+      "description": "See our pricing plans",
+      "url": "/#pricing",
+      "icons": [{ "src": "/favicon-32x32.png", "sizes": "32x32" }]
+    }
+  ]
 }
