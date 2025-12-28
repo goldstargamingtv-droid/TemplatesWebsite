@@ -115,6 +115,43 @@
                 }
             },
             {
+                "@type": "SiteNavigationElement",
+                "@id": "https://deploytemplate.com/#navigation",
+                "name": "Main Navigation",
+                "hasPart": [
+                    {
+                        "@type": "WebPage",
+                        "name": "Home",
+                        "url": "https://deploytemplate.com/"
+                    },
+                    {
+                        "@type": "CollectionPage",
+                        "name": "Templates",
+                        "url": "https://deploytemplate.com/#templates"
+                    },
+                    {
+                        "@type": "WebPage",
+                        "name": "Features",
+                        "url": "https://deploytemplate.com/#features"
+                    },
+                    {
+                        "@type": "WebPage",
+                        "name": "Custom Projects",
+                        "url": "https://deploytemplate.com/#custom-request"
+                    },
+                    {
+                        "@type": "Blog",
+                        "name": "Blog",
+                        "url": "https://deploytemplate.com/#blog"
+                    },
+                    {
+                        "@type": "WebPage",
+                        "name": "FAQ",
+                        "url": "https://deploytemplate.com/#faq"
+                    }
+                ]
+            },
+            {
                 "@type": "BreadcrumbList",
                 "@id": "https://deploytemplate.com/#breadcrumb",
                 "itemListElement": [
@@ -128,13 +165,86 @@
                         "@type": "ListItem",
                         "position": 2,
                         "name": "Templates",
-                        "item": "https://deploytemplate.com/#browse"
+                        "item": "https://deploytemplate.com/#templates"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "Blog",
+                        "item": "https://deploytemplate.com/#blog"
                     }
                 ]
             },
             {
-                "@type": "ItemList",
+                "@type": "CollectionPage",
+                "@id": "https://deploytemplate.com/#templates",
                 "name": "Website Templates",
+                "description": "Browse our collection of premium website templates for SaaS, portfolios, restaurants, and more.",
+                "url": "https://deploytemplate.com/#templates",
+                "isPartOf": {
+                    "@id": "https://deploytemplate.com/#website"
+                },
+                "mainEntity": {
+                    "@type": "ItemList",
+                    "name": "Template Categories",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "item": {
+                                "@type": "CollectionPage",
+                                "name": "SaaS Templates",
+                                "url": "https://deploytemplate.com/#templates?category=saas",
+                                "description": "Modern SaaS and startup landing page templates"
+                            }
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "item": {
+                                "@type": "CollectionPage",
+                                "name": "Portfolio Templates",
+                                "url": "https://deploytemplate.com/#templates?category=portfolio",
+                                "description": "Creative portfolio templates for designers and artists"
+                            }
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 3,
+                            "item": {
+                                "@type": "CollectionPage",
+                                "name": "Restaurant Templates",
+                                "url": "https://deploytemplate.com/#templates?category=restaurant",
+                                "description": "Elegant restaurant and food business templates"
+                            }
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 4,
+                            "item": {
+                                "@type": "CollectionPage",
+                                "name": "E-Commerce Templates",
+                                "url": "https://deploytemplate.com/#templates?category=ecommerce",
+                                "description": "Online store and e-commerce templates"
+                            }
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 5,
+                            "item": {
+                                "@type": "CollectionPage",
+                                "name": "Agency Templates",
+                                "url": "https://deploytemplate.com/#templates?category=agency",
+                                "description": "Professional agency and business templates"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "@type": "ItemList",
+                "@id": "https://deploytemplate.com/#product-list",
+                "name": "Featured Templates",
                 "description": "Premium website templates for various industries",
                 "numberOfItems": 3,
                 "itemListElement": [
@@ -143,19 +253,23 @@
                         "position": 1,
                         "item": {
                             "@type": "Product",
+                            "@id": "https://deploytemplate.com/templates/flowmetrics",
                             "name": "FlowMetrics - SaaS Landing Page Template",
                             "description": "Modern SaaS landing page template with analytics dashboard design. Perfect for startups and tech companies.",
                             "image": "https://deploytemplate.com/templates/saas-landing/preview.png",
+                            "url": "https://deploytemplate.com/#template/flowmetrics",
                             "brand": {
                                 "@type": "Brand",
                                 "name": "DeployTemplate"
                             },
+                            "category": "SaaS Templates",
                             "offers": {
                                 "@type": "Offer",
                                 "price": "29.00",
                                 "priceCurrency": "USD",
                                 "availability": "https://schema.org/InStock",
-                                "priceValidUntil": "2025-12-31"
+                                "priceValidUntil": "2025-12-31",
+                                "url": "https://deploytemplate.com/#template/flowmetrics"
                             },
                             "aggregateRating": {
                                 "@type": "AggregateRating",
@@ -169,19 +283,23 @@
                         "position": 2,
                         "item": {
                             "@type": "Product",
+                            "@id": "https://deploytemplate.com/templates/creative-portfolio",
                             "name": "Creative Portfolio Template",
                             "description": "Stunning portfolio template for designers, photographers, and creative professionals.",
                             "image": "https://deploytemplate.com/templates/portfolio/preview.png",
+                            "url": "https://deploytemplate.com/#template/creative-portfolio",
                             "brand": {
                                 "@type": "Brand",
                                 "name": "DeployTemplate"
                             },
+                            "category": "Portfolio Templates",
                             "offers": {
                                 "@type": "Offer",
                                 "price": "29.00",
                                 "priceCurrency": "USD",
                                 "availability": "https://schema.org/InStock",
-                                "priceValidUntil": "2025-12-31"
+                                "priceValidUntil": "2025-12-31",
+                                "url": "https://deploytemplate.com/#template/creative-portfolio"
                             },
                             "aggregateRating": {
                                 "@type": "AggregateRating",
@@ -195,19 +313,23 @@
                         "position": 3,
                         "item": {
                             "@type": "Product",
+                            "@id": "https://deploytemplate.com/templates/bella-vista",
                             "name": "Bella Vista - Restaurant Template",
                             "description": "Elegant restaurant and cafe website template with menu showcase and reservation features.",
                             "image": "https://deploytemplate.com/templates/restaurant/preview.png",
+                            "url": "https://deploytemplate.com/#template/bella-vista",
                             "brand": {
                                 "@type": "Brand",
                                 "name": "DeployTemplate"
                             },
+                            "category": "Restaurant Templates",
                             "offers": {
                                 "@type": "Offer",
                                 "price": "29.00",
                                 "priceCurrency": "USD",
                                 "availability": "https://schema.org/InStock",
-                                "priceValidUntil": "2025-12-31"
+                                "priceValidUntil": "2025-12-31",
+                                "url": "https://deploytemplate.com/#template/bella-vista"
                             },
                             "aggregateRating": {
                                 "@type": "AggregateRating",
@@ -219,7 +341,127 @@
                 ]
             },
             {
+                "@type": "Blog",
+                "@id": "https://deploytemplate.com/#blog",
+                "name": "DeployTemplate Blog",
+                "description": "Tips, tutorials, and insights for building better websites",
+                "url": "https://deploytemplate.com/#blog",
+                "isPartOf": {
+                    "@id": "https://deploytemplate.com/#website"
+                },
+                "publisher": {
+                    "@id": "https://deploytemplate.com/#organization"
+                },
+                "blogPost": [
+                    {
+                        "@type": "BlogPosting",
+                        "@id": "https://deploytemplate.com/blog/design-trends-2025",
+                        "headline": "10 Web Design Trends Dominating 2025",
+                        "description": "Discover the latest design trends shaping the future of web development, from glassmorphism to AI-generated interfaces.",
+                        "url": "https://deploytemplate.com/#blog-design-trends",
+                        "datePublished": "2024-12-15",
+                        "dateModified": "2024-12-15",
+                        "author": {
+                            "@type": "Organization",
+                            "name": "DeployTemplate"
+                        },
+                        "publisher": {
+                            "@id": "https://deploytemplate.com/#organization"
+                        },
+                        "image": "https://deploytemplate.com/blog/design-trends-2025.jpg",
+                        "articleSection": "Design",
+                        "wordCount": 2500,
+                        "timeRequired": "PT12M",
+                        "keywords": ["web design", "design trends", "2025", "glassmorphism", "UI design", "UX trends"]
+                    },
+                    {
+                        "@type": "BlogPosting",
+                        "@id": "https://deploytemplate.com/blog/deployment-guide",
+                        "headline": "The Complete Guide to Deploying Your First Website",
+                        "description": "A comprehensive walkthrough for getting your website live using modern deployment platforms like Vercel and Netlify.",
+                        "url": "https://deploytemplate.com/#blog-deployment-guide",
+                        "datePublished": "2024-12-08",
+                        "dateModified": "2024-12-08",
+                        "author": {
+                            "@type": "Organization",
+                            "name": "DeployTemplate"
+                        },
+                        "publisher": {
+                            "@id": "https://deploytemplate.com/#organization"
+                        },
+                        "image": "https://deploytemplate.com/blog/deployment-guide.jpg",
+                        "articleSection": "Development",
+                        "wordCount": 3000,
+                        "timeRequired": "PT15M",
+                        "keywords": ["web deployment", "Vercel", "Netlify", "hosting", "website launch", "GitHub"]
+                    },
+                    {
+                        "@type": "BlogPosting",
+                        "@id": "https://deploytemplate.com/blog/speed-optimization",
+                        "headline": "Speed Optimization: Why Your Website Needs to Load in Under 3 Seconds",
+                        "description": "Learn the critical performance metrics that impact user experience and how to optimize your site for speed.",
+                        "url": "https://deploytemplate.com/#blog-speed-optimization",
+                        "datePublished": "2024-12-01",
+                        "dateModified": "2024-12-01",
+                        "author": {
+                            "@type": "Organization",
+                            "name": "DeployTemplate"
+                        },
+                        "publisher": {
+                            "@id": "https://deploytemplate.com/#organization"
+                        },
+                        "image": "https://deploytemplate.com/blog/speed-optimization.jpg",
+                        "articleSection": "Performance",
+                        "wordCount": 2200,
+                        "timeRequired": "PT10M",
+                        "keywords": ["website speed", "Core Web Vitals", "performance optimization", "LCP", "page load time"]
+                    }
+                ]
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://deploytemplate.com/privacy-policy",
+                "name": "Privacy Policy",
+                "description": "DeployTemplate privacy policy explaining how we collect, use, and protect your personal information.",
+                "url": "https://deploytemplate.com/#privacy",
+                "isPartOf": {
+                    "@id": "https://deploytemplate.com/#website"
+                },
+                "datePublished": "2024-12-27",
+                "dateModified": "2024-12-27",
+                "inLanguage": "en-US"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://deploytemplate.com/terms-of-service",
+                "name": "Terms of Service",
+                "description": "DeployTemplate terms of service governing use of our website, products, and services.",
+                "url": "https://deploytemplate.com/#terms",
+                "isPartOf": {
+                    "@id": "https://deploytemplate.com/#website"
+                },
+                "datePublished": "2024-12-27",
+                "dateModified": "2024-12-27",
+                "inLanguage": "en-US"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://deploytemplate.com/cookie-policy",
+                "name": "Cookie Policy",
+                "description": "DeployTemplate cookie policy explaining how we use cookies and similar technologies.",
+                "url": "https://deploytemplate.com/#cookies",
+                "isPartOf": {
+                    "@id": "https://deploytemplate.com/#website"
+                },
+                "datePublished": "2024-12-27",
+                "dateModified": "2024-12-27",
+                "inLanguage": "en-US"
+            },
+            {
                 "@type": "FAQPage",
+                "@id": "https://deploytemplate.com/#faq",
+                "name": "Frequently Asked Questions",
+                "url": "https://deploytemplate.com/#faq",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -250,10 +492,88 @@
                         "name": "Do you offer refunds?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "We offer a 14-day money-back guarantee. If you're not satisfied with your purchase, contact our support team for a full refund."
+                            "text": "We offer a 30-day money-back guarantee. If you're not satisfied with your purchase, contact our support team for a full refund."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How do I get support if I need help?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "We offer email support for all customers. Premium template purchases include priority support with faster response times."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Are the templates mobile responsive?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Absolutely! All our templates are fully responsive and optimized for mobile, tablet, and desktop devices."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can I customize the templates?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes! All templates come with clean, well-organized code that's easy to customize. Change colors, fonts, content, and layout to match your brand."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Do you offer custom development services?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes! We offer custom website development for businesses needing unique solutions. Contact us through our Custom Request form for a quote."
                         }
                     }
                 ]
+            },
+            {
+                "@type": "Service",
+                "@id": "https://deploytemplate.com/#custom-service",
+                "name": "Custom Website Development",
+                "description": "Professional custom website development services for businesses needing unique solutions.",
+                "url": "https://deploytemplate.com/#custom-request",
+                "provider": {
+                    "@id": "https://deploytemplate.com/#organization"
+                },
+                "serviceType": "Web Development",
+                "areaServed": "Worldwide",
+                "hasOfferCatalog": {
+                    "@type": "OfferCatalog",
+                    "name": "Custom Development Services",
+                    "itemListElement": [
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Custom Website"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Web Application"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "E-Commerce Development"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "SaaS Development"
+                            }
+                        }
+                    ]
+                }
             }
         ]
     }
@@ -271,6 +591,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
     <link rel="icon" href="/favicon.ico">
     
     <!-- Google Fonts - Inter -->
@@ -9041,80 +9362,6 @@
             </div>
         </div>
     </section>
-
-    <!-- FAQ Schema for SEO -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "What is included with each website template?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Each template includes the complete source code (HTML, CSS, JavaScript), all design assets, responsive layouts optimized for mobile, tablet, and desktop devices, cross-browser compatibility, SEO-optimized markup, and detailed documentation. Premium templates also include lifetime updates and priority support."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Can I use a template for multiple projects or clients?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Each template purchase includes a single-use license for one end product (website). If you need to use the template for multiple projects or clients, you'll need to purchase additional licenses. We offer bulk licensing discounts for agencies and developers working on multiple projects."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "How do I customize a template after purchase?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Our templates are built with clean, well-commented code that's easy to customize. Simply edit the HTML content, modify CSS variables for colors and typography, and replace placeholder images with your own. Each template includes comprehensive documentation with step-by-step customization guides. No coding experience required for basic changes."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Do you offer refunds if I'm not satisfied?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes! We offer a 30-day money-back guarantee on all template purchases. If you're not completely satisfied with your purchase, contact our support team within 30 days for a full refund. We want you to be 100% happy with your investment."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Are the templates SEO-friendly and optimized for performance?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Absolutely! All our templates are built with SEO best practices including semantic HTML5 markup, proper heading hierarchy, meta tag optimization, schema markup support, fast loading times, and Core Web Vitals optimization. Templates typically score 90+ on Google PageSpeed Insights out of the box."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "What hosting services do you recommend?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Our templates work with any web hosting service. For static HTML templates, we recommend Vercel, Netlify, or GitHub Pages for free hosting with excellent performance. For templates requiring a backend, services like DigitalOcean, AWS, or traditional hosting providers work great. Each template includes deployment guides for popular platforms."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Do you provide support after purchase?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes! All purchases include 6 months of standard support via email. Premium templates include lifetime priority support with faster response times. Our support team can help with installation issues, customization questions, and technical troubleshooting. We typically respond within 24 hours on business days."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Can I request a custom template design?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Yes! We offer custom template design services for businesses with specific requirements. Contact our team with your project details, and we'll provide a quote and timeline. Custom projects typically start at $2,500 and include unlimited revisions, dedicated support, and full ownership of the final design."
-                }
-            }
-        ]
-    }
-    </script>
 
     <!-- Footer -->
     <footer class="footer">
