@@ -14459,26 +14459,11 @@
                     const ext = previewImageFile.name.split('.').pop().toLowerCase();
                     const path = `previews/${template.slug}.${ext}`;
                     
-                    // Determine content type
-                    const mimeTypes = {
-                        'png': 'image/png',
-                        'jpg': 'image/jpeg',
-                        'jpeg': 'image/jpeg',
-                        'gif': 'image/gif',
-                        'webp': 'image/webp'
-                    };
-                    const contentType = mimeTypes[ext] || 'image/png';
-                    
-                    // Convert to Blob with correct MIME type
-                    const arrayBuffer = await previewImageFile.arrayBuffer();
-                    const blob = new Blob([arrayBuffer], { type: contentType });
+                    console.log('Uploading preview:', path, 'Type:', previewImageFile.type);
                     
                     const { error: uploadError } = await supabaseClient.storage
                         .from('public-assets')
-                        .upload(path, blob, { 
-                            upsert: true,
-                            contentType: contentType
-                        });
+                        .upload(path, previewImageFile, { upsert: true });
 
                     if (uploadError) throw uploadError;
 
@@ -14584,12 +14569,11 @@
                     }
                 }
                 
-                // Upload new image
+                // Upload new image using fetch API
                 const ext = file.name.split('.').pop().toLowerCase();
                 const timestamp = Date.now();
                 const path = `hero-${device}-${timestamp}.${ext}`;
                 
-                // Determine content type
                 const mimeTypes = {
                     'png': 'image/png',
                     'jpg': 'image/jpeg',
@@ -14597,22 +14581,28 @@
                     'gif': 'image/gif',
                     'webp': 'image/webp'
                 };
-                const contentType = mimeTypes[ext] || file.type || 'image/png';
-                console.log('Content type:', contentType);
+                const contentType = mimeTypes[ext] || 'image/png';
                 
-                // Convert to Blob with correct MIME type
-                const arrayBuffer = await file.arrayBuffer();
-                const blob = new Blob([arrayBuffer], { type: contentType });
+                console.log('Uploading:', path, 'Type:', contentType, 'Size:', file.size);
                 
-                const { error } = await supabaseClient.storage
-                    .from('public-assets')
-                    .upload(path, blob, {
-                        cacheControl: '3600',
-                        upsert: true,
-                        contentType: contentType
-                    });
+                // Use fetch API directly for reliable upload
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                const uploadUrl = `${CONFIG.SUPABASE_URL}/storage/v1/object/public-assets/${path}`;
                 
-                if (error) throw error;
+                const response = await fetch(uploadUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${session?.access_token || CONFIG.SUPABASE_ANON_KEY}`,
+                        'Content-Type': contentType,
+                        'x-upsert': 'true'
+                    },
+                    body: file
+                });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(errorText);
+                }
                 
                 showNotification(`${deviceCap} image uploaded successfully!`, 'success');
                 
@@ -15129,39 +15119,19 @@
                 const previewImageExt = previewImage.name.split('.').pop().toLowerCase();
                 const previewImagePath = `previews/${slug}.${previewImageExt}`;
                 
-                // Determine content type
-                const previewMimeTypes = {
-                    'png': 'image/png',
-                    'jpg': 'image/jpeg',
-                    'jpeg': 'image/jpeg',
-                    'gif': 'image/gif',
-                    'webp': 'image/webp'
-                };
-                const previewContentType = previewMimeTypes[previewImageExt] || 'image/png';
-                
-                // Convert to Blob with correct MIME type
-                const previewArrayBuffer = await previewImage.arrayBuffer();
-                const previewBlob = new Blob([previewArrayBuffer], { type: previewContentType });
+                console.log('Uploading preview:', previewImagePath, 'Type:', previewImage.type);
                 
                 const { error: imageError } = await supabaseClient.storage
                     .from('public-assets')
-                    .upload(previewImagePath, previewBlob, { 
-                        upsert: true,
-                        contentType: previewContentType
-                    });
+                    .upload(previewImagePath, previewImage, { upsert: true });
 
                 if (imageError) throw imageError;
 
                 // Upload ZIP file
                 const zipPath = `${slug}/${slug}-v1.0.0.zip`;
-                const zipArrayBuffer = await zipFile.arrayBuffer();
-                const zipBlob = new Blob([zipArrayBuffer], { type: 'application/zip' });
                 const { error: zipError } = await supabaseClient.storage
                     .from('Templates')
-                    .upload(zipPath, zipBlob, { 
-                        upsert: true,
-                        contentType: 'application/zip'
-                    });
+                    .upload(zipPath, zipFile, { upsert: true });
 
                 if (zipError) throw zipError;
 
