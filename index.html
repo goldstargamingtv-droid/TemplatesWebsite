@@ -14580,12 +14580,15 @@
                     'gif': 'image/gif',
                     'webp': 'image/webp'
                 };
-                const contentType = file.type || mimeTypes[ext] || 'image/png';
+                const contentType = mimeTypes[ext] || file.type || 'image/png';
                 console.log('Content type:', contentType);
+                
+                // Convert file to ArrayBuffer for reliable upload
+                const arrayBuffer = await file.arrayBuffer();
                 
                 const { error } = await supabaseClient.storage
                     .from('public-assets')
-                    .upload(path, file, {
+                    .upload(path, arrayBuffer, {
                         cacheControl: '3600',
                         upsert: true,
                         contentType: contentType
