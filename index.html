@@ -14459,13 +14459,34 @@
                     const ext = previewImageFile.name.split('.').pop().toLowerCase();
                     const path = `previews/${template.slug}.${ext}`;
                     
-                    console.log('Uploading preview:', path, 'Type:', previewImageFile.type);
+                    const mimeTypes = {
+                        'png': 'image/png',
+                        'jpg': 'image/jpeg',
+                        'jpeg': 'image/jpeg',
+                        'gif': 'image/gif',
+                        'webp': 'image/webp'
+                    };
+                    const contentType = mimeTypes[ext] || 'image/png';
                     
-                    const { error: uploadError } = await supabaseClient.storage
-                        .from('public-assets')
-                        .upload(path, previewImageFile, { upsert: true });
-
-                    if (uploadError) throw uploadError;
+                    console.log('Uploading preview:', path, 'Type:', contentType);
+                    
+                    const { data: { session } } = await supabaseClient.auth.getSession();
+                    const uploadUrl = `${CONFIG.SUPABASE_URL}/storage/v1/object/public-assets/${path}`;
+                    
+                    const response = await fetch(uploadUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${session?.access_token || CONFIG.SUPABASE_ANON_KEY}`,
+                            'Content-Type': contentType,
+                            'x-upsert': 'true'
+                        },
+                        body: previewImageFile
+                    });
+                    
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(errorText);
+                    }
 
                     const { data: urlData } = supabaseClient.storage.from('public-assets').getPublicUrl(path);
                     updateData.preview_image = urlData.publicUrl;
@@ -15119,21 +15140,55 @@
                 const previewImageExt = previewImage.name.split('.').pop().toLowerCase();
                 const previewImagePath = `previews/${slug}.${previewImageExt}`;
                 
-                console.log('Uploading preview:', previewImagePath, 'Type:', previewImage.type);
+                const previewMimeTypes = {
+                    'png': 'image/png',
+                    'jpg': 'image/jpeg',
+                    'jpeg': 'image/jpeg',
+                    'gif': 'image/gif',
+                    'webp': 'image/webp'
+                };
+                const previewContentType = previewMimeTypes[previewImageExt] || 'image/png';
                 
-                const { error: imageError } = await supabaseClient.storage
-                    .from('public-assets')
-                    .upload(previewImagePath, previewImage, { upsert: true });
-
-                if (imageError) throw imageError;
+                console.log('Uploading preview:', previewImagePath, 'Type:', previewContentType);
+                
+                const { data: { session: previewSession } } = await supabaseClient.auth.getSession();
+                const previewUploadUrl = `${CONFIG.SUPABASE_URL}/storage/v1/object/public-assets/${previewImagePath}`;
+                
+                const previewResponse = await fetch(previewUploadUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${previewSession?.access_token || CONFIG.SUPABASE_ANON_KEY}`,
+                        'Content-Type': previewContentType,
+                        'x-upsert': 'true'
+                    },
+                    body: previewImage
+                });
+                
+                if (!previewResponse.ok) {
+                    const errorText = await previewResponse.text();
+                    throw new Error(errorText);
+                }
 
                 // Upload ZIP file
                 const zipPath = `${slug}/${slug}-v1.0.0.zip`;
-                const { error: zipError } = await supabaseClient.storage
-                    .from('Templates')
-                    .upload(zipPath, zipFile, { upsert: true });
-
-                if (zipError) throw zipError;
+                
+                const { data: { session: zipSession } } = await supabaseClient.auth.getSession();
+                const zipUploadUrl = `${CONFIG.SUPABASE_URL}/storage/v1/object/Templates/${zipPath}`;
+                
+                const zipResponse = await fetch(zipUploadUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${zipSession?.access_token || CONFIG.SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/zip',
+                        'x-upsert': 'true'
+                    },
+                    body: zipFile
+                });
+                
+                if (!zipResponse.ok) {
+                    const errorText = await zipResponse.text();
+                    throw new Error(errorText);
+                }
 
                 // Get public URLs
                 const { data: previewUrlData } = supabaseClient.storage
