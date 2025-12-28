@@ -279,9 +279,6 @@
     <!-- Supabase Client Library -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
-    <!-- Stripe.js -->
-    <script src="https://js.stripe.com/v3/"></script>
-    
     <style>
         /* ============================================
            DEPLOYTEMPLATE - ALL STYLES
@@ -7977,11 +7974,15 @@
         const CONFIG = {
             SUPABASE_URL: 'https://gkyzpehxdqoolomglpal.supabase.co',
             SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdreXpwZWh4ZHFvb2xvbWdscGFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3MjU0NzAsImV4cCI6MjA4MjMwMTQ3MH0.mdhXZZXFTWnSrdtIMTYAIR47LcCZXAz9ofxQmVCxnmc',
+            GUMROAD_SELLER_ID: 'goldstar06',
             ADMIN_EMAIL: 'tylern101@yahoo.com',
             SITE_URL: window.location.origin,
             SITE_NAME: 'DeployTemplate',
-            STRIPE_PUBLISHABLE_KEY: 'pk_test_51Sj8SO90e6DvzxZLvTvJJOIygCR8r5wniQJvvjERSXjVmYf0JiYNMcbfM438dHQM05KcCDhfJTKKvnFSHwFLC63V00LWnw7cLQ',
-            API_BASE_URL: 'https://templates-website-one.vercel.app/api'
+            GUMROAD_PRODUCTS: {
+                'saas-landing': 'tf-test',
+                'portfolio': 'tf-test',
+                'restaurant': 'tf-test'
+            }
         };
 
         // Initialize Supabase Client
@@ -7997,11 +7998,6 @@
                 }
             }
         });
-        
-        // Initialize Stripe
-        const stripe = Stripe(CONFIG.STRIPE_PUBLISHABLE_KEY);
-        let stripeElements = null;
-        let stripeCardElement = null;
         
         // Global State
         let currentUser = null;
@@ -8814,12 +8810,11 @@
         }
 
         // ============================================
-        // PURCHASE FLOW - STRIPE
+        // PURCHASE FLOW
         // ============================================
         
         // Track pending purchase for post-checkout flow
         let pendingPurchase = null;
-        let currentPaymentIntentId = null;
 
         function buyTemplate(templateSlug, templateName, price) {
             if (!currentUser) {
@@ -8828,14 +8823,25 @@
                 return;
             }
             
+            // Get Gumroad product permalink
+            const gumroadPermalink = CONFIG.GUMROAD_PRODUCTS[templateSlug];
+            if (!gumroadPermalink) {
+                console.error('No Gumroad product found for:', templateSlug);
+                showNotification('Product configuration error. Please contact support.', 'error');
+                return;
+            }
+            
             // Store pending purchase info
             pendingPurchase = { slug: templateSlug, name: templateName, price: price };
             
-            // Show Stripe checkout modal
-            showStripeCheckoutModal(templateName, price, templateSlug);
+            // Build Gumroad URL with user email
+            const gumroadUrl = `https://goldstar06.gumroad.com/l/${gumroadPermalink}?email=${encodeURIComponent(currentUser.email)}`;
+            
+            // Show checkout modal with Gumroad button
+            showCheckoutModal(templateName, price, gumroadUrl, templateSlug);
         }
         
-        async function showStripeCheckoutModal(templateName, price, templateSlug) {
+        function showCheckoutModal(templateName, price, gumroadUrl, templateSlug) {
             // Remove existing modal if any
             const existing = document.getElementById('checkoutModal');
             if (existing) existing.remove();
@@ -8844,73 +8850,29 @@
             modal.className = 'modal-overlay';
             modal.id = 'checkoutModal';
             modal.innerHTML = `
-                <div class="modal" style="max-width: 420px;">
+                <div class="modal" style="max-width: 450px; text-align: center;">
                     <button class="modal-close" onclick="closeCheckoutModal()">×</button>
-                    
-                    <!-- Header -->
-                    <div style="text-align: center; margin-bottom: 1.5rem;">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                                <line x1="1" y1="10" x2="23" y2="10"></line>
-                            </svg>
-                        </div>
-                        <h2 style="color: var(--text-primary); margin: 0 0 0.25rem; font-size: 1.5rem;">Secure Checkout</h2>
-                        <p style="color: var(--text-muted); margin: 0; font-size: 0.9rem;">Complete your purchase</p>
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛒</div>
+                    <h2 style="color: var(--text-primary); margin-bottom: 0.5rem;">Checkout</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                        <strong>${templateName}</strong>
+                    </p>
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">$${price}</div>
+                        <div style="color: var(--text-muted); font-size: 0.9rem;">One-time payment</div>
                     </div>
-                    
-                    <!-- Order Summary -->
-                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color);">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <div style="font-weight: 600; color: var(--text-primary);">${templateName}</div>
-                                <div style="font-size: 0.85rem; color: var(--text-muted);">Premium Template • Lifetime Access</div>
-                            </div>
-                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary);">$${price}</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Email Display -->
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.5rem;">Email</label>
-                        <div style="padding: 0.75rem 1rem; background: var(--bg-secondary); border-radius: 8px; color: var(--text-primary); border: 1px solid var(--border-color);">
-                            ${currentUser?.email || ''}
-                        </div>
-                    </div>
-                    
-                    <!-- Card Element Container -->
-                    <div style="margin-bottom: 1.5rem;">
-                        <label style="display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.5rem;">Card Details</label>
-                        <div id="stripe-card-element" style="padding: 0.875rem 1rem; background: var(--bg-primary); border: 2px solid var(--border-color); border-radius: 10px; transition: border-color 0.2s;"></div>
-                        <div id="card-errors" style="color: #ef4444; font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.25rem;"></div>
-                    </div>
-                    
-                    <!-- Pay Button -->
-                    <button id="stripe-pay-btn" onclick="processStripePayment('${templateSlug}', '${templateName}', ${price})" 
-                        style="width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                        </svg>
-                        Pay $${price}
+                    <button id="checkoutBtn" onclick="openGumroadPopup('${gumroadUrl}', '${templateSlug}')"
+                       style="display: block; width: 100%; padding: 1rem 2rem; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: all 0.3s;">
+                        Complete Purchase →
                     </button>
-                    
-                    <!-- Processing State (hidden by default) -->
-                    <div id="stripe-processing" style="display: none; text-align: center; padding: 2rem 0;">
-                        <div style="width: 48px; height: 48px; border: 3px solid var(--border-color); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
-                        <p style="color: var(--text-secondary); margin: 0;">Processing payment...</p>
-                    </div>
-                    
-                    <!-- Security Badge -->
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border-color);">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                        </svg>
-                        <span style="font-size: 0.8rem; color: var(--text-muted);">Secured by</span>
-                        <svg width="40" height="16" viewBox="0 0 60 25" fill="var(--text-muted)">
-                            <path d="M59.64 14.28h-8.06c.19 1.93 1.6 2.55 3.2 2.55 1.64 0 2.96-.37 4.05-.95l.63 3.58c-1.3.62-2.92 1.11-5.08 1.11-4.74 0-7.56-2.73-7.56-7.37 0-4.26 2.6-7.59 7.12-7.59 4.23 0 6.17 2.97 6.17 6.78 0 .6-.05 1.34-.13 1.89h-.34zm-4.95-3.12c0-1.16-.51-2.91-2.68-2.91-1.95 0-2.81 1.67-2.97 2.91h5.65zM40.84 5.8l-.35 1.85c-.82-.26-1.47-.34-2.06-.34-2.05 0-3.06 1.76-3.06 4.25v8.86h-4.77V6.07h4.56v1.78c.74-1.23 2.02-2.11 3.74-2.11.69 0 1.33.06 1.94.06zm-14.55 0v14.42h-4.77V6.07h4.77zm-2.35-5.95c1.55 0 2.66 1.11 2.66 2.51s-1.11 2.55-2.66 2.55c-1.6 0-2.68-1.15-2.68-2.55s1.08-2.51 2.68-2.51zM14.24 13.4c0-2.32-.95-3.46-2.77-3.46-1.69 0-2.77 1.23-2.77 3.46v7.02H3.93V6.07h4.56v1.57c1.07-1.16 2.52-1.9 4.38-1.9 3.54 0 6.14 2.32 6.14 6.87v7.81h-4.77V13.4z"/>
-                        </svg>
+                    <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 1rem;">
+                        🔒 Secure checkout powered by Gumroad
+                    </p>
+                    <div id="checkoutWaiting" style="display: none; margin-top: 1.5rem; padding: 1rem; background: rgba(29, 154, 155, 0.1); border-radius: 8px;">
+                        <p style="color: var(--text-secondary); margin: 0;">
+                            ⏳ Complete your purchase in the popup window<br>
+                            <small>Close the popup when finished</small>
+                        </p>
                     </div>
                 </div>
             `;
@@ -8918,148 +8880,70 @@
             document.body.appendChild(modal);
             setTimeout(() => modal.classList.add('active'), 10);
             
-            // Initialize Stripe Elements
-            initStripeElements();
-            
             // Close modal when clicking outside
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) closeCheckoutModal();
             });
         }
         
-        function initStripeElements() {
-            // Create Elements instance
-            stripeElements = stripe.elements({
-                fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap' }]
-            });
+        function openGumroadPopup(gumroadUrl, templateSlug) {
+            // Show waiting message
+            const waitingDiv = document.getElementById('checkoutWaiting');
+            if (waitingDiv) waitingDiv.style.display = 'block';
             
-            // Custom styling for card element
-            const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-            const style = {
-                base: {
-                    color: isDark ? '#ffffff' : '#1a1a1a',
-                    fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
-                    fontSmoothing: 'antialiased',
-                    fontSize: '16px',
-                    '::placeholder': {
-                        color: isDark ? '#6b7280' : '#9ca3af'
-                    }
-                },
-                invalid: {
-                    color: '#ef4444',
-                    iconColor: '#ef4444'
-                }
+            // Hide checkout button
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            if (checkoutBtn) checkoutBtn.style.display = 'none';
+            
+            // Store template info for later
+            const templateNames = {
+                'saas-landing': 'FlowMetrics - SaaS Landing',
+                'portfolio': 'Creative Portfolio',
+                'restaurant': 'Bella Vista - Restaurant'
             };
+            const templateName = templateNames[templateSlug] || 'Your Template';
             
-            // Create card element
-            stripeCardElement = stripeElements.create('card', { 
-                style,
-                hidePostalCode: false
-            });
+            // Open popup
+            const width = 500;
+            const height = 700;
+            const left = (screen.width - width) / 2;
+            const top = (screen.height - height) / 2;
             
-            // Mount to DOM
-            stripeCardElement.mount('#stripe-card-element');
+            gumroadPopup = window.open(
+                gumroadUrl,
+                'GumroadCheckout',
+                `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
+            );
             
-            // Handle validation errors
-            stripeCardElement.on('change', (event) => {
-                const displayError = document.getElementById('card-errors');
-                if (event.error) {
-                    displayError.textContent = event.error.message;
-                } else {
-                    displayError.textContent = '';
-                }
-            });
-            
-            // Update border on focus
-            stripeCardElement.on('focus', () => {
-                document.getElementById('stripe-card-element').style.borderColor = 'var(--primary)';
-            });
-            stripeCardElement.on('blur', () => {
-                document.getElementById('stripe-card-element').style.borderColor = 'var(--border-color)';
-            });
-        }
-        
-        async function processStripePayment(templateSlug, templateName, price) {
-            const payBtn = document.getElementById('stripe-pay-btn');
-            const processingDiv = document.getElementById('stripe-processing');
-            const errorDiv = document.getElementById('card-errors');
-            
-            // Show processing state
-            payBtn.style.display = 'none';
-            processingDiv.style.display = 'block';
-            errorDiv.textContent = '';
-            
-            try {
-                // Create payment intent on server
-                const response = await fetch(`${CONFIG.API_BASE_URL}/create-payment-intent`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        amount: price,
-                        items: [{ id: templateSlug, name: templateName, price: price }],
-                        userId: currentUser?.id || '',
-                        email: currentUser?.email || ''
-                    })
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Failed to create payment intent');
-                }
-                
-                const { clientSecret, paymentIntentId } = await response.json();
-                currentPaymentIntentId = paymentIntentId;
-                
-                // Confirm payment with Stripe
-                const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-                    payment_method: {
-                        card: stripeCardElement,
-                        billing_details: {
-                            email: currentUser?.email || ''
-                        }
-                    }
-                });
-                
-                if (error) {
-                    throw new Error(error.message);
-                }
-                
-                if (paymentIntent.status === 'succeeded') {
-                    // Payment successful!
+            // Monitor popup - when user closes it, assume purchase complete and show success
+            const popupMonitor = setInterval(() => {
+                if (gumroadPopup && gumroadPopup.closed) {
+                    clearInterval(popupMonitor);
                     closeCheckoutModal();
-                    showPurchaseSuccessModal({ slug: templateSlug, name: templateName });
                     
-                    // Reload dashboard to show new purchase
+                    // Show success modal (user closed popup, likely completed purchase)
+                    showPurchaseSuccessModal({ slug: templateSlug, name: templateName });
                     loadDashboard();
                 }
-                
-            } catch (error) {
-                console.error('Payment error:', error);
-                errorDiv.textContent = error.message || 'Payment failed. Please try again.';
-                payBtn.style.display = 'flex';
-                processingDiv.style.display = 'none';
-            }
+            }, 500);
         }
         
         function closeCheckoutModal() {
             const modal = document.getElementById('checkoutModal');
             if (modal) {
                 modal.classList.remove('active');
-                setTimeout(() => {
-                    modal.remove();
-                    // Cleanup Stripe elements
-                    if (stripeCardElement) {
-                        stripeCardElement.destroy();
-                        stripeCardElement = null;
-                    }
-                    stripeElements = null;
-                }, 300);
+                setTimeout(() => modal.remove(), 300);
             }
         }
         
-        // Poll for purchase completion (backup check)
-        async function startPurchasePolling(templateSlug) {
+        // Store popup reference globally so we can close it
+        let gumroadPopup = null;
+        
+        // Poll for purchase completion after Gumroad checkout
+        async function startPurchasePolling(templateSlug, popup = null) {
+            gumroadPopup = popup;
             let attempts = 0;
-            const maxAttempts = 30; // Poll for 1 minute max
+            const maxAttempts = 90; // Poll for 3 minutes max
             
             const pollInterval = setInterval(async () => {
                 attempts++;
@@ -9068,17 +8952,29 @@
                     // Check if purchase exists
                     const { data: purchases, error } = await supabaseClient
                         .from('purchases')
-                        .select('id, template_id')
+                        .select('id, template_slug')
                         .eq('user_id', currentUser.id)
-                        .eq('template_id', templateSlug);
+                        .eq('template_slug', templateSlug);
+                    
+                    console.log('Polling attempt', attempts, '- Purchases:', purchases, 'Error:', error);
                     
                     if (!error && purchases && purchases.length > 0) {
                         clearInterval(pollInterval);
+                        
+                        // Close popup
+                        if (gumroadPopup && !gumroadPopup.closed) {
+                            gumroadPopup.close();
+                        }
+                        
+                        // Close checkout modal
                         closeCheckoutModal();
                         
+                        // Show success modal
                         if (pendingPurchase) {
                             showPurchaseSuccessModal(pendingPurchase);
                             pendingPurchase = null;
+                        } else {
+                            showPurchaseSuccessModal({ slug: templateSlug, name: 'Your Template' });
                         }
                         
                         loadDashboard();
@@ -9086,7 +8982,6 @@
                     }
                 } catch (e) {
                     console.log('Polling error:', e);
-                }
                 }
                 
                 if (attempts >= maxAttempts) {
@@ -10335,69 +10230,29 @@
             modal.className = 'modal-overlay';
             modal.id = 'checkoutModal';
             modal.innerHTML = `
-                <div class="modal" style="max-width: 450px;">
+                <div class="modal" style="max-width: 450px; text-align: center;">
                     <button class="modal-close" onclick="closeCheckoutModal()">×</button>
-                    
-                    <!-- Header -->
-                    <div style="text-align: center; margin-bottom: 1.5rem;">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                                <line x1="1" y1="10" x2="23" y2="10"></line>
-                            </svg>
-                        </div>
-                        <h2 style="color: var(--text-primary); margin: 0 0 0.25rem; font-size: 1.5rem;">Secure Checkout</h2>
-                        <p style="color: var(--text-muted); margin: 0; font-size: 0.9rem;">${items.length} templates in your cart</p>
-                    </div>
-                    
-                    <!-- Order Summary -->
-                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); text-align: left;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛒</div>
+                    <h2 style="color: var(--text-primary); margin-bottom: 0.5rem;">Checkout</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        ${items.length} templates in your cart
+                    </p>
+                    <div style="background: var(--bg-secondary); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; text-align: left;">
                         ${itemsHtml}
                         <div style="display: flex; justify-content: space-between; padding-top: 0.75rem; font-weight: 700;">
                             <span style="color: var(--text-primary);">Total</span>
-                            <span style="color: var(--primary); font-size: 1.25rem;">$${total}</span>
+                            <span style="color: var(--primary);">$${total}</span>
                         </div>
                     </div>
-                    
-                    <!-- Email Display -->
-                    <div style="margin-bottom: 1rem;">
-                        <label style="display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.5rem;">Email</label>
-                        <div style="padding: 0.75rem 1rem; background: var(--bg-secondary); border-radius: 8px; color: var(--text-primary); border: 1px solid var(--border-color);">
-                            ${currentUser?.email || ''}
-                        </div>
-                    </div>
-                    
-                    <!-- Card Element Container -->
-                    <div style="margin-bottom: 1.5rem;">
-                        <label style="display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.5rem;">Card Details</label>
-                        <div id="stripe-card-element" style="padding: 0.875rem 1rem; background: var(--bg-primary); border: 2px solid var(--border-color); border-radius: 10px; transition: border-color 0.2s;"></div>
-                        <div id="card-errors" style="color: #ef4444; font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.25rem;"></div>
-                    </div>
-                    
-                    <!-- Pay Button -->
-                    <button id="stripe-pay-btn" onclick="processMultiStripePayment()" 
-                        style="width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                        </svg>
-                        Pay $${total}
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+                        Each template will be purchased separately via Gumroad
+                    </p>
+                    <button onclick="startMultiPurchase()" class="btn btn-primary btn-lg" style="width: 100%;">
+                        Purchase All Templates
                     </button>
-                    
-                    <!-- Processing State (hidden by default) -->
-                    <div id="stripe-processing" style="display: none; text-align: center; padding: 2rem 0;">
-                        <div style="width: 48px; height: 48px; border: 3px solid var(--border-color); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
-                        <p style="color: var(--text-secondary); margin: 0;">Processing payment...</p>
-                    </div>
-                    
-                    <!-- Security Badge -->
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border-color);">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                        </svg>
-                        <span style="font-size: 0.8rem; color: var(--text-muted);">Secured by Stripe</span>
-                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 1rem;">
+                        🔒 Secure checkout powered by Gumroad
+                    </p>
                 </div>
             `;
             
@@ -10407,86 +10262,20 @@
             
             document.body.appendChild(modal);
             setTimeout(() => modal.classList.add('active'), 10);
-            
-            // Store items for processing
-            window.multiCheckoutItems = items.map(item => {
-                const info = templateInfo[item.slug] || { name: item.slug, price: 29 };
-                return { id: item.slug, name: info.name, price: info.price };
-            });
-            window.multiCheckoutTotal = total;
-            
-            // Initialize Stripe Elements
-            initStripeElements();
-        }
-        
-        async function processMultiStripePayment() {
-            const payBtn = document.getElementById('stripe-pay-btn');
-            const processingDiv = document.getElementById('stripe-processing');
-            const errorDiv = document.getElementById('card-errors');
-            
-            // Show processing state
-            payBtn.style.display = 'none';
-            processingDiv.style.display = 'block';
-            errorDiv.textContent = '';
-            
-            try {
-                // Create payment intent on server
-                const response = await fetch(`${CONFIG.API_BASE_URL}/create-payment-intent`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        amount: window.multiCheckoutTotal,
-                        items: window.multiCheckoutItems,
-                        userId: currentUser?.id || '',
-                        email: currentUser?.email || ''
-                    })
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Failed to create payment intent');
-                }
-                
-                const { clientSecret } = await response.json();
-                
-                // Confirm payment with Stripe
-                const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-                    payment_method: {
-                        card: stripeCardElement,
-                        billing_details: {
-                            email: currentUser?.email || ''
-                        }
-                    }
-                });
-                
-                if (error) {
-                    throw new Error(error.message);
-                }
-                
-                if (paymentIntent.status === 'succeeded') {
-                    // Payment successful! Clear cart
-                    cart = [];
-                    localStorage.setItem('cart', JSON.stringify(cart));
-                    try { updateCartUI(); } catch(e) {}
-                    
-                    closeCheckoutModal();
-                    showNotification('All purchases complete! 🎉', 'success');
-                    showPurchaseSuccessModal({ name: `${window.multiCheckoutItems.length} Templates` });
-                    loadDashboard();
-                }
-                
-            } catch (error) {
-                console.error('Payment error:', error);
-                errorDiv.textContent = error.message || 'Payment failed. Please try again.';
-                payBtn.style.display = 'flex';
-                processingDiv.style.display = 'none';
-            }
         }
         
         let purchaseQueue = [];
         
         function startMultiPurchase() {
-            // Legacy function - now just processes via Stripe
-            processMultiStripePayment();
+            const templateInfo = {
+                'saas-landing': { name: 'FlowMetrics - SaaS Landing', price: 29 },
+                'portfolio': { name: 'Creative Portfolio', price: 29 },
+                'restaurant': { name: 'Bella Vista - Restaurant', price: 29 }
+            };
+            
+            purchaseQueue = [...cart];
+            closeCheckoutModal();
+            processNextPurchase(templateInfo);
         }
         
         function processNextPurchase(templateInfo) {
@@ -11224,5 +11013,8 @@
             CookieConsent.showBanner();
         }
     </script>
+    
+    <!-- Gumroad Script -->
+    <script src="https://gumroad.com/js/gumroad.js"></script>
 </body>
 </html>
