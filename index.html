@@ -5418,7 +5418,7 @@
         
         .demo-catalog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.5rem;
             max-width: 1400px;
             margin: 0 auto;
@@ -5691,28 +5691,53 @@
                 padding: 1rem;
             }
             
+            .demo-catalog-header {
+                margin-bottom: 1.5rem;
+            }
+            
             .demo-catalog-header h2 {
                 font-size: 1.5rem;
             }
             
+            .demo-catalog-header p {
+                font-size: 0.9rem;
+            }
+            
             .demo-catalog-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .demo-catalog-thumb {
+                height: 180px;
+            }
+            
+            .demo-preview-view {
+                height: 100%;
             }
             
             .demo-preview-header {
                 flex-wrap: wrap;
                 padding: 1rem;
+                position: relative;
             }
             
             .demo-preview-title {
                 order: -1;
                 width: 100%;
                 text-align: left;
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.75rem;
+                font-size: 1rem;
+                padding-right: 50px;
             }
             
             .demo-device-btn {
                 display: none;
+            }
+            
+            .demo-preview-actions {
+                width: 100%;
+                justify-content: space-between;
             }
             
             .demo-preview-close {
@@ -5721,11 +5746,19 @@
                 right: 1rem;
             }
             
+            .demo-open-btn {
+                margin-left: 0;
+            }
+            
+            .demo-preview-container {
+                padding: 0.75rem;
+            }
+            
             .demo-preview-frame.preview-desktop,
             .demo-preview-frame.preview-tablet,
             .demo-preview-frame.preview-mobile {
                 width: 100%;
-                height: calc(100vh - 180px);
+                height: calc(100vh - 160px);
                 border-radius: 8px;
                 border: none;
                 transform: none !important;
@@ -8270,6 +8303,300 @@
             .section {
                 padding: 2rem 0;
             }
+            
+            /* Hero Steps - Small Mobile */
+            .hero-steps {
+                padding-top: 1.5rem;
+            }
+            
+            .step-item {
+                padding: 0.75rem 1rem;
+                max-width: 100%;
+            }
+            
+            .step-number {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+            
+            .step-title {
+                font-size: 0.85rem;
+            }
+            
+            .step-desc {
+                font-size: 0.7rem;
+            }
+            
+            /* Hero Buttons - Small Mobile */
+            .hero-buttons {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            /* Blog Grid - Small Mobile */
+            .blog-section [style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+            }
+            
+            /* Custom Request - Small Mobile */
+            .custom-request-section {
+                padding: 3rem 0;
+            }
+            
+            .custom-request-title {
+                font-size: 1.75rem !important;
+            }
+            
+            .custom-request-desc {
+                font-size: 1rem;
+            }
+            
+            /* FAQ Section - Small Mobile */
+            .faq-section .container {
+                padding: 0 1rem;
+            }
+            
+            /* CTA Sections - Small Mobile */
+            .cta-section {
+                padding: 3rem 1rem;
+            }
+            
+            .cta-content h2 {
+                font-size: 1.5rem !important;
+            }
+            
+            /* Footer - Small Mobile */
+            .footer {
+                padding: 2rem 0 1rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            /* Legal/Blog Modals - Small Mobile */
+            .legal-modal-overlay,
+            .blog-modal-overlay {
+                padding: 1rem;
+            }
+            
+            .legal-modal,
+            .blog-modal {
+                max-height: 90vh;
+                border-radius: 16px;
+            }
+            
+            .legal-modal-header,
+            .blog-modal-header {
+                padding: 1rem;
+            }
+            
+            .legal-modal-body,
+            .blog-modal-body {
+                padding: 1rem;
+            }
+            
+            /* Template Detail Modal - Small Mobile */
+            .template-detail-modal {
+                padding: 1rem;
+            }
+            
+            /* Sidebar - Small Mobile */
+            .sidebar {
+                width: 100% !important;
+                max-width: 280px;
+            }
+            
+            /* Cart Modal - Small Mobile */
+            .cart-modal-header,
+            .auth-panel-header {
+                padding: 1rem 1.25rem;
+            }
+            
+            .cart-modal-content,
+            .auth-panel-content {
+                padding: 1rem;
+            }
+            
+            /* Proof Banner - Small Mobile */
+            .proof-content {
+                gap: 1rem;
+            }
+            
+            .proof-stat {
+                flex: 1 1 45%;
+            }
+            
+            .proof-number {
+                font-size: 1.1rem;
+            }
+            
+            .proof-label {
+                font-size: 0.7rem;
+            }
+            
+            /* Sticky CTA Bar - Small Mobile */
+            .sticky-cta-bar {
+                padding: 0.75rem 1rem;
+            }
+            
+            .sticky-cta-content {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            
+            /* Demo Catalog - Small Mobile */
+            .demo-catalog-view {
+                padding: 0.75rem;
+            }
+            
+            .demo-catalog-header {
+                margin-bottom: 1rem;
+                padding-right: 50px;
+            }
+            
+            .demo-catalog-header h2 {
+                font-size: 1.25rem;
+            }
+            
+            .demo-catalog-header p {
+                font-size: 0.85rem;
+            }
+            
+            .demo-catalog-close {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .demo-catalog-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem;
+            }
+            
+            .demo-catalog-card {
+                border-radius: 12px;
+            }
+            
+            .demo-catalog-thumb {
+                height: 160px;
+            }
+            
+            .demo-catalog-info {
+                padding: 1rem;
+            }
+            
+            .demo-catalog-name {
+                font-size: 1rem;
+            }
+            
+            .demo-catalog-category {
+                font-size: 0.8rem;
+            }
+            
+            /* Demo Preview - Small Mobile */
+            .demo-preview-header {
+                padding: 0.75rem !important;
+                gap: 0.5rem !important;
+                position: relative;
+            }
+            
+            .demo-preview-title {
+                font-size: 0.95rem !important;
+                padding-right: 50px;
+            }
+            
+            .demo-back-btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.8rem;
+            }
+            
+            .demo-back-btn svg {
+                width: 14px;
+                height: 14px;
+            }
+            
+            .demo-open-btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.8rem;
+            }
+            
+            .demo-preview-close {
+                width: 36px !important;
+                height: 36px !important;
+                font-size: 1.25rem !important;
+            }
+            
+            .demo-preview-container {
+                padding: 0.5rem;
+            }
+            
+            .demo-preview-frame.preview-desktop,
+            .demo-preview-frame.preview-tablet,
+            .demo-preview-frame.preview-mobile {
+                height: calc(100vh - 140px) !important;
+                border-radius: 8px !important;
+            }
+            
+            /* FAQ Section - Small Mobile */
+            .faq-item summary {
+                padding: 1rem !important;
+                font-size: 0.95rem !important;
+            }
+            
+            .faq-icon-wrapper {
+                width: 32px !important;
+                height: 32px !important;
+                margin-right: 0.75rem !important;
+            }
+            
+            .faq-icon-wrapper svg {
+                width: 16px !important;
+                height: 16px !important;
+            }
+            
+            .faq-item > div {
+                padding: 0 1rem 1rem !important;
+                font-size: 0.9rem !important;
+            }
+            
+            .faq-header {
+                padding: 2rem 1.5rem !important;
+            }
+            
+            /* Blog Cards - Small Mobile */
+            .blog-card > div:last-child {
+                padding: 1rem !important;
+            }
+            
+            .blog-card h3 {
+                font-size: 1.1rem !important;
+            }
+            
+            /* Template Detail Modal - Small Mobile */
+            .template-detail-content {
+                padding: 1rem !important;
+            }
+            
+            .template-detail-header h2 {
+                font-size: 1.25rem !important;
+            }
+            
+            .template-detail-actions {
+                flex-direction: column !important;
+                gap: 0.75rem !important;
+            }
+            
+            .template-detail-actions .btn {
+                width: 100% !important;
+            }
         }
 
         /* ============================================
@@ -8366,6 +8693,19 @@
             /* Hide desktop nav on mobile */
             .navbar {
                 display: none;
+            }
+            
+            /* Cart and Auth modals - Full screen on mobile */
+            .cart-modal,
+            .auth-panel {
+                top: 0 !important;
+                height: 100vh !important;
+            }
+            
+            /* Stripe checkout panel - Full screen on mobile */
+            #stripeCheckoutPanel {
+                top: 0 !important;
+                height: 100vh !important;
             }
             
             .sidebar {
