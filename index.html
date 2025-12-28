@@ -676,12 +676,14 @@
             background: transparent;
             color: var(--text-primary);
             border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
         }
 
         .btn-outline:hover {
             border-color: var(--primary);
             color: var(--primary);
-            background: rgba(13, 148, 136, 0.1);
+            background: rgba(29, 154, 155, 0.1);
+            box-shadow: 0 0 20px rgba(29, 154, 155, 0.2);
         }
 
         .btn-white {
@@ -3697,18 +3699,18 @@
         
         /* Laptop - Empty placeholder for template images */
         .gradient-1 {
-            background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.3) 0%, rgba(30, 30, 50, 0.9) 50%, rgba(20, 184, 166, 0.2) 100%);
             position: relative;
         }
         
         /* Tablet - Empty placeholder for template images */
         .gradient-2 {
-            background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.3) 0%, rgba(30, 30, 50, 0.9) 50%, rgba(29, 154, 155, 0.2) 100%);
         }
         
         /* Phone - Empty placeholder for template images */
         .gradient-3 {
-            background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(30, 30, 50, 0.9) 50%, rgba(29, 154, 155, 0.2) 100%);
         }
         
         
@@ -3871,6 +3873,41 @@
         .preview-gradient {
             width: 100%;
             height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .preview-gradient::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(29, 154, 155, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(29, 154, 155, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.5;
+        }
+        
+        .preview-gradient::after {
+            content: '⚡';
+            font-size: 4rem;
+            opacity: 0.15;
+            filter: grayscale(100%);
+        }
+        
+        .gradient-1::after {
+            content: '🎨';
+        }
+        
+        .gradient-2::after {
+            content: '🚀';
+        }
+        
+        .gradient-3::after {
+            content: '✨';
         }
 
         .hero-background {
@@ -3983,6 +4020,32 @@
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
+            position: relative;
+        }
+        
+        /* Gradient border glow effect */
+        .template-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: var(--border-radius-lg);
+            background: linear-gradient(135deg, #1d9a9b 0%, #14b8a6 50%, #1d9a9b 100%);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
+        }
+        
+        .template-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--border-radius-lg);
+            background: rgba(24, 24, 27, 0.95);
+            z-index: -1;
+        }
+        
+        [data-theme="light"] .template-card::after {
+            background: rgba(255, 255, 255, 0.95);
         }
         
         [data-theme="light"] .template-card {
@@ -3993,8 +4056,12 @@
 
         .template-card:hover {
             transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(13, 148, 136, 0.15);
-            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(29, 154, 155, 0.25), 0 10px 30px rgba(29, 154, 155, 0.15);
+            border-color: transparent;
+        }
+        
+        .template-card:hover::before {
+            opacity: 1;
         }
 
         .template-image {
@@ -4064,15 +4131,28 @@
             top: 1rem;
             right: 1rem;
             padding: 0.5rem 1rem;
-            background: var(--accent);
+            background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
             color: var(--white);
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 600;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            z-index: 3;
         }
 
         .badge-new {
-            background: var(--secondary);
+            background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+        }
+        
+        .badge-free {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        .badge-sale {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
         }
 
         .template-info {
@@ -4090,8 +4170,8 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 30% 30%, rgba(29, 154, 155, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 70%, rgba(29, 154, 155, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 30%, rgba(29, 154, 155, 0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(29, 154, 155, 0.08) 0%, transparent 50%);
             opacity: 0;
             transition: opacity 0.4s ease;
             pointer-events: none;
@@ -4125,22 +4205,70 @@
         }
         
         [data-theme="light"] .template-info::after {
-            background: radial-gradient(circle at 30% 30%, rgba(29, 154, 155, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 70%, rgba(29, 154, 155, 0.08) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 30%, rgba(29, 154, 155, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(29, 154, 155, 0.06) 0%, transparent 50%);
         }
 
         .template-category {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .template-category-badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 6px;
+            color: #A78BFA;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+        
+        .template-card:hover .template-category-badge {
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.25) 0%, rgba(20, 184, 166, 0.25) 100%);
+            border-color: rgba(29, 154, 155, 0.5);
+            color: var(--primary);
+        }
+        
+        [data-theme="light"] .template-category-badge {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+            border-color: rgba(139, 92, 246, 0.25);
+            color: #7C3AED;
+        }
+        
+        [data-theme="light"] .template-card:hover .template-category-badge {
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.2) 0%, rgba(20, 184, 166, 0.2) 100%);
+            color: var(--primary);
         }
 
         .template-title {
             font-size: 1.5rem;
             margin-bottom: 0.75rem;
+            transition: color 0.3s ease;
+        }
+        
+        .template-card:hover .template-title {
+            background: linear-gradient(135deg, #ffffff 0%, #5eead4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        [data-theme="light"] .template-card:hover .template-title {
+            background: linear-gradient(135deg, #1f1f1f 0%, #0d9488 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .template-description {
@@ -4157,12 +4285,54 @@
         }
 
         .tag {
-            padding: 0.25rem 0.75rem;
-            background: var(--bg-tertiary);
+            padding: 0.3rem 0.75rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
             border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .tag:nth-child(2) {
+            background: rgba(236, 72, 153, 0.1);
+            border-color: rgba(236, 72, 153, 0.2);
+        }
+        
+        .tag:nth-child(3) {
+            background: rgba(29, 154, 155, 0.1);
+            border-color: rgba(29, 154, 155, 0.2);
+        }
+        
+        .template-card:hover .tag {
+            background: rgba(29, 154, 155, 0.2);
+            border-color: rgba(29, 154, 155, 0.4);
+            color: var(--primary);
+        }
+        
+        .template-card:hover .tag:nth-child(2) {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: rgba(236, 72, 153, 0.4);
+            color: #F9A8D4;
+        }
+        
+        .template-card:hover .tag:nth-child(3) {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.4);
+            color: #C4B5FD;
+        }
+        
+        [data-theme="light"] .template-card:hover .tag {
+            color: var(--primary);
+        }
+        
+        [data-theme="light"] .template-card:hover .tag:nth-child(2) {
+            color: #DB2777;
+        }
+        
+        [data-theme="light"] .template-card:hover .tag:nth-child(3) {
+            color: #7C3AED;
         }
 
         .template-footer {
@@ -4170,8 +4340,13 @@
             justify-content: space-between;
             align-items: center;
             padding-top: 1rem;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid rgba(29, 154, 155, 0.1);
             gap: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .template-card:hover .template-footer {
+            border-color: rgba(29, 154, 155, 0.3);
         }
         
         .template-actions {
@@ -4195,6 +4370,13 @@
             font-size: 1.75rem;
             font-weight: 800;
             color: var(--primary);
+        }
+        
+        .price-current.free {
+            background: linear-gradient(135deg, #10B981 0%, #1d9a9b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .templates-cta {
@@ -11328,6 +11510,8 @@
                 const price = template.price || 0;
                 const originalPrice = template.original_price || price;
                 const previewImage = template.preview_image || '';
+                const isFree = price === 0;
+                const isOnSale = originalPrice > price && price > 0;
                 
                 return `
                     <div class="template-card" data-category="${template.category || 'all'}">
@@ -11341,11 +11525,9 @@
                                 <button class="btn btn-white" onclick="event.preventDefault(); viewTemplateDetails('${template.slug}'); return false;">View Details</button>
                                 ${template.demo_url ? `<a href="${template.demo_url}" target="_blank" class="btn btn-outline-white">Live Preview</a>` : ''}
                             </div>
-                            ${template.is_popular ? '<div class="template-badge">Most Popular</div>' : ''}
-                            ${template.is_new ? '<div class="template-badge badge-new">New</div>' : ''}
                         </div>
                         <div class="template-info">
-                            <div class="template-category">${template.category || 'Template'}</div>
+                            <span class="template-category-badge">${template.category || 'Template'}</span>
                             <h3 class="template-title">${template.name}</h3>
                             <p class="template-description">${template.description || 'Professional template ready for your business'}</p>
                             <div class="template-tags">
@@ -11354,16 +11536,16 @@
                             <div class="template-footer">
                                 <div class="template-price">
                                     ${originalPrice > price ? `<span class="price-original">$${originalPrice}</span>` : ''}
-                                    <span class="price-current">${price === 0 ? 'FREE' : '$' + price}</span>
+                                    <span class="price-current ${isFree ? 'free' : ''}">${isFree ? 'FREE' : '$' + price}</span>
                                 </div>
                                 <div class="template-actions">
                                     <button class="btn btn-small btn-outline" 
                                         onclick="addToCart('${template.slug}', '${template.name}', ${price}, '${template.preview_image || ''}'); event.stopPropagation();">
                                         Add to Cart
                                     </button>
-                                    <button class="btn btn-small ${price === 0 ? 'btn-primary' : 'btn-secondary'}" 
+                                    <button class="btn btn-small ${isFree ? 'btn-primary' : 'btn-secondary'}" 
                                         onclick="buyTemplate('${template.slug}', '${template.name}', ${price})">
-                                        ${price === 0 ? 'Get Free →' : 'Buy Now →'}
+                                        ${isFree ? 'Get Free →' : 'Buy Now →'}
                                     </button>
                                 </div>
                             </div>
@@ -13346,7 +13528,7 @@
                     <li><strong>Opt-Out:</strong> Unsubscribe from marketing communications at any time using the link in our emails.</li>
                     <li><strong>Cookie Preferences:</strong> Manage your cookie preferences through our Cookie Settings.</li>
                 </ul>
-                <p>To exercise these rights, please contact us at privacy@deploytemplate.com.</p>
+                <p>To exercise these rights, please contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b6c6c4dfc0d7d5cff6d2d3c6dad9cfc2d3dbc6dad7c2d398d5d9db">[email&#160;protected]</a>.</p>
                 
                 <h3>7. International Data Transfers</h3>
                 <p>Your information may be transferred to and processed in countries other than your country of residence. These countries may have different data protection laws. When we transfer data internationally, we implement appropriate safeguards to ensure your information remains protected.</p>
@@ -13363,7 +13545,7 @@
                 <h3>11. Contact Us</h3>
                 <p>If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
                 <ul>
-                    <li><strong>Email:</strong> privacy@deploytemplate.com</li>
+                    <li><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7505071c0314160c35111005191a0c01101805191401105b161a18">[email&#160;protected]</a></li>
                     <li><strong>Address:</strong> DeployTemplate, [Your Business Address]</li>
                 </ul>
             </div>
@@ -13505,7 +13687,7 @@
                 <h3>16. Contact Information</h3>
                 <p>For questions about these Terms, please contact us:</p>
                 <ul>
-                    <li><strong>Email:</strong> legal@deploytemplate.com</li>
+                    <li><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6b070e0c0a072b0f0e1b0704121f0e061b070a1f0e45080406">[email&#160;protected]</a></li>
                     <li><strong>Address:</strong> DeployTemplate, [Your Business Address]</li>
                 </ul>
             </div>
@@ -13638,7 +13820,7 @@
                 <h3>8. Contact Us</h3>
                 <p>If you have questions about our use of cookies or this Cookie Policy, please contact us:</p>
                 <ul>
-                    <li><strong>Email:</strong> privacy@deploytemplate.com</li>
+                    <li><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aadad8c3dccbc9d3eacecfdac6c5d3decfc7dac6cbdecf84c9c5c7">[email&#160;protected]</a></li>
                     <li><strong>Cookie Settings:</strong> <a href="#" onclick="showCookieSettings(); return false;">Manage Your Preferences</a></li>
                 </ul>
             </div>
@@ -14243,7 +14425,7 @@ git push -u origin main</code></pre>
         </div>
     </div>
     
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // ============================================
         // COOKIE CONSENT MANAGEMENT
         // ============================================
@@ -14508,21 +14690,4 @@ git push -u origin main</code></pre>
                 e.target.classList.remove('active');
                 document.body.style.overflow = '';
             }
-            if (e.target.classList.contains('blog-modal-overlay')) {
-                e.target.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-        
-        // Close modals on ESC key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.legal-modal-overlay.active, .blog-modal-overlay.active').forEach(modal => {
-                    modal.classList.remove('active');
-                });
-                document.body.style.overflow = '';
-            }
-        });
-    </script>
-</body>
-</html>
+            if (e.
