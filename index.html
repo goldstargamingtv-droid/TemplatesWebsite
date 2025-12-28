@@ -20,7 +20,7 @@
          ============================================ -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="DeployTemplate">
-    <meta property="og:title" content="Premium Website Templates: Launch in Minutes | DeployTemplate">
+    <meta property="og:title" content="Premium Website Templates: Launch Instantly | DeployTemplate">
     <meta property="og:description" content="Launch a professional website in minutes with premium, no-code templates for SaaS, startups & businesses. One-time purchase, lifetime access.">
     <meta property="og:url" content="https://deploytemplate.com/">
     <meta property="og:image" content="https://deploytemplate.com/og-image.png">
@@ -35,7 +35,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@deploytemplate">
     <meta name="twitter:creator" content="@deploytemplate">
-    <meta name="twitter:title" content="Premium Website Templates: Launch in Minutes | DeployTemplate">
+    <meta name="twitter:title" content="Premium Website Templates: Launch Instantly | DeployTemplate">
     <meta name="twitter:description" content="Launch a professional website in minutes with premium, no-code templates for SaaS, startups & businesses. One-time purchase, lifetime access.">
     <meta name="twitter:image" content="https://deploytemplate.com/og-image.png">
     <meta name="twitter:image:alt" content="DeployTemplate - Premium Website Templates">
@@ -14570,7 +14570,11 @@
                 
                 const { error } = await supabaseClient.storage
                     .from('Templates')
-                    .upload(path, file);
+                    .upload(path, file, {
+                        cacheControl: '3600',
+                        upsert: true,
+                        contentType: file.type
+                    });
                 
                 if (error) throw error;
                 
