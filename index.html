@@ -14591,7 +14591,8 @@
                 heroDeviceFiles[device] = null;
                 
             } catch (error) {
-                showNotification('Error uploading image: ' + error.message, 'error');
+                console.error('Full upload error:', error);
+                showNotification('Error uploading image: ' + (error.message || JSON.stringify(error)), 'error');
             } finally {
                 uploadBtn.disabled = true;
                 uploadBtn.textContent = 'Upload';
