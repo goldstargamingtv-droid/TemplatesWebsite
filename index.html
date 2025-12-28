@@ -14552,21 +14552,21 @@
                 // First, try to remove any existing image for this device
                 const { data: existingFiles } = await supabaseClient.storage
                     .from('public-assets')
-                    .list('hero-devices', { search: device });
+                    .list('', { search: `hero-${device}` });
                 
                 if (existingFiles && existingFiles.length > 0) {
-                    const toDelete = existingFiles.filter(f => f.name.startsWith(device + '-'));
+                    const toDelete = existingFiles.filter(f => f.name.startsWith(`hero-${device}-`));
                     if (toDelete.length > 0) {
                         await supabaseClient.storage
                             .from('public-assets')
-                            .remove(toDelete.map(f => `hero-devices/${f.name}`));
+                            .remove(toDelete.map(f => f.name));
                     }
                 }
                 
                 // Upload new image
                 const ext = file.name.split('.').pop();
                 const timestamp = Date.now();
-                const path = `hero-devices/${device}-${timestamp}.${ext}`;
+                const path = `hero-${device}-${timestamp}.${ext}`;
                 
                 const { error } = await supabaseClient.storage
                     .from('public-assets')
@@ -14608,14 +14608,14 @@
                 // Find and delete the device image
                 const { data: files } = await supabaseClient.storage
                     .from('public-assets')
-                    .list('hero-devices');
+                    .list('');
                 
                 if (files) {
-                    const toDelete = files.filter(f => f.name.startsWith(device + '-'));
+                    const toDelete = files.filter(f => f.name.startsWith(`hero-${device}-`));
                     if (toDelete.length > 0) {
                         const { error } = await supabaseClient.storage
                             .from('public-assets')
-                            .remove(toDelete.map(f => `hero-devices/${f.name}`));
+                            .remove(toDelete.map(f => f.name));
                         
                         if (error) throw error;
                     }
@@ -14643,7 +14643,7 @@
             try {
                 const { data: files, error } = await supabaseClient.storage
                     .from('public-assets')
-                    .list('hero-devices', { limit: 100 });
+                    .list('', { limit: 100 });
                 
                 if (error) throw error;
                 
@@ -14651,7 +14651,7 @@
                 
                 for (const device of devices) {
                     const deviceCap = device.charAt(0).toUpperCase() + device.slice(1);
-                    const deviceFile = files?.find(f => f.name.startsWith(device + '-'));
+                    const deviceFile = files?.find(f => f.name.startsWith(`hero-${device}-`));
                     
                     // Hero section elements
                     const heroScreen = document.getElementById(`hero${deviceCap}Screen`);
@@ -14664,7 +14664,7 @@
                     if (deviceFile) {
                         const { data } = supabaseClient.storage
                             .from('public-assets')
-                            .getPublicUrl(`hero-devices/${deviceFile.name}`);
+                            .getPublicUrl(deviceFile.name);
                         
                         const imageUrl = data.publicUrl + '?t=' + Date.now();
                         console.log(`${device} image URL:`, imageUrl);
