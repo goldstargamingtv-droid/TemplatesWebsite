@@ -4485,6 +4485,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center center;
             z-index: 1;
         }
 
@@ -11407,6 +11408,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Original Price ($) <span style="color: var(--text-muted); font-size: 0.85rem;">(Set higher than price to show sale)</span></label>
+                    <input type="number" id="editTemplateOriginalPrice" min="0" step="0.01" placeholder="Leave empty for no sale">
+                </div>
+
+                <div class="form-group">
                     <label>New Preview Image (leave empty to keep current)</label>
                     <input type="file" id="editTemplatePreviewImage" accept="image/*">
                 </div>
@@ -14439,6 +14445,7 @@
                 document.getElementById('editTemplateCategory').value = template.category;
                 document.getElementById('editTemplateDescription').value = template.description;
                 document.getElementById('editTemplatePrice').value = template.price;
+                document.getElementById('editTemplateOriginalPrice').value = template.original_price || '';
                 document.getElementById('editTemplateIsPopular').checked = template.is_popular;
 
                 document.getElementById('editTemplateModal').classList.add('active');
@@ -14466,6 +14473,7 @@
                     category: document.getElementById('editTemplateCategory').value,
                     description: document.getElementById('editTemplateDescription').value,
                     price: parseFloat(document.getElementById('editTemplatePrice').value),
+                    original_price: document.getElementById('editTemplateOriginalPrice').value ? parseFloat(document.getElementById('editTemplateOriginalPrice').value) : null,
                     is_popular: document.getElementById('editTemplateIsPopular').checked
                 };
 
