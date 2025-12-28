@@ -14456,12 +14456,28 @@
                 // Upload new preview image if provided
                 if (previewImageFile) {
                     const { data: template } = await supabaseClient.from('templates').select('slug').eq('id', id).single();
-                    const ext = previewImageFile.name.split('.').pop();
+                    const ext = previewImageFile.name.split('.').pop().toLowerCase();
                     const path = `previews/${template.slug}.${ext}`;
                     
+                    // Determine content type
+                    const mimeTypes = {
+                        'png': 'image/png',
+                        'jpg': 'image/jpeg',
+                        'jpeg': 'image/jpeg',
+                        'gif': 'image/gif',
+                        'webp': 'image/webp'
+                    };
+                    const contentType = mimeTypes[ext] || 'image/png';
+                    
+                    // Convert to ArrayBuffer
+                    const arrayBuffer = await previewImageFile.arrayBuffer();
+                    
                     const { error: uploadError } = await supabaseClient.storage
-                    .from('public-assets')
-                        .upload(path, previewImageFile, { upsert: true });
+                        .from('public-assets')
+                        .upload(path, arrayBuffer, { 
+                            upsert: true,
+                            contentType: contentType
+                        });
 
                     if (uploadError) throw uploadError;
 
@@ -15108,19 +15124,40 @@
                 const slug = document.getElementById('adminTemplateSlug').value;
 
                 // Upload preview image
-                const previewImageExt = previewImage.name.split('.').pop();
+                const previewImageExt = previewImage.name.split('.').pop().toLowerCase();
                 const previewImagePath = `previews/${slug}.${previewImageExt}`;
+                
+                // Determine content type
+                const previewMimeTypes = {
+                    'png': 'image/png',
+                    'jpg': 'image/jpeg',
+                    'jpeg': 'image/jpeg',
+                    'gif': 'image/gif',
+                    'webp': 'image/webp'
+                };
+                const previewContentType = previewMimeTypes[previewImageExt] || 'image/png';
+                
+                // Convert to ArrayBuffer
+                const previewArrayBuffer = await previewImage.arrayBuffer();
+                
                 const { error: imageError } = await supabaseClient.storage
                     .from('public-assets')
-                    .upload(previewImagePath, previewImage, { upsert: true });
+                    .upload(previewImagePath, previewArrayBuffer, { 
+                        upsert: true,
+                        contentType: previewContentType
+                    });
 
                 if (imageError) throw imageError;
 
                 // Upload ZIP file
                 const zipPath = `${slug}/${slug}-v1.0.0.zip`;
+                const zipArrayBuffer = await zipFile.arrayBuffer();
                 const { error: zipError } = await supabaseClient.storage
                     .from('Templates')
-                    .upload(zipPath, zipFile, { upsert: true });
+                    .upload(zipPath, zipArrayBuffer, { 
+                        upsert: true,
+                        contentType: 'application/zip'
+                    });
 
                 if (zipError) throw zipError;
 
