@@ -1360,12 +1360,12 @@
         .user-dropdown::before {
             content: '';
             position: absolute;
-            top: -20px;
+            top: -30px;
             right: 0;
             left: 0;
-            height: 25px;
+            height: 35px;
             background: transparent;
-            pointer-events: none;
+            pointer-events: auto;
         }
 
         .user-menu:hover .user-dropdown,
@@ -2029,11 +2029,12 @@
         .cart-dropdown::before {
             content: '';
             position: absolute;
-            top: -20px;
+            top: -30px;
             right: 0;
             left: 0;
-            height: 25px;
+            height: 35px;
             background: transparent;
+            pointer-events: auto;
         }
 
         .cart-icon-wrapper:hover .cart-dropdown,
@@ -3262,7 +3263,7 @@
         /* Laptop - Top center, larger with float */
         .laptop {
             width: 650px;
-            top: -30px;
+            top: -70px;
             left: 55%;
             transform: translateX(-50%);
             z-index: 2;
@@ -3338,10 +3339,10 @@
         }
         
         @keyframes orbitPhone {
-            0%, 100% { transform: perspective(1000px) rotateY(18deg) rotateX(12deg) rotateZ(-8deg); }
-            25% { transform: perspective(1000px) rotateY(24deg) rotateX(9deg) rotateZ(-8deg); }
-            50% { transform: perspective(1000px) rotateY(18deg) rotateX(4deg) rotateZ(-8deg); }
-            75% { transform: perspective(1000px) rotateY(12deg) rotateX(10deg) rotateZ(-8deg); }
+            0%, 100% { transform: perspective(1000px) rotateY(12deg) rotateX(3deg) rotateZ(-6deg); }
+            25% { transform: perspective(1000px) rotateY(16deg) rotateX(2deg) rotateZ(-6deg); }
+            50% { transform: perspective(1000px) rotateY(12deg) rotateX(1deg) rotateZ(-6deg); }
+            75% { transform: perspective(1000px) rotateY(8deg) rotateX(3deg) rotateZ(-6deg); }
         }
         
         .phone:has(.device-frame:hover) {
@@ -3394,15 +3395,15 @@
         @keyframes zoomInPhone {
             0% {
                 opacity: 0;
-                transform: perspective(1000px) rotateY(18deg) rotateX(12deg) rotateZ(-8deg) scale(0.3);
+                transform: perspective(1000px) rotateY(12deg) rotateX(3deg) rotateZ(-6deg) scale(0.3);
             }
             70% {
                 opacity: 1;
-                transform: perspective(1000px) rotateY(18deg) rotateX(12deg) rotateZ(-8deg) scale(1.1);
+                transform: perspective(1000px) rotateY(12deg) rotateX(3deg) rotateZ(-6deg) scale(1.1);
             }
             100% {
                 opacity: 1;
-                transform: perspective(1000px) rotateY(18deg) rotateX(12deg) rotateZ(-8deg) scale(1);
+                transform: perspective(1000px) rotateY(12deg) rotateX(3deg) rotateZ(-6deg) scale(1);
             }
         }
         
@@ -4250,13 +4251,62 @@
         .feature-icon {
             width: 60px;
             height: 60px;
-            background: var(--bg-tertiary);
+            background: rgba(29, 154, 155, 0.1);
+            border: 1px solid rgba(29, 154, 155, 0.2);
             border-radius: var(--border-radius);
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
             color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            background: rgba(29, 154, 155, 0.2);
+            border-color: rgba(29, 154, 155, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .feature-icon svg {
+            stroke: #ffffff;
+            stroke-width: 2;
+            fill: none;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon svg {
+            stroke: var(--primary);
+        }
+        
+        .feature-icon svg path,
+        .feature-icon svg circle,
+        .feature-icon svg rect,
+        .feature-icon svg polyline,
+        .feature-icon svg line {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: featureDrawLine 1s ease forwards;
+        }
+        
+        @keyframes featureDrawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .feature-card:hover .feature-icon svg path,
+        .feature-card:hover .feature-icon svg circle,
+        .feature-card:hover .feature-icon svg rect,
+        .feature-card:hover .feature-icon svg polyline,
+        .feature-card:hover .feature-icon svg line {
+            animation: featureDrawLine 0.5s ease forwards;
+        }
+        
+        /* Feature Accent Text */
+        .feature-accent {
+            color: var(--primary);
+            font-weight: 600;
         }
 
         .feature-card h3 {
@@ -4406,64 +4456,310 @@
         }
 
         /* Showcase Section */
-        .showcase-grid {
+        /* Custom Request Section */
+        .custom-request-section {
+            padding: 6rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .custom-request-wrapper {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
         }
-
-        .showcase-item {
-            border-radius: var(--border-radius-lg);
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background: rgba(10, 10, 10, 0.75);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        
+        .custom-request-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(29, 154, 155, 0.1);
             border: 1px solid rgba(29, 154, 155, 0.2);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
         
-        [data-theme="light"] .showcase-item {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(13, 148, 136, 0.2);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .showcase-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-            border-color: rgba(29, 154, 155, 0.4);
+        .custom-request-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
         }
         
-        [data-theme="light"] .showcase-item:hover {
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            border-color: rgba(13, 148, 136, 0.4);
+        .custom-request-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
         }
-
-        .showcase-image {
-            height: 250px;
-            background: var(--bg-tertiary);
+        
+        .custom-request-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
         }
-
-        .showcase-placeholder {
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-1);
+        
+        .custom-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
         }
-
-        .showcase-info {
-            padding: 1.5rem;
+        
+        .custom-feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(29, 154, 155, 0.1);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--primary);
         }
-
-        .showcase-info h4 {
-            font-size: 1.25rem;
+        
+        .custom-feature h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .custom-feature p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .custom-request-trust {
+            display: flex;
+            gap: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(29, 154, 155, 0.15);
+        }
+        
+        .trust-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .trust-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        
+        .trust-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        /* Custom Request Form */
+        .custom-request-form-container {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        [data-theme="light"] .custom-request-form-container {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(29, 154, 155, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+        
+        .custom-request-form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(29, 154, 155, 0.15);
+        }
+        
+        .custom-request-form-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
-
-        .showcase-info p {
+        
+        .custom-request-form-header p {
             color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .custom-request-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        
+        .custom-request-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .custom-request-form .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .custom-request-form label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .custom-request-form label .required {
+            color: #ef4444;
+        }
+        
+        .custom-request-form input,
+        .custom-request-form select,
+        .custom-request-form textarea {
+            padding: 0.875rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        [data-theme="light"] .custom-request-form input,
+        [data-theme="light"] .custom-request-form select,
+        [data-theme="light"] .custom-request-form textarea {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(29, 154, 155, 0.2);
+        }
+        
+        .custom-request-form input:focus,
+        .custom-request-form select:focus,
+        .custom-request-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(29, 154, 155, 0.1);
+        }
+        
+        .custom-request-form input::placeholder,
+        .custom-request-form textarea::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .custom-request-form select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231d9a9b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+        
+        .custom-request-form select option {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+        
+        .custom-request-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .form-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+        
+        .form-checkbox label {
+            font-weight: 400;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .custom-request-submit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+        
+        .custom-request-submit:hover {
+            background: #178384;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(29, 154, 155, 0.3);
+        }
+        
+        .custom-request-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .form-disclaimer {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        
+        .form-disclaimer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .form-disclaimer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 968px) {
+            .custom-request-wrapper {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .custom-request-form .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .custom-request-trust {
+                justify-content: space-between;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .custom-request-form-container {
+                padding: 1.5rem;
+            }
+            
+            .custom-request-trust {
+                flex-wrap: wrap;
+                gap: 1.5rem;
+            }
         }
 
         /* CTA Section */
@@ -4476,6 +4772,312 @@
             padding: 6rem 2rem;
             position: relative;
             overflow: hidden;
+        }
+        
+        /* Legal & Blog Modal Styles */
+        .legal-modal-overlay,
+        .blog-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 100001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .legal-modal-overlay.active,
+        .blog-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .legal-modal,
+        .blog-modal {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            border-radius: 24px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 85vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        [data-theme="light"] .legal-modal,
+        [data-theme="light"] .blog-modal {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(29, 154, 155, 0.15);
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .legal-modal-header,
+        .blog-modal-header {
+            padding: 2rem 2rem 1.5rem;
+            border-bottom: 1px solid rgba(29, 154, 155, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-shrink: 0;
+        }
+        
+        .legal-modal-header h2,
+        .blog-modal-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .legal-modal-header p,
+        .blog-modal-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .blog-modal-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .blog-modal-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .blog-category-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .legal-modal-close,
+        .blog-modal-close {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        .legal-modal-close:hover,
+        .blog-modal-close:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        .legal-modal-body,
+        .blog-modal-body {
+            padding: 2rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .legal-modal-body h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+        }
+        
+        .legal-modal-body h3:first-child {
+            margin-top: 0;
+        }
+        
+        .legal-modal-body p,
+        .blog-modal-body p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .legal-modal-body ul,
+        .blog-modal-body ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .legal-modal-body li,
+        .blog-modal-body li {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+        }
+        
+        .blog-modal-body h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem;
+            color: var(--text-primary);
+        }
+        
+        .blog-modal-body h3:first-child {
+            margin-top: 0;
+        }
+        
+        .blog-modal-body h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem;
+            color: var(--text-primary);
+        }
+        
+        .blog-modal-body blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            background: rgba(29, 154, 155, 0.1);
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+        }
+        
+        .blog-modal-body blockquote p {
+            margin: 0;
+            color: var(--text-primary);
+        }
+        
+        .blog-modal-body code {
+            background: rgba(29, 154, 155, 0.15);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+            color: var(--primary);
+        }
+        
+        .blog-modal-body pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        [data-theme="light"] .blog-modal-body pre {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .blog-modal-body pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+        }
+        
+        .blog-modal-body .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .blog-modal-body .tip-box {
+            background: rgba(29, 154, 155, 0.1);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+        
+        .blog-modal-body .tip-box h5 {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .blog-modal-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid rgba(29, 154, 155, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .blog-share-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .blog-share-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .blog-share-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        @media (max-width: 640px) {
+            .legal-modal-overlay,
+            .blog-modal-overlay {
+                padding: 1rem;
+            }
+            
+            .legal-modal,
+            .blog-modal {
+                max-height: 90vh;
+                border-radius: 16px;
+            }
+            
+            .legal-modal-header,
+            .blog-modal-header,
+            .legal-modal-body,
+            .blog-modal-body {
+                padding: 1.25rem;
+            }
+            
+            .legal-modal-header h2,
+            .blog-modal-header h2 {
+                font-size: 1.35rem;
+            }
         }
         
         .cta-section::before {
@@ -4562,6 +5164,99 @@
         
         [data-theme="light"] .faq-cta p {
             color: #64748b !important;
+        }
+        
+        /* FAQ Animated Icons */
+        .faq-icon-wrapper {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(29, 154, 155, 0.1);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+        }
+        
+        .faq-item:hover .faq-icon-wrapper {
+            background: rgba(29, 154, 155, 0.2);
+            border-color: rgba(29, 154, 155, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .faq-item[open] .faq-icon-wrapper {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .faq-item[open] .faq-icon-wrapper svg {
+            stroke: white;
+        }
+        
+        .faq-icon-wrapper svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--primary);
+            stroke-width: 2;
+            fill: none;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-icon-wrapper svg path,
+        .faq-icon-wrapper svg circle,
+        .faq-icon-wrapper svg line,
+        .faq-icon-wrapper svg polyline,
+        .faq-icon-wrapper svg rect {
+            stroke-dasharray: 60;
+            stroke-dashoffset: 60;
+            animation: drawLine 0.8s ease forwards;
+        }
+        
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .faq-item:hover .faq-icon-wrapper svg path,
+        .faq-item:hover .faq-icon-wrapper svg circle,
+        .faq-item:hover .faq-icon-wrapper svg line {
+            animation: drawLine 0.5s ease forwards;
+        }
+        
+        /* FAQ Toggle Icon */
+        .faq-toggle-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(29, 154, 155, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover .faq-toggle-icon {
+            background: rgba(29, 154, 155, 0.2);
+        }
+        
+        .faq-item[open] .faq-toggle-icon {
+            background: var(--primary);
+            transform: rotate(180deg);
+        }
+        
+        .faq-item[open] .faq-toggle-icon svg {
+            stroke: white;
+        }
+        
+        /* FAQ Accent Text */
+        .faq-accent {
+            color: var(--primary);
+            font-weight: 600;
         }
         
         /* Blog Section */
@@ -5693,7 +6388,7 @@
                 0 4px 24px rgba(0, 0, 0, 0.4),
                 inset 0 1px 1px rgba(29, 154, 155, 0.1),
                 0 0 40px rgba(29, 154, 155, 0.05);
-            z-index: 10000;
+            z-index: 999;
             animation: slideInRight 0.3s ease-out;
             max-width: 400px;
             font-weight: 500;
@@ -5704,6 +6399,7 @@
             backdrop-filter: blur(20px) saturate(180%); /* Exact match */
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid rgba(29, 154, 155, 0.2);
+            pointer-events: auto;
         }
         
         /* Light mode glassmorphism for notifications */
@@ -7126,7 +7822,7 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#templates" onclick="event.preventDefault(); scrollToSection('templates');">Templates</a></li>
                 <li><a href="#features" onclick="event.preventDefault(); scrollToSection('features');">Features</a></li>
-                <li><a href="#showcase" onclick="event.preventDefault(); scrollToSection('showcase');">Showcase</a></li>
+                <li><a href="#custom-request" onclick="event.preventDefault(); scrollToSection('custom-request');">Custom</a></li>
                 <li><a href="#blog" onclick="event.preventDefault(); scrollToSection('blog');">Blog</a></li>
                 <li><a href="#faq" onclick="event.preventDefault(); scrollToSection('faq');">FAQ</a></li>
                 <li>
@@ -7367,7 +8063,7 @@
                         </svg>
                     </div>
                     <h3>Fully Responsive</h3>
-                    <p>Every template looks perfect on desktop, tablet, and mobile devices. Your visitors get a great experience everywhere.</p>
+                    <p>Every template looks <span class="feature-accent">perfect on desktop, tablet, and mobile</span> devices. Your visitors get a <span class="feature-accent">great experience everywhere</span>.</p>
                 </div>
 
                 <div class="feature-card">
@@ -7378,7 +8074,7 @@
                         </svg>
                     </div>
                     <h3>Launch in Minutes</h3>
-                    <p>Download, customize your content, and deploy. No complex setup or technical knowledge required.</p>
+                    <p>Download, customize your content, and <span class="feature-accent">deploy instantly</span>. No complex setup or <span class="feature-accent">technical knowledge required</span>.</p>
                 </div>
 
                 <div class="feature-card">
@@ -7388,7 +8084,7 @@
                         </svg>
                     </div>
                     <h3>Blazing Fast</h3>
-                    <p>Optimized code and lightweight design ensures your site loads instantly. Better SEO, better conversions.</p>
+                    <p><span class="feature-accent">Optimized code</span> and lightweight design ensures your site <span class="feature-accent">loads instantly</span>. Better SEO, <span class="feature-accent">better conversions</span>.</p>
                 </div>
 
                 <div class="feature-card">
@@ -7398,7 +8094,7 @@
                         </svg>
                     </div>
                     <h3>Easy to Customize</h3>
-                    <p>Clean, well-organized code with helpful comments. Change colors, fonts, and content with ease.</p>
+                    <p><span class="feature-accent">Clean, well-organized code</span> with helpful comments. Change <span class="feature-accent">colors, fonts, and content</span> with ease.</p>
                 </div>
 
                 <div class="feature-card">
@@ -7409,7 +8105,7 @@
                         </svg>
                     </div>
                     <h3>Complete Documentation</h3>
-                    <p>Step-by-step guides and video tutorials help you get started and customize your template perfectly.</p>
+                    <p><span class="feature-accent">Step-by-step guides</span> and video tutorials help you get started and customize your template <span class="feature-accent">perfectly</span>.</p>
                 </div>
 
                 <div class="feature-card">
@@ -7419,61 +8115,213 @@
                         </svg>
                     </div>
                     <h3>Premium Support</h3>
-                    <p>Stuck on something? We're here to help. Email support included with every purchase.</p>
+                    <p>Stuck on something? We're <span class="feature-accent">here to help</span>. <span class="feature-accent">Email support included</span> with every purchase.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                            <path d="M11 8v6M8 11h6"/>
+                        </svg>
+                    </div>
+                    <h3>SEO Optimized</h3>
+                    <p>Built with <span class="feature-accent">semantic HTML</span>, meta tags, and <span class="feature-accent">schema markup</span>. Your site <span class="feature-accent">ranks higher</span> from day one.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="4"/>
+                            <path d="M12 2v2"/>
+                            <path d="M12 20v2"/>
+                            <path d="m4.93 4.93 1.41 1.41"/>
+                            <path d="m17.66 17.66 1.41 1.41"/>
+                            <path d="M2 12h2"/>
+                            <path d="M20 12h2"/>
+                            <path d="m6.34 17.66-1.41 1.41"/>
+                            <path d="m19.07 4.93-1.41 1.41"/>
+                        </svg>
+                    </div>
+                    <h3>Dark Mode Ready</h3>
+                    <p>Every template includes a <span class="feature-accent">polished dark mode</span>. One toggle, <span class="feature-accent">two stunning looks</span> for your brand.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Showcase Section -->
-    <section class="showcase-section" id="showcase">
+    <!-- Custom Project Request Section -->
+    <section class="custom-request-section" id="custom-request">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Built with DeployTemplate</h2>
-                <p class="section-description">
-                    See how businesses are using our templates to create stunning websites
-                </p>
-            </div>
-
-            <div class="showcase-grid">
-                <div class="showcase-item">
-                    <div class="showcase-image">
-                        <div class="showcase-placeholder"></div>
+            <div class="custom-request-wrapper">
+                <!-- Left Side - Info -->
+                <div class="custom-request-info">
+                    <span class="custom-request-badge">Enterprise Solutions</span>
+                    <h2 class="custom-request-title">Need Something <span class="text-gradient">Custom?</span></h2>
+                    <p class="custom-request-desc">Our team specializes in building bespoke web solutions tailored to your unique business requirements. From custom designs to complex functionality, we've got you covered.</p>
+                    
+                    <div class="custom-request-features">
+                        <div class="custom-feature">
+                            <div class="custom-feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4>Fully Custom Design</h4>
+                                <p>Unique designs tailored to your brand identity</p>
+                            </div>
+                        </div>
+                        <div class="custom-feature">
+                            <div class="custom-feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4>Dedicated Project Manager</h4>
+                                <p>Single point of contact throughout development</p>
+                            </div>
+                        </div>
+                        <div class="custom-feature">
+                            <div class="custom-feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4>Priority Support & Maintenance</h4>
+                                <p>Ongoing support after project completion</p>
+                            </div>
+                        </div>
+                        <div class="custom-feature">
+                            <div class="custom-feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4>100% Ownership</h4>
+                                <p>Full rights and source code upon delivery</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="showcase-info">
-                        <h4>TechFlow Analytics</h4>
-                        <p>SaaS Landing Template</p>
+                    
+                    <div class="custom-request-trust">
+                        <div class="trust-item">
+                            <span class="trust-number">48hr</span>
+                            <span class="trust-label">Response Time</span>
+                        </div>
+                        <div class="trust-item">
+                            <span class="trust-number">100%</span>
+                            <span class="trust-label">Satisfaction Rate</span>
+                        </div>
+                        <div class="trust-item">
+                            <span class="trust-number">NDA</span>
+                            <span class="trust-label">Available</span>
+                        </div>
                     </div>
                 </div>
-
-                <div class="showcase-item">
-                    <div class="showcase-image">
-                        <div class="showcase-placeholder"></div>
+                
+                <!-- Right Side - Form -->
+                <div class="custom-request-form-container">
+                    <div class="custom-request-form-header">
+                        <h3>Request a Quote</h3>
+                        <p>Tell us about your project and we'll get back to you within 48 hours.</p>
                     </div>
-                    <div class="showcase-info">
-                        <h4>Sarah Chen Design</h4>
-                        <p>Portfolio Template</p>
-                    </div>
-                </div>
-
-                <div class="showcase-item">
-                    <div class="showcase-image">
-                        <div class="showcase-placeholder"></div>
-                    </div>
-                    <div class="showcase-info">
-                        <h4>Bistro 42</h4>
-                        <p>Restaurant Template</p>
-                    </div>
-                </div>
-
-                <div class="showcase-item">
-                    <div class="showcase-image">
-                        <div class="showcase-placeholder"></div>
-                    </div>
-                    <div class="showcase-info">
-                        <h4>FitLife Coaching</h4>
-                        <p>SaaS Landing Template</p>
-                    </div>
+                    
+                    <form id="customRequestForm" class="custom-request-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="crName">Full Name <span class="required">*</span></label>
+                                <input type="text" id="crName" name="name" required placeholder="John Smith">
+                            </div>
+                            <div class="form-group">
+                                <label for="crEmail">Business Email <span class="required">*</span></label>
+                                <input type="email" id="crEmail" name="email" required placeholder="john@company.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="crCompany">Company Name</label>
+                                <input type="text" id="crCompany" name="company" placeholder="Acme Inc.">
+                            </div>
+                            <div class="form-group">
+                                <label for="crPhone">Phone Number</label>
+                                <input type="tel" id="crPhone" name="phone" placeholder="+1 (555) 000-0000">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="crProjectType">Project Type <span class="required">*</span></label>
+                            <select id="crProjectType" name="project_type" required>
+                                <option value="" disabled selected>Select project type</option>
+                                <option value="custom_website">Custom Website Design</option>
+                                <option value="web_application">Web Application</option>
+                                <option value="ecommerce">E-Commerce Platform</option>
+                                <option value="saas">SaaS Product</option>
+                                <option value="landing_page">Landing Page Campaign</option>
+                                <option value="redesign">Website Redesign</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="crBudget">Estimated Budget <span class="required">*</span></label>
+                                <select id="crBudget" name="budget" required>
+                                    <option value="" disabled selected>Select budget range</option>
+                                    <option value="2500-5000">$2,500 - $5,000</option>
+                                    <option value="5000-10000">$5,000 - $10,000</option>
+                                    <option value="10000-25000">$10,000 - $25,000</option>
+                                    <option value="25000-50000">$25,000 - $50,000</option>
+                                    <option value="50000+">$50,000+</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="crTimeline">Timeline <span class="required">*</span></label>
+                                <select id="crTimeline" name="timeline" required>
+                                    <option value="" disabled selected>Select timeline</option>
+                                    <option value="asap">ASAP (Rush)</option>
+                                    <option value="1-2months">1-2 Months</option>
+                                    <option value="2-3months">2-3 Months</option>
+                                    <option value="3-6months">3-6 Months</option>
+                                    <option value="flexible">Flexible</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="crDescription">Project Description <span class="required">*</span></label>
+                            <textarea id="crDescription" name="description" required rows="4" placeholder="Tell us about your project goals, target audience, key features needed, and any specific requirements..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="crReferenceUrl">Reference URLs</label>
+                            <input type="text" id="crReferenceUrl" name="reference_urls" placeholder="Links to websites you like (comma separated)">
+                        </div>
+                        
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="crNda" name="nda_required">
+                            <label for="crNda">I require an NDA before discussing project details</label>
+                        </div>
+                        
+                        <button type="submit" class="custom-request-submit" id="customRequestSubmit">
+                            <span>Submit Request</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 2L11 13"/>
+                                <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+                            </svg>
+                        </button>
+                        
+                        <p class="form-disclaimer">By submitting this form, you agree to our <a href="#" onclick="openLegalModal('privacy'); return false;">Privacy Policy</a> and <a href="#" onclick="openLegalModal('terms'); return false;">Terms of Service</a>.</p>
+                    </form>
                 </div>
             </div>
         </div>
@@ -7530,7 +8378,7 @@
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
                 <!-- Article 1 -->
-                <article class="blog-card" style="
+                <article class="blog-card" onclick="openBlogModal('design-trends')" style="
                     background: rgba(10, 10, 10, 0.7);
                     backdrop-filter: blur(20px) saturate(180%);
                     -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -7538,6 +8386,7 @@
                     border-radius: 16px;
                     overflow: hidden;
                     transition: all 0.3s ease;
+                    cursor: pointer;
                 " onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 20px 40px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">
                     <div style="height: 200px; background: linear-gradient(135deg, rgba(29, 154, 155, 0.3) 0%, rgba(13, 148, 136, 0.1) 100%); display: flex; align-items: center; justify-content: center;">
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" style="opacity: 0.6;">
@@ -7550,19 +8399,19 @@
                     <div style="padding: 1.5rem;">
                         <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
                             <span style="font-size: 0.75rem; color: var(--primary); background: rgba(29, 154, 155, 0.15); padding: 0.25rem 0.75rem; border-radius: 20px;">Design</span>
-                            <span style="font-size: 0.75rem; color: var(--text-muted);">5 min read</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">12 min read</span>
                         </div>
                         <h3 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 0.75rem; line-height: 1.4;">10 Web Design Trends Dominating 2025</h3>
                         <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">Discover the latest design trends shaping the future of web development, from glassmorphism to AI-generated interfaces.</p>
-                        <a href="#" style="color: var(--primary); font-weight: 500; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: var(--primary); font-weight: 500; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
                             Read More
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
+                        </span>
                     </div>
                 </article>
 
                 <!-- Article 2 -->
-                <article class="blog-card" style="
+                <article class="blog-card" onclick="openBlogModal('deployment-guide')" style="
                     background: rgba(10, 10, 10, 0.7);
                     backdrop-filter: blur(20px) saturate(180%);
                     -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -7570,6 +8419,7 @@
                     border-radius: 16px;
                     overflow: hidden;
                     transition: all 0.3s ease;
+                    cursor: pointer;
                 " onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 20px 40px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">
                     <div style="height: 200px; background: linear-gradient(135deg, rgba(99, 91, 255, 0.3) 0%, rgba(139, 92, 246, 0.1) 100%); display: flex; align-items: center; justify-content: center;">
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" style="opacity: 0.6;">
@@ -7580,19 +8430,19 @@
                     <div style="padding: 1.5rem;">
                         <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
                             <span style="font-size: 0.75rem; color: #8B5CF6; background: rgba(139, 92, 246, 0.15); padding: 0.25rem 0.75rem; border-radius: 20px;">Development</span>
-                            <span style="font-size: 0.75rem; color: var(--text-muted);">8 min read</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">15 min read</span>
                         </div>
-                        <h3 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 0.75rem; line-height: 1.4;">How to Deploy Your First Website in Under 5 Minutes</h3>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">A step-by-step guide to getting your website live using modern deployment platforms like Vercel and Netlify.</p>
-                        <a href="#" style="color: var(--primary); font-weight: 500; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <h3 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 0.75rem; line-height: 1.4;">The Complete Guide to Deploying Your First Website</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">A comprehensive walkthrough for getting your website live using modern deployment platforms like Vercel and Netlify.</p>
+                        <span style="color: var(--primary); font-weight: 500; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
                             Read More
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
+                        </span>
                     </div>
                 </article>
 
                 <!-- Article 3 -->
-                <article class="blog-card" style="
+                <article class="blog-card" onclick="openBlogModal('speed-optimization')" style="
                     background: rgba(10, 10, 10, 0.7);
                     backdrop-filter: blur(20px) saturate(180%);
                     -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -7600,6 +8450,7 @@
                     border-radius: 16px;
                     overflow: hidden;
                     transition: all 0.3s ease;
+                    cursor: pointer;
                 " onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 20px 40px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">
                     <div style="height: 200px; background: linear-gradient(135deg, rgba(236, 72, 153, 0.3) 0%, rgba(244, 114, 182, 0.1) 100%); display: flex; align-items: center; justify-content: center;">
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5" style="opacity: 0.6;">
@@ -7609,14 +8460,14 @@
                     <div style="padding: 1.5rem;">
                         <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
                             <span style="font-size: 0.75rem; color: #EC4899; background: rgba(236, 72, 153, 0.15); padding: 0.25rem 0.75rem; border-radius: 20px;">Performance</span>
-                            <span style="font-size: 0.75rem; color: var(--text-muted);">6 min read</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">10 min read</span>
                         </div>
                         <h3 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 0.75rem; line-height: 1.4;">Speed Optimization: Why Your Website Needs to Load in Under 3 Seconds</h3>
                         <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">Learn the critical performance metrics that impact user experience and how to optimize your site for speed.</p>
-                        <a href="#" style="color: var(--primary); font-weight: 500; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: var(--primary); font-weight: 500; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
                             Read More
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
+                        </span>
                     </div>
                 </article>
             </div>
@@ -7675,7 +8526,6 @@
                         padding: 1.5rem;
                         cursor: pointer;
                         display: flex;
-                        justify-content: space-between;
                         align-items: center;
                         font-weight: 600;
                         font-size: 1.1rem;
@@ -7683,13 +8533,20 @@
                         list-style: none;
                         user-select: none;
                     ">
-                        <span>What is included with each website template?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                            </svg>
+                        </div>
+                        <span style="flex: 1;">What is included with each website template?</span>
+                        <div class="faq-toggle-icon">
+                            <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" style="transition: transform 0.3s ease;">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </div>
                     </summary>
                     <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
-                        <p>Each template includes the complete source code (HTML, CSS, JavaScript), all design assets, responsive layouts optimized for mobile, tablet, and desktop devices, cross-browser compatibility, SEO-optimized markup, and detailed documentation. Premium templates also include lifetime updates and priority support.</p>
+                        <p>Each template includes the <span class="faq-accent">complete source code</span> (HTML, CSS, JavaScript), all design assets, <span class="faq-accent">responsive layouts</span> optimized for mobile, tablet, and desktop devices, cross-browser compatibility, <span class="faq-accent">SEO-optimized markup</span>, and detailed documentation. Premium templates also include <span class="faq-accent">lifetime updates</span> and priority support.</p>
                     </div>
                 </details>
 
@@ -7707,7 +8564,6 @@
                         padding: 1.5rem;
                         cursor: pointer;
                         display: flex;
-                        justify-content: space-between;
                         align-items: center;
                         font-weight: 600;
                         font-size: 1.1rem;
@@ -7715,13 +8571,21 @@
                         list-style: none;
                         user-select: none;
                     ">
-                        <span>Can I use a template for multiple projects or clients?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            </svg>
+                        </div>
+                        <span style="flex: 1;">Can I use a template for multiple projects or clients?</span>
+                        <div class="faq-toggle-icon">
+                            <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" style="transition: transform 0.3s ease;">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </div>
                     </summary>
                     <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
-                        <p>Each template purchase includes a single-use license for one end product (website). If you need to use the template for multiple projects or clients, you'll need to purchase additional licenses. We offer bulk licensing discounts for agencies and developers working on multiple projects.</p>
+                        <p>Each template purchase includes a <span class="faq-accent">single-use license</span> for one end product (website). If you need to use the template for multiple projects or clients, you'll need to purchase additional licenses. We offer <span class="faq-accent">bulk licensing discounts</span> for agencies and developers working on multiple projects.</p>
                     </div>
                 </details>
 
@@ -7739,7 +8603,6 @@
                         padding: 1.5rem;
                         cursor: pointer;
                         display: flex;
-                        justify-content: space-between;
                         align-items: center;
                         font-weight: 600;
                         font-size: 1.1rem;
@@ -7747,13 +8610,21 @@
                         list-style: none;
                         user-select: none;
                     ">
-                        <span>How do I customize a template after purchase?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 20h9"/>
+                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                            </svg>
+                        </div>
+                        <span style="flex: 1;">How do I customize a template after purchase?</span>
+                        <div class="faq-toggle-icon">
+                            <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" style="transition: transform 0.3s ease;">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </div>
                     </summary>
                     <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
-                        <p>Our templates are built with clean, well-commented code that's easy to customize. Simply edit the HTML content, modify CSS variables for colors and typography, and replace placeholder images with your own. Each template includes comprehensive documentation with step-by-step customization guides. No coding experience required for basic changes.</p>
+                        <p>Our templates are built with <span class="faq-accent">clean, well-commented code</span> that's easy to customize. Simply edit the HTML content, modify <span class="faq-accent">CSS variables</span> for colors and typography, and replace placeholder images with your own. Each template includes comprehensive documentation with <span class="faq-accent">step-by-step customization guides</span>. No coding experience required for basic changes.</p>
                     </div>
                 </details>
 
@@ -7771,7 +8642,6 @@
                         padding: 1.5rem;
                         cursor: pointer;
                         display: flex;
-                        justify-content: space-between;
                         align-items: center;
                         font-weight: 600;
                         font-size: 1.1rem;
@@ -7779,13 +8649,21 @@
                         list-style: none;
                         user-select: none;
                     ">
-                        <span>Do you offer refunds if I'm not satisfied?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <polyline points="9 22 9 12 15 12 15 22"/>
+                            </svg>
+                        </div>
+                        <span style="flex: 1;">Do you offer refunds if I'm not satisfied?</span>
+                        <div class="faq-toggle-icon">
+                            <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" style="transition: transform 0.3s ease;">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </div>
                     </summary>
                     <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
-                        <p>Yes! We offer a 30-day money-back guarantee on all template purchases. If you're not completely satisfied with your purchase, contact our support team within 30 days for a full refund. We want you to be 100% happy with your investment.</p>
+                        <p>Yes! We offer a <span class="faq-accent">30-day money-back guarantee</span> on all template purchases. If you're not completely satisfied with your purchase, contact our support team within 30 days for a <span class="faq-accent">full refund</span>. We want you to be <span class="faq-accent">100% happy</span> with your investment.</p>
                     </div>
                 </details>
 
@@ -7803,7 +8681,6 @@
                         padding: 1.5rem;
                         cursor: pointer;
                         display: flex;
-                        justify-content: space-between;
                         align-items: center;
                         font-weight: 600;
                         font-size: 1.1rem;
@@ -7811,13 +8688,23 @@
                         list-style: none;
                         user-select: none;
                     ">
-                        <span>Are the templates SEO-friendly and optimized for performance?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8"/>
+                                <path d="m21 21-4.35-4.35"/>
+                                <path d="M11 8v6"/>
+                                <path d="M8 11h6"/>
+                            </svg>
+                        </div>
+                        <span style="flex: 1;">Are the templates SEO-friendly and optimized for performance?</span>
+                        <div class="faq-toggle-icon">
+                            <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" style="transition: transform 0.3s ease;">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </div>
                     </summary>
                     <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
-                        <p>Absolutely! All our templates are built with SEO best practices including semantic HTML5 markup, proper heading hierarchy, meta tag optimization, schema markup support, fast loading times, and Core Web Vitals optimization. Templates typically score 90+ on Google PageSpeed Insights out of the box.</p>
+                        <p>Absolutely! All our templates are built with <span class="faq-accent">SEO best practices</span> including semantic HTML5 markup, proper heading hierarchy, meta tag optimization, <span class="faq-accent">schema markup support</span>, fast loading times, and <span class="faq-accent">Core Web Vitals optimization</span>. Templates typically score <span class="faq-accent">90+ on Google PageSpeed</span> Insights out of the box.</p>
                     </div>
                 </details>
 
@@ -7835,7 +8722,6 @@
                         padding: 1.5rem;
                         cursor: pointer;
                         display: flex;
-                        justify-content: space-between;
                         align-items: center;
                         font-weight: 600;
                         font-size: 1.1rem;
@@ -7843,13 +8729,23 @@
                         list-style: none;
                         user-select: none;
                     ">
-                        <span>What hosting services do you recommend?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                                <line x1="6" y1="6" x2="6.01" y2="6"/>
+                                <line x1="6" y1="18" x2="6.01" y2="18"/>
+                            </svg>
+                        </div>
+                        <span style="flex: 1;">What hosting services do you recommend?</span>
+                        <div class="faq-toggle-icon">
+                            <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" style="transition: transform 0.3s ease;">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </div>
                     </summary>
                     <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
-                        <p>Our templates work with any web hosting service. For static HTML templates, we recommend Vercel, Netlify, or GitHub Pages for free hosting with excellent performance. For templates requiring a backend, services like DigitalOcean, AWS, or traditional hosting providers work great. Each template includes deployment guides for popular platforms.</p>
+                        <p>Our templates work with any web hosting service. For static HTML templates, we recommend <span class="faq-accent">Vercel</span>, <span class="faq-accent">Netlify</span>, or <span class="faq-accent">GitHub Pages</span> for free hosting with excellent performance. For templates requiring a backend, services like DigitalOcean, AWS, or traditional hosting providers work great. Each template includes <span class="faq-accent">deployment guides</span> for popular platforms.</p>
                     </div>
                 </details>
 
@@ -7867,7 +8763,6 @@
                         padding: 1.5rem;
                         cursor: pointer;
                         display: flex;
-                        justify-content: space-between;
                         align-items: center;
                         font-weight: 600;
                         font-size: 1.1rem;
@@ -7875,13 +8770,23 @@
                         list-style: none;
                         user-select: none;
                     ">
-                        <span>Do you provide support after purchase?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                <path d="M8 10h.01"/>
+                                <path d="M12 10h.01"/>
+                                <path d="M16 10h.01"/>
+                            </svg>
+                        </div>
+                        <span style="flex: 1;">Do you provide support after purchase?</span>
+                        <div class="faq-toggle-icon">
+                            <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" style="transition: transform 0.3s ease;">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </div>
                     </summary>
                     <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
-                        <p>Yes! All purchases include 6 months of standard support via email. Premium templates include lifetime priority support with faster response times. Our support team can help with installation issues, customization questions, and technical troubleshooting. We typically respond within 24 hours on business days.</p>
+                        <p>Yes! All purchases include <span class="faq-accent">6 months of standard support</span> via email. Premium templates include <span class="faq-accent">lifetime priority support</span> with faster response times. Our support team can help with installation issues, customization questions, and technical troubleshooting. We typically respond within <span class="faq-accent">24 hours</span> on business days.</p>
                     </div>
                 </details>
 
@@ -7899,7 +8804,6 @@
                         padding: 1.5rem;
                         cursor: pointer;
                         display: flex;
-                        justify-content: space-between;
                         align-items: center;
                         font-weight: 600;
                         font-size: 1.1rem;
@@ -7907,13 +8811,22 @@
                         list-style: none;
                         user-select: none;
                     ">
-                        <span>Can I request a custom template design?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
-                            <path d="M6 9l6 6 6-6"/>
-                        </svg>
+                        <div class="faq-icon-wrapper">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5"/>
+                                <path d="M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <span style="flex: 1;">Can I request a custom template design?</span>
+                        <div class="faq-toggle-icon">
+                            <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" style="transition: transform 0.3s ease;">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </div>
                     </summary>
                     <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
-                        <p>Yes! We offer custom template design services for businesses with specific requirements. Contact our team with your project details, and we'll provide a quote and timeline. Custom projects typically start at $2,500 and include unlimited revisions, dedicated support, and full ownership of the final design.</p>
+                        <p>Yes! We offer <span class="faq-accent">custom template design services</span> for businesses with specific requirements. Contact our team with your project details, and we'll provide a quote and timeline. Custom projects typically start at <span class="faq-accent">$2,500</span> and include <span class="faq-accent">unlimited revisions</span>, dedicated support, and <span class="faq-accent">full ownership</span> of the final design.</p>
                     </div>
                 </details>
 
@@ -8065,7 +8978,7 @@
                     <h4>Company</h4>
                     <ul>
                         <li><a href="about.html">About</a></li>
-                        <li><a href="#showcase">Showcase</a></li>
+                        <li><a href="#custom-request">Custom</a></li>
                         <li><a href="#blog">Blog</a></li>
                         <li><a href="#faq">FAQ</a></li>
                         <li><a href="/cdn-cgi/l/email-protection#94f7fbfae0f5f7e0d4e0f1f9e4f8f5e0f1f2fbe6f3f1baf7fbf9">Contact</a></li>
@@ -8085,11 +8998,11 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2024 DeployTemplate. All rights reserved.</p>
+                <p>&copy; 2025 DeployTemplate. All rights reserved.</p>
                 <div class="footer-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Cookies</a>
+                    <a href="#" onclick="openLegalModal('privacy'); return false;">Privacy Policy</a>
+                    <a href="#" onclick="openLegalModal('terms'); return false;">Terms of Service</a>
+                    <a href="#" onclick="openLegalModal('cookies'); return false;">Cookies</a>
                 </div>
             </div>
         </div>
@@ -8411,10 +9324,14 @@
             <p>Manage templates and site content</p>
             
             <!-- Tab Navigation -->
-            <div style="display: flex; gap: 1rem; margin: 2rem 0 1rem; border-bottom: 2px solid var(--border-color);">
+            <div style="display: flex; gap: 1rem; margin: 2rem 0 1rem; border-bottom: 2px solid var(--border-color); flex-wrap: wrap;">
                 <button onclick="showAdminTab('add')" id="adminTabAdd" class="admin-tab active" style="padding: 0.75rem 1.5rem; background: none; border: none; border-bottom: 2px solid var(--primary); color: var(--primary); cursor: pointer; font-weight: 600;">Add Template</button>
                 <button onclick="showAdminTab('manage')" id="adminTabManage" class="admin-tab" style="padding: 0.75rem 1.5rem; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-secondary); cursor: pointer; font-weight: 600;">Manage Templates</button>
                 <button onclick="showAdminTab('hero')" id="adminTabHero" class="admin-tab" style="padding: 0.75rem 1.5rem; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-secondary); cursor: pointer; font-weight: 600;">Hero Images</button>
+                <button onclick="showAdminTab('requests')" id="adminTabRequests" class="admin-tab" style="padding: 0.75rem 1.5rem; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-secondary); cursor: pointer; font-weight: 600; position: relative;">
+                    Custom Requests
+                    <span id="requestsBadge" style="display: none; position: absolute; top: 5px; right: 5px; background: #ef4444; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 10px; font-weight: 700;"></span>
+                </button>
             </div>
 
             <!-- Add Template Tab -->
@@ -8515,6 +9432,60 @@
                 <div id="adminHeroImagesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
                     <p style="color: var(--text-muted);">Loading hero images...</p>
                 </div>
+            </div>
+            
+            <!-- Custom Requests Tab -->
+            <div id="adminTabRequestsContent" class="admin-tab-content" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <div>
+                        <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Custom Project Requests</h3>
+                        <p style="color: var(--text-muted);">Manage incoming custom project inquiries</p>
+                    </div>
+                    <button onclick="loadCustomRequests()" class="btn btn-primary" style="padding: 0.5rem 1rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem;">
+                            <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+                            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                        </svg>
+                        Refresh
+                    </button>
+                </div>
+                
+                <!-- Filters -->
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                    <select id="requestStatusFilter" onchange="filterCustomRequests()" style="padding: 0.5rem 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
+                        <option value="all">All Status</option>
+                        <option value="new">New</option>
+                        <option value="contacted">Contacted</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="quoted">Quoted</option>
+                        <option value="won">Won</option>
+                        <option value="lost">Lost</option>
+                    </select>
+                    <select id="requestBudgetFilter" onchange="filterCustomRequests()" style="padding: 0.5rem 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary);">
+                        <option value="all">All Budgets</option>
+                        <option value="2500-5000">$2,500 - $5,000</option>
+                        <option value="5000-10000">$5,000 - $10,000</option>
+                        <option value="10000-25000">$10,000 - $25,000</option>
+                        <option value="25000-50000">$25,000 - $50,000</option>
+                        <option value="50000+">$50,000+</option>
+                    </select>
+                </div>
+                
+                <!-- Requests List -->
+                <div id="customRequestsList" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <p style="color: var(--text-muted); text-align: center; padding: 2rem;">Loading requests...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Request Detail Modal -->
+    <div id="requestDetailModal" class="modal-overlay">
+        <div class="modal" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+            <button class="modal-close" onclick="closeModal('requestDetailModal')" aria-label="Close">&times;</button>
+            
+            <div id="requestDetailContent">
+                <!-- Content loaded dynamically -->
             </div>
         </div>
     </div>
@@ -9441,6 +10412,9 @@
                     }
                 });
             });
+            
+            // Check for new custom requests (for admin badge)
+            checkNewRequests();
         });
 
         // ============================================
@@ -11449,6 +12423,7 @@
             showAdminTab('add');
             loadAdminTemplates();
             loadAdminHeroImages();
+            loadCustomRequests();
             
             // Auto-generate slug from name
             document.getElementById('adminTemplateName').addEventListener('input', (e) => {
@@ -11676,6 +12651,367 @@
                 showNotification('Error deleting image: ' + error.message, 'error');
             }
         }
+
+        // ============================================
+        // CUSTOM PROJECT REQUESTS
+        // ============================================
+        
+        // Store requests in memory for filtering
+        let allCustomRequests = [];
+        
+        // Handle custom request form submission
+        document.getElementById('customRequestForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('customRequestSubmit');
+            const originalHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span>Submitting...</span>';
+            
+            try {
+                const formData = {
+                    name: document.getElementById('crName').value,
+                    email: document.getElementById('crEmail').value,
+                    company: document.getElementById('crCompany').value || null,
+                    phone: document.getElementById('crPhone').value || null,
+                    project_type: document.getElementById('crProjectType').value,
+                    budget: document.getElementById('crBudget').value,
+                    timeline: document.getElementById('crTimeline').value,
+                    description: document.getElementById('crDescription').value,
+                    reference_urls: document.getElementById('crReferenceUrl').value || null,
+                    nda_required: document.getElementById('crNda').checked,
+                    status: 'new',
+                    created_at: new Date().toISOString()
+                };
+                
+                const { data, error } = await supabaseClient
+                    .from('custom_requests')
+                    .insert([formData]);
+                
+                if (error) throw error;
+                
+                showNotification('Request submitted successfully! We\'ll be in touch within 48 hours.', 'success');
+                document.getElementById('customRequestForm').reset();
+                
+            } catch (error) {
+                console.error('Error submitting request:', error);
+                showNotification('Error submitting request. Please try again or email us directly.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+            }
+        });
+        
+        // Load custom requests for admin panel
+        async function loadCustomRequests() {
+            const list = document.getElementById('customRequestsList');
+            list.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 2rem;">Loading requests...</p>';
+            
+            try {
+                const { data: requests, error } = await supabaseClient
+                    .from('custom_requests')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                allCustomRequests = requests || [];
+                renderCustomRequests(allCustomRequests);
+                updateRequestsBadge(requests.filter(r => r.status === 'new').length);
+                
+            } catch (error) {
+                console.error('Error loading requests:', error);
+                list.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 2rem;">Error loading requests. Make sure the custom_requests table exists.</p>';
+            }
+        }
+        
+        // Render custom requests list
+        function renderCustomRequests(requests) {
+            const list = document.getElementById('customRequestsList');
+            
+            if (!requests || requests.length === 0) {
+                list.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 2rem;">No custom requests yet.</p>';
+                return;
+            }
+            
+            const statusColors = {
+                'new': '#3b82f6',
+                'contacted': '#f59e0b',
+                'in_progress': '#8b5cf6',
+                'quoted': '#06b6d4',
+                'won': '#22c55e',
+                'lost': '#ef4444'
+            };
+            
+            const projectTypeLabels = {
+                'custom_website': 'Custom Website',
+                'web_application': 'Web Application',
+                'ecommerce': 'E-Commerce',
+                'saas': 'SaaS Product',
+                'landing_page': 'Landing Page',
+                'redesign': 'Website Redesign',
+                'other': 'Other'
+            };
+            
+            list.innerHTML = requests.map(req => `
+                <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; cursor: pointer; transition: all 0.2s ease;" 
+                     onclick="showRequestDetail('${req.id}')"
+                     onmouseover="this.style.borderColor='var(--primary)';this.style.transform='translateY(-2px)'"
+                     onmouseout="this.style.borderColor='var(--border-color)';this.style.transform='translateY(0)'">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                                <h4 style="font-weight: 600; font-size: 1.1rem;">${req.name}</h4>
+                                <span style="background: ${statusColors[req.status] || '#6b7280'}20; color: ${statusColors[req.status] || '#6b7280'}; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase;">${req.status.replace('_', ' ')}</span>
+                                ${req.nda_required ? '<span style="background: #ef444420; color: #ef4444; padding: 0.25rem 0.5rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600;">NDA</span>' : ''}
+                            </div>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">${req.email}${req.company ? ' • ' + req.company : ''}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 700; color: var(--primary); font-size: 1.1rem;">${formatBudget(req.budget)}</div>
+                            <div style="color: var(--text-muted); font-size: 0.8rem;">${formatTimeline(req.timeline)}</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="background: rgba(29, 154, 155, 0.1); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem;">${projectTypeLabels[req.project_type] || req.project_type}</span>
+                        <span style="color: var(--text-muted); font-size: 0.8rem;">${formatDate(req.created_at)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Filter custom requests
+        function filterCustomRequests() {
+            const statusFilter = document.getElementById('requestStatusFilter').value;
+            const budgetFilter = document.getElementById('requestBudgetFilter').value;
+            
+            let filtered = allCustomRequests;
+            
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(r => r.status === statusFilter);
+            }
+            
+            if (budgetFilter !== 'all') {
+                filtered = filtered.filter(r => r.budget === budgetFilter);
+            }
+            
+            renderCustomRequests(filtered);
+        }
+        
+        // Show request detail modal
+        async function showRequestDetail(id) {
+            const request = allCustomRequests.find(r => r.id === id);
+            if (!request) return;
+            
+            const statusColors = {
+                'new': '#3b82f6',
+                'contacted': '#f59e0b',
+                'in_progress': '#8b5cf6',
+                'quoted': '#06b6d4',
+                'won': '#22c55e',
+                'lost': '#ef4444'
+            };
+            
+            const projectTypeLabels = {
+                'custom_website': 'Custom Website Design',
+                'web_application': 'Web Application',
+                'ecommerce': 'E-Commerce Platform',
+                'saas': 'SaaS Product',
+                'landing_page': 'Landing Page Campaign',
+                'redesign': 'Website Redesign',
+                'other': 'Other'
+            };
+            
+            const content = document.getElementById('requestDetailContent');
+            content.innerHTML = `
+                <div style="margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <div>
+                            <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">${request.name}</h2>
+                            <p style="color: var(--text-muted);">${request.company || 'No company specified'}</p>
+                        </div>
+                        <select id="requestStatusSelect" onchange="updateRequestStatus('${request.id}', this.value)" style="padding: 0.5rem 1rem; background: ${statusColors[request.status]}20; border: 1px solid ${statusColors[request.status]}; border-radius: 8px; color: ${statusColors[request.status]}; font-weight: 600; cursor: pointer;">
+                            <option value="new" ${request.status === 'new' ? 'selected' : ''}>New</option>
+                            <option value="contacted" ${request.status === 'contacted' ? 'selected' : ''}>Contacted</option>
+                            <option value="in_progress" ${request.status === 'in_progress' ? 'selected' : ''}>In Progress</option>
+                            <option value="quoted" ${request.status === 'quoted' ? 'selected' : ''}>Quoted</option>
+                            <option value="won" ${request.status === 'won' ? 'selected' : ''}>Won</option>
+                            <option value="lost" ${request.status === 'lost' ? 'selected' : ''}>Lost</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 12px;">
+                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Email</div>
+                        <a href="mailto:${request.email}" style="color: var(--primary); font-weight: 500;">${request.email}</a>
+                    </div>
+                    <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 12px;">
+                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Phone</div>
+                        <div style="font-weight: 500;">${request.phone || 'Not provided'}</div>
+                    </div>
+                    <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 12px;">
+                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Budget</div>
+                        <div style="font-weight: 700; color: var(--primary);">${formatBudget(request.budget)}</div>
+                    </div>
+                    <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 12px;">
+                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Timeline</div>
+                        <div style="font-weight: 500;">${formatTimeline(request.timeline)}</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                        <h3 style="font-size: 1.1rem;">Project Type</h3>
+                        ${request.nda_required ? '<span style="background: #ef444420; color: #ef4444; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">NDA Required</span>' : ''}
+                    </div>
+                    <span style="background: rgba(29, 154, 155, 0.1); color: var(--primary); padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500;">${projectTypeLabels[request.project_type] || request.project_type}</span>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem;">Project Description</h3>
+                    <div style="background: var(--bg-tertiary); padding: 1.25rem; border-radius: 12px; line-height: 1.8; color: var(--text-secondary);">
+                        ${request.description}
+                    </div>
+                </div>
+                
+                ${request.reference_urls ? `
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem;">Reference URLs</h3>
+                    <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 12px;">
+                        ${request.reference_urls.split(',').map(url => `<a href="${url.trim()}" target="_blank" style="color: var(--primary); display: block; margin-bottom: 0.5rem;">${url.trim()}</a>`).join('')}
+                    </div>
+                </div>
+                ` : ''}
+                
+                <div style="display: flex; gap: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <a href="mailto:${request.email}?subject=Re: Your Custom Project Request - DeployTemplate" class="btn btn-primary" style="flex: 1; text-align: center;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem;">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        Send Email
+                    </a>
+                    <button onclick="deleteCustomRequest('${request.id}')" class="btn" style="background: #ef444420; color: #ef4444; border: 1px solid #ef4444;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 1rem;">
+                    Submitted on ${formatDate(request.created_at)}
+                </div>
+            `;
+            
+            openModal('requestDetailModal');
+        }
+        
+        // Update request status
+        async function updateRequestStatus(id, status) {
+            try {
+                const { error } = await supabaseClient
+                    .from('custom_requests')
+                    .update({ status: status })
+                    .eq('id', id);
+                
+                if (error) throw error;
+                
+                showNotification('Status updated!', 'success');
+                loadCustomRequests();
+                
+            } catch (error) {
+                showNotification('Error updating status: ' + error.message, 'error');
+            }
+        }
+        
+        // Delete custom request
+        async function deleteCustomRequest(id) {
+            if (!confirm('Are you sure you want to delete this request? This cannot be undone.')) return;
+            
+            try {
+                const { error } = await supabaseClient
+                    .from('custom_requests')
+                    .delete()
+                    .eq('id', id);
+                
+                if (error) throw error;
+                
+                showNotification('Request deleted!', 'success');
+                closeModal('requestDetailModal');
+                loadCustomRequests();
+                
+            } catch (error) {
+                showNotification('Error deleting request: ' + error.message, 'error');
+            }
+        }
+        
+        // Update requests badge count
+        function updateRequestsBadge(count) {
+            const badge = document.getElementById('requestsBadge');
+            if (count > 0) {
+                badge.textContent = count;
+                badge.style.display = 'inline-block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+        
+        // Helper functions
+        function formatBudget(budget) {
+            const budgets = {
+                '2500-5000': '$2.5K - $5K',
+                '5000-10000': '$5K - $10K',
+                '10000-25000': '$10K - $25K',
+                '25000-50000': '$25K - $50K',
+                '50000+': '$50K+'
+            };
+            return budgets[budget] || budget;
+        }
+        
+        function formatTimeline(timeline) {
+            const timelines = {
+                'asap': 'ASAP (Rush)',
+                '1-2months': '1-2 Months',
+                '2-3months': '2-3 Months',
+                '3-6months': '3-6 Months',
+                'flexible': 'Flexible'
+            };
+            return timelines[timeline] || timeline;
+        }
+        
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        // Load requests when admin panel opens
+        const originalShowAdminPanel = typeof showAdminPanel === 'function' ? showAdminPanel : null;
+        
+        // Check for new requests on page load (for admin)
+        async function checkNewRequests() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('custom_requests')
+                    .select('id')
+                    .eq('status', 'new');
+                
+                if (!error && data) {
+                    updateRequestsBadge(data.length);
+                }
+            } catch (e) {
+                // Table might not exist yet
+            }
+        }
+        
+        // Check for new requests periodically
+        setInterval(checkNewRequests, 60000); // Every minute
 
         async function handleAdminAddTemplate(event) {
             event.preventDefault();
@@ -11934,12 +13270,921 @@
         })();
     </script>
     
+    <!-- Legal Modal - Privacy Policy -->
+    <div class="legal-modal-overlay" id="privacyModal">
+        <div class="legal-modal">
+            <div class="legal-modal-header">
+                <div>
+                    <h2>Privacy Policy</h2>
+                    <p>Last updated: December 27, 2024</p>
+                </div>
+                <button class="legal-modal-close" onclick="closeLegalModal('privacy')">&times;</button>
+            </div>
+            <div class="legal-modal-body">
+                <p>At DeployTemplate ("we," "our," or "us"), we are committed to protecting your privacy and ensuring transparency about how we collect, use, and safeguard your personal information. This Privacy Policy explains our practices concerning the data we collect when you visit our website, purchase our products, or interact with our services.</p>
+                
+                <h3>1. Information We Collect</h3>
+                <p>We collect information that you provide directly to us, as well as information that is automatically collected when you use our services.</p>
+                
+                <p><strong>Information You Provide:</strong></p>
+                <ul>
+                    <li><strong>Account Information:</strong> When you create an account, we collect your name, email address, and password.</li>
+                    <li><strong>Payment Information:</strong> When you make a purchase, our payment processor (Stripe) collects your payment card details. We do not store complete credit card numbers on our servers.</li>
+                    <li><strong>Communication Data:</strong> When you contact us for support or submit custom project requests, we collect your name, email, phone number, company name, and the content of your messages.</li>
+                    <li><strong>Profile Information:</strong> Any additional information you choose to add to your account profile.</li>
+                </ul>
+                
+                <p><strong>Information Collected Automatically:</strong></p>
+                <ul>
+                    <li><strong>Device Information:</strong> Browser type, operating system, device type, and unique device identifiers.</li>
+                    <li><strong>Usage Data:</strong> Pages visited, time spent on pages, click patterns, and navigation paths.</li>
+                    <li><strong>Log Data:</strong> IP address, access times, referring URLs, and error logs.</li>
+                    <li><strong>Cookies and Similar Technologies:</strong> We use cookies, pixel tags, and similar technologies to collect information about your browsing activities. See our Cookie Policy for more details.</li>
+                </ul>
+                
+                <h3>2. How We Use Your Information</h3>
+                <p>We use the information we collect for the following purposes:</p>
+                <ul>
+                    <li><strong>Service Delivery:</strong> To process transactions, deliver purchased templates, and provide access to your account and download history.</li>
+                    <li><strong>Communication:</strong> To send order confirmations, respond to inquiries, provide customer support, and send important service-related notices.</li>
+                    <li><strong>Improvement:</strong> To analyze usage patterns, improve our website and templates, develop new features, and enhance user experience.</li>
+                    <li><strong>Marketing:</strong> With your consent, to send promotional emails about new templates, features, and special offers. You can opt out at any time.</li>
+                    <li><strong>Security:</strong> To detect, prevent, and address fraud, abuse, and security issues.</li>
+                    <li><strong>Legal Compliance:</strong> To comply with applicable laws, regulations, and legal processes.</li>
+                </ul>
+                
+                <h3>3. Information Sharing and Disclosure</h3>
+                <p>We do not sell, trade, or rent your personal information to third parties. We may share your information in the following circumstances:</p>
+                <ul>
+                    <li><strong>Service Providers:</strong> We share information with trusted third-party service providers who assist us in operating our website, processing payments (Stripe), hosting our services (Vercel, Supabase), and analyzing usage data.</li>
+                    <li><strong>Legal Requirements:</strong> We may disclose information if required by law, court order, or governmental authority, or when we believe disclosure is necessary to protect our rights or the safety of others.</li>
+                    <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction.</li>
+                    <li><strong>With Your Consent:</strong> We may share information with third parties when you explicitly consent to such sharing.</li>
+                </ul>
+                
+                <h3>4. Data Security</h3>
+                <p>We implement industry-standard security measures to protect your personal information, including:</p>
+                <ul>
+                    <li>SSL/TLS encryption for all data transmission</li>
+                    <li>Secure password hashing and authentication protocols</li>
+                    <li>Regular security audits and vulnerability assessments</li>
+                    <li>Access controls limiting employee access to personal data</li>
+                    <li>Secure data storage with our hosting providers</li>
+                </ul>
+                <p>While we strive to protect your information, no method of transmission over the Internet is 100% secure. We cannot guarantee absolute security of your data.</p>
+                
+                <h3>5. Data Retention</h3>
+                <p>We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required by law. When you delete your account, we will delete or anonymize your personal information within 30 days, except where we are required to retain it for legal, regulatory, or legitimate business purposes.</p>
+                
+                <h3>6. Your Rights and Choices</h3>
+                <p>Depending on your location, you may have the following rights regarding your personal information:</p>
+                <ul>
+                    <li><strong>Access:</strong> Request a copy of the personal information we hold about you.</li>
+                    <li><strong>Correction:</strong> Request correction of inaccurate or incomplete information.</li>
+                    <li><strong>Deletion:</strong> Request deletion of your personal information, subject to certain exceptions.</li>
+                    <li><strong>Portability:</strong> Request a copy of your data in a machine-readable format.</li>
+                    <li><strong>Opt-Out:</strong> Unsubscribe from marketing communications at any time using the link in our emails.</li>
+                    <li><strong>Cookie Preferences:</strong> Manage your cookie preferences through our Cookie Settings.</li>
+                </ul>
+                <p>To exercise these rights, please contact us at privacy@deploytemplate.com.</p>
+                
+                <h3>7. International Data Transfers</h3>
+                <p>Your information may be transferred to and processed in countries other than your country of residence. These countries may have different data protection laws. When we transfer data internationally, we implement appropriate safeguards to ensure your information remains protected.</p>
+                
+                <h3>8. Children's Privacy</h3>
+                <p>Our services are not directed to individuals under the age of 16. We do not knowingly collect personal information from children. If we become aware that we have collected personal information from a child without parental consent, we will take steps to delete that information.</p>
+                
+                <h3>9. Third-Party Links</h3>
+                <p>Our website may contain links to third-party websites and services. We are not responsible for the privacy practices of these third parties. We encourage you to review their privacy policies before providing any personal information.</p>
+                
+                <h3>10. Changes to This Policy</h3>
+                <p>We may update this Privacy Policy from time to time to reflect changes in our practices or applicable laws. We will notify you of material changes by posting the updated policy on our website with a new "Last Updated" date. Your continued use of our services after such changes constitutes acceptance of the updated policy.</p>
+                
+                <h3>11. Contact Us</h3>
+                <p>If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
+                <ul>
+                    <li><strong>Email:</strong> privacy@deploytemplate.com</li>
+                    <li><strong>Address:</strong> DeployTemplate, [Your Business Address]</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Legal Modal - Terms of Service -->
+    <div class="legal-modal-overlay" id="termsModal">
+        <div class="legal-modal">
+            <div class="legal-modal-header">
+                <div>
+                    <h2>Terms of Service</h2>
+                    <p>Last updated: December 27, 2024</p>
+                </div>
+                <button class="legal-modal-close" onclick="closeLegalModal('terms')">&times;</button>
+            </div>
+            <div class="legal-modal-body">
+                <p>Welcome to DeployTemplate. These Terms of Service ("Terms") govern your access to and use of our website, products, and services. By accessing or using our services, you agree to be bound by these Terms. If you do not agree to these Terms, please do not use our services.</p>
+                
+                <h3>1. Definitions</h3>
+                <ul>
+                    <li><strong>"Service"</strong> refers to the DeployTemplate website, templates, and all related services.</li>
+                    <li><strong>"User," "you," or "your"</strong> refers to any individual or entity accessing or using our Service.</li>
+                    <li><strong>"Template"</strong> refers to any website template, theme, component, or digital product available for purchase or download through our Service.</li>
+                    <li><strong>"License"</strong> refers to the rights granted to you upon purchase of a Template.</li>
+                </ul>
+                
+                <h3>2. Account Registration</h3>
+                <p>To access certain features of our Service, you must create an account. When creating an account, you agree to:</p>
+                <ul>
+                    <li>Provide accurate, current, and complete information</li>
+                    <li>Maintain and promptly update your account information</li>
+                    <li>Maintain the security of your password and account</li>
+                    <li>Accept responsibility for all activities under your account</li>
+                    <li>Notify us immediately of any unauthorized access or security breach</li>
+                </ul>
+                <p>We reserve the right to suspend or terminate accounts that violate these Terms or engage in fraudulent activity.</p>
+                
+                <h3>3. License Grant and Restrictions</h3>
+                <p><strong>Standard License:</strong> Upon purchase of a Template, you are granted a non-exclusive, non-transferable license to:</p>
+                <ul>
+                    <li>Use the Template for a single end product (website or application)</li>
+                    <li>Modify and customize the Template for your project</li>
+                    <li>Use the Template for personal or commercial purposes</li>
+                </ul>
+                
+                <p><strong>You may NOT:</strong></p>
+                <ul>
+                    <li>Resell, redistribute, or sublicense the Template or its source code</li>
+                    <li>Use the Template to create derivative templates for sale</li>
+                    <li>Share your license or downloaded files with third parties</li>
+                    <li>Use the Template in multiple end products without additional licenses</li>
+                    <li>Remove or alter any copyright notices or attributions</li>
+                    <li>Use the Template for illegal, harmful, or unethical purposes</li>
+                </ul>
+                
+                <p><strong>Extended License:</strong> For use in multiple projects, SaaS applications, or for redistribution purposes, please contact us about our Extended License options.</p>
+                
+                <h3>4. Purchases and Payments</h3>
+                <ul>
+                    <li><strong>Pricing:</strong> All prices are displayed in US Dollars and are subject to change without notice. Prices at the time of purchase will be honored.</li>
+                    <li><strong>Payment Processing:</strong> Payments are processed securely through Stripe. We do not store your complete payment card information.</li>
+                    <li><strong>Taxes:</strong> Prices may be exclusive of applicable taxes. You are responsible for any taxes associated with your purchase.</li>
+                    <li><strong>Delivery:</strong> Upon successful payment, Templates are delivered immediately via download. You will also receive an email confirmation with download links.</li>
+                </ul>
+                
+                <h3>5. Refund Policy</h3>
+                <p>We offer a 30-day money-back guarantee on all Template purchases. If you are unsatisfied with your purchase for any reason, you may request a full refund within 30 days of purchase by contacting our support team.</p>
+                <ul>
+                    <li>Refund requests must be submitted within 30 days of the original purchase date</li>
+                    <li>Refunds will be processed to the original payment method within 5-10 business days</li>
+                    <li>Upon refund, your license to use the Template is revoked and you must delete all copies</li>
+                    <li>We reserve the right to deny refunds for suspected abuse of this policy</li>
+                </ul>
+                
+                <h3>6. Intellectual Property</h3>
+                <p>All Templates, website content, graphics, logos, and trademarks are the intellectual property of DeployTemplate or our licensors. Your purchase grants you a license to use the Template as specified, but does not transfer ownership of any intellectual property rights.</p>
+                <ul>
+                    <li>Our brand name, logo, and trademarks may not be used without written permission</li>
+                    <li>Template designs and code remain our intellectual property</li>
+                    <li>You own the content you create using our Templates</li>
+                </ul>
+                
+                <h3>7. User Conduct</h3>
+                <p>You agree not to use our Service to:</p>
+                <ul>
+                    <li>Violate any applicable laws, regulations, or third-party rights</li>
+                    <li>Transmit malware, viruses, or other harmful code</li>
+                    <li>Attempt to gain unauthorized access to our systems</li>
+                    <li>Interfere with the proper functioning of our Service</li>
+                    <li>Engage in any form of harassment, discrimination, or abusive behavior</li>
+                    <li>Create fake accounts or misrepresent your identity</li>
+                    <li>Scrape, crawl, or collect data from our Service without permission</li>
+                </ul>
+                
+                <h3>8. Third-Party Services</h3>
+                <p>Our Templates may include or suggest integrations with third-party services (hosting platforms, APIs, plugins, etc.). Your use of such services is governed by their respective terms and privacy policies. We are not responsible for third-party services and do not guarantee their availability or functionality.</p>
+                
+                <h3>9. Disclaimer of Warranties</h3>
+                <p>OUR SERVICE AND TEMPLATES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED. WE DISCLAIM ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO:</p>
+                <ul>
+                    <li>MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</li>
+                    <li>NON-INFRINGEMENT OF THIRD-PARTY RIGHTS</li>
+                    <li>ACCURACY, RELIABILITY, OR COMPLETENESS OF CONTENT</li>
+                    <li>UNINTERRUPTED OR ERROR-FREE SERVICE</li>
+                </ul>
+                <p>We do not warrant that our Templates will meet your specific requirements or that they will be compatible with all platforms, browsers, or devices.</p>
+                
+                <h3>10. Limitation of Liability</h3>
+                <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, DEPLOYTEMPLATE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, BUSINESS OPPORTUNITIES, OR GOODWILL, REGARDLESS OF THE CAUSE OF ACTION OR WHETHER WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+                <p>OUR TOTAL LIABILITY FOR ANY CLAIMS ARISING FROM OR RELATED TO THESE TERMS OR YOUR USE OF OUR SERVICE SHALL NOT EXCEED THE AMOUNT YOU PAID US IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM.</p>
+                
+                <h3>11. Indemnification</h3>
+                <p>You agree to indemnify, defend, and hold harmless DeployTemplate, its officers, directors, employees, and agents from any claims, damages, losses, liabilities, and expenses (including reasonable attorneys' fees) arising from:</p>
+                <ul>
+                    <li>Your use of our Service or Templates</li>
+                    <li>Your violation of these Terms</li>
+                    <li>Your violation of any third-party rights</li>
+                    <li>Content you create using our Templates</li>
+                </ul>
+                
+                <h3>12. Modifications to Terms</h3>
+                <p>We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting to our website. We will provide notice of material changes through email or prominent website notification. Your continued use of our Service after changes constitute acceptance of the modified Terms.</p>
+                
+                <h3>13. Termination</h3>
+                <p>We may suspend or terminate your access to our Service at any time, with or without cause, with or without notice. Upon termination:</p>
+                <ul>
+                    <li>Your license to use purchased Templates remains valid (subject to compliance with these Terms)</li>
+                    <li>You lose access to your account and download history</li>
+                    <li>Provisions that by their nature should survive will remain in effect</li>
+                </ul>
+                
+                <h3>14. Governing Law and Disputes</h3>
+                <p>These Terms shall be governed by and construed in accordance with the laws of [Your Jurisdiction], without regard to conflict of law principles. Any disputes arising from these Terms shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association, unless you are located in a jurisdiction that prohibits mandatory arbitration.</p>
+                
+                <h3>15. Severability</h3>
+                <p>If any provision of these Terms is found to be unenforceable or invalid, that provision shall be limited or eliminated to the minimum extent necessary, and the remaining provisions shall remain in full force and effect.</p>
+                
+                <h3>16. Contact Information</h3>
+                <p>For questions about these Terms, please contact us:</p>
+                <ul>
+                    <li><strong>Email:</strong> legal@deploytemplate.com</li>
+                    <li><strong>Address:</strong> DeployTemplate, [Your Business Address]</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Legal Modal - Cookie Policy -->
+    <div class="legal-modal-overlay" id="cookiesModal">
+        <div class="legal-modal">
+            <div class="legal-modal-header">
+                <div>
+                    <h2>Cookie Policy</h2>
+                    <p>Last updated: December 27, 2024</p>
+                </div>
+                <button class="legal-modal-close" onclick="closeLegalModal('cookies')">&times;</button>
+            </div>
+            <div class="legal-modal-body">
+                <p>This Cookie Policy explains what cookies are, how DeployTemplate uses cookies and similar technologies on our website, and your choices regarding their use. This policy should be read alongside our Privacy Policy.</p>
+                
+                <h3>1. What Are Cookies?</h3>
+                <p>Cookies are small text files that are stored on your device (computer, tablet, or mobile phone) when you visit a website. They are widely used to make websites work more efficiently, provide a better user experience, and give website owners useful information about how their site is being used.</p>
+                <p>Cookies can be "persistent" (remaining on your device until deleted or until they expire) or "session" cookies (deleted when you close your browser). They can be set by the website you are visiting ("first-party cookies") or by third parties whose services are embedded in the website ("third-party cookies").</p>
+                
+                <h3>2. How We Use Cookies</h3>
+                <p>DeployTemplate uses cookies and similar technologies for the following purposes:</p>
+                
+                <p><strong>Essential Cookies (Strictly Necessary)</strong></p>
+                <p>These cookies are necessary for the website to function and cannot be switched off. They are usually set in response to your actions, such as setting privacy preferences, logging in, or filling out forms.</p>
+                <ul>
+                    <li><strong>Authentication:</strong> To remember when you are logged in and keep your session secure</li>
+                    <li><strong>Shopping Cart:</strong> To remember items in your cart during your browsing session</li>
+                    <li><strong>Security:</strong> To help detect fraud and protect against unauthorized access</li>
+                    <li><strong>Cookie Consent:</strong> To remember your cookie preferences</li>
+                </ul>
+                
+                <p><strong>Analytics Cookies</strong></p>
+                <p>These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously.</p>
+                <ul>
+                    <li><strong>Usage Patterns:</strong> To understand which pages are most popular and how users navigate the site</li>
+                    <li><strong>Performance Monitoring:</strong> To identify technical issues and improve site performance</li>
+                    <li><strong>Audience Insights:</strong> To understand our visitor demographics and interests</li>
+                </ul>
+                <p>We may use services like Google Analytics, which sets cookies to help us analyze website traffic. You can learn more about Google Analytics cookies at <a href="https://policies.google.com/technologies/cookies" target="_blank" rel="noopener">Google's Privacy & Terms</a>.</p>
+                
+                <p><strong>Marketing Cookies</strong></p>
+                <p>These cookies may be set by our advertising partners to build a profile of your interests and show you relevant advertisements on other sites.</p>
+                <ul>
+                    <li><strong>Ad Targeting:</strong> To display advertisements that are relevant to your interests</li>
+                    <li><strong>Campaign Tracking:</strong> To measure the effectiveness of our advertising campaigns</li>
+                    <li><strong>Social Media:</strong> To enable sharing functionality and track engagement</li>
+                </ul>
+                
+                <h3>3. Specific Cookies We Use</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 1rem 0;">
+                    <tr style="border-bottom: 1px solid rgba(29, 154, 155, 0.2);">
+                        <th style="text-align: left; padding: 0.75rem; color: var(--primary);">Cookie Name</th>
+                        <th style="text-align: left; padding: 0.75rem; color: var(--primary);">Purpose</th>
+                        <th style="text-align: left; padding: 0.75rem; color: var(--primary);">Duration</th>
+                        <th style="text-align: left; padding: 0.75rem; color: var(--primary);">Type</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(29, 154, 155, 0.1);">
+                        <td style="padding: 0.75rem;">cookieConsent</td>
+                        <td style="padding: 0.75rem;">Stores your cookie preferences</td>
+                        <td style="padding: 0.75rem;">1 year</td>
+                        <td style="padding: 0.75rem;">Essential</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(29, 154, 155, 0.1);">
+                        <td style="padding: 0.75rem;">sb-*-auth-token</td>
+                        <td style="padding: 0.75rem;">Authentication session (Supabase)</td>
+                        <td style="padding: 0.75rem;">Session</td>
+                        <td style="padding: 0.75rem;">Essential</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(29, 154, 155, 0.1);">
+                        <td style="padding: 0.75rem;">theme</td>
+                        <td style="padding: 0.75rem;">Stores your dark/light mode preference</td>
+                        <td style="padding: 0.75rem;">1 year</td>
+                        <td style="padding: 0.75rem;">Essential</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(29, 154, 155, 0.1);">
+                        <td style="padding: 0.75rem;">cart</td>
+                        <td style="padding: 0.75rem;">Stores shopping cart contents</td>
+                        <td style="padding: 0.75rem;">30 days</td>
+                        <td style="padding: 0.75rem;">Essential</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(29, 154, 155, 0.1);">
+                        <td style="padding: 0.75rem;">_ga, _ga_*</td>
+                        <td style="padding: 0.75rem;">Google Analytics - visitor tracking</td>
+                        <td style="padding: 0.75rem;">2 years</td>
+                        <td style="padding: 0.75rem;">Analytics</td>
+                    </tr>
+                </table>
+                
+                <h3>4. Similar Technologies</h3>
+                <p>In addition to cookies, we may use other similar technologies:</p>
+                <ul>
+                    <li><strong>Local Storage:</strong> Similar to cookies but can store larger amounts of data locally on your device. Used to store preferences and improve performance.</li>
+                    <li><strong>Pixel Tags (Web Beacons):</strong> Small graphic images embedded in web pages or emails used to track user behavior and conversions.</li>
+                    <li><strong>JavaScript:</strong> Scripts that enable interactive features and collect usage data.</li>
+                </ul>
+                
+                <h3>5. Your Cookie Choices</h3>
+                <p>You have several options for managing cookies:</p>
+                
+                <p><strong>Cookie Consent Banner:</strong> When you first visit our website, you can choose to accept all cookies, decline non-essential cookies, or customize your preferences.</p>
+                
+                <p><strong>Cookie Settings:</strong> You can change your cookie preferences at any time by clicking the "Cookie Settings" link in our website footer or by clicking <a href="#" onclick="showCookieSettings(); return false;">here</a>.</p>
+                
+                <p><strong>Browser Settings:</strong> Most web browsers allow you to control cookies through their settings. You can typically:</p>
+                <ul>
+                    <li>View cookies stored on your device</li>
+                    <li>Delete all or specific cookies</li>
+                    <li>Block all or certain cookies</li>
+                    <li>Set preferences for specific websites</li>
+                </ul>
+                <p>Please note that blocking or deleting cookies may impact your experience on our website and limit certain functionality.</p>
+                
+                <p><strong>Opt-Out Tools:</strong></p>
+                <ul>
+                    <li><a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics Opt-out Browser Add-on</a></li>
+                    <li><a href="https://optout.networkadvertising.org/" target="_blank" rel="noopener">Network Advertising Initiative Opt-Out</a></li>
+                    <li><a href="https://optout.aboutads.info/" target="_blank" rel="noopener">Digital Advertising Alliance Opt-Out</a></li>
+                </ul>
+                
+                <h3>6. Do Not Track Signals</h3>
+                <p>Some browsers have a "Do Not Track" (DNT) feature that signals to websites that you do not want to be tracked. Currently, there is no universal standard for how websites should respond to DNT signals. We currently do not respond to DNT signals, but we honor your cookie preferences set through our Cookie Settings.</p>
+                
+                <h3>7. Updates to This Policy</h3>
+                <p>We may update this Cookie Policy from time to time to reflect changes in technology, regulation, or our business practices. Any changes will be posted on this page with an updated "Last Updated" date. We encourage you to review this policy periodically.</p>
+                
+                <h3>8. Contact Us</h3>
+                <p>If you have questions about our use of cookies or this Cookie Policy, please contact us:</p>
+                <ul>
+                    <li><strong>Email:</strong> privacy@deploytemplate.com</li>
+                    <li><strong>Cookie Settings:</strong> <a href="#" onclick="showCookieSettings(); return false;">Manage Your Preferences</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Blog Modal - Design Trends -->
+    <div class="blog-modal-overlay" id="blogDesignTrendsModal">
+        <div class="blog-modal">
+            <div class="blog-modal-header">
+                <div>
+                    <h2>10 Web Design Trends Dominating 2025</h2>
+                    <div class="blog-modal-meta">
+                        <span class="blog-category-badge" style="background: rgba(29, 154, 155, 0.15); color: var(--primary);">Design</span>
+                        <span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            12 min read
+                        </span>
+                        <span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            December 15, 2024
+                        </span>
+                    </div>
+                </div>
+                <button class="blog-modal-close" onclick="closeBlogModal('design-trends')">&times;</button>
+            </div>
+            <div class="blog-modal-body">
+                <p>The web design landscape in 2025 has evolved dramatically, pushing the boundaries of what's possible while simultaneously returning to fundamentals that prioritize user experience. As businesses compete for attention in an increasingly digital world, the designs that stand out are those that masterfully blend innovation with accessibility, aesthetics with performance.</p>
+                
+                <p>After analyzing hundreds of award-winning websites and consulting with leading designers, we've identified the ten most influential design trends shaping the digital landscape this year. Whether you're redesigning an existing site or starting from scratch, understanding these trends will help you create experiences that resonate with modern audiences.</p>
+                
+                <h3>1. Glassmorphism 2.0: Beyond the Blur</h3>
+                <p>Glassmorphism has matured significantly since its initial surge in popularity. The frosted-glass aesthetic has evolved beyond simple blur effects to incorporate <span class="highlight">dynamic transparency layers</span> that respond to scroll position, cursor movement, and even time of day.</p>
+                
+                <p>Modern implementations use variable blur intensities and subtle gradient overlays that create depth without sacrificing readability. The key to successful glassmorphism in 2025 is restraint—using the effect strategically to highlight important UI elements rather than applying it universally.</p>
+                
+                <div class="tip-box">
+                    <h5>💡 Pro Tip</h5>
+                    <p>When implementing glassmorphism, always ensure sufficient contrast between text and backgrounds. Use the <code>backdrop-filter</code> property with fallbacks for older browsers, and test thoroughly on different background colors.</p>
+                </div>
+                
+                <h3>2. AI-Powered Personalization</h3>
+                <p>2025 marks the year AI moved from backend optimization to front-end personalization. Websites now dynamically adjust their layouts, color schemes, and content presentation based on individual user behavior patterns.</p>
+                
+                <p>This goes far beyond simple A/B testing. Modern AI systems analyze how users interact with interfaces—scroll speed, hover patterns, click behavior—and automatically optimize the experience in real-time. Some cutting-edge implementations even adjust typography and spacing based on detected reading patterns.</p>
+                
+                <h4>Key Implementation Areas:</h4>
+                <ul>
+                    <li><strong>Dynamic hero sections</strong> that showcase products based on browsing history</li>
+                    <li><strong>Adaptive navigation</strong> that promotes frequently-used features</li>
+                    <li><strong>Personalized color themes</strong> based on user preferences and accessibility needs</li>
+                    <li><strong>Smart content ordering</strong> that prioritizes relevant information</li>
+                </ul>
+                
+                <h3>3. Micro-Interactions That Delight</h3>
+                <p>The best websites in 2025 understand that every interaction is an opportunity to delight users. Micro-interactions have evolved from simple hover effects to <span class="highlight">sophisticated choreographed animations</span> that provide feedback, guide attention, and create emotional connections.</p>
+                
+                <p>These small details—a button that morphs on click, icons that animate to indicate state changes, or subtle particles that respond to cursor movement—collectively transform mundane tasks into memorable experiences. The trend emphasizes purposeful animation that aids usability rather than mere decoration.</p>
+                
+                <blockquote>
+                    <p>"The magic is in the details. A thoughtfully animated toggle switch can do more for user satisfaction than a complete visual redesign."</p>
+                </blockquote>
+                
+                <h3>4. 3D Elements and Spatial Design</h3>
+                <p>With improved browser capabilities and WebGL performance, 3D elements have become practical for mainstream websites. We're seeing subtle 3D transformations, floating elements with realistic shadows, and even full 3D product viewers becoming standard features.</p>
+                
+                <p>The key trend isn't overwhelming 3D scenes, but rather <span class="highlight">the strategic integration of depth and dimension</span> into otherwise flat designs. Think product cards that tilt slightly on hover, hero images with parallax depth layers, or navigation elements that exist in a subtle 3D space.</p>
+                
+                <h3>5. Dark Mode as Default</h3>
+                <p>Dark mode has transitioned from an alternative option to the default choice for many premium websites. The aesthetic preferences of users, combined with practical benefits like reduced eye strain and battery savings on OLED screens, have made dark themes the expected standard.</p>
+                
+                <p>However, the trend isn't just about inverting colors. Modern dark mode implementations feature:</p>
+                <ul>
+                    <li>Carefully calibrated gray scales that maintain hierarchy without harsh contrast</li>
+                    <li>Vibrant accent colors that pop against dark backgrounds</li>
+                    <li>Subtle gradients that add depth and visual interest</li>
+                    <li>Thoughtful light-leak effects that prevent the "black void" feeling</li>
+                </ul>
+                
+                <h3>6. Variable Fonts and Kinetic Typography</h3>
+                <p>Typography has become dynamic. Variable fonts allow designers to animate weight, width, and other properties smoothly, creating text that literally comes alive. We're seeing headlines that morph based on scroll position, paragraph text that subtly adjusts for optimal readability, and creative uses of animated letterforms.</p>
+                
+                <p>The performance benefits are significant too—a single variable font file can replace multiple static weights, improving load times while enabling new creative possibilities.</p>
+                
+                <h3>7. Bento Box Layouts</h3>
+                <p>Inspired by Apple's presentation style, the bento box layout has become ubiquitous in 2025. This grid-based approach features asymmetric card arrangements with varying sizes, creating visual interest through intentional imbalance while maintaining underlying order.</p>
+                
+                <p>These layouts excel at presenting diverse content types—statistics, features, testimonials, images—in a cohesive yet dynamic arrangement. The key is the interplay between uniform grid alignment and varied content sizes.</p>
+                
+                <div class="tip-box">
+                    <h5>💡 Design Principle</h5>
+                    <p>Effective bento layouts follow the rule of intentional contrast: if most cards are rectangular, include one circular element. If most are small, include one large feature. The exception proves the rule.</p>
+                </div>
+                
+                <h3>8. Scroll-Triggered Narratives</h3>
+                <p>Long-form storytelling through scroll has matured into a sophisticated art form. Websites now guide users through carefully orchestrated narratives where scrolling controls animation playback, reveals content progressively, and creates immersive experiences.</p>
+                
+                <p>These aren't mere parallax effects—they're <span class="highlight">full interactive stories</span> where the scroll bar becomes a timeline. Used effectively for product launches, brand stories, and educational content, scroll-triggered narratives transform passive browsing into active engagement.</p>
+                
+                <h3>9. Sustainable Web Design</h3>
+                <p>Environmental consciousness has reached web design. Sustainable web design minimizes energy consumption through optimized images, efficient code, reduced data transfer, and thoughtful color choices (darker colors on OLED screens consume less energy).</p>
+                
+                <p>Beyond performance benefits, this trend resonates with environmentally-conscious consumers. Websites now proudly display their carbon footprint metrics and sustainability commitments, making eco-friendly design a competitive advantage.</p>
+                
+                <h3>10. Inclusive Design First</h3>
+                <p>Accessibility is no longer an afterthought—it's the foundation. The best designs in 2025 are built from the ground up with inclusivity in mind, ensuring that beautiful aesthetics never compromise usability for any user.</p>
+                
+                <p>This manifests in color contrast ratios that exceed minimums, keyboard navigation that's logical and comprehensive, screen reader optimization, and interfaces that work equally well for users with motor impairments, visual differences, or cognitive considerations.</p>
+                
+                <h3>Putting It All Together</h3>
+                <p>The overarching theme of 2025's design trends is <span class="highlight">purposeful innovation</span>. The most successful websites don't adopt trends blindly—they selectively implement elements that serve their users and business goals.</p>
+                
+                <p>As you apply these trends to your own projects, remember that the best design is invisible. Every glassmorphism effect, micro-interaction, and animated element should feel natural and inevitable, enhancing the experience without calling attention to itself.</p>
+                
+                <p>The future of web design belongs to those who can balance technical capability with human-centered thinking. These trends are your tools—use them wisely to create experiences that inform, delight, and endure.</p>
+            </div>
+            <div class="blog-modal-footer">
+                <div class="blog-share-buttons">
+                    <button class="blog-share-btn" onclick="shareBlog('twitter', 'design-trends')" title="Share on X">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </button>
+                    <button class="blog-share-btn" onclick="shareBlog('linkedin', 'design-trends')" title="Share on LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </button>
+                    <button class="blog-share-btn" onclick="copyBlogLink('design-trends')" title="Copy Link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </button>
+                </div>
+                <button class="btn btn-primary" onclick="closeBlogModal('design-trends')">Close Article</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Blog Modal - Deployment Guide -->
+    <div class="blog-modal-overlay" id="blogDeploymentGuideModal">
+        <div class="blog-modal">
+            <div class="blog-modal-header">
+                <div>
+                    <h2>The Complete Guide to Deploying Your First Website</h2>
+                    <div class="blog-modal-meta">
+                        <span class="blog-category-badge" style="background: rgba(139, 92, 246, 0.15); color: #8B5CF6;">Development</span>
+                        <span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            15 min read
+                        </span>
+                        <span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            December 8, 2024
+                        </span>
+                    </div>
+                </div>
+                <button class="blog-modal-close" onclick="closeBlogModal('deployment-guide')">&times;</button>
+            </div>
+            <div class="blog-modal-body">
+                <p>You've built something amazing. Your website looks beautiful in the browser, every feature works perfectly on localhost, and you're ready to share it with the world. But between your local development environment and a live URL sits a process that intimidates many developers: deployment.</p>
+                
+                <p>The good news? Modern deployment platforms have made this process remarkably simple. In this comprehensive guide, we'll walk through everything you need to know to get your website live—from choosing the right platform to configuring custom domains and setting up continuous deployment.</p>
+                
+                <h3>Understanding Modern Web Deployment</h3>
+                <p>Before diving into the how-to, let's understand what happens when you deploy a website. At its core, deployment means transferring your files from your computer to a server that's accessible via the internet. Modern platforms have abstracted away most of the complexity, but understanding the fundamentals helps you make better decisions.</p>
+                
+                <p>There are three main types of web hosting to consider:</p>
+                <ul>
+                    <li><strong>Static Hosting:</strong> Serves pre-built files (HTML, CSS, JavaScript) directly. Ideal for most marketing sites, portfolios, and applications built with frameworks that compile to static files.</li>
+                    <li><strong>Server-Side Hosting:</strong> Runs code on the server for each request. Required for applications with databases, authentication, and dynamic content generation.</li>
+                    <li><strong>Hybrid (Edge/Serverless):</strong> Combines static delivery with server-side capabilities at the edge. The modern approach used by platforms like Vercel and Netlify.</li>
+                </ul>
+                
+                <h3>Choosing Your Deployment Platform</h3>
+                <p>For most developers deploying their first (or hundredth) website, <span class="highlight">Vercel and Netlify</span> are the go-to choices. Both offer generous free tiers, excellent developer experience, and handle everything from SSL certificates to global CDN distribution automatically.</p>
+                
+                <h4>Vercel</h4>
+                <p>Vercel is the company behind Next.js, and their platform is optimized for modern JavaScript frameworks. Key strengths include:</p>
+                <ul>
+                    <li>Zero-configuration deployment for most frameworks</li>
+                    <li>Automatic preview deployments for every pull request</li>
+                    <li>Edge Functions for server-side logic without managing servers</li>
+                    <li>Excellent performance with their global edge network</li>
+                    <li>Built-in analytics and performance monitoring</li>
+                </ul>
+                
+                <h4>Netlify</h4>
+                <p>Netlify pioneered the modern JAMstack deployment workflow and offers:</p>
+                <ul>
+                    <li>Simple drag-and-drop deployment option</li>
+                    <li>Powerful build plugins ecosystem</li>
+                    <li>Built-in forms and identity (authentication) features</li>
+                    <li>Split testing and gradual rollouts</li>
+                    <li>Excellent documentation and community</li>
+                </ul>
+                
+                <div class="tip-box">
+                    <h5>💡 Our Recommendation</h5>
+                    <p>For simple static sites and HTML templates, either platform works beautifully. If you're using Next.js, Vercel provides the most seamless experience. For sites that need built-in forms or identity management, Netlify's integrated features save development time.</p>
+                </div>
+                
+                <h3>Step-by-Step: Deploying with Vercel</h3>
+                <p>Let's walk through deploying a website template to Vercel. This process takes about 5 minutes from start to finish.</p>
+                
+                <h4>Step 1: Prepare Your Project</h4>
+                <p>Ensure your project has a clear structure:</p>
+                <pre><code>my-website/
+├── index.html
+├── css/
+│   └── styles.css
+├── js/
+│   └── main.js
+├── images/
+│   └── hero.jpg
+└── README.md</code></pre>
+                
+                <h4>Step 2: Push to GitHub</h4>
+                <p>If your project isn't already on GitHub, create a new repository:</p>
+                <pre><code>git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/yourusername/my-website.git
+git push -u origin main</code></pre>
+                
+                <h4>Step 3: Connect to Vercel</h4>
+                <ol>
+                    <li>Go to <a href="https://vercel.com" target="_blank">vercel.com</a> and sign up (GitHub login recommended)</li>
+                    <li>Click "Add New Project"</li>
+                    <li>Import your GitHub repository</li>
+                    <li>Vercel auto-detects your project type—for static HTML, no configuration needed</li>
+                    <li>Click "Deploy"</li>
+                </ol>
+                
+                <p>Within seconds, your site is live on a <code>.vercel.app</code> subdomain.</p>
+                
+                <h4>Step 4: Set Up Continuous Deployment</h4>
+                <p>The magic happens automatically. Every time you push to your main branch, Vercel:</p>
+                <ul>
+                    <li>Detects the new commit</li>
+                    <li>Builds your project</li>
+                    <li>Runs any tests (if configured)</li>
+                    <li>Deploys to production if successful</li>
+                    <li>Invalidates the CDN cache globally</li>
+                </ul>
+                <p>For pull requests, Vercel creates a unique preview URL so you can test changes before merging.</p>
+                
+                <h3>Configuring a Custom Domain</h3>
+                <p>A <code>.vercel.app</code> URL works, but a custom domain looks professional. Here's how to set it up:</p>
+                
+                <h4>Option A: Register Through Vercel</h4>
+                <p>Vercel can be your domain registrar. Navigate to your project settings, go to Domains, and search for available domains. Purchasing and configuration happens automatically.</p>
+                
+                <h4>Option B: Use an External Registrar</h4>
+                <p>If you already own a domain or prefer another registrar (Namecheap, GoDaddy, Google Domains, etc.):</p>
+                <ol>
+                    <li>In Vercel, add your domain in Project Settings → Domains</li>
+                    <li>Vercel provides the DNS records you need to add</li>
+                    <li>In your registrar's DNS settings, add the provided records (usually an A record and CNAME)</li>
+                    <li>DNS propagation takes 1-48 hours (usually under 1 hour)</li>
+                    <li>SSL certificate is provisioned automatically</li>
+                </ol>
+                
+                <h3>Environment Variables and Secrets</h3>
+                <p>For sites that connect to APIs or services, you'll need to manage environment variables securely. <span class="highlight">Never commit API keys or secrets to your repository.</span></p>
+                
+                <p>Both Vercel and Netlify provide secure environment variable management:</p>
+                <ol>
+                    <li>Go to Project Settings → Environment Variables</li>
+                    <li>Add your variables (e.g., <code>API_KEY</code>, <code>DATABASE_URL</code>)</li>
+                    <li>Choose which environments they apply to (Production, Preview, Development)</li>
+                    <li>Access them in your code via <code>process.env.VARIABLE_NAME</code></li>
+                </ol>
+                
+                <h3>Deployment Best Practices</h3>
+                <p>After deploying hundreds of projects, here are the practices that consistently lead to success:</p>
+                
+                <h4>1. Always Use Version Control</h4>
+                <p>Even for simple projects, Git provides history, backup, and enables collaboration. It also unlocks automated deployments.</p>
+                
+                <h4>2. Set Up Branch Protection</h4>
+                <p>Require pull request reviews before merging to your production branch. This catches bugs before they reach users.</p>
+                
+                <h4>3. Preview Every Change</h4>
+                <p>Use preview deployments religiously. Test on a real URL with production settings before going live.</p>
+                
+                <h4>4. Monitor Performance</h4>
+                <p>Both platforms offer analytics. Track Core Web Vitals, watch for errors, and understand your traffic patterns.</p>
+                
+                <h4>5. Set Up Notifications</h4>
+                <p>Configure Slack, email, or Discord notifications for deployment status. Know immediately if something fails.</p>
+                
+                <blockquote>
+                    <p>"The best deployment is the one you don't have to think about. Set up automation once, and let it protect you forever."</p>
+                </blockquote>
+                
+                <h3>Troubleshooting Common Issues</h3>
+                <p>When deployments fail, don't panic. Here are the most common issues and solutions:</p>
+                
+                <p><strong>Build Fails:</strong> Check the build logs for specific error messages. Common causes include missing dependencies, case-sensitivity issues (local filesystems often ignore case, servers don't), and missing environment variables.</p>
+                
+                <p><strong>404 Errors:</strong> For single-page applications, you need to configure redirects so all routes serve your index.html. Add a <code>vercel.json</code> with rewrite rules or a <code>_redirects</code> file for Netlify.</p>
+                
+                <p><strong>Slow Performance:</strong> Optimize images, enable compression, and leverage caching headers. Both platforms provide optimization features—make sure they're enabled.</p>
+                
+                <p><strong>SSL Issues:</strong> Custom domains sometimes have certificate delays. Wait for propagation, check your DNS records are correct, and the platform will handle the rest.</p>
+                
+                <h3>Beyond Basic Deployment</h3>
+                <p>Once you're comfortable with basic deployment, explore these advanced features:</p>
+                <ul>
+                    <li><strong>Edge Functions:</strong> Run server-side code at the edge for personalization, authentication, and A/B testing</li>
+                    <li><strong>Monorepos:</strong> Deploy multiple projects from a single repository</li>
+                    <li><strong>Preview Comments:</strong> Allow stakeholders to leave feedback directly on preview deployments</li>
+                    <li><strong>Instant Rollbacks:</strong> Revert to any previous deployment instantly if issues arise</li>
+                </ul>
+                
+                <h3>Conclusion</h3>
+                <p>Modern deployment platforms have democratized web publishing. What once required server administration knowledge, command-line expertise, and hours of configuration now takes minutes and a few clicks.</p>
+                
+                <p>The key is to start simple. Deploy your first project today, even if it's just a single HTML file. Experience the workflow, understand the feedback loops, and build confidence. From there, you can layer in complexity—custom domains, environment variables, advanced features—as your needs grow.</p>
+                
+                <p>Your website deserves to be seen. Now you know exactly how to make that happen.</p>
+            </div>
+            <div class="blog-modal-footer">
+                <div class="blog-share-buttons">
+                    <button class="blog-share-btn" onclick="shareBlog('twitter', 'deployment-guide')" title="Share on X">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </button>
+                    <button class="blog-share-btn" onclick="shareBlog('linkedin', 'deployment-guide')" title="Share on LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </button>
+                    <button class="blog-share-btn" onclick="copyBlogLink('deployment-guide')" title="Copy Link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </button>
+                </div>
+                <button class="btn btn-primary" onclick="closeBlogModal('deployment-guide')">Close Article</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Blog Modal - Speed Optimization -->
+    <div class="blog-modal-overlay" id="blogSpeedOptimizationModal">
+        <div class="blog-modal">
+            <div class="blog-modal-header">
+                <div>
+                    <h2>Speed Optimization: Why Your Website Needs to Load in Under 3 Seconds</h2>
+                    <div class="blog-modal-meta">
+                        <span class="blog-category-badge" style="background: rgba(236, 72, 153, 0.15); color: #EC4899;">Performance</span>
+                        <span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            10 min read
+                        </span>
+                        <span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            December 1, 2024
+                        </span>
+                    </div>
+                </div>
+                <button class="blog-modal-close" onclick="closeBlogModal('speed-optimization')">&times;</button>
+            </div>
+            <div class="blog-modal-body">
+                <p>Every second counts. In the time it takes you to read this sentence, <span class="highlight">53% of mobile users</span> will abandon a website that hasn't finished loading. Speed isn't just a technical metric—it's the difference between a thriving business and one that hemorrhages potential customers before they even see your content.</p>
+                
+                <p>The data is unequivocal: page speed directly impacts everything that matters. Conversion rates, search rankings, user satisfaction, and ultimately, revenue. Google has made it explicit that Core Web Vitals—their speed and user experience metrics—are ranking factors. But beyond SEO, there's a fundamental truth: fast websites simply perform better.</p>
+                
+                <h3>The Psychology of Waiting</h3>
+                <p>Humans are terrible at waiting. Our digital expectations have been conditioned by instant gratification—we tap and expect immediate response. When a website makes us wait, several psychological effects kick in:</p>
+                
+                <ul>
+                    <li><strong>Anxiety increases</strong> as uncertainty about whether something is happening grows</li>
+                    <li><strong>Trust erodes</strong> because slow sites feel broken or unprofessional</li>
+                    <li><strong>Attention wanders</strong> as the brain seeks other stimulation</li>
+                    <li><strong>Frustration accumulates</strong> making users less forgiving of other issues</li>
+                </ul>
+                
+                <p>Research from Google shows that as page load time goes from 1 second to 3 seconds, the probability of bounce increases by 32%. From 1 second to 5 seconds? The bounce probability increases by 90%. From 1 to 10 seconds? A staggering 123% increase.</p>
+                
+                <blockquote>
+                    <p>"Speed is the ultimate feature. Every other feature is irrelevant if users leave before experiencing it."</p>
+                </blockquote>
+                
+                <h3>Understanding Core Web Vitals</h3>
+                <p>Google's Core Web Vitals provide a standardized framework for measuring user experience. These three metrics capture the essence of how users perceive your site:</p>
+                
+                <h4>Largest Contentful Paint (LCP)</h4>
+                <p>LCP measures how quickly the main content of a page loads. Specifically, it tracks when the largest image or text block becomes visible. Target: <span class="highlight">under 2.5 seconds</span>.</p>
+                
+                <p>A slow LCP usually indicates:</p>
+                <ul>
+                    <li>Slow server response times</li>
+                    <li>Render-blocking resources (CSS, JavaScript)</li>
+                    <li>Large, unoptimized images</li>
+                    <li>Client-side rendering without server-side generation</li>
+                </ul>
+                
+                <h4>First Input Delay (FID) / Interaction to Next Paint (INP)</h4>
+                <p>These metrics measure interactivity—how quickly your site responds when users click, tap, or type. Target: <span class="highlight">under 100 milliseconds for FID, under 200ms for INP</span>.</p>
+                
+                <p>Poor interactivity scores often result from:</p>
+                <ul>
+                    <li>Heavy JavaScript execution blocking the main thread</li>
+                    <li>Third-party scripts competing for resources</li>
+                    <li>Inefficient event handlers</li>
+                    <li>Large DOM size causing slow updates</li>
+                </ul>
+                
+                <h4>Cumulative Layout Shift (CLS)</h4>
+                <p>CLS measures visual stability—how much unexpected movement occurs as the page loads. Target: <span class="highlight">under 0.1</span>.</p>
+                
+                <p>Layout shifts frustrate users and typically happen because:</p>
+                <ul>
+                    <li>Images and videos without explicit dimensions</li>
+                    <li>Ads, embeds, or iframes that resize</li>
+                    <li>Dynamically injected content</li>
+                    <li>Web fonts causing text reflow (FOUT/FOIT)</li>
+                </ul>
+                
+                <div class="tip-box">
+                    <h5>💡 Quick Diagnostic</h5>
+                    <p>Run your site through Google PageSpeed Insights (pagespeed.web.dev) to see your Core Web Vitals scores and specific recommendations. It's free, instant, and uses real user data when available.</p>
+                </div>
+                
+                <h3>The Optimization Toolkit</h3>
+                <p>Now let's get practical. Here are the highest-impact optimizations you can implement today:</p>
+                
+                <h4>1. Optimize Images Ruthlessly</h4>
+                <p>Images typically account for 50-80% of a page's weight. Start here.</p>
+                
+                <p><strong>Use modern formats:</strong> WebP offers 25-35% better compression than JPEG with equivalent quality. AVIF is even better but has less browser support. Implement with the <code>&lt;picture&gt;</code> element for fallbacks.</p>
+                
+                <p><strong>Implement lazy loading:</strong> Add <code>loading="lazy"</code> to images below the fold. The browser won't load them until they're needed.</p>
+                
+                <p><strong>Specify dimensions:</strong> Always include width and height attributes so browsers can reserve space before images load, preventing layout shifts.</p>
+                
+                <pre><code>&lt;picture&gt;
+  &lt;source srcset="hero.avif" type="image/avif"&gt;
+  &lt;source srcset="hero.webp" type="image/webp"&gt;
+  &lt;img src="hero.jpg" 
+       alt="Hero image" 
+       width="1200" 
+       height="600"
+       loading="lazy"&gt;
+&lt;/picture&gt;</code></pre>
+                
+                <h4>2. Minimize Render-Blocking Resources</h4>
+                <p>CSS and synchronous JavaScript block rendering. The browser can't paint content until these resources are loaded and parsed.</p>
+                
+                <p><strong>Critical CSS:</strong> Inline the CSS needed for above-the-fold content directly in <code>&lt;head&gt;</code>. Load the rest asynchronously.</p>
+                
+                <p><strong>Defer JavaScript:</strong> Use the <code>defer</code> attribute for non-critical scripts, or <code>async</code> for scripts that don't depend on others.</p>
+                
+                <pre><code>&lt;!-- Defer non-critical scripts --&gt;
+&lt;script src="analytics.js" defer&gt;&lt;/script&gt;
+
+&lt;!-- Async for independent scripts --&gt;
+&lt;script src="chat-widget.js" async&gt;&lt;/script&gt;</code></pre>
+                
+                <h4>3. Leverage Browser Caching</h4>
+                <p>Returning visitors shouldn't re-download resources that haven't changed. Configure cache headers to store static assets locally.</p>
+                
+                <p>For assets with fingerprinted filenames (like <code>styles.abc123.css</code>), set long cache durations—a year is common. The fingerprint changes when the file changes, forcing a fresh download.</p>
+                
+                <h4>4. Enable Compression</h4>
+                <p>Gzip compression reduces text-based resource sizes by 70-90%. Brotli compression is even better. Most CDNs and hosts enable this automatically, but verify it's active.</p>
+                
+                <h4>5. Prioritize Above-the-Fold Content</h4>
+                <p>Users perceive a site as "fast" when they see meaningful content quickly, even if the full page takes longer. Optimize the critical rendering path:</p>
+                
+                <ul>
+                    <li>Inline critical CSS for initial viewport</li>
+                    <li>Preload the hero image with <code>&lt;link rel="preload"&gt;</code></li>
+                    <li>Use font-display: swap to show text immediately with fallback fonts</li>
+                    <li>Server-side render (SSR) or pre-render above-the-fold content</li>
+                </ul>
+                
+                <h4>6. Audit Third-Party Scripts</h4>
+                <p>Analytics, chat widgets, ad networks, A/B testing tools—third-party scripts accumulate and often become the primary performance bottleneck.</p>
+                
+                <p>Audit every third-party script. For each one, ask:</p>
+                <ul>
+                    <li>Is this actively providing value?</li>
+                    <li>Can it be loaded later or on-demand?</li>
+                    <li>Is there a lighter alternative?</li>
+                    <li>What's its actual performance cost?</li>
+                </ul>
+                
+                <h3>Measuring and Monitoring</h3>
+                <p>Optimization without measurement is guesswork. Establish a monitoring practice:</p>
+                
+                <p><strong>Lab Data:</strong> Tools like Lighthouse, WebPageTest, and GTmetrix test under controlled conditions. Great for debugging and tracking changes.</p>
+                
+                <p><strong>Field Data:</strong> Real User Monitoring (RUM) captures actual user experiences. Chrome User Experience Report (CrUX) provides real-world data accessible through PageSpeed Insights.</p>
+                
+                <p><strong>Set Performance Budgets:</strong> Define thresholds that trigger alerts. For example: "LCP must stay under 2 seconds" or "Total JavaScript must stay under 200KB." Automate testing in your CI/CD pipeline.</p>
+                
+                <h3>The Business Case for Speed</h3>
+                <p>Still need to convince stakeholders? Here's what the data shows:</p>
+                
+                <ul>
+                    <li><strong>Walmart:</strong> Every 1 second improvement in load time increased conversions by 2%</li>
+                    <li><strong>BBC:</strong> Lost 10% of users for every additional second of load time</li>
+                    <li><strong>Pinterest:</strong> Reduced perceived wait times by 40%, increased search engine traffic by 15%</li>
+                    <li><strong>Vodafone:</strong> A 31% improvement in LCP led to 8% more sales</li>
+                </ul>
+                
+                <p>Speed optimization isn't just technical housekeeping—it's a revenue driver with measurable ROI.</p>
+                
+                <h3>Starting Point: Quick Wins</h3>
+                <p>If you're just beginning your optimization journey, start with these high-impact, low-effort changes:</p>
+                
+                <ol>
+                    <li><strong>Compress all images</strong> using a tool like Squoosh or ImageOptim</li>
+                    <li><strong>Add loading="lazy"</strong> to images below the fold</li>
+                    <li><strong>Move scripts to the end</strong> of the body or add defer</li>
+                    <li><strong>Enable compression</strong> on your server or CDN</li>
+                    <li><strong>Check Google PageSpeed Insights</strong> and address the top 3 recommendations</li>
+                </ol>
+                
+                <p>These five changes alone can often cut load times in half with minimal effort.</p>
+                
+                <h3>Conclusion: Speed as a Competitive Advantage</h3>
+                <p>In a world where attention is the scarcest resource, speed is your silent salesperson. It works around the clock, across every page, for every visitor. It reduces bounce rates, increases engagement, improves conversions, and boosts search rankings.</p>
+                
+                <p>The websites that will win in 2025 and beyond are those that respect users' time. They load instantly, respond immediately, and never make users wait for the content they came for.</p>
+                
+                <p>Your competitors are getting faster. Your users expect better. The question isn't whether you can afford to optimize—it's whether you can afford not to.</p>
+                
+                <p>Start today. Measure your baseline. Implement the quick wins. Build a culture of performance. Your users—and your bottom line—will thank you.</p>
+            </div>
+            <div class="blog-modal-footer">
+                <div class="blog-share-buttons">
+                    <button class="blog-share-btn" onclick="shareBlog('twitter', 'speed-optimization')" title="Share on X">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </button>
+                    <button class="blog-share-btn" onclick="shareBlog('linkedin', 'speed-optimization')" title="Share on LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </button>
+                    <button class="blog-share-btn" onclick="copyBlogLink('speed-optimization')" title="Copy Link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </button>
+                </div>
+                <button class="btn btn-primary" onclick="closeBlogModal('speed-optimization')">Close Article</button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Cookie Consent Banner -->
     <div class="cookie-banner" id="cookieBanner">
         <div class="cookie-banner-inner">
             <div class="cookie-content">
                 <h3>We value your privacy</h3>
-                <p>We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By clicking "Accept All", you consent to our use of cookies. <a href="#" onclick="showPrivacyInfo(); return false;">Learn more</a></p>
+                <p>We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By clicking "Accept All", you consent to our use of cookies. <a href="#" onclick="openLegalModal('cookies'); return false;">Learn more</a></p>
             </div>
             <div class="cookie-actions">
                 <button class="cookie-btn cookie-btn-decline" onclick="declineCookies()">Decline</button>
@@ -12135,9 +14380,7 @@
         
         // Show privacy info (you can link to a privacy page)
         function showPrivacyInfo() {
-            showNotification('Privacy Policy coming soon!', 'info');
-            // TODO: Link to your privacy policy page
-            // window.location.href = '/privacy';
+            openLegalModal('privacy');
         }
         
         // Initialize cookie consent on page load
@@ -12152,4 +14395,134 @@
         
         // Allow reopening cookie settings (add this to your footer or settings)
         function reopenCookieSettings() {
-            Cookie
+            CookieConsent.showBanner();
+        }
+        
+        // ============================================
+        // LEGAL & BLOG MODAL FUNCTIONS
+        // ============================================
+        
+        // Legal Modal Functions
+        function openLegalModal(type) {
+            const modalIds = {
+                'privacy': 'privacyModal',
+                'terms': 'termsModal',
+                'cookies': 'cookiesModal'
+            };
+            
+            const modalId = modalIds[type];
+            if (modalId) {
+                const modal = document.getElementById(modalId);
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeLegalModal(type) {
+            const modalIds = {
+                'privacy': 'privacyModal',
+                'terms': 'termsModal',
+                'cookies': 'cookiesModal'
+            };
+            
+            const modalId = modalIds[type];
+            if (modalId) {
+                const modal = document.getElementById(modalId);
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Blog Modal Functions
+        function openBlogModal(slug) {
+            const modalIds = {
+                'design-trends': 'blogDesignTrendsModal',
+                'deployment-guide': 'blogDeploymentGuideModal',
+                'speed-optimization': 'blogSpeedOptimizationModal'
+            };
+            
+            const modalId = modalIds[slug];
+            if (modalId) {
+                const modal = document.getElementById(modalId);
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeBlogModal(slug) {
+            const modalIds = {
+                'design-trends': 'blogDesignTrendsModal',
+                'deployment-guide': 'blogDeploymentGuideModal',
+                'speed-optimization': 'blogSpeedOptimizationModal'
+            };
+            
+            const modalId = modalIds[slug];
+            if (modalId) {
+                const modal = document.getElementById(modalId);
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Blog Share Functions
+        function shareBlog(platform, slug) {
+            const titles = {
+                'design-trends': '10 Web Design Trends Dominating 2025',
+                'deployment-guide': 'The Complete Guide to Deploying Your First Website',
+                'speed-optimization': 'Speed Optimization: Why Your Website Needs to Load in Under 3 Seconds'
+            };
+            
+            const title = encodeURIComponent(titles[slug] || 'DeployTemplate Blog');
+            const url = encodeURIComponent(window.location.origin + '/#blog-' + slug);
+            
+            let shareUrl;
+            switch(platform) {
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${title}&url=${url}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                    break;
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                    break;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            }
+        }
+        
+        function copyBlogLink(slug) {
+            const url = window.location.origin + '/#blog-' + slug;
+            navigator.clipboard.writeText(url).then(() => {
+                showNotification('Link copied to clipboard!', 'success');
+            }).catch(() => {
+                showNotification('Failed to copy link', 'error');
+            });
+        }
+        
+        // Close modals on overlay click
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('legal-modal-overlay')) {
+                e.target.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            if (e.target.classList.contains('blog-modal-overlay')) {
+                e.target.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close modals on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.legal-modal-overlay.active, .blog-modal-overlay.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+</body>
+</html>
