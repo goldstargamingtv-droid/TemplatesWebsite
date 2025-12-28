@@ -14551,14 +14551,14 @@
             try {
                 // First, try to remove any existing image for this device
                 const { data: existingFiles } = await supabaseClient.storage
-                    .from('Templates')
+                    .from('public-assets')
                     .list('hero-devices', { search: device });
                 
                 if (existingFiles && existingFiles.length > 0) {
                     const toDelete = existingFiles.filter(f => f.name.startsWith(device + '-'));
                     if (toDelete.length > 0) {
                         await supabaseClient.storage
-                            .from('Templates')
+                            .from('public-assets')
                             .remove(toDelete.map(f => `hero-devices/${f.name}`));
                     }
                 }
@@ -14569,7 +14569,7 @@
                 const path = `hero-devices/${device}-${timestamp}.${ext}`;
                 
                 const { error } = await supabaseClient.storage
-                    .from('Templates')
+                    .from('public-assets')
                     .upload(path, file, {
                         cacheControl: '3600',
                         upsert: true,
@@ -14607,14 +14607,14 @@
             try {
                 // Find and delete the device image
                 const { data: files } = await supabaseClient.storage
-                    .from('Templates')
+                    .from('public-assets')
                     .list('hero-devices');
                 
                 if (files) {
                     const toDelete = files.filter(f => f.name.startsWith(device + '-'));
                     if (toDelete.length > 0) {
                         const { error } = await supabaseClient.storage
-                            .from('Templates')
+                            .from('public-assets')
                             .remove(toDelete.map(f => `hero-devices/${f.name}`));
                         
                         if (error) throw error;
@@ -14642,7 +14642,7 @@
         async function loadHeroDeviceImages() {
             try {
                 const { data: files, error } = await supabaseClient.storage
-                    .from('Templates')
+                    .from('public-assets')
                     .list('hero-devices', { limit: 100 });
                 
                 if (error) throw error;
@@ -14663,10 +14663,11 @@
                     
                     if (deviceFile) {
                         const { data } = supabaseClient.storage
-                            .from('Templates')
+                            .from('public-assets')
                             .getPublicUrl(`hero-devices/${deviceFile.name}`);
                         
-                        const imageUrl = data.publicUrl;
+                        const imageUrl = data.publicUrl + '?t=' + Date.now();
+                        console.log(`${device} image URL:`, imageUrl);
                         
                         // Update hero section
                         if (heroImg) {
