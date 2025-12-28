@@ -14690,4 +14690,21 @@ git push -u origin main</code></pre>
                 e.target.classList.remove('active');
                 document.body.style.overflow = '';
             }
-            if (e.
+            if (e.target.classList.contains('blog-modal-overlay')) {
+                e.target.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close modals on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.legal-modal-overlay.active, .blog-modal-overlay.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+</body>
+</html>
