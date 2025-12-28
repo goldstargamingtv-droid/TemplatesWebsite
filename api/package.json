@@ -1,0 +1,9 @@
+{
+  "name": "deploytemplate-api",
+  "version": "1.0.0",
+  "description": "API endpoints for DeployTemplate",
+  "dependencies": {
+    "stripe": "^14.0.0",
+    "@supabase/supabase-js": "^2.39.0"
+  }
+}
