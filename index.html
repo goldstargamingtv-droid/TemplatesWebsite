@@ -13133,8 +13133,14 @@
                     .select('*')
                     .order('created_at', { ascending: false });
                 
-                // Always use templates for now (until admin panel is set up)
-                allTemplates = getTemplates();
+                if (error) throw error;
+                
+                // Use Supabase data if available, fallback to hardcoded
+                if (templates && templates.length > 0) {
+                    allTemplates = templates;
+                } else {
+                    allTemplates = getTemplates();
+                }
                 filteredTemplates = [...allTemplates];
                 displayedTemplates = 0;
                 
@@ -13143,6 +13149,7 @@
                 LoadingBar.complete();
                 
             } catch (error) {
+                console.log('Error loading from Supabase, using fallback:', error);
                 // Use template data on error
                 allTemplates = getTemplates();
                 filteredTemplates = [...allTemplates];
