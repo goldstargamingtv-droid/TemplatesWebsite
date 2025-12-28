@@ -6793,7 +6793,7 @@
                 <li><a href="#templates" onclick="event.preventDefault(); scrollToSection('templates');">Templates</a></li>
                 <li><a href="#features" onclick="event.preventDefault(); scrollToSection('features');">Features</a></li>
                 <li><a href="#showcase" onclick="event.preventDefault(); scrollToSection('showcase');">Showcase</a></li>
-                <li><a href="#pricing" onclick="event.preventDefault(); scrollToSection('pricing');">Pricing</a></li>
+                <li><a href="#blog" onclick="event.preventDefault(); scrollToSection('blog');">Blog</a></li>
                 <li>
                     <div class="cart-icon-wrapper" onmouseenter="showCartDropdown()" onmouseleave="hideCartDropdown()">
                         <div class="cart-icon-container" onclick="toggleCartModal(); event.stopPropagation();">
@@ -7153,170 +7153,114 @@
                 <p>Join hundreds of businesses who chose DeployTemplate to bring their vision to life</p>
                 <div class="cta-buttons">
                     <a href="#templates" class="btn btn-primary btn-lg">Browse Templates</a>
-                    <a href="#pricing" class="btn btn-white btn-lg">View Pricing</a>
+                    <a href="#templates" class="btn btn-white btn-lg" onclick="event.preventDefault(); scrollToSection('templates');">Browse Templates</a>
                 </div>
             </div>
         </div>
     </section>
 
 
-    <!-- Pricing Section -->
-    <section class="pricing-section" id="pricing">
+    <!-- Blog Section -->
+    <section class="blog-section" id="blog" style="padding: 6rem 0;">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <h2 class="section-title">Latest Articles</h2>
                 <p class="section-description">
-                    Launch sale: Get 43% off all templates. Limited time offer!
+                    Tips, tutorials, and insights for building better websites
                 </p>
             </div>
 
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Single Template</h3>
-                        <p>Perfect for one project</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <!-- Article 1 -->
+                <article style="
+                    background: rgba(10, 10, 10, 0.7);
+                    backdrop-filter: blur(20px) saturate(180%);
+                    -webkit-backdrop-filter: blur(20px) saturate(180%);
+                    border: 1px solid rgba(29, 154, 155, 0.2);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 20px 40px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">
+                    <div style="height: 200px; background: linear-gradient(135deg, rgba(29, 154, 155, 0.3) 0%, rgba(13, 148, 136, 0.1) 100%); display: flex; align-items: center; justify-content: center;">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" style="opacity: 0.6;">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                            <path d="M2 2l7.586 7.586"></path>
+                            <circle cx="11" cy="11" r="2"></circle>
+                        </svg>
                     </div>
-                    <div class="pricing-price">
-                        <div class="price-original">$69</div>
-                        <div class="price-current">
-                            <span class="currency">$</span>39
+                    <div style="padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <span style="font-size: 0.75rem; color: var(--primary); background: rgba(29, 154, 155, 0.15); padding: 0.25rem 0.75rem; border-radius: 20px;">Design</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">5 min read</span>
                         </div>
-                        <div class="price-label">per template</div>
+                        <h3 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 0.75rem; line-height: 1.4;">10 Web Design Trends Dominating 2025</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">Discover the latest design trends shaping the future of web development, from glassmorphism to AI-generated interfaces.</p>
+                        <a href="#" style="color: var(--primary); font-weight: 500; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            Read More
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
                     </div>
-                    <ul class="pricing-features">
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Complete template files
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Setup documentation
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Lifetime updates
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Commercial license
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Email support
-                        </li>
-                    </ul>
-                    <a href="#templates" class="btn btn-outline btn-block">Choose Template</a>
-                </div>
+                </article>
 
-                <div class="pricing-card featured">
-                    <div class="pricing-badge">Best Value</div>
-                    <div class="pricing-header">
-                        <h3>Complete Bundle</h3>
-                        <p>All current + future templates</p>
+                <!-- Article 2 -->
+                <article style="
+                    background: rgba(10, 10, 10, 0.7);
+                    backdrop-filter: blur(20px) saturate(180%);
+                    -webkit-backdrop-filter: blur(20px) saturate(180%);
+                    border: 1px solid rgba(29, 154, 155, 0.2);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 20px 40px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">
+                    <div style="height: 200px; background: linear-gradient(135deg, rgba(99, 91, 255, 0.3) 0%, rgba(139, 92, 246, 0.1) 100%); display: flex; align-items: center; justify-content: center;">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" style="opacity: 0.6;">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
                     </div>
-                    <div class="pricing-price">
-                        <div class="price-original">$179</div>
-                        <div class="price-current">
-                            <span class="currency">$</span>99
+                    <div style="padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <span style="font-size: 0.75rem; color: #8B5CF6; background: rgba(139, 92, 246, 0.15); padding: 0.25rem 0.75rem; border-radius: 20px;">Development</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">8 min read</span>
                         </div>
-                        <div class="price-label">one-time payment</div>
+                        <h3 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 0.75rem; line-height: 1.4;">How to Deploy Your First Website in Under 5 Minutes</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">A step-by-step guide to getting your website live using modern deployment platforms like Vercel and Netlify.</p>
+                        <a href="#" style="color: var(--primary); font-weight: 500; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            Read More
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
                     </div>
-                    <ul class="pricing-features">
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            All 15+ templates
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Access to new templates
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Priority email support
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Lifetime updates
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Commercial license
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Video tutorials
-                        </li>
-                    </ul>
-                    <a href="#" class="btn btn-primary btn-block">Get All Templates</a>
-                </div>
+                </article>
 
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Custom Development</h3>
-                        <p>Need something unique?</p>
+                <!-- Article 3 -->
+                <article style="
+                    background: rgba(10, 10, 10, 0.7);
+                    backdrop-filter: blur(20px) saturate(180%);
+                    -webkit-backdrop-filter: blur(20px) saturate(180%);
+                    border: 1px solid rgba(29, 154, 155, 0.2);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 20px 40px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">
+                    <div style="height: 200px; background: linear-gradient(135deg, rgba(236, 72, 153, 0.3) 0%, rgba(244, 114, 182, 0.1) 100%); display: flex; align-items: center; justify-content: center;">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5" style="opacity: 0.6;">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                        </svg>
                     </div>
-                    <div class="pricing-price">
-                        <div class="price-current" style="font-size: 2.5rem;">
-                            Custom
+                    <div style="padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <span style="font-size: 0.75rem; color: #EC4899; background: rgba(236, 72, 153, 0.15); padding: 0.25rem 0.75rem; border-radius: 20px;">Performance</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">6 min read</span>
                         </div>
-                        <div class="price-label">starting at $299</div>
+                        <h3 style="color: var(--text-primary); font-size: 1.25rem; margin-bottom: 0.75rem; line-height: 1.4;">Speed Optimization: Why Your Website Needs to Load in Under 3 Seconds</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">Learn the critical performance metrics that impact user experience and how to optimize your site for speed.</p>
+                        <a href="#" style="color: var(--primary); font-weight: 500; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            Read More
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
                     </div>
-                    <ul class="pricing-features">
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Template customization
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Brand integration
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Content writing
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Deployment assistance
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            Dedicated support
-                        </li>
-                    </ul>
-                    <a href="/cdn-cgi/l/email-protection#f5969a9b81949681b58190988599948190939a879290db969a98" class="btn btn-outline btn-block">Contact Us</a>
-                </div>
+                </article>
             </div>
         </div>
     </section>
@@ -7366,7 +7310,7 @@
                     <ul>
                         <li><a href="about.html">About</a></li>
                         <li><a href="#showcase">Showcase</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#blog">Blog</a></li>
                         <li><a href="#">Blog</a></li>
                         <li><a href="/cdn-cgi/l/email-protection#94f7fbfae0f5f7e0d4e0f1f9e4f8f5e0f1f2fbe6f3f1baf7fbf9">Contact</a></li>
                     </ul>
