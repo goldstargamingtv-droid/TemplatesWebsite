@@ -278,6 +278,7 @@
     
     <!-- Supabase Client Library -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://js.stripe.com/v3/"></script>
     
     <style>
         /* ============================================
@@ -7982,7 +7983,9 @@
                 'saas-landing': 'tf-test',
                 'portfolio': 'tf-test',
                 'restaurant': 'tf-test'
-            }
+            },
+            STRIPE_PUBLISHABLE_KEY: 'pk_test_51Sj8SO90e6DvzxZLvTvJJOIygCR8r5wniQJvvjERSXjVmYf0JiYNMcbfM438dHQM05KcCDhfJTKKvnFSHwFLC63V00LWnw7cLQ',
+            USE_STRIPE: true
         };
 
         // Initialize Supabase Client
@@ -7998,6 +8001,9 @@
                 }
             }
         });
+        
+        // Initialize Stripe
+        const stripe = Stripe(CONFIG.STRIPE_PUBLISHABLE_KEY);
         
         // Global State
         let currentUser = null;
@@ -8816,14 +8822,47 @@
         // Track pending purchase for post-checkout flow
         let pendingPurchase = null;
 
-        function buyTemplate(templateSlug, templateName, price) {
+        async function buyTemplate(templateSlug, templateName, price) {
             if (!currentUser) {
                 showNotification('Please sign up to purchase templates!', 'info');
                 setTimeout(() => showSignup(), 500);
                 return;
             }
             
-            // Get Gumroad product permalink
+            // Use Stripe Checkout
+            if (CONFIG.USE_STRIPE) {
+                try {
+                    showNotification('Redirecting to checkout...', 'info');
+                    
+                    const response = await fetch('https://templates-website-one.vercel.app/api/create-checkout-session', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            items: [{
+                                id: templateSlug,
+                                name: templateName,
+                                price: price,
+                                description: `Premium website template - ${templateName}`
+                            }],
+                            userId: currentUser.id,
+                            userEmail: currentUser.email,
+                            successUrl: `${window.location.origin}/?payment=success&template=${templateSlug}`,
+                            cancelUrl: `${window.location.origin}/?payment=cancelled`
+                        })
+                    });
+                    
+                    if (!response.ok) throw new Error('Failed to create checkout session');
+                    
+                    const { url } = await response.json();
+                    window.location.href = url;
+                } catch (error) {
+                    console.error('Checkout error:', error);
+                    showNotification('Checkout failed. Please try again.', 'error');
+                }
+                return;
+            }
+            
+            // Fallback to Gumroad
             const gumroadPermalink = CONFIG.GUMROAD_PRODUCTS[templateSlug];
             if (!gumroadPermalink) {
                 console.error('No Gumroad product found for:', templateSlug);
@@ -8831,13 +8870,8 @@
                 return;
             }
             
-            // Store pending purchase info
             pendingPurchase = { slug: templateSlug, name: templateName, price: price };
-            
-            // Build Gumroad URL with user email
             const gumroadUrl = `https://goldstar06.gumroad.com/l/${gumroadPermalink}?email=${encodeURIComponent(currentUser.email)}`;
-            
-            // Show checkout modal with Gumroad button
             showCheckoutModal(templateName, price, gumroadUrl, templateSlug);
         }
         
@@ -9705,6 +9739,21 @@
             
             // Check auth state
             await checkAuth();
+            
+            // Check for Stripe payment success/cancel
+            const urlParams = new URLSearchParams(window.location.search);
+            const paymentStatus = urlParams.get('payment');
+            
+            if (paymentStatus === 'success') {
+                window.history.replaceState({}, document.title, window.location.pathname);
+                setTimeout(() => {
+                    showNotification('🎉 Payment successful! Your template is now available in your dashboard.', 'success');
+                    if (currentUser) showPage('dashboard');
+                }, 500);
+            } else if (paymentStatus === 'cancelled') {
+                window.history.replaceState({}, document.title, window.location.pathname);
+                showNotification('Payment was cancelled.', 'info');
+            }
             
             // Load templates for search suggestions
             try {
