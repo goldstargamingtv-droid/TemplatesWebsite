@@ -7,8 +7,8 @@
     <!-- ============================================
          PRIMARY SEO META TAGS
          ============================================ -->
-    <title>DeployTemplate | Premium Website Templates for Startups & Businesses</title>
-    <meta name="description" content="Launch your website in minutes with premium, hand-crafted templates. Professional SaaS, portfolio, restaurant & business templates. No coding required. One-time purchase, lifetime access.">
+    <title>Premium Website Templates: Launch in Minutes | DeployTemplate</title>
+    <meta name="description" content="Launch a professional website in minutes with premium, no-code templates for SaaS, startups & businesses. One-time purchase, lifetime access.">
     <meta name="keywords" content="website templates, premium templates, HTML templates, SaaS templates, portfolio templates, restaurant templates, business templates, landing page templates, responsive templates, no code website, startup templates, professional web design">
     <meta name="author" content="DeployTemplate">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -20,8 +20,8 @@
          ============================================ -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="DeployTemplate">
-    <meta property="og:title" content="DeployTemplate | Premium Website Templates for Startups & Businesses">
-    <meta property="og:description" content="Launch your website in minutes with premium, hand-crafted templates. Professional designs, no coding required. One-time purchase, lifetime access.">
+    <meta property="og:title" content="Premium Website Templates: Launch in Minutes | DeployTemplate">
+    <meta property="og:description" content="Launch a professional website in minutes with premium, no-code templates for SaaS, startups & businesses. One-time purchase, lifetime access.">
     <meta property="og:url" content="https://deploytemplate.com/">
     <meta property="og:image" content="https://deploytemplate.com/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -35,8 +35,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@deploytemplate">
     <meta name="twitter:creator" content="@deploytemplate">
-    <meta name="twitter:title" content="DeployTemplate | Premium Website Templates">
-    <meta name="twitter:description" content="Launch your website in minutes with premium, hand-crafted templates. No coding required.">
+    <meta name="twitter:title" content="Premium Website Templates: Launch in Minutes | DeployTemplate">
+    <meta name="twitter:description" content="Launch a professional website in minutes with premium, no-code templates for SaaS, startups & businesses. One-time purchase, lifetime access.">
     <meta name="twitter:image" content="https://deploytemplate.com/og-image.png">
     <meta name="twitter:image:alt" content="DeployTemplate - Premium Website Templates">
     
@@ -102,7 +102,7 @@
                 "@type": "WebPage",
                 "@id": "https://deploytemplate.com/#webpage",
                 "url": "https://deploytemplate.com",
-                "name": "DeployTemplate | Premium Website Templates for Startups & Businesses",
+                "name": "Premium Website Templates: Launch in Minutes | DeployTemplate",
                 "isPartOf": {
                     "@id": "https://deploytemplate.com/#website"
                 },
@@ -4061,6 +4061,17 @@
             position: relative;
             background-size: cover;
             background-position: center;
+            overflow: hidden;
+        }
+        
+        .screen-content img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
         }
         
         /* ============================================
@@ -9571,19 +9582,19 @@
             <div class="hero-content">
                 <div class="hero-badge">
                     <span class="badge-dot"></span>
-                    Hand-crafted for modern businesses
+                    New templates added monthly
                 </div>
                 <h1 class="hero-title">
-                    Beautiful Websites,
-                    <span class="gradient-text">Zero Hassle</span>
+                    Launch Your Website in
+                    <span class="gradient-text">Minutes, Not Months</span>
                 </h1>
                 <p class="hero-description">
-                    Stop starting from scratch. Our professionally designed templates 
-                    give you a head start so you can focus on what matters — your business.
+                    Premium, production-ready templates built with modern design principles. 
+                    Simply customize, deploy, and start growing your business today.
                 </p>
                 <div class="hero-buttons">
                     <a href="#templates" class="btn btn-primary btn-lg">
-                        Browse Templates
+                        Explore Templates
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -9592,7 +9603,7 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polygon points="5 3 19 12 5 21 5 3"/>
                         </svg>
-                        See Live Demos
+                        View Templates Live
                     </button>
                 </div>
                 <div class="hero-steps">
@@ -9633,7 +9644,9 @@
                                         <span></span><span></span><span></span>
                                     </div>
                                 </div>
-                                <div class="screen-content gradient-1"></div>
+                                <div class="screen-content gradient-1" id="heroLaptopScreen">
+                                    <img id="heroLaptopImg" src="" alt="Laptop Preview" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                                </div>
                             </div>
                         </div>
                         <div class="device-base"></div>
@@ -9643,7 +9656,9 @@
                     <div class="device tablet">
                         <div class="device-frame">
                             <div class="device-screen">
-                                <div class="screen-content gradient-2"></div>
+                                <div class="screen-content gradient-2" id="heroTabletScreen">
+                                    <img id="heroTabletImg" src="" alt="Tablet Preview" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -9652,7 +9667,9 @@
                     <div class="device phone">
                         <div class="device-frame">
                             <div class="device-screen">
-                                <div class="screen-content gradient-3"></div>
+                                <div class="screen-content gradient-3" id="heroPhoneScreen">
+                                    <img id="heroPhoneImg" src="" alt="Phone Preview" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -11146,19 +11163,117 @@
 
             <!-- Hero Images Tab -->
             <div id="adminTabHeroContent" class="admin-tab-content" style="display: none;">
-                <h3 style="color: var(--primary); margin-bottom: 1rem;">Hero Section Images</h3>
-                <p style="color: var(--text-muted); margin-bottom: 1rem;">Upload images to display in the hero section carousel</p>
-                <form id="adminHeroUploadForm" onsubmit="handleAdminHeroUpload(event)">
-                    <div class="form-group">
-                        <label>Hero Image *</label>
-                        <input type="file" id="adminHeroImage" accept="image/*" required>
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Hero Device Images</h3>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Upload images to display inside the device mockups in the hero section. Recommended sizes: Laptop (1200x750), Tablet (800x1000), Phone (375x812)</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                    <!-- Laptop Upload -->
+                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <div style="width: 40px; height: 40px; background: rgba(29, 154, 155, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="2" y1="20" x2="22" y2="20"></line>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 style="color: var(--text-primary); font-size: 1rem; margin: 0;">Laptop Screen</h4>
+                                <p style="color: var(--text-muted); font-size: 0.8rem; margin: 0;">1200 × 750px recommended</p>
+                            </div>
+                        </div>
+                        <div id="heroLaptopPreview" style="width: 100%; height: 120px; background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary)); border-radius: 8px; margin-bottom: 1rem; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                            <span style="color: var(--text-muted); font-size: 0.85rem;">No image uploaded</span>
+                        </div>
+                        <input type="file" id="heroLaptopFile" accept="image/*" style="display: none;" onchange="previewHeroImage('laptop')">
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button onclick="document.getElementById('heroLaptopFile').click()" class="btn btn-secondary" style="flex: 1; padding: 0.6rem;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem;">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                                Choose File
+                            </button>
+                            <button onclick="uploadHeroImage('laptop')" class="btn btn-primary" style="padding: 0.6rem 1rem;" id="heroLaptopUploadBtn" disabled>
+                                Upload
+                            </button>
+                        </div>
+                        <button onclick="removeHeroImage('laptop')" class="btn" style="width: 100%; margin-top: 0.5rem; padding: 0.5rem; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);" id="heroLaptopRemoveBtn" disabled>
+                            Remove Image
+                        </button>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="adminHeroBtn">
-                        Upload Hero Image
-                    </button>
-                </form>
-                <div id="adminHeroImagesList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
-                    <p style="color: var(--text-muted);">Loading hero images...</p>
+                    
+                    <!-- Tablet Upload -->
+                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <div style="width: 40px; height: 40px; background: rgba(29, 154, 155, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+                                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 style="color: var(--text-primary); font-size: 1rem; margin: 0;">Tablet Screen</h4>
+                                <p style="color: var(--text-muted); font-size: 0.8rem; margin: 0;">800 × 1000px recommended</p>
+                            </div>
+                        </div>
+                        <div id="heroTabletPreview" style="width: 100%; height: 120px; background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary)); border-radius: 8px; margin-bottom: 1rem; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                            <span style="color: var(--text-muted); font-size: 0.85rem;">No image uploaded</span>
+                        </div>
+                        <input type="file" id="heroTabletFile" accept="image/*" style="display: none;" onchange="previewHeroImage('tablet')">
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button onclick="document.getElementById('heroTabletFile').click()" class="btn btn-secondary" style="flex: 1; padding: 0.6rem;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem;">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                                Choose File
+                            </button>
+                            <button onclick="uploadHeroImage('tablet')" class="btn btn-primary" style="padding: 0.6rem 1rem;" id="heroTabletUploadBtn" disabled>
+                                Upload
+                            </button>
+                        </div>
+                        <button onclick="removeHeroImage('tablet')" class="btn" style="width: 100%; margin-top: 0.5rem; padding: 0.5rem; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);" id="heroTabletRemoveBtn" disabled>
+                            Remove Image
+                        </button>
+                    </div>
+                    
+                    <!-- Phone Upload -->
+                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <div style="width: 40px; height: 40px; background: rgba(29, 154, 155, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+                                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 style="color: var(--text-primary); font-size: 1rem; margin: 0;">Phone Screen</h4>
+                                <p style="color: var(--text-muted); font-size: 0.8rem; margin: 0;">375 × 812px recommended</p>
+                            </div>
+                        </div>
+                        <div id="heroPhonePreview" style="width: 100%; height: 120px; background: linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary)); border-radius: 8px; margin-bottom: 1rem; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                            <span style="color: var(--text-muted); font-size: 0.85rem;">No image uploaded</span>
+                        </div>
+                        <input type="file" id="heroPhoneFile" accept="image/*" style="display: none;" onchange="previewHeroImage('phone')">
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button onclick="document.getElementById('heroPhoneFile').click()" class="btn btn-secondary" style="flex: 1; padding: 0.6rem;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem;">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                                Choose File
+                            </button>
+                            <button onclick="uploadHeroImage('phone')" class="btn btn-primary" style="padding: 0.6rem 1rem;" id="heroPhoneUploadBtn" disabled>
+                                Upload
+                            </button>
+                        </div>
+                        <button onclick="removeHeroImage('phone')" class="btn" style="width: 100%; margin-top: 0.5rem; padding: 0.5rem; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);" id="heroPhoneRemoveBtn" disabled>
+                            Remove Image
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1rem; background: rgba(29, 154, 155, 0.1); border: 1px solid rgba(29, 154, 155, 0.2); border-radius: 12px;">
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">
+                        <strong style="color: var(--primary);">💡 Tip:</strong> For best results, use high-quality screenshots of your templates or mockup images. Images will be automatically scaled to fit the device frames.
+                    </p>
                 </div>
             </div>
             
@@ -12180,6 +12295,9 @@
             
             // Check for new custom requests (for admin badge)
             checkNewRequests();
+            
+            // Load hero device images
+            loadHeroDeviceImages();
         });
 
         // ============================================
@@ -14219,7 +14337,7 @@
             document.getElementById('adminModal').classList.add('active');
             showAdminTab('add');
             loadAdminTemplates();
-            loadAdminHeroImages();
+            loadHeroDeviceImages();
             loadCustomRequests();
             
             // Auto-generate slug from name
@@ -14372,80 +14490,202 @@
             }
         }
 
-        async function loadAdminHeroImages() {
-            const list = document.getElementById('adminHeroImagesList');
+        // Store selected files for each device
+        let heroDeviceFiles = {
+            laptop: null,
+            tablet: null,
+            phone: null
+        };
+        
+        // Preview hero image when file is selected
+        function previewHeroImage(device) {
+            const fileInput = document.getElementById(`hero${device.charAt(0).toUpperCase() + device.slice(1)}File`);
+            const preview = document.getElementById(`hero${device.charAt(0).toUpperCase() + device.slice(1)}Preview`);
+            const uploadBtn = document.getElementById(`hero${device.charAt(0).toUpperCase() + device.slice(1)}UploadBtn`);
             
-            try {
-                const { data: files, error } = await supabaseClient.storage
-                    .from('Templates')
-                    .list('hero', { limit: 100 });
-
-                if (error) throw error;
-
-                if (!files || files.length === 0) {
-                    list.innerHTML = '<p style="color: var(--text-muted);">No hero images uploaded yet</p>';
-                    return;
-                }
-
-                list.innerHTML = files.filter(f => f.name !== '.emptyFolderPlaceholder').map(file => {
-                    const { data } = supabaseClient.storage.from('Templates').getPublicUrl(`hero/${file.name}`);
-                    return `
-                        <div style="position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 16/9;">
-                            <img src="${data.publicUrl}" style="width: 100%; height: 100%; object-fit: cover;" />
-                            <button onclick="deleteHeroImage('${file.name}')" style="position: absolute; top: 0.5rem; right: 0.5rem; background: #dc2626; color: white; border: none; border-radius: 4px; padding: 0.25rem 0.5rem; cursor: pointer; font-size: 0.8rem;">Delete</button>
-                        </div>
-                    `;
-                }).join('');
-            } catch (error) {
-                list.innerHTML = '<p style="color: var(--text-muted);">Error loading hero images</p>';
+            const file = fileInput.files[0];
+            if (file) {
+                heroDeviceFiles[device] = file;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover;">`;
+                };
+                reader.readAsDataURL(file);
+                uploadBtn.disabled = false;
             }
         }
-
-        async function handleAdminHeroUpload(event) {
-            event.preventDefault();
+        
+        // Upload hero image to Supabase
+        async function uploadHeroImage(device) {
+            const deviceCap = device.charAt(0).toUpperCase() + device.slice(1);
+            const uploadBtn = document.getElementById(`hero${deviceCap}UploadBtn`);
+            const removeBtn = document.getElementById(`hero${deviceCap}RemoveBtn`);
+            const file = heroDeviceFiles[device];
             
-            const btn = document.getElementById('adminHeroBtn');
-            const file = document.getElementById('adminHeroImage').files[0];
+            if (!file) {
+                showNotification('Please select a file first', 'error');
+                return;
+            }
             
-            btn.disabled = true;
-            btn.textContent = 'Uploading...';
+            uploadBtn.disabled = true;
+            uploadBtn.textContent = 'Uploading...';
             
             try {
-                const timestamp = Date.now();
+                // First, try to remove any existing image for this device
+                const { data: existingFiles } = await supabaseClient.storage
+                    .from('Templates')
+                    .list('hero-devices', { search: device });
+                
+                if (existingFiles && existingFiles.length > 0) {
+                    const toDelete = existingFiles.filter(f => f.name.startsWith(device + '-'));
+                    if (toDelete.length > 0) {
+                        await supabaseClient.storage
+                            .from('Templates')
+                            .remove(toDelete.map(f => `hero-devices/${f.name}`));
+                    }
+                }
+                
+                // Upload new image
                 const ext = file.name.split('.').pop();
-                const path = `hero/hero-${timestamp}.${ext}`;
-
+                const timestamp = Date.now();
+                const path = `hero-devices/${device}-${timestamp}.${ext}`;
+                
                 const { error } = await supabaseClient.storage
                     .from('Templates')
                     .upload(path, file);
-
+                
                 if (error) throw error;
-
-                showNotification('Hero image uploaded successfully!', 'success');
-                document.getElementById('adminHeroUploadForm').reset();
-                loadAdminHeroImages();
+                
+                showNotification(`${deviceCap} image uploaded successfully!`, 'success');
+                
+                // Update the hero section immediately
+                await loadHeroDeviceImages();
+                
+                // Enable remove button
+                removeBtn.disabled = false;
+                
+                // Reset file input
+                document.getElementById(`hero${deviceCap}File`).value = '';
+                heroDeviceFiles[device] = null;
+                
             } catch (error) {
-                showNotification('Error uploading hero image: ' + error.message, 'error');
+                showNotification('Error uploading image: ' + error.message, 'error');
             } finally {
-                btn.disabled = false;
-                btn.textContent = 'Upload Hero Image';
+                uploadBtn.disabled = true;
+                uploadBtn.textContent = 'Upload';
             }
         }
-
-        async function deleteHeroImage(filename) {
-            if (!confirm('Delete this hero image?')) return;
-
+        
+        // Remove hero image from Supabase
+        async function removeHeroImage(device) {
+            const deviceCap = device.charAt(0).toUpperCase() + device.slice(1);
+            
+            if (!confirm(`Remove the ${device} screen image?`)) return;
+            
             try {
-                const { error } = await supabaseClient.storage
+                // Find and delete the device image
+                const { data: files } = await supabaseClient.storage
                     .from('Templates')
-                    .remove([`hero/${filename}`]);
-
-                if (error) throw error;
-
-                showNotification('Hero image deleted!', 'success');
-                loadAdminHeroImages();
+                    .list('hero-devices');
+                
+                if (files) {
+                    const toDelete = files.filter(f => f.name.startsWith(device + '-'));
+                    if (toDelete.length > 0) {
+                        const { error } = await supabaseClient.storage
+                            .from('Templates')
+                            .remove(toDelete.map(f => `hero-devices/${f.name}`));
+                        
+                        if (error) throw error;
+                    }
+                }
+                
+                showNotification(`${deviceCap} image removed!`, 'success');
+                
+                // Update displays
+                await loadHeroDeviceImages();
+                
+                // Reset admin preview
+                const preview = document.getElementById(`hero${deviceCap}Preview`);
+                preview.innerHTML = '<span style="color: var(--text-muted); font-size: 0.85rem;">No image uploaded</span>';
+                
+                // Disable remove button
+                document.getElementById(`hero${deviceCap}RemoveBtn`).disabled = true;
+                
             } catch (error) {
-                showNotification('Error deleting image: ' + error.message, 'error');
+                showNotification('Error removing image: ' + error.message, 'error');
+            }
+        }
+        
+        // Load hero device images on page load and update both admin and hero section
+        async function loadHeroDeviceImages() {
+            try {
+                const { data: files, error } = await supabaseClient.storage
+                    .from('Templates')
+                    .list('hero-devices', { limit: 100 });
+                
+                if (error) throw error;
+                
+                const devices = ['laptop', 'tablet', 'phone'];
+                
+                for (const device of devices) {
+                    const deviceCap = device.charAt(0).toUpperCase() + device.slice(1);
+                    const deviceFile = files?.find(f => f.name.startsWith(device + '-'));
+                    
+                    // Hero section elements
+                    const heroScreen = document.getElementById(`hero${deviceCap}Screen`);
+                    const heroImg = document.getElementById(`hero${deviceCap}Img`);
+                    
+                    // Admin preview elements
+                    const adminPreview = document.getElementById(`hero${deviceCap}Preview`);
+                    const removeBtn = document.getElementById(`hero${deviceCap}RemoveBtn`);
+                    
+                    if (deviceFile) {
+                        const { data } = supabaseClient.storage
+                            .from('Templates')
+                            .getPublicUrl(`hero-devices/${deviceFile.name}`);
+                        
+                        const imageUrl = data.publicUrl;
+                        
+                        // Update hero section
+                        if (heroImg) {
+                            heroImg.src = imageUrl;
+                            heroImg.style.display = 'block';
+                        }
+                        if (heroScreen) {
+                            heroScreen.classList.remove('gradient-1', 'gradient-2', 'gradient-3');
+                        }
+                        
+                        // Update admin preview
+                        if (adminPreview) {
+                            adminPreview.innerHTML = `<img src="${imageUrl}" style="width: 100%; height: 100%; object-fit: cover;">`;
+                        }
+                        if (removeBtn) {
+                            removeBtn.disabled = false;
+                        }
+                    } else {
+                        // No image - show gradient
+                        if (heroImg) {
+                            heroImg.style.display = 'none';
+                            heroImg.src = '';
+                        }
+                        if (heroScreen) {
+                            const gradientClass = device === 'laptop' ? 'gradient-1' : device === 'tablet' ? 'gradient-2' : 'gradient-3';
+                            if (!heroScreen.classList.contains(gradientClass)) {
+                                heroScreen.classList.add(gradientClass);
+                            }
+                        }
+                        
+                        // Update admin preview
+                        if (adminPreview) {
+                            adminPreview.innerHTML = '<span style="color: var(--text-muted); font-size: 0.85rem;">No image uploaded</span>';
+                        }
+                        if (removeBtn) {
+                            removeBtn.disabled = true;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading hero device images:', error);
             }
         }
 
