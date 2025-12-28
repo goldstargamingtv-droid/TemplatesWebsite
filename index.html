@@ -287,15 +287,15 @@
 
         /* CSS Variables */
         :root {
-            --primary: #0D9488;
+            --primary: #1d9a9b;
             --primary-dark: #0F766E;
             --primary-light: #1d9a9b;
             --secondary: #1d9a9b;
             --accent: #F97316;
             
-            --gradient-1: linear-gradient(135deg, #0D9488 0%, #1d9a9b 100%);
+            --gradient-1: linear-gradient(135deg, #1d9a9b 0%, #1d9a9b 100%);
             --gradient-2: linear-gradient(135deg, #1d9a9b 0%, #1d9a9b 100%);
-            --gradient-3: linear-gradient(135deg, #0F766E 0%, #0EA5E9 100%);
+            --gradient-3: linear-gradient(135deg, #0F766E 0%, #1d9a9b 100%);
             
             --border-radius: 8px;
             --border-radius-lg: 16px;
@@ -1058,8 +1058,8 @@
         }
         
         [data-theme="light"] .logo-text-template-inner span {
-            color: #0D9488 !important;
-            -webkit-text-fill-color: #0D9488 !important;
+            color: #1d9a9b !important;
+            -webkit-text-fill-color: #1d9a9b !important;
         }
         
         .logo-text-template-cursor {
@@ -1587,13 +1587,82 @@
         }
 
         .sidebar-content {
-            padding: 1rem 0.75rem;
+            padding: 0.25rem;
             position: relative;
             z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .sidebar:hover .sidebar-content {
+            padding: 0.25rem;
+        }
+        
+        .sidebar .sidebar-header {
+            margin-bottom: calc(0.25rem + 26px);
+        }
+        
+        .sidebar:hover .sidebar-header {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar-action-text {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .sidebar:hover .sidebar-action-text {
+            opacity: 1;
+        }
+        
+        .sidebar .sidebar-footer {
+            padding: 0.25rem;
+            transition: none;
+        }
+        
+        .sidebar:hover .sidebar-footer {
+            padding: 0.25rem;
+        }
+        
+        .sidebar .sidebar-quick-action {
+            justify-content: center;
+            padding-left: 0.5rem;
+            margin-bottom: 0.25rem;
+            padding-top: 0.6rem;
+            padding-bottom: 0.6rem;
+            padding-right: 0.5rem;
+        }
+        
+        .sidebar .sidebar-quick-action:last-child {
+            margin-bottom: 0;
+        }
+        
+        .sidebar:hover .sidebar-quick-action {
+            justify-content: flex-start;
+            margin-bottom: 0.5rem;
+            padding: 0.6rem 0.75rem 0.6rem 1.2rem;
+        }
+        
+        .sidebar .sidebar-quick-action span {
+            display: none;
+        }
+        
+        .sidebar:hover .sidebar-quick-action span {
+            display: inline;
         }
 
         .sidebar-section {
-            margin-bottom: 1.5rem;
+            margin-bottom: 0;
+        }
+        
+        .sidebar:hover .sidebar-categories {
+            margin-top: -8px;
+        }
+        
+        .sidebar:hover .sidebar-section {
+            margin-bottom: 0.5rem;
         }
 
         .sidebar-section-title {
@@ -1602,36 +1671,44 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
-            padding: 0 0.75rem;
-            margin-bottom: 0.5rem;
+            padding: 0 0.5rem;
+            margin-bottom: 0;
+            height: 0;
             opacity: 0;
-            transition: opacity 0.2s ease;
+            overflow: hidden;
+            transition: all 0.2s ease;
             white-space: nowrap;
         }
         
         .sidebar:hover .sidebar-section-title {
             opacity: 1;
+            height: auto;
+            margin-bottom: 0.25rem;
         }
 
         .sidebar-menu {
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
+            gap: 0;
         }
 
         .sidebar-menu-item {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.75rem;
+            padding: 0.6rem 0.5rem 0.6rem 1.2rem;
             color: var(--text-secondary);
             text-decoration: none;
             border-radius: var(--border-radius);
-            transition: all 0.2s ease;
+            transition: background 0.2s ease, color 0.2s ease;
             cursor: pointer;
             font-weight: 500;
             position: relative;
             overflow: hidden;
+        }
+        
+        .sidebar:hover .sidebar-menu-item {
+            padding: 0.6rem 0.75rem 0.6rem 1.2rem;
         }
         
         .sidebar-menu-item > span:not(.badge) {
@@ -4446,6 +4523,169 @@
             flex-wrap: wrap;
         }
 
+        /* FAQ Section */
+        .faq-section {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .faq-header {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+        
+        .faq-header h2 {
+            color: #ffffff;
+        }
+        
+        .faq-header-desc {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        [data-theme="light"] .faq-header {
+            background: rgba(255, 255, 255, 0.7) !important;
+            border-color: rgba(29, 154, 155, 0.2);
+        }
+        
+        [data-theme="light"] .faq-header h2 {
+            color: #0f172a !important;
+        }
+        
+        [data-theme="light"] .faq-header-desc {
+            color: #64748b !important;
+        }
+        
+        .faq-cta p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        [data-theme="light"] .faq-cta p {
+            color: #64748b !important;
+        }
+        
+        /* Blog Section */
+        .blog-section {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .blog-header {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+        
+        .blog-title {
+            color: #ffffff;
+        }
+        
+        .blog-desc {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        [data-theme="light"] .blog-header {
+            background: rgba(255, 255, 255, 0.7) !important;
+            border-color: rgba(29, 154, 155, 0.2);
+        }
+        
+        [data-theme="light"] .blog-title {
+            color: #0f172a !important;
+        }
+        
+        [data-theme="light"] .blog-desc {
+            color: #64748b !important;
+        }
+        
+        .faq-item {
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            border-color: rgba(29, 154, 155, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        [data-theme="light"] .faq-item:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .faq-item[open] {
+            border-color: rgba(29, 154, 155, 0.4);
+            background: rgba(10, 10, 10, 0.85);
+        }
+        
+        [data-theme="light"] .faq-item[open] {
+            background: rgba(255, 255, 255, 0.95) !important;
+        }
+        
+        .faq-item summary {
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item summary:hover {
+            color: var(--primary);
+        }
+        
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+        
+        .faq-item[open] summary .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        .faq-item[open] summary {
+            border-bottom: 1px solid rgba(29, 154, 155, 0.1);
+            margin-bottom: 0.5rem;
+        }
+        
+        [data-theme="light"] .faq-item {
+            background: rgba(255, 255, 255, 0.8) !important;
+            border-color: rgba(29, 154, 155, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        [data-theme="light"] .faq-item:hover,
+        [data-theme="light"] .faq-item[open] {
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* FAQ Text Colors */
+        .faq-item summary span {
+            color: #ffffff;
+        }
+        
+        .faq-item div p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        [data-theme="light"] .faq-item summary span {
+            color: #0f172a;
+        }
+        
+        [data-theme="light"] .faq-item div p {
+            color: #334155;
+        }
+        
+        /* Blog Cards */
+        .blog-card {
+            transition: all 0.3s ease;
+        }
+        
+        [data-theme="light"] .blog-card {
+            background: rgba(255, 255, 255, 0.8) !important;
+            border-color: rgba(29, 154, 155, 0.2) !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        [data-theme="light"] .blog-card:hover {
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+        }
+
         /* Footer */
         .footer {
             background: #0a0a0a;
@@ -6544,11 +6784,40 @@
     <div class="sidebar" id="sidebar">
         <div class="sidebar-content">
 
+            <!-- Sidebar Header -->
+            <div class="sidebar-header" style="
+                padding: 0.25rem;
+                padding-left: calc(0.85rem - 5px);
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            ">
+                <!-- Logo/Home Button -->
+                <a href="#" onclick="navigateTo('home'); return false;" class="sidebar-logo-btn" style="
+                    width: 40px;
+                    height: 40px;
+                    background: linear-gradient(135deg, var(--primary) 0%, #1d9a9b 100%);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    box-shadow: 0 4px 12px rgba(29, 154, 155, 0.3);
+                " onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 6px 16px rgba(29, 154, 155, 0.4)'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 4px 12px rgba(29, 154, 155, 0.3)'">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                </a>
+            </div>
+
             <!-- Quick Filters -->
             <div class="sidebar-section">
                 <div class="sidebar-section-title">Quick Filters</div>
                 <div class="sidebar-menu">
-                    <a href="#filter-new" class="sidebar-menu-item" onclick="filterTemplates('new'); return false;">
+                    <a href="#filter-new" class="sidebar-menu-item" onclick="filterByQuickFilter('new'); return false;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"/>
                             <polyline points="12 6 12 12 16 14"/>
@@ -6556,19 +6825,19 @@
                         <span>New Releases</span>
                         <span class="badge">12</span>
                     </a>
-                    <a href="#filter-popular" class="sidebar-menu-item" onclick="filterTemplates('popular'); return false;">
+                    <a href="#filter-popular" class="sidebar-menu-item" onclick="filterByQuickFilter('popular'); return false;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                         </svg>
                         <span>Popular</span>
                     </a>
-                    <a href="#filter-premium" class="sidebar-menu-item" onclick="filterTemplates('premium'); return false;">
+                    <a href="#filter-premium" class="sidebar-menu-item" onclick="filterByQuickFilter('premium'); return false;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/>
                         </svg>
                         <span>Premium</span>
                     </a>
-                    <a href="#filter-free" class="sidebar-menu-item" onclick="filterTemplates('free'); return false;">
+                    <a href="#filter-free" class="sidebar-menu-item" onclick="filterByQuickFilter('free'); return false;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/>
                             <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/>
@@ -6580,7 +6849,7 @@
             </div>
 
             <!-- Categories -->
-            <div class="sidebar-section">
+            <div class="sidebar-section sidebar-categories">
                 <div class="sidebar-menu">
                     <a href="#category-all" class="sidebar-menu-item" onclick="filterByCategory('all'); return false;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -6735,30 +7004,77 @@
                 </div>
             </div>
 
-            <!-- My Account (shown when logged in) -->
-            <div class="sidebar-section" id="sidebarAccountSection" style="display: none;">
-                <div class="sidebar-section-title">My Account</div>
-                <div class="sidebar-menu">
-                    <a href="#dashboard" class="sidebar-menu-item" onclick="navigateTo('dashboard'); return false;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="3" width="7" height="7"/>
-                            <rect x="14" y="3" width="7" height="7"/>
-                            <rect x="14" y="14" width="7" height="7"/>
-                            <rect x="3" y="14" width="7" height="7"/>
-                        </svg>
-                        <span>My Library</span>
-                    </a>
-                    <a href="#dashboard" class="sidebar-menu-item" onclick="navigateTo('dashboard'); return false;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M12 1v6m0 6v6"/>
-                            <path d="m4.93 4.93 4.24 4.24m5.66 5.66 4.24 4.24"/>
-                            <path d="M1 12h6m6 0h6"/>
-                            <path d="m4.93 19.07 4.24-4.24m5.66-5.66 4.24-4.24"/>
-                        </svg>
-                        <span>Settings</span>
-                    </a>
-                </div>
+            <!-- Sidebar Footer - Quick Actions -->
+            <div class="sidebar-footer" style="
+                margin-top: auto;
+                border-top: 1px solid rgba(29, 154, 155, 0.1);
+            ">
+                <!-- Scroll to Top -->
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="sidebar-quick-action" style="
+                    width: 100%;
+                    background: rgba(255,255,255,0.05);
+                    border: 1px solid rgba(29, 154, 155, 0.15);
+                    border-radius: 10px;
+                    color: var(--text-secondary);
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.5rem;
+                    font-size: 0.8rem;
+                    transition: all 0.2s;
+                " onmouseover="this.style.background='rgba(29, 154, 155, 0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 15l-6-6-6 6"/>
+                    </svg>
+                    <span class="sidebar-action-text">Back to Top</span>
+                </button>
+                
+                <!-- Help -->
+                <a href="#faq" onclick="scrollToSection('faq'); closeSidebar(); return false;" class="sidebar-quick-action" style="
+                    width: 100%;
+                    background: rgba(255,255,255,0.05);
+                    border: 1px solid rgba(29, 154, 155, 0.15);
+                    border-radius: 10px;
+                    color: var(--text-secondary);
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.5rem;
+                    font-size: 0.8rem;
+                    transition: all 0.2s;
+                    text-decoration: none;
+                " onmouseover="this.style.background='rgba(29, 154, 155, 0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    <span class="sidebar-action-text">Help & FAQ</span>
+                </a>
+            
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="sidebar-quick-action" style="
+                    width: 100%;
+                    background: rgba(29, 154, 155, 0.1);
+                    border: 1px solid rgba(29, 154, 155, 0.15);
+                    border-radius: 10px;
+                    color: var(--text-secondary);
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.5rem;
+                    font-size: 0.8rem;
+                    transition: all 0.2s;
+                " onmouseover="this.style.background='rgba(29, 154, 155, 0.2)'" onmouseout="this.style.background='rgba(29, 154, 155, 0.1)'">
+                    <svg id="sidebarThemeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <span class="sidebar-action-text">Toggle Theme</span>
+                </button>
             </div>
         </div>
     </div>
@@ -6812,6 +7128,7 @@
                 <li><a href="#features" onclick="event.preventDefault(); scrollToSection('features');">Features</a></li>
                 <li><a href="#showcase" onclick="event.preventDefault(); scrollToSection('showcase');">Showcase</a></li>
                 <li><a href="#blog" onclick="event.preventDefault(); scrollToSection('blog');">Blog</a></li>
+                <li><a href="#faq" onclick="event.preventDefault(); scrollToSection('faq');">FAQ</a></li>
                 <li>
                     <div class="cart-icon-wrapper" onmouseenter="showCartDropdown()" onmouseleave="hideCartDropdown()">
                         <div class="cart-icon-container" onclick="toggleCartModal(); event.stopPropagation();">
@@ -7181,16 +7498,39 @@
     <!-- Blog Section -->
     <section class="blog-section" id="blog" style="padding: 6rem 0;">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Latest Articles</h2>
-                <p class="section-description">
+            <!-- Section Header with Glassmorphism -->
+            <div class="blog-header" style="
+                text-align: center;
+                margin-bottom: 4rem;
+                padding: 3rem;
+                background: rgba(10, 10, 10, 0.6);
+                backdrop-filter: blur(20px) saturate(180%);
+                -webkit-backdrop-filter: blur(20px) saturate(180%);
+                border: 1px solid rgba(29, 154, 155, 0.15);
+                border-radius: 24px;
+            ">
+                <span style="
+                    display: inline-block;
+                    padding: 0.5rem 1rem;
+                    background: rgba(29, 154, 155, 0.1);
+                    border: 1px solid rgba(29, 154, 155, 0.2);
+                    border-radius: 50px;
+                    font-size: 0.85rem;
+                    font-weight: 600;
+                    color: var(--primary);
+                    margin-bottom: 1.5rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                ">Blog</span>
+                <h2 class="blog-title" style="color: #ffffff; font-size: clamp(2rem, 4vw, 2.5rem); font-weight: 800; margin-bottom: 1rem;">Latest Articles</h2>
+                <p class="blog-desc" style="color: rgba(255, 255, 255, 0.7);">
                     Tips, tutorials, and insights for building better websites
                 </p>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 3rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
                 <!-- Article 1 -->
-                <article style="
+                <article class="blog-card" style="
                     background: rgba(10, 10, 10, 0.7);
                     backdrop-filter: blur(20px) saturate(180%);
                     -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -7222,7 +7562,7 @@
                 </article>
 
                 <!-- Article 2 -->
-                <article style="
+                <article class="blog-card" style="
                     background: rgba(10, 10, 10, 0.7);
                     backdrop-filter: blur(20px) saturate(180%);
                     -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -7252,7 +7592,7 @@
                 </article>
 
                 <!-- Article 3 -->
-                <article style="
+                <article class="blog-card" style="
                     background: rgba(10, 10, 10, 0.7);
                     backdrop-filter: blur(20px) saturate(180%);
                     -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -7282,6 +7622,404 @@
             </div>
         </div>
     </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq" style="padding: 6rem 0;">
+        <div class="container">
+            <!-- Section Header with Glassmorphism -->
+            <div class="faq-header" style="
+                text-align: center;
+                margin-bottom: 4rem;
+                padding: 3rem;
+                background: rgba(10, 10, 10, 0.6);
+                backdrop-filter: blur(20px) saturate(180%);
+                -webkit-backdrop-filter: blur(20px) saturate(180%);
+                border: 1px solid rgba(29, 154, 155, 0.15);
+                border-radius: 24px;
+            ">
+                <span style="
+                    display: inline-block;
+                    padding: 0.5rem 1rem;
+                    background: rgba(29, 154, 155, 0.1);
+                    border: 1px solid rgba(29, 154, 155, 0.2);
+                    border-radius: 50px;
+                    font-size: 0.85rem;
+                    font-weight: 600;
+                    color: var(--primary);
+                    margin-bottom: 1.5rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                ">Support</span>
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; color: #ffffff;">
+                    Frequently Asked Questions
+                </h2>
+                <p class="faq-header-desc" style="color: rgba(255, 255, 255, 0.7); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+                    Everything you need to know about our premium website templates and how to get started.
+                </p>
+            </div>
+
+            <!-- FAQ Grid -->
+            <div style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
+                
+                <!-- FAQ Item 1 -->
+                <details class="faq-item" style="
+                    background: rgba(10, 10, 10, 0.7);
+                    backdrop-filter: blur(20px) saturate(180%);
+                    -webkit-backdrop-filter: blur(20px) saturate(180%);
+                    border: 1px solid rgba(29, 154, 155, 0.15);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                ">
+                    <summary style="
+                        padding: 1.5rem;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-weight: 600;
+                        font-size: 1.1rem;
+                        color: var(--text-primary);
+                        list-style: none;
+                        user-select: none;
+                    ">
+                        <span>What is included with each website template?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </summary>
+                    <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
+                        <p>Each template includes the complete source code (HTML, CSS, JavaScript), all design assets, responsive layouts optimized for mobile, tablet, and desktop devices, cross-browser compatibility, SEO-optimized markup, and detailed documentation. Premium templates also include lifetime updates and priority support.</p>
+                    </div>
+                </details>
+
+                <!-- FAQ Item 2 -->
+                <details class="faq-item" style="
+                    background: rgba(10, 10, 10, 0.7);
+                    backdrop-filter: blur(20px) saturate(180%);
+                    -webkit-backdrop-filter: blur(20px) saturate(180%);
+                    border: 1px solid rgba(29, 154, 155, 0.15);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                ">
+                    <summary style="
+                        padding: 1.5rem;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-weight: 600;
+                        font-size: 1.1rem;
+                        color: var(--text-primary);
+                        list-style: none;
+                        user-select: none;
+                    ">
+                        <span>Can I use a template for multiple projects or clients?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </summary>
+                    <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
+                        <p>Each template purchase includes a single-use license for one end product (website). If you need to use the template for multiple projects or clients, you'll need to purchase additional licenses. We offer bulk licensing discounts for agencies and developers working on multiple projects.</p>
+                    </div>
+                </details>
+
+                <!-- FAQ Item 3 -->
+                <details class="faq-item" style="
+                    background: rgba(10, 10, 10, 0.7);
+                    backdrop-filter: blur(20px) saturate(180%);
+                    -webkit-backdrop-filter: blur(20px) saturate(180%);
+                    border: 1px solid rgba(29, 154, 155, 0.15);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                ">
+                    <summary style="
+                        padding: 1.5rem;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-weight: 600;
+                        font-size: 1.1rem;
+                        color: var(--text-primary);
+                        list-style: none;
+                        user-select: none;
+                    ">
+                        <span>How do I customize a template after purchase?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </summary>
+                    <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
+                        <p>Our templates are built with clean, well-commented code that's easy to customize. Simply edit the HTML content, modify CSS variables for colors and typography, and replace placeholder images with your own. Each template includes comprehensive documentation with step-by-step customization guides. No coding experience required for basic changes.</p>
+                    </div>
+                </details>
+
+                <!-- FAQ Item 4 -->
+                <details class="faq-item" style="
+                    background: rgba(10, 10, 10, 0.7);
+                    backdrop-filter: blur(20px) saturate(180%);
+                    -webkit-backdrop-filter: blur(20px) saturate(180%);
+                    border: 1px solid rgba(29, 154, 155, 0.15);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                ">
+                    <summary style="
+                        padding: 1.5rem;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-weight: 600;
+                        font-size: 1.1rem;
+                        color: var(--text-primary);
+                        list-style: none;
+                        user-select: none;
+                    ">
+                        <span>Do you offer refunds if I'm not satisfied?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </summary>
+                    <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
+                        <p>Yes! We offer a 30-day money-back guarantee on all template purchases. If you're not completely satisfied with your purchase, contact our support team within 30 days for a full refund. We want you to be 100% happy with your investment.</p>
+                    </div>
+                </details>
+
+                <!-- FAQ Item 5 -->
+                <details class="faq-item" style="
+                    background: rgba(10, 10, 10, 0.7);
+                    backdrop-filter: blur(20px) saturate(180%);
+                    -webkit-backdrop-filter: blur(20px) saturate(180%);
+                    border: 1px solid rgba(29, 154, 155, 0.15);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                ">
+                    <summary style="
+                        padding: 1.5rem;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-weight: 600;
+                        font-size: 1.1rem;
+                        color: var(--text-primary);
+                        list-style: none;
+                        user-select: none;
+                    ">
+                        <span>Are the templates SEO-friendly and optimized for performance?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </summary>
+                    <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
+                        <p>Absolutely! All our templates are built with SEO best practices including semantic HTML5 markup, proper heading hierarchy, meta tag optimization, schema markup support, fast loading times, and Core Web Vitals optimization. Templates typically score 90+ on Google PageSpeed Insights out of the box.</p>
+                    </div>
+                </details>
+
+                <!-- FAQ Item 6 -->
+                <details class="faq-item" style="
+                    background: rgba(10, 10, 10, 0.7);
+                    backdrop-filter: blur(20px) saturate(180%);
+                    -webkit-backdrop-filter: blur(20px) saturate(180%);
+                    border: 1px solid rgba(29, 154, 155, 0.15);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                ">
+                    <summary style="
+                        padding: 1.5rem;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-weight: 600;
+                        font-size: 1.1rem;
+                        color: var(--text-primary);
+                        list-style: none;
+                        user-select: none;
+                    ">
+                        <span>What hosting services do you recommend?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </summary>
+                    <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
+                        <p>Our templates work with any web hosting service. For static HTML templates, we recommend Vercel, Netlify, or GitHub Pages for free hosting with excellent performance. For templates requiring a backend, services like DigitalOcean, AWS, or traditional hosting providers work great. Each template includes deployment guides for popular platforms.</p>
+                    </div>
+                </details>
+
+                <!-- FAQ Item 7 -->
+                <details class="faq-item" style="
+                    background: rgba(10, 10, 10, 0.7);
+                    backdrop-filter: blur(20px) saturate(180%);
+                    -webkit-backdrop-filter: blur(20px) saturate(180%);
+                    border: 1px solid rgba(29, 154, 155, 0.15);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                ">
+                    <summary style="
+                        padding: 1.5rem;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-weight: 600;
+                        font-size: 1.1rem;
+                        color: var(--text-primary);
+                        list-style: none;
+                        user-select: none;
+                    ">
+                        <span>Do you provide support after purchase?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </summary>
+                    <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
+                        <p>Yes! All purchases include 6 months of standard support via email. Premium templates include lifetime priority support with faster response times. Our support team can help with installation issues, customization questions, and technical troubleshooting. We typically respond within 24 hours on business days.</p>
+                    </div>
+                </details>
+
+                <!-- FAQ Item 8 -->
+                <details class="faq-item" style="
+                    background: rgba(10, 10, 10, 0.7);
+                    backdrop-filter: blur(20px) saturate(180%);
+                    -webkit-backdrop-filter: blur(20px) saturate(180%);
+                    border: 1px solid rgba(29, 154, 155, 0.15);
+                    border-radius: 16px;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                ">
+                    <summary style="
+                        padding: 1.5rem;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-weight: 600;
+                        font-size: 1.1rem;
+                        color: var(--text-primary);
+                        list-style: none;
+                        user-select: none;
+                    ">
+                        <span>Can I request a custom template design?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink: 0; transition: transform 0.3s ease;">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                    </summary>
+                    <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
+                        <p>Yes! We offer custom template design services for businesses with specific requirements. Contact our team with your project details, and we'll provide a quote and timeline. Custom projects typically start at $2,500 and include unlimited revisions, dedicated support, and full ownership of the final design.</p>
+                    </div>
+                </details>
+
+            </div>
+
+            <!-- Contact CTA -->
+            <div class="faq-cta" style="text-align: center; margin-top: 4rem;">
+                <p style="color: rgba(255, 255, 255, 0.7); font-size: 1rem; margin-bottom: 1.5rem;">
+                    Still have questions? We're here to help.
+                </p>
+                <a href="/cdn-cgi/l/email-protection#e0939590908f9294a08485908c8f9994858d908c819485ce838f8d" style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    padding: 1rem 2rem;
+                    background: rgba(29, 154, 155, 0.1);
+                    border: 1px solid rgba(29, 154, 155, 0.3);
+                    border-radius: 12px;
+                    color: var(--primary);
+                    font-weight: 600;
+                    text-decoration: none;
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.background='rgba(29, 154, 155, 0.2)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(29, 154, 155, 0.1)';this.style.transform='translateY(0)'">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    Contact Support
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Schema for SEO -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is included with each website template?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Each template includes the complete source code (HTML, CSS, JavaScript), all design assets, responsive layouts optimized for mobile, tablet, and desktop devices, cross-browser compatibility, SEO-optimized markup, and detailed documentation. Premium templates also include lifetime updates and priority support."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I use a template for multiple projects or clients?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Each template purchase includes a single-use license for one end product (website). If you need to use the template for multiple projects or clients, you'll need to purchase additional licenses. We offer bulk licensing discounts for agencies and developers working on multiple projects."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I customize a template after purchase?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Our templates are built with clean, well-commented code that's easy to customize. Simply edit the HTML content, modify CSS variables for colors and typography, and replace placeholder images with your own. Each template includes comprehensive documentation with step-by-step customization guides. No coding experience required for basic changes."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do you offer refunds if I'm not satisfied?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! We offer a 30-day money-back guarantee on all template purchases. If you're not completely satisfied with your purchase, contact our support team within 30 days for a full refund. We want you to be 100% happy with your investment."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Are the templates SEO-friendly and optimized for performance?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Absolutely! All our templates are built with SEO best practices including semantic HTML5 markup, proper heading hierarchy, meta tag optimization, schema markup support, fast loading times, and Core Web Vitals optimization. Templates typically score 90+ on Google PageSpeed Insights out of the box."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What hosting services do you recommend?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Our templates work with any web hosting service. For static HTML templates, we recommend Vercel, Netlify, or GitHub Pages for free hosting with excellent performance. For templates requiring a backend, services like DigitalOcean, AWS, or traditional hosting providers work great. Each template includes deployment guides for popular platforms."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do you provide support after purchase?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! All purchases include 6 months of standard support via email. Premium templates include lifetime priority support with faster response times. Our support team can help with installation issues, customization questions, and technical troubleshooting. We typically respond within 24 hours on business days."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I request a custom template design?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! We offer custom template design services for businesses with specific requirements. Contact our team with your project details, and we'll provide a quote and timeline. Custom projects typically start at $2,500 and include unlimited revisions, dedicated support, and full ownership of the final design."
+                }
+            }
+        ]
+    }
+    </script>
 
     <!-- Footer -->
     <footer class="footer">
@@ -7329,7 +8067,7 @@
                         <li><a href="about.html">About</a></li>
                         <li><a href="#showcase">Showcase</a></li>
                         <li><a href="#blog">Blog</a></li>
-                        <li><a href="#">Blog</a></li>
+                        <li><a href="#faq">FAQ</a></li>
                         <li><a href="/cdn-cgi/l/email-protection#94f7fbfae0f5f7e0d4e0f1f9e4f8f5e0f1f2fbe6f3f1baf7fbf9">Contact</a></li>
                     </ul>
                 </div>
@@ -7338,7 +8076,7 @@
                     <h4>Support</h4>
                     <ul>
                         <li><a href="#">Documentation</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#faq" onclick="event.preventDefault(); scrollToSection('faq');">FAQ</a></li>
                         <li><a href="#">License</a></li>
                         <li><a href="#">Refund Policy</a></li>
                         <li><a href="/cdn-cgi/l/email-protection#1b686e6b6b74696f5b6f7e766b777a6f7e7d74697c7e35787476">Get Help</a></li>
@@ -8024,31 +8762,117 @@
             }
         }
         
-        // Filter templates by quick filter
-        function filterTemplates(filter) {
-            console.log('Filtering by:', filter);
-            toggleSidebar();
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            sidebarToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Filter templates by quick filter (new, popular, premium, free)
+        function filterByQuickFilter(filter) {
+            console.log('Quick filtering by:', filter);
+            closeSidebar();
             scrollToSection('templates');
             
-            // Add your filtering logic here
-            // This would filter the template grid based on the selected filter
+            // Reset category filter
+            const categoryFilter = document.getElementById('categoryFilter');
+            if (categoryFilter) categoryFilter.value = 'all';
+            
+            // Apply quick filter
+            const searchInput = document.getElementById('templateSearch');
+            if (searchInput) searchInput.value = '';
+            
+            // Filter based on type
+            filteredTemplates = allTemplates.filter(template => {
+                switch(filter) {
+                    case 'new':
+                        return template.is_new === true;
+                    case 'popular':
+                        return template.is_popular === true;
+                    case 'premium':
+                        return (template.price || 0) > 0;
+                    case 'free':
+                        return (template.price || 0) === 0;
+                    default:
+                        return true;
+                }
+            });
+            
+            displayedTemplates = 0;
+            renderTemplates();
         }
         
         // Filter templates by category
         function filterByCategory(category) {
             console.log('Filtering category:', category);
             
-            // Update active state
+            // Update active state in sidebar
             document.querySelectorAll('.sidebar-menu-item').forEach(item => {
                 item.classList.remove('active');
             });
-            event.target.closest('.sidebar-menu-item').classList.add('active');
+            if (event && event.target) {
+                const menuItem = event.target.closest('.sidebar-menu-item');
+                if (menuItem) menuItem.classList.add('active');
+            }
             
-            toggleSidebar();
+            closeSidebar();
             scrollToSection('templates');
             
-            // Add your category filtering logic here
-            // This would filter the template grid based on the selected category
+            // Set the category dropdown to match
+            const categoryFilter = document.getElementById('categoryFilter');
+            if (categoryFilter) {
+                categoryFilter.value = category;
+            }
+            
+            // Clear search
+            const searchInput = document.getElementById('templateSearch');
+            if (searchInput) searchInput.value = '';
+            
+            // Trigger the main filter function
+            applyTemplateFilters();
+        }
+        
+        // Main filter function used by dropdowns and sidebar
+        function applyTemplateFilters() {
+            const searchTerm = document.getElementById('templateSearch')?.value.toLowerCase() || '';
+            const category = document.getElementById('categoryFilter')?.value || 'all';
+            const sortBy = document.getElementById('sortFilter')?.value || 'newest';
+            
+            // Filter
+            filteredTemplates = allTemplates.filter(template => {
+                const matchesSearch = !searchTerm || 
+                    template.name.toLowerCase().includes(searchTerm) ||
+                    (template.description && template.description.toLowerCase().includes(searchTerm));
+                
+                const matchesCategory = category === 'all' || template.category === category;
+                
+                return matchesSearch && matchesCategory;
+            });
+            
+            // Sort
+            filteredTemplates.sort((a, b) => {
+                switch(sortBy) {
+                    case 'newest':
+                        return new Date(b.created_at) - new Date(a.created_at);
+                    case 'popular':
+                        return (b.downloads || 0) - (a.downloads || 0);
+                    case 'price-low':
+                        return (a.price || 0) - (b.price || 0);
+                    case 'price-high':
+                        return (b.price || 0) - (a.price || 0);
+                    default:
+                        return 0;
+                }
+            });
+            
+            currentPage = 1;
+            displayedTemplates = 0;
+            renderTemplates();
         }
         
         // Sidebar search functionality
@@ -8078,7 +8902,7 @@
         }
 
         function updateThemeIcons(theme) {
-            const icons = document.querySelectorAll('#themeIconDropdown, #themeIconNav');
+            const icons = document.querySelectorAll('#themeIconDropdown, #themeIconNav, #sidebarThemeIcon');
             const sunIcon = '<circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
             const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
             
@@ -8873,7 +9697,7 @@
                         <div style="
                             width: 40px;
                             height: 40px;
-                            background: linear-gradient(135deg, var(--primary) 0%, #0d9488 100%);
+                            background: linear-gradient(135deg, var(--primary) 0%, #1d9a9b 100%);
                             border-radius: 10px;
                             display: flex;
                             align-items: center;
@@ -8958,7 +9782,7 @@
                     <button id="stripe-pay-button" onclick="processStripePayment('${templateSlug}', '${templateName}', ${price})" style="
                         width: 100%;
                         padding: 1.125rem;
-                        background: linear-gradient(135deg, var(--primary) 0%, #0d9488 100%);
+                        background: linear-gradient(135deg, var(--primary) 0%, #1d9a9b 100%);
                         color: white;
                         border: none;
                         border-radius: 12px;
@@ -9112,6 +9936,27 @@
                 if (error) throw new Error(error.message);
                 
                 if (paymentIntent.status === 'succeeded') {
+                    // Record purchase in database
+                    try {
+                        const { error: purchaseError } = await supabaseClient
+                            .from('purchases')
+                            .insert({
+                                user_id: currentUser.id,
+                                template_slug: templateSlug,
+                                amount: price,
+                                stripe_payment_id: paymentIntent.id,
+                                purchased_at: new Date().toISOString()
+                            });
+                        
+                        if (purchaseError) {
+                            console.error('Error recording purchase:', purchaseError);
+                        } else {
+                            console.log('Purchase recorded successfully!');
+                        }
+                    } catch (dbError) {
+                        console.error('Database error recording purchase:', dbError);
+                    }
+                    
                     closeStripeCheckoutModal();
                     showPurchaseSuccessModal({ slug: templateSlug, name: templateName });
                     loadDashboard();
@@ -9598,58 +10443,21 @@
             const searchInput = document.getElementById('templateSearch');
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => {
-                    filterTemplates();
+                    applyTemplateFilters();
                 });
             }
             
             // Category filter
             const categoryFilter = document.getElementById('categoryFilter');
             if (categoryFilter) {
-                categoryFilter.addEventListener('change', filterTemplates);
+                categoryFilter.addEventListener('change', applyTemplateFilters);
             }
             
             // Sort filter
             const sortFilter = document.getElementById('sortFilter');
             if (sortFilter) {
-                sortFilter.addEventListener('change', filterTemplates);
+                sortFilter.addEventListener('change', applyTemplateFilters);
             }
-        }
-
-        function filterTemplates() {
-            const searchTerm = document.getElementById('templateSearch')?.value.toLowerCase() || '';
-            const category = document.getElementById('categoryFilter')?.value || 'all';
-            const sortBy = document.getElementById('sortFilter')?.value || 'newest';
-            
-            // Filter
-            filteredTemplates = allTemplates.filter(template => {
-                const matchesSearch = !searchTerm || 
-                    template.name.toLowerCase().includes(searchTerm) ||
-                    (template.description && template.description.toLowerCase().includes(searchTerm));
-                
-                const matchesCategory = category === 'all' || template.category === category;
-                
-                return matchesSearch && matchesCategory;
-            });
-            
-            // Sort
-            filteredTemplates.sort((a, b) => {
-                switch(sortBy) {
-                    case 'newest':
-                        return new Date(b.created_at) - new Date(a.created_at);
-                    case 'popular':
-                        return (b.downloads || 0) - (a.downloads || 0);
-                    case 'price-low':
-                        return (a.price || 0) - (b.price || 0);
-                    case 'price-high':
-                        return (b.price || 0) - (a.price || 0);
-                    default:
-                        return 0;
-                }
-            });
-            
-            currentPage = 1;
-            displayedTemplates = 0;
-            renderTemplates();
         }
 
         function viewTemplateDetails(slug) {
@@ -9964,7 +10772,7 @@
                 const template = allTemplates.find(t => t.slug === slug);
                 if (searchInput && template) {
                     searchInput.value = template.name;
-                    filterTemplates();
+                    applyTemplateFilters();
                 }
                 // Scroll to templates section
                 document.getElementById('templates').scrollIntoView({behavior:'smooth'});
@@ -11344,11 +12152,4 @@
         
         // Allow reopening cookie settings (add this to your footer or settings)
         function reopenCookieSettings() {
-            CookieConsent.showBanner();
-        }
-    </script>
-    
-    <!-- Gumroad Script -->
-    <script src="https://gumroad.com/js/gumroad.js"></script>
-</body>
-</html>
+            Cookie
