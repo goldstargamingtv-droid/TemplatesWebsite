@@ -13167,6 +13167,7 @@
                     features: ['Responsive Design', 'Dark/Light Mode', 'Pricing Tables', 'Scroll Animations', 'SEO Optimized', 'Mobile Menu'],
                     downloads: 0,
                     demo_url: 'https://www.deploytemplate.com/demos/saas',
+                    preview_image: 'https://gkyzpehxdqoolomglpal.supabase.co/storage/v1/object/public/public-assets/previews/saas-landing.png',
                     tech_stack: ['HTML5', 'CSS3', 'JavaScript'],
                     created_at: '2024-12-27T00:00:00Z',
                     updated_at: '2024-12-27T00:00:00Z'
@@ -13183,6 +13184,7 @@
                     features: ['Dark/Light Mode', 'Custom Cursor', 'Scroll Animations', 'Contact Form', 'Skill Bars', 'Mobile Menu'],
                     downloads: 0,
                     demo_url: 'https://www.deploytemplate.com/demos/portfolio',
+                    preview_image: 'https://gkyzpehxdqoolomglpal.supabase.co/storage/v1/object/public/public-assets/previews/portfolio.png',
                     tech_stack: ['HTML5', 'CSS3', 'JavaScript'],
                     created_at: '2024-12-27T00:00:00Z',
                     updated_at: '2024-12-27T00:00:00Z'
@@ -13199,6 +13201,7 @@
                     features: ['Menu Display', 'Reservation Form', 'Image Gallery', 'Dark/Light Mode', 'Mobile Menu', 'SEO Optimized'],
                     downloads: 0,
                     demo_url: 'https://www.deploytemplate.com/demos/restaurant',
+                    preview_image: 'https://gkyzpehxdqoolomglpal.supabase.co/storage/v1/object/public/public-assets/previews/restaurant.png',
                     tech_stack: ['HTML5', 'CSS3', 'JavaScript'],
                     created_at: '2024-12-27T00:00:00Z',
                     updated_at: '2024-12-27T00:00:00Z'
@@ -13237,8 +13240,6 @@
                 const previewImage = template.preview_image || '';
                 const isFree = price === 0;
                 const isOnSale = originalPrice > price && price > 0;
-                
-                console.log('Template:', template.name, 'Preview:', previewImage);
                 
                 return `
                     <div class="template-card" data-category="${template.category || 'all'}">
