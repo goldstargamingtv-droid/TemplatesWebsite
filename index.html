@@ -1918,7 +1918,7 @@
         }
         
         .sidebar .sidebar-header {
-            margin-bottom: calc(0.25rem + 26px);
+            margin-bottom: 0.5rem;
         }
         
         .sidebar:hover .sidebar-header {
@@ -1945,12 +1945,9 @@
         }
         
         .sidebar .sidebar-quick-action {
-            justify-content: center;
-            padding-left: 0.5rem;
+            justify-content: flex-start;
+            padding: 0.6rem 0.75rem 0.6rem 1.2rem;
             margin-bottom: 0.25rem;
-            padding-top: 0.6rem;
-            padding-bottom: 0.6rem;
-            padding-right: 0.5rem;
         }
         
         .sidebar .sidebar-quick-action:last-child {
@@ -1959,7 +1956,7 @@
         
         .sidebar:hover .sidebar-quick-action {
             justify-content: flex-start;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
             padding: 0.6rem 0.75rem 0.6rem 1.2rem;
         }
         
@@ -1972,11 +1969,11 @@
         }
 
         .sidebar-section {
-            margin-bottom: 0;
+            margin-bottom: 0.5rem;
         }
         
         .sidebar:hover .sidebar-categories {
-            margin-top: -8px;
+            margin-top: 0;
         }
         
         .sidebar:hover .sidebar-section {
@@ -1989,19 +1986,31 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
-            padding: 0 0.5rem;
-            margin-bottom: 0;
-            height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: all 0.2s ease;
+            padding: 0;
+            margin-bottom: 0.25rem;
             white-space: nowrap;
+            text-align: center;
         }
         
         .sidebar:hover .sidebar-section-title {
-            opacity: 1;
-            height: auto;
-            margin-bottom: 0.25rem;
+            text-align: left;
+            padding: 0 1.2rem;
+        }
+        
+        .sidebar-section-title .title-collapsed {
+            display: inline;
+        }
+        
+        .sidebar-section-title .title-expanded {
+            display: none;
+        }
+        
+        .sidebar:hover .sidebar-section-title .title-collapsed {
+            display: none;
+        }
+        
+        .sidebar:hover .sidebar-section-title .title-expanded {
+            display: inline;
         }
 
         .sidebar-menu {
@@ -2014,7 +2023,7 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.6rem 0.5rem 0.6rem 1.2rem;
+            padding: 0.6rem 0.75rem 0.6rem 1.2rem;
             color: var(--text-secondary);
             text-decoration: none;
             border-radius: var(--border-radius);
@@ -5196,6 +5205,17 @@
             transition: all 0.3s ease;
         }
         
+        .custom-request-form input,
+        .custom-request-form textarea {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', 'Courier New', monospace;
+        }
+        
+        .custom-request-form input::placeholder,
+        .custom-request-form textarea::placeholder {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', 'Courier New', monospace;
+            color: var(--text-muted);
+        }
+        
         [data-theme="light"] .custom-request-form input,
         [data-theme="light"] .custom-request-form select,
         [data-theme="light"] .custom-request-form textarea {
@@ -5209,11 +5229,6 @@
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(29, 154, 155, 0.1);
-        }
-        
-        .custom-request-form input::placeholder,
-        .custom-request-form textarea::placeholder {
-            color: var(--text-muted);
         }
         
         .custom-request-form select {
@@ -9204,7 +9219,10 @@
 
             <!-- Quick Filters -->
             <div class="sidebar-section">
-                <div class="sidebar-section-title">Quick Filters</div>
+                <div class="sidebar-section-title">
+                    <span class="title-collapsed">Filters</span>
+                    <span class="title-expanded">Quick Filters</span>
+                </div>
                 <div class="sidebar-menu">
                     <a href="#filter-new" class="sidebar-menu-item" onclick="filterByQuickFilter('new'); return false;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -10010,29 +10028,29 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="crName">Full Name <span class="required">*</span></label>
-                                <input type="text" id="crName" name="name" required placeholder="John Smith">
+                                <input type="text" id="crName" name="name" required placeholder="Enter your full name...">
                             </div>
                             <div class="form-group">
                                 <label for="crEmail">Business Email <span class="required">*</span></label>
-                                <input type="email" id="crEmail" name="email" required placeholder="john@company.com">
+                                <input type="email" id="crEmail" name="email" required placeholder="Enter your email address...">
                             </div>
                         </div>
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="crCompany">Company Name</label>
-                                <input type="text" id="crCompany" name="company" placeholder="Acme Inc.">
+                                <label for="crCompany">Company Name <span style="color: var(--text-muted); font-weight: 400;">(Optional)</span></label>
+                                <input type="text" id="crCompany" name="company" placeholder="Enter your company name...">
                             </div>
                             <div class="form-group">
-                                <label for="crPhone">Phone Number</label>
-                                <input type="tel" id="crPhone" name="phone" placeholder="+1 (555) 000-0000">
+                                <label for="crPhone">Phone Number <span style="color: var(--text-muted); font-weight: 400;">(Optional)</span></label>
+                                <input type="tel" id="crPhone" name="phone" placeholder="For faster communication...">
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label for="crProjectType">Project Type <span class="required">*</span></label>
                             <select id="crProjectType" name="project_type" required>
-                                <option value="" disabled selected>Select project type</option>
+                                <option value="" disabled selected>Select the type of project you need...</option>
                                 <option value="custom_website">Custom Website Design</option>
                                 <option value="web_application">Web Application</option>
                                 <option value="ecommerce">E-Commerce Platform</option>
@@ -10047,7 +10065,7 @@
                             <div class="form-group">
                                 <label for="crBudget">Estimated Budget <span class="required">*</span></label>
                                 <select id="crBudget" name="budget" required>
-                                    <option value="" disabled selected>Select budget range</option>
+                                    <option value="" disabled selected>Select your budget range...</option>
                                     <option value="2500-5000">$2,500 - $5,000</option>
                                     <option value="5000-10000">$5,000 - $10,000</option>
                                     <option value="10000-25000">$10,000 - $25,000</option>
@@ -10058,7 +10076,7 @@
                             <div class="form-group">
                                 <label for="crTimeline">Timeline <span class="required">*</span></label>
                                 <select id="crTimeline" name="timeline" required>
-                                    <option value="" disabled selected>Select timeline</option>
+                                    <option value="" disabled selected>Select your ideal timeline...</option>
                                     <option value="asap">ASAP (Rush)</option>
                                     <option value="1-2months">1-2 Months</option>
                                     <option value="2-3months">2-3 Months</option>
@@ -10074,8 +10092,8 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="crReferenceUrl">Reference URLs</label>
-                            <input type="text" id="crReferenceUrl" name="reference_urls" placeholder="Links to websites you like (comma separated)">
+                            <label for="crReferenceUrl">Reference URLs <span style="color: var(--text-muted); font-weight: 400;">(Optional)</span></label>
+                            <input type="text" id="crReferenceUrl" name="reference_urls" placeholder="Share links to websites or designs you like for inspiration...">
                         </div>
                         
                         <div class="form-checkbox">
