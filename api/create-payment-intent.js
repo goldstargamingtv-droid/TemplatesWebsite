@@ -19,15 +19,24 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { amount, items, userId, email } = req.body;
+        const { amount, items, templateId, templateName, userId, email } = req.body;
 
         if (!amount || amount <= 0) {
             return res.status(400).json({ error: 'Invalid amount' });
         }
 
-        // Extract template IDs for metadata
-        const templateIds = items ? items.map(item => item.id) : [];
-        const templateNames = items ? items.map(item => item.name).join(', ') : 'Template Purchase';
+        // Handle both single template and items array
+        let templateIds, templateNames;
+        if (templateId) {
+            templateIds = [templateId];
+            templateNames = templateName || 'Template Purchase';
+        } else if (items) {
+            templateIds = items.map(item => item.id);
+            templateNames = items.map(item => item.name).join(', ');
+        } else {
+            templateIds = [];
+            templateNames = 'Template Purchase';
+        }
 
         // Create Payment Intent
         const paymentIntent = await stripe.paymentIntents.create({
@@ -40,6 +49,7 @@ export default async function handler(req, res) {
                 template_ids: JSON.stringify(templateIds),
                 template_names: templateNames,
                 user_id: userId || '',
+                email: email || '',
             },
             receipt_email: email || undefined,
             description: `DeployTemplate: ${templateNames}`,
