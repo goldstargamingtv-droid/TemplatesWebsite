@@ -270,11 +270,6 @@
                                 "availability": "https://schema.org/InStock",
                                 "priceValidUntil": "2025-12-31",
                                 "url": "https://deploytemplate.com/#template/flowmetrics"
-                            },
-                            "aggregateRating": {
-                                "@type": "AggregateRating",
-                                "ratingValue": "4.9",
-                                "reviewCount": "47"
                             }
                         }
                     },
@@ -300,11 +295,6 @@
                                 "availability": "https://schema.org/InStock",
                                 "priceValidUntil": "2025-12-31",
                                 "url": "https://deploytemplate.com/#template/creative-portfolio"
-                            },
-                            "aggregateRating": {
-                                "@type": "AggregateRating",
-                                "ratingValue": "4.8",
-                                "reviewCount": "32"
                             }
                         }
                     },
@@ -330,11 +320,6 @@
                                 "availability": "https://schema.org/InStock",
                                 "priceValidUntil": "2025-12-31",
                                 "url": "https://deploytemplate.com/#template/bella-vista"
-                            },
-                            "aggregateRating": {
-                                "@type": "AggregateRating",
-                                "ratingValue": "4.9",
-                                "reviewCount": "28"
                             }
                         }
                     }
@@ -489,10 +474,10 @@
                     },
                     {
                         "@type": "Question",
-                        "name": "Do you offer refunds?",
+                        "name": "What is your refund policy?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "We offer a 30-day money-back guarantee. If you're not satisfied with your purchase, contact our support team for a full refund."
+                            "text": "Due to the digital nature of our products, all sales are final. We encourage you to use our live preview feature to thoroughly explore each template before purchasing. Our support team is available to answer any questions before you buy."
                         }
                     },
                     {
@@ -1564,21 +1549,27 @@
         /* Nav CTA */
         .nav-cta {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
             align-items: center;
+            margin-left: 0.5rem;
+        }
+        
+        /* Cart icon li needs specific margin */
+        .nav-links li:last-child {
+            margin-left: 0.75rem;
         }
 
         /* User Menu Styles */
         .user-menu {
             position: relative;
             z-index: 10002;
-            padding: 0.25rem;
+            cursor: pointer;
         }
 
         .user-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             background: rgba(10, 10, 10, 0.7);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -1614,7 +1605,7 @@
             left: -2px;
             right: -2px;
             bottom: -2px;
-            border-radius: 50%;
+            border-radius: 14px;
             background: linear-gradient(45deg, #1d9a9b, #F97316, #1d9a9b, #1d9a9b);
             background-size: 300% 300%;
             z-index: -2;
@@ -1630,7 +1621,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            border-radius: 50%;
+            border-radius: 12px;
             background: rgba(10, 10, 10, 0.7);
             z-index: -1;
         }
@@ -1647,6 +1638,22 @@
             transform: translateY(-2px);
             border-color: transparent;
             box-shadow: 0 8px 25px rgba(13, 148, 136, 0.3);
+        }
+        
+        .user-avatar svg {
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .user-avatar:hover svg {
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+        
+        [data-theme="light"] .user-avatar:hover svg {
+            color: var(--text-primary);
         }
 
         .user-dropdown {
@@ -1680,18 +1687,6 @@
                 0 0 40px rgba(13, 148, 136, 0.03);
         }
 
-        .user-dropdown::before {
-            content: '';
-            position: absolute;
-            top: -30px;
-            right: 0;
-            left: 0;
-            height: 35px;
-            background: transparent;
-            pointer-events: auto;
-        }
-
-        .user-menu:hover .user-dropdown,
         .user-dropdown.active {
             display: flex;
         }
@@ -2166,27 +2161,24 @@
         .cart-icon-wrapper {
             position: relative;
             cursor: pointer;
-            padding: 0.25rem;
             transition: var(--transition);
             z-index: 10002;
         }
 
         .cart-icon-container {
             position: relative;
-            width: 38px;
-            height: 38px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 12px;
-            background: rgba(10, 10, 10, 0.7); /* Exact match */
-            backdrop-filter: blur(20px) saturate(180%); /* Exact match */
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1.5px solid rgba(29, 154, 155, 0.2);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: visible;
-            margin-top: 3px;
-            margin-left: 5px;
             box-shadow: 
                 0 4px 24px rgba(0, 0, 0, 0.4),
                 inset 0 1px 1px rgba(29, 154, 155, 0.1),
@@ -2349,24 +2341,11 @@
                 0 0 40px rgba(13, 148, 136, 0.03);
         }
 
-        .cart-dropdown::before {
-            content: '';
-            position: absolute;
-            top: -30px;
-            right: 0;
-            left: 0;
-            height: 35px;
-            background: transparent;
-            pointer-events: auto;
-        }
-
-        .cart-icon-wrapper:hover .cart-dropdown,
         .cart-dropdown.active {
             display: flex;
         }
         
         /* Hide cart dropdown when modal is open */
-        body.cart-modal-open .cart-icon-wrapper:hover .cart-dropdown,
         body.cart-modal-open .cart-dropdown.active {
             display: none !important;
             pointer-events: none;
@@ -2715,7 +2694,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: transparent;
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
             opacity: 0;
@@ -2768,7 +2747,7 @@
         }
         
         [data-theme="light"] .auth-overlay {
-            background: transparent;
+            background: rgba(0, 0, 0, 0.5);
         }
         
         /* Auth Panel Header */
@@ -3399,30 +3378,100 @@
             animation: fadeInUp 1s ease-out 0.6s backwards;
         }
 
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
+        .hero-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             padding-top: 2rem;
             border-top: 1px solid var(--border-color);
             animation: fadeInUp 1s ease-out 0.8s backwards;
         }
-
-        .stat-item {
-            text-align: center;
+        
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: rgba(29, 154, 155, 0.08);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            border-radius: 12px;
             animation: scaleIn 0.6s ease-out backwards;
+            transition: all 0.3s ease;
         }
         
-        .stat-item:nth-child(1) {
+        .step-item:hover {
+            background: rgba(29, 154, 155, 0.15);
+            border-color: rgba(29, 154, 155, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .step-item:nth-child(1) {
             animation-delay: 1s;
         }
         
-        .stat-item:nth-child(2) {
+        .step-item:nth-child(3) {
             animation-delay: 1.15s;
         }
         
-        .stat-item:nth-child(3) {
+        .step-item:nth-child(5) {
             animation-delay: 1.3s;
+        }
+        
+        .step-number {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #1d9a9b 100%);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            text-align: left;
+        }
+        
+        .step-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.15rem;
+        }
+        
+        .step-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .step-connector {
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), rgba(29, 154, 155, 0.3));
+            border-radius: 2px;
+            animation: fadeIn 0.5s ease-out 1.4s backwards;
+        }
+        
+        @media (max-width: 1100px) {
+            .hero-steps {
+                gap: 0.25rem;
+            }
+            .step-item {
+                padding: 0.75rem 1rem;
+            }
+            .step-connector {
+                width: 20px;
+            }
+            .step-title {
+                font-size: 0.85rem;
+            }
+            .step-desc {
+                font-size: 0.75rem;
+            }
         }
         
         @keyframes scaleIn {
@@ -5277,6 +5326,419 @@
             overflow: hidden;
         }
         
+        /* =============================================
+           DEMO CATALOG MODAL
+           ============================================= */
+        .demo-catalog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            z-index: 100002;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            transform: none;
+            transform-style: flat;
+            perspective: none;
+            isolation: isolate;
+        }
+        
+        .demo-catalog-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        .demo-catalog-modal {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transform: none;
+            transform-style: flat;
+            perspective: none;
+        }
+        
+        /* Catalog View */
+        .demo-catalog-view {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .demo-catalog-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .demo-catalog-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-catalog-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        .demo-catalog-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .demo-catalog-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .demo-catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .demo-catalog-card {
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-catalog-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(29, 154, 155, 0.2);
+        }
+        
+        .demo-catalog-thumb {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .demo-catalog-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .demo-catalog-card:hover .demo-catalog-thumb img {
+            transform: scale(1.05);
+        }
+        
+        .demo-catalog-thumb-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.2) 0%, rgba(20, 184, 166, 0.1) 100%);
+        }
+        
+        .demo-catalog-info {
+            padding: 1.25rem;
+        }
+        
+        .demo-catalog-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-catalog-category {
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-catalog-price {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        
+        .demo-catalog-price span {
+            color: var(--primary);
+        }
+        
+        /* Preview View */
+        .demo-preview-view {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: transparent;
+            transform: none;
+            transform-style: flat;
+            perspective: none;
+        }
+        
+        .demo-preview-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(29, 154, 155, 0.2);
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .demo-back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            color: #fff;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .demo-back-btn:hover {
+            background: rgba(29, 154, 155, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .demo-preview-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .demo-preview-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .demo-preview-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .demo-preview-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .demo-device-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .demo-device-btn:hover,
+        .demo-device-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+        
+        .demo-open-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            border: none;
+            color: #fff;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-left: 0.5rem;
+        }
+        
+        .demo-open-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .demo-preview-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: transparent;
+            overflow: hidden;
+            transform: none;
+            transform-style: flat;
+            perspective: none;
+        }
+        
+        .demo-preview-frame {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 80px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-radius 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: none !important;
+            transform-style: flat !important;
+            perspective: none !important;
+            animation: none !important;
+        }
+        
+        .demo-preview-frame.preview-desktop {
+            width: 100%;
+            max-width: 1200px;
+            height: calc(100vh - 150px);
+        }
+        
+        .demo-preview-frame.preview-tablet {
+            width: 768px;
+            max-width: 100%;
+            height: calc(100vh - 150px);
+            max-height: 1024px;
+            transform: none !important;
+            animation: none !important;
+        }
+        
+        .demo-preview-frame.preview-mobile {
+            width: 375px;
+            max-width: 100%;
+            height: calc(100vh - 150px);
+            max-height: 812px;
+            border-radius: 40px;
+            border: 8px solid #333;
+        }
+        
+        .demo-preview-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            transform: none !important;
+            transform-style: flat !important;
+            pointer-events: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-catalog-view {
+                padding: 1rem;
+            }
+            
+            .demo-catalog-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .demo-catalog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-preview-header {
+                flex-wrap: wrap;
+                padding: 1rem;
+            }
+            
+            .demo-preview-title {
+                order: -1;
+                width: 100%;
+                text-align: left;
+                margin-bottom: 0.5rem;
+            }
+            
+            .demo-device-btn {
+                display: none;
+            }
+            
+            .demo-preview-close {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            
+            .demo-preview-frame.preview-desktop,
+            .demo-preview-frame.preview-tablet,
+            .demo-preview-frame.preview-mobile {
+                width: 100%;
+                height: calc(100vh - 180px);
+                border-radius: 8px;
+                border: none;
+                transform: none !important;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .demo-preview-frame.preview-tablet {
+                width: 100%;
+                max-width: 768px;
+            }
+        }
+        
         /* Legal & Blog Modal Styles */
         .legal-modal-overlay,
         .blog-modal-overlay {
@@ -5620,12 +6082,381 @@
             margin-bottom: 2rem;
             opacity: 0.95;
         }
+        
+        .cta-urgency-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #F97316 0%, #FB923C 100%);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .cta-trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .cta-trust-item {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        [data-theme="light"] .cta-trust-item {
+            color: var(--text-secondary);
+        }
+        
+        @media (max-width: 640px) {
+            .cta-trust-badges {
+                gap: 1rem;
+            }
+            .cta-trust-item {
+                font-size: 0.8rem;
+            }
+        }
 
         .cta-buttons {
             display: flex;
             gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
+        }
+        
+        .cta-buttons .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* =============================================
+           NEW CTA ELEMENTS
+           ============================================= */
+        
+        /* Social Proof Banner */
+        .social-proof-banner {
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.1) 0%, rgba(20, 184, 166, 0.05) 100%);
+            border-top: 1px solid rgba(29, 154, 155, 0.2);
+            border-bottom: 1px solid rgba(29, 154, 155, 0.2);
+            padding: 1.5rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        [data-theme="light"] .social-proof-banner {
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.08) 0%, rgba(20, 184, 166, 0.03) 100%);
+        }
+        
+        .proof-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .proof-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .proof-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .proof-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .proof-divider {
+            width: 1px;
+            height: 35px;
+            background: rgba(29, 154, 155, 0.3);
+        }
+        
+        @media (max-width: 1024px) {
+            .proof-content {
+                gap: 1.5rem;
+            }
+            .proof-divider {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .proof-content {
+                gap: 1.25rem;
+            }
+            .proof-stat {
+                flex: 1 1 30%;
+            }
+            .proof-number {
+                font-size: 1.25rem;
+            }
+            .proof-label {
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* Inline CTA Section */
+        .inline-cta-section {
+            padding: 3rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .inline-cta {
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.15) 0%, rgba(20, 184, 166, 0.1) 100%);
+            border: 1px solid rgba(29, 154, 155, 0.3);
+            border-radius: 24px;
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .inline-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(29, 154, 155, 0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        [data-theme="light"] .inline-cta {
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.1) 0%, rgba(20, 184, 166, 0.05) 100%);
+        }
+        
+        .inline-cta-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .inline-cta-badge {
+            display: inline-block;
+            background: rgba(29, 154, 155, 0.2);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .inline-cta h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .inline-cta p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin: 0;
+            max-width: 500px;
+        }
+        
+        .inline-cta-buttons {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .inline-cta-buttons .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        
+        @media (max-width: 768px) {
+            .inline-cta {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+            .inline-cta p {
+                max-width: 100%;
+            }
+            .inline-cta h3 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Floating CTA Bar */
+        .floating-cta-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(20, 20, 20, 0.95) 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-top: 1px solid rgba(29, 154, 155, 0.3);
+            padding: 0.875rem 1.5rem;
+            z-index: 9999;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .floating-cta-bar.visible {
+            transform: translateY(0);
+        }
+        
+        [data-theme="light"] .floating-cta-bar {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 245, 245, 0.95) 100%);
+            border-top-color: rgba(29, 154, 155, 0.2);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .floating-cta-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        
+        .floating-cta-text {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+        
+        .floating-cta-highlight {
+            background: linear-gradient(135deg, #F97316 0%, #FB923C 100%);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.6); }
+        }
+        
+        .floating-cta-buttons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .floating-cta-buttons .btn-sm {
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .floating-cta-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+        
+        .floating-cta-close:hover {
+            color: var(--text-primary);
+        }
+        
+        @media (max-width: 640px) {
+            .floating-cta-bar {
+                padding: 0.75rem 1rem;
+            }
+            .floating-cta-content {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            .floating-cta-text {
+                font-size: 0.85rem;
+                text-align: center;
+                justify-content: center;
+            }
+            .floating-cta-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            .floating-cta-buttons .btn-sm {
+                flex: 1;
+                max-width: 200px;
+            }
+        }
+        
+        /* Features CTA Strip */
+        .features-cta-strip {
+            padding: 3rem 0;
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.08) 0%, transparent 50%, rgba(20, 184, 166, 0.05) 100%);
+            border-top: 1px solid rgba(29, 154, 155, 0.1);
+            border-bottom: 1px solid rgba(29, 154, 155, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .features-cta-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        
+        .features-cta-text h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .features-cta-text p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        .features-cta-content .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        
+        @media (max-width: 768px) {
+            .features-cta-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .features-cta-text h3 {
+                font-size: 1.25rem;
+            }
         }
 
         /* FAQ Section */
@@ -6079,9 +6910,15 @@
                 font-size: 1.1rem;
             }
             
-            .hero-stats {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+            .hero-steps {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .step-connector {
+                width: 2px;
+                height: 20px;
+                background: linear-gradient(180deg, var(--primary), rgba(29, 154, 155, 0.3));
             }
             
             .section-title {
@@ -6142,7 +6979,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: transparent;
+            background: rgba(0, 0, 0, 0.5);
             display: none;
             align-items: center;
             justify-content: center;
@@ -7063,18 +7900,20 @@
                 justify-content: center;
             }
             
-            .hero-stats {
+            .hero-steps {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 0.75rem;
                 margin-top: 2rem;
             }
             
-            .stat-item h3 {
-                font-size: 1.75rem;
+            .step-item {
+                width: 100%;
+                max-width: 300px;
             }
             
-            .stat-item p {
-                font-size: 0.875rem;
+            .step-connector {
+                width: 2px;
+                height: 15px;
             }
             
             /* Hide or simplify hero devices on mobile */
@@ -8329,8 +9168,8 @@
                 <li><a href="#blog" onclick="event.preventDefault(); scrollToSection('blog');">Blog</a></li>
                 <li><a href="#faq" onclick="event.preventDefault(); scrollToSection('faq');">FAQ</a></li>
                 <li>
-                    <div class="cart-icon-wrapper" onmouseenter="showCartDropdown()" onmouseleave="hideCartDropdown()">
-                        <div class="cart-icon-container" onclick="toggleCartModal(); event.stopPropagation();">
+                    <div class="cart-icon-wrapper" onclick="toggleCartModal();" onmouseenter="showCartDropdown()" onmouseleave="hideCartDropdown()">
+                        <div class="cart-icon-container">
                             <svg class="cart-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <!-- Shopping bag icon -->
                                 <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -8392,39 +9231,53 @@
             <div class="hero-content">
                 <div class="hero-badge">
                     <span class="badge-dot"></span>
-                    New templates added monthly
+                    Hand-crafted for modern businesses
                 </div>
                 <h1 class="hero-title">
-                    Launch Your Website in
-                    <span class="gradient-text">Minutes, Not Months</span>
+                    Beautiful Websites,
+                    <span class="gradient-text">Zero Hassle</span>
                 </h1>
                 <p class="hero-description">
-                    Premium, production-ready templates built with modern design principles. 
-                    Simply customize, deploy, and start growing your business today.
+                    Stop starting from scratch. Our professionally designed templates 
+                    give you a head start so you can focus on what matters — your business.
                 </p>
                 <div class="hero-buttons">
                     <a href="#templates" class="btn btn-primary btn-lg">
-                        Explore Templates
+                        Browse Templates
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </a>
-                    <a href="#preview" class="btn btn-secondary btn-lg">
-                        See Live Demo
-                    </a>
+                    <button onclick="openDemoCatalog()" class="btn btn-secondary btn-lg">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                        See Live Demos
+                    </button>
                 </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Happy Customers</div>
+                <div class="hero-steps">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <div class="step-title">Browse & Select</div>
+                            <div class="step-desc">Find the perfect template for your project</div>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">15+</div>
-                        <div class="stat-label">Premium Templates</div>
+                    <div class="step-connector"></div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="step-title">Download Instantly</div>
+                            <div class="step-desc">Files stored forever in your library</div>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">4.9★</div>
-                        <div class="stat-label">Average Rating</div>
+                    <div class="step-connector"></div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <div class="step-title">Launch Your Site</div>
+                            <div class="step-desc">Customize and deploy in minutes</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -8547,6 +9400,48 @@
         </div>
     </section>
 
+    <!-- Feature Highlights Banner -->
+    <section class="social-proof-banner">
+        <div class="container">
+            <div class="proof-content">
+                <div class="proof-stat">
+                    <span class="proof-number">⚡</span>
+                    <span class="proof-label">Instant Download</span>
+                </div>
+                <div class="proof-divider"></div>
+                <div class="proof-stat">
+                    <span class="proof-number">🎨</span>
+                    <span class="proof-label">Fully Customizable</span>
+                </div>
+                <div class="proof-divider"></div>
+                <div class="proof-stat">
+                    <span class="proof-number">💬</span>
+                    <span class="proof-label">24hr Support</span>
+                </div>
+                <div class="proof-divider"></div>
+                <div class="proof-stat">
+                    <span class="proof-number">📱</span>
+                    <span class="proof-label">Mobile Responsive</span>
+                </div>
+                <div class="proof-divider"></div>
+                <div class="proof-stat">
+                    <span class="proof-number">🌙</span>
+                    <span class="proof-label">Dark Mode Included</span>
+                </div>
+                <div class="proof-divider"></div>
+                <div class="proof-stat">
+                    <span class="proof-number">🔍</span>
+                    <span class="proof-label">SEO Optimized</span>
+                </div>
+                <div class="proof-divider"></div>
+                <div class="proof-stat">
+                    <span class="proof-number">∞</span>
+                    <span class="proof-label">Lifetime Updates</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Features Section -->
     <section class="features-section" id="features">
         <div class="container">
@@ -8650,6 +9545,22 @@
                     <h3>Dark Mode Ready</h3>
                     <p>Every template includes a <span class="feature-accent">polished dark mode</span>. One toggle, <span class="feature-accent">two stunning looks</span> for your brand.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features CTA Strip -->
+    <section class="features-cta-strip">
+        <div class="container">
+            <div class="features-cta-content">
+                <div class="features-cta-text">
+                    <h3>Need Something More Specific?</h3>
+                    <p>Our team builds custom solutions tailored to your exact requirements</p>
+                </div>
+                <a href="#custom-request" class="btn btn-secondary btn-lg" onclick="event.preventDefault(); scrollToSection('custom-request');">
+                    Request Custom Build
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
             </div>
         </div>
     </section>
@@ -8835,11 +9746,22 @@
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
+                <span class="cta-urgency-badge">🎉 Launch Special: 20% Off with code LAUNCH20</span>
                 <h2>Ready to Launch Your Website?</h2>
-                <p>Join hundreds of businesses who chose DeployTemplate to bring their vision to life</p>
+                <p>Get a professionally designed website up and running in minutes. Start building today.</p>
                 <div class="cta-buttons">
-                    <a href="#templates" class="btn btn-primary btn-lg">Browse Templates</a>
-                    <a href="#templates" class="btn btn-white btn-lg" onclick="event.preventDefault(); scrollToSection('templates');">Browse Templates</a>
+                    <a href="#templates" class="btn btn-primary btn-lg" onclick="event.preventDefault(); scrollToSection('templates');">
+                        Browse Templates
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="#custom-request" class="btn btn-white btn-lg" onclick="event.preventDefault(); scrollToSection('custom-request');">
+                        Request Custom Build
+                    </a>
+                </div>
+                <div class="cta-trust-badges">
+                    <span class="cta-trust-item">✓ Live Preview Available</span>
+                    <span class="cta-trust-item">✓ Lifetime Updates</span>
+                    <span class="cta-trust-item">✓ Premium Support</span>
                 </div>
             </div>
         </div>
@@ -8973,6 +9895,25 @@
                         </span>
                     </div>
                 </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Post-Blog CTA -->
+    <section class="inline-cta-section">
+        <div class="container">
+            <div class="inline-cta">
+                <div class="inline-cta-content">
+                    <span class="inline-cta-badge">💡 Ready to Apply These Tips?</span>
+                    <h3>Turn Knowledge Into Action</h3>
+                    <p>Our templates are built with every best practice from our blog. Modern design, blazing speed, SEO optimized.</p>
+                </div>
+                <div class="inline-cta-buttons">
+                    <a href="#templates" class="btn btn-primary btn-lg" onclick="event.preventDefault(); scrollToSection('templates');">
+                        Browse Templates
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -9158,7 +10099,7 @@
                                 <polyline points="9 22 9 12 15 12 15 22"/>
                             </svg>
                         </div>
-                        <span style="flex: 1;">Do you offer refunds if I'm not satisfied?</span>
+                        <span style="flex: 1;">What is your refund policy?</span>
                         <div class="faq-toggle-icon">
                             <svg class="faq-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" style="transition: transform 0.3s ease;">
                                 <path d="M6 9l6 6 6-6"/>
@@ -9166,7 +10107,7 @@
                         </div>
                     </summary>
                     <div style="padding: 0 1.5rem 1.5rem; color: var(--text-muted); line-height: 1.8;">
-                        <p>Yes! We offer a <span class="faq-accent">30-day money-back guarantee</span> on all template purchases. If you're not completely satisfied with your purchase, contact our support team within 30 days for a <span class="faq-accent">full refund</span>. We want you to be <span class="faq-accent">100% happy</span> with your investment.</p>
+                        <p>Due to the <span class="faq-accent">digital nature</span> of our products, all sales are final. We strongly encourage you to use our <span class="faq-accent">live preview feature</span> to thoroughly explore each template before purchasing. Our support team is always available to <span class="faq-accent">answer questions</span> and help you choose the right template for your needs.</p>
                     </div>
                 </details>
 
@@ -9420,7 +10361,7 @@
                         <li><a href="#">Documentation</a></li>
                         <li><a href="#faq" onclick="event.preventDefault(); scrollToSection('faq');">FAQ</a></li>
                         <li><a href="#">License</a></li>
-                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#" onclick="openLegalModal('terms'); return false;">Sales Policy</a></li>
                         <li><a href="/cdn-cgi/l/email-protection#1b686e6b6b74696f5b6f7e766b777a6f7e7d74697c7e35787476">Get Help</a></li>
                     </ul>
                 </div>
@@ -9436,6 +10377,22 @@
             </div>
         </div>
     </footer>
+
+    <!-- Floating CTA Bar -->
+    <div class="floating-cta-bar" id="floatingCta">
+        <div class="floating-cta-content">
+            <div class="floating-cta-text">
+                <span class="floating-cta-highlight">🔥 Limited Time:</span>
+                <span>Get 20% off your first template with code <strong>LAUNCH20</strong></span>
+            </div>
+            <div class="floating-cta-buttons">
+                <a href="#templates" class="btn btn-primary btn-sm" onclick="event.preventDefault(); scrollToSection('templates');">Shop Now</a>
+                <button class="floating-cta-close" onclick="closeFloatingCta()" aria-label="Close">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
 
     </div>
     <!-- END HOME PAGE SECTION -->
@@ -9463,16 +10420,18 @@
                         <div class="detail-meta">
                             <div class="meta-item">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                                    <circle cx="12" cy="7" r="4"/>
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="3" y1="9" x2="21" y2="9"/>
+                                    <line x1="9" y1="21" x2="9" y2="9"/>
                                 </svg>
-                                <span id="detailDownloads">0 downloads</span>
+                                <span>Responsive Design</span>
                             </div>
                             <div class="meta-item">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
                                 </svg>
-                                <span>4.9 rating</span>
+                                <span>Verified Quality</span>
                             </div>
                             <div class="meta-item">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -10604,7 +11563,10 @@
                 navCta.innerHTML = `
                     <div class="user-menu" onmouseenter="showUserDropdown()" onmouseleave="hideUserDropdown()">
                         <div class="user-avatar" onclick="navigateTo('dashboard')">
-                            <img src="logo.png" alt="Profile" style="width: 28px; height: 28px; object-fit: contain;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
                         </div>
                         <div class="user-dropdown" id="userDropdown">
                             <a onclick="navigateTo('dashboard')">
@@ -10664,6 +11626,20 @@
                         </div>
                     </div>
                 `;
+                
+                // Set up user dropdown hover listeners after creation
+                setTimeout(() => {
+                    const userDropdown = document.getElementById('userDropdown');
+                    if (userDropdown) {
+                        userDropdown.addEventListener('mouseenter', function() {
+                            if (userDropdownTimeout) {
+                                clearTimeout(userDropdownTimeout);
+                                userDropdownTimeout = null;
+                            }
+                        });
+                        userDropdown.addEventListener('mouseleave', hideUserDropdown);
+                    }
+                }, 0);
             } else {
                 // Hide sidebar account section when logged out
                 if (sidebarAccountSection) {
@@ -10683,7 +11659,24 @@
             }
         }
 
+        let userDropdownTimeout = null;
+        let cartDropdownTimeout = null;
+        
         function showUserDropdown() {
+            // Clear any pending hide timeout
+            if (userDropdownTimeout) {
+                clearTimeout(userDropdownTimeout);
+                userDropdownTimeout = null;
+            }
+            
+            // Clear cart timeout and hide cart dropdown immediately
+            if (cartDropdownTimeout) {
+                clearTimeout(cartDropdownTimeout);
+                cartDropdownTimeout = null;
+            }
+            const cartDropdown = document.getElementById('cartDropdown');
+            if (cartDropdown) cartDropdown.classList.remove('active');
+            
             const dropdown = document.getElementById('userDropdown');
             const userMenu = document.querySelector('.user-menu');
             
@@ -10697,10 +11690,13 @@
         }
 
         function hideUserDropdown() {
-            const dropdown = document.getElementById('userDropdown');
-            if (dropdown) {
-                dropdown.classList.remove('active');
-            }
+            // Use a delay to allow mouse to move to dropdown
+            userDropdownTimeout = setTimeout(() => {
+                const dropdown = document.getElementById('userDropdown');
+                if (dropdown) {
+                    dropdown.classList.remove('active');
+                }
+            }, 200);
         }
 
         function toggleUserMenu(event) {
@@ -11057,7 +12053,7 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: transparent;
+                background: rgba(0, 0, 0, 0.5);
                 z-index: 24999;
                 opacity: 0;
                 transition: opacity 0.3s ease;
@@ -11770,7 +12766,7 @@
                             }
                             <div class="template-overlay">
                                 <button class="btn btn-white" onclick="event.preventDefault(); viewTemplateDetails('${template.slug}'); return false;">View Details</button>
-                                ${template.demo_url ? `<a href="${template.demo_url}" target="_blank" class="btn btn-outline-white">Live Preview</a>` : ''}
+                                ${template.demo_url ? `<button class="btn btn-outline-white" onclick="event.preventDefault(); openLivePreview('${template.slug}'); return false;">Live Preview</button>` : ''}
                             </div>
                         </div>
                         <div class="template-info">
@@ -11925,7 +12921,7 @@
                 // Preview button
                 const previewBtn = document.getElementById('detailPreviewBtn');
                 if (template.demo_url) {
-                    previewBtn.onclick = () => window.open(template.demo_url, '_blank');
+                    previewBtn.onclick = () => openLivePreview(template.slug);
                     previewBtn.style.display = 'block';
                 } else {
                     previewBtn.style.display = 'none';
@@ -12676,8 +13672,22 @@
             updateCartUI();
             showNotification('Removed from cart', 'success');
         }
-
+        
         function showCartDropdown() {
+            // Clear any pending hide timeout
+            if (cartDropdownTimeout) {
+                clearTimeout(cartDropdownTimeout);
+                cartDropdownTimeout = null;
+            }
+            
+            // Clear user timeout and hide user dropdown immediately
+            if (userDropdownTimeout) {
+                clearTimeout(userDropdownTimeout);
+                userDropdownTimeout = null;
+            }
+            const userDropdown = document.getElementById('userDropdown');
+            if (userDropdown) userDropdown.classList.remove('active');
+            
             const dropdown = document.getElementById('cartDropdown');
             const cartIcon = document.querySelector('.cart-icon-wrapper');
             
@@ -12692,8 +13702,26 @@
         }
 
         function hideCartDropdown() {
-            document.getElementById('cartDropdown').classList.remove('active');
+            // Use a delay to allow mouse to move to dropdown
+            cartDropdownTimeout = setTimeout(() => {
+                const dropdown = document.getElementById('cartDropdown');
+                if (dropdown) dropdown.classList.remove('active');
+            }, 200);
         }
+        
+        // Keep dropdown open when hovering over it
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartDropdown = document.getElementById('cartDropdown');
+            if (cartDropdown) {
+                cartDropdown.addEventListener('mouseenter', function() {
+                    if (cartDropdownTimeout) {
+                        clearTimeout(cartDropdownTimeout);
+                        cartDropdownTimeout = null;
+                    }
+                });
+                cartDropdown.addEventListener('mouseleave', hideCartDropdown);
+            }
+        });
 
         function toggleCartModal() {
             const modal = document.getElementById('cartModal');
@@ -13699,6 +14727,70 @@
         })();
     </script>
     
+    <!-- Demo Catalog Modal -->
+    <div class="demo-catalog-overlay" id="demoCatalogOverlay">
+        <div class="demo-catalog-modal">
+            <!-- Catalog View (Grid of templates) -->
+            <div class="demo-catalog-view" id="demoCatalogView">
+                <div class="demo-catalog-header">
+                    <h2>Live Template Demos</h2>
+                    <p>Click any template to preview it live</p>
+                    <button class="demo-catalog-close" onclick="closeDemoCatalog()">&times;</button>
+                </div>
+                <div class="demo-catalog-grid" id="demoCatalogGrid">
+                    <!-- Templates will be populated by JS -->
+                </div>
+            </div>
+            
+            <!-- Preview View (iframe showing template) -->
+            <div class="demo-preview-view" id="demoPreviewView" style="display: none;">
+                <div class="demo-preview-header">
+                    <button class="demo-back-btn" onclick="backToCatalog()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                        </svg>
+                        Back to Catalog
+                    </button>
+                    <div class="demo-preview-title" id="demoPreviewTitle">Template Name</div>
+                    <div class="demo-preview-actions">
+                        <button class="demo-device-btn active" data-device="desktop" onclick="setPreviewDevice('desktop')">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                                <path d="M8 21h8M12 17v4"/>
+                            </svg>
+                        </button>
+                        <button class="demo-device-btn" data-device="tablet" onclick="setPreviewDevice('tablet')">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="4" y="2" width="16" height="20" rx="2"/>
+                                <line x1="12" y1="18" x2="12" y2="18"/>
+                            </svg>
+                        </button>
+                        <button class="demo-device-btn" data-device="mobile" onclick="setPreviewDevice('mobile')">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="5" y="2" width="14" height="20" rx="2"/>
+                                <line x1="12" y1="18" x2="12" y2="18"/>
+                            </svg>
+                        </button>
+                        <a href="#" id="demoOpenNew" class="demo-open-btn" target="_blank">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15 3 21 3 21 9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                            Open Full
+                        </a>
+                    </div>
+                    <button class="demo-preview-close" onclick="closeDemoCatalog()">&times;</button>
+                </div>
+                <div class="demo-preview-container" id="demoPreviewContainer">
+                    <div class="demo-preview-frame preview-desktop" id="demoPreviewFrame">
+                        <iframe id="demoIframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Legal Modal - Privacy Policy -->
     <div class="legal-modal-overlay" id="privacyModal">
         <div class="legal-modal">
@@ -13859,13 +14951,13 @@
                     <li><strong>Delivery:</strong> Upon successful payment, Templates are delivered immediately via download. You will also receive an email confirmation with download links.</li>
                 </ul>
                 
-                <h3>5. Refund Policy</h3>
-                <p>We offer a 30-day money-back guarantee on all Template purchases. If you are unsatisfied with your purchase for any reason, you may request a full refund within 30 days of purchase by contacting our support team.</p>
+                <h3>5. Sales Policy</h3>
+                <p>Due to the digital nature of our products, <strong>all sales are final</strong>. Once a Template is purchased and delivered, we cannot offer refunds as the digital product cannot be "returned."</p>
                 <ul>
-                    <li>Refund requests must be submitted within 30 days of the original purchase date</li>
-                    <li>Refunds will be processed to the original payment method within 5-10 business days</li>
-                    <li>Upon refund, your license to use the Template is revoked and you must delete all copies</li>
-                    <li>We reserve the right to deny refunds for suspected abuse of this policy</li>
+                    <li><strong>Preview Before Purchase:</strong> We strongly encourage you to use our live preview feature to thoroughly explore each template before buying</li>
+                    <li><strong>Pre-Purchase Support:</strong> Our support team is available to answer any questions about templates before you purchase</li>
+                    <li><strong>Technical Issues:</strong> If you experience technical issues with a template, our support team will work with you to resolve them</li>
+                    <li><strong>Defective Products:</strong> In the rare case of a genuinely defective product that cannot be fixed, we may offer a replacement or store credit at our discretion</li>
                 </ul>
                 
                 <h3>6. Intellectual Property</h3>
@@ -14828,6 +15920,198 @@ git push -u origin main</code></pre>
         }
         
         // ============================================
+        // DEMO CATALOG MODAL FUNCTIONS
+        // ============================================
+        
+        let currentDemoTemplates = [];
+        
+        function openDemoCatalog() {
+            const overlay = document.getElementById('demoCatalogOverlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Populate the grid with templates
+            populateDemoCatalog();
+        }
+        
+        function closeDemoCatalog() {
+            const overlay = document.getElementById('demoCatalogOverlay');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // Reset to catalog view
+            document.getElementById('demoCatalogView').style.display = 'flex';
+            document.getElementById('demoPreviewView').style.display = 'none';
+            
+            // Clear iframe
+            document.getElementById('demoIframe').src = '';
+        }
+        
+        function populateDemoCatalog() {
+            const grid = document.getElementById('demoCatalogGrid');
+            
+            // Use the templates from getTemplates function or allTemplates
+            const templates = typeof allTemplates !== 'undefined' && allTemplates.length > 0 
+                ? allTemplates 
+                : (typeof getTemplates === 'function' ? getTemplates() : []);
+            currentDemoTemplates = templates;
+            
+            if (templates.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 3rem;">No templates available</div>';
+                return;
+            }
+            
+            grid.innerHTML = templates.map((template, index) => `
+                <div class="demo-catalog-card" onclick="openDemoPreview(${index})">
+                    <div class="demo-catalog-thumb">
+                        ${template.preview_image 
+                            ? `<img src="${template.preview_image}" alt="${template.name}" onerror="this.parentElement.innerHTML='<div class=\\'demo-catalog-thumb-placeholder\\'>${getCategoryEmoji(template.category)}</div>'">` 
+                            : `<div class="demo-catalog-thumb-placeholder">${getCategoryEmoji(template.category)}</div>`
+                        }
+                    </div>
+                    <div class="demo-catalog-info">
+                        <div class="demo-catalog-name">${template.name}</div>
+                        <div class="demo-catalog-category">${formatCategory(template.category)}</div>
+                        <div class="demo-catalog-price">${template.price === 0 ? 'Free' : `<span>$${template.price}</span>`}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function getCategoryEmoji(category) {
+            const emojis = {
+                'saas': '📊',
+                'portfolio': '🎨',
+                'restaurant': '🍽️',
+                'ecommerce': '🛒',
+                'agency': '🏢',
+                'startup': '🚀',
+                'landing': '📄',
+                'blog': '✍️',
+                'business': '💼'
+            };
+            return emojis[category] || '🌐';
+        }
+        
+        function formatCategory(category) {
+            const names = {
+                'saas': 'SaaS & Software',
+                'portfolio': 'Portfolio & Creative',
+                'restaurant': 'Restaurant & Food',
+                'ecommerce': 'E-commerce',
+                'agency': 'Agency & Studio',
+                'startup': 'Startup & Tech',
+                'landing': 'Landing Page',
+                'blog': 'Blog & Magazine',
+                'business': 'Business'
+            };
+            return names[category] || category;
+        }
+        
+        function openDemoPreview(index) {
+            const template = currentDemoTemplates[index];
+            if (!template || !template.demo_url) {
+                showNotification('Demo not available for this template', 'info');
+                return;
+            }
+            
+            // Switch to preview view
+            document.getElementById('demoCatalogView').style.display = 'none';
+            document.getElementById('demoPreviewView').style.display = 'flex';
+            
+            // Set title and link
+            document.getElementById('demoPreviewTitle').textContent = template.name;
+            document.getElementById('demoOpenNew').href = template.demo_url;
+            
+            // Load iframe
+            document.getElementById('demoIframe').src = template.demo_url;
+            
+            // Reset device to desktop
+            setPreviewDevice('desktop');
+        }
+        
+        // Open live preview directly by slug (from template cards)
+        function openLivePreview(slug) {
+            // Get templates
+            const templates = typeof allTemplates !== 'undefined' && allTemplates.length > 0 
+                ? allTemplates 
+                : (typeof getTemplates === 'function' ? getTemplates() : []);
+            
+            // Find the template by slug
+            const template = templates.find(t => t.slug === slug);
+            
+            if (!template || !template.demo_url) {
+                showNotification('Demo not available for this template', 'info');
+                return;
+            }
+            
+            // Store templates for back navigation
+            currentDemoTemplates = templates;
+            
+            // Open the modal
+            const overlay = document.getElementById('demoCatalogOverlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Go directly to preview view (skip catalog grid)
+            document.getElementById('demoCatalogView').style.display = 'none';
+            document.getElementById('demoPreviewView').style.display = 'flex';
+            
+            // Set title and link
+            document.getElementById('demoPreviewTitle').textContent = template.name;
+            document.getElementById('demoOpenNew').href = template.demo_url;
+            
+            // Load iframe
+            document.getElementById('demoIframe').src = template.demo_url;
+            
+            // Reset device to desktop
+            setPreviewDevice('desktop');
+        }
+        
+        function backToCatalog() {
+            // Populate the catalog grid (in case user came directly to preview)
+            populateDemoCatalog();
+            
+            document.getElementById('demoCatalogView').style.display = 'flex';
+            document.getElementById('demoPreviewView').style.display = 'none';
+            
+            // Clear iframe to stop loading
+            document.getElementById('demoIframe').src = '';
+        }
+        
+        function setPreviewDevice(device) {
+            const frame = document.getElementById('demoPreviewFrame');
+            
+            // Update button states
+            document.querySelectorAll('.demo-device-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.device === device) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Update frame class with preview- prefix to avoid conflicts with hero device styles
+            frame.className = 'demo-preview-frame preview-' + device;
+        }
+        
+        // Close demo catalog on ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const overlay = document.getElementById('demoCatalogOverlay');
+                if (overlay && overlay.classList.contains('active')) {
+                    closeDemoCatalog();
+                }
+            }
+        });
+        
+        // Close on overlay click
+        document.getElementById('demoCatalogOverlay')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDemoCatalog();
+            }
+        });
+        
+        // ============================================
         // LEGAL & BLOG MODAL FUNCTIONS
         // ============================================
         
@@ -14930,6 +16214,54 @@ git push -u origin main</code></pre>
                 showNotification('Failed to copy link', 'error');
             });
         }
+        
+        // =============================================
+        // FLOATING CTA BAR
+        // =============================================
+        
+        let floatingCtaClosed = false;
+        
+        function closeFloatingCta() {
+            const bar = document.getElementById('floatingCta');
+            if (bar) {
+                bar.classList.remove('visible');
+                floatingCtaClosed = true;
+                // Remember for session
+                sessionStorage.setItem('floatingCtaClosed', 'true');
+            }
+        }
+        
+        function checkFloatingCta() {
+            if (floatingCtaClosed || sessionStorage.getItem('floatingCtaClosed')) {
+                return;
+            }
+            
+            const bar = document.getElementById('floatingCta');
+            if (!bar) return;
+            
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const triggerPoint = windowHeight * 0.5; // Show after scrolling 50% of viewport
+            
+            if (scrollPosition > triggerPoint) {
+                bar.classList.add('visible');
+            }
+        }
+        
+        // Check on scroll with throttle
+        let floatingCtaThrottle = false;
+        window.addEventListener('scroll', function() {
+            if (!floatingCtaThrottle) {
+                floatingCtaThrottle = true;
+                requestAnimationFrame(function() {
+                    checkFloatingCta();
+                    floatingCtaThrottle = false;
+                });
+            }
+        });
+        
+        // Initial check after page load
+        setTimeout(checkFloatingCta, 2000);
         
         // Close modals on overlay click
         document.addEventListener('click', function(e) {
