@@ -264,12 +264,7 @@
          ============================================ -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://gkyzpehxdqoolomglpal.supabase.co" crossorigin>
-    <link rel="preconnect" href="https://unpkg.com" crossorigin>
-    <link rel="preconnect" href="https://assets.gumroad.com" crossorigin>
-    <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="dns-prefetch" href="https://gumroad.com">
     
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -278,12 +273,11 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="icon" href="/favicon.ico">
     
-    <!-- Google Fonts - Deferred for performance -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"></noscript>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Supabase Client Library - Deferred -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
+    <!-- Supabase Client Library -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     
     <style>
         /* ============================================
@@ -2992,7 +2986,7 @@
             color: var(--text-secondary);
             margin-bottom: 2rem;
             line-height: 1.8;
-            animation: fadeInUp 0.6s ease-out 0.1s backwards;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
         }
 
         .hero-buttons {
@@ -3000,7 +2994,7 @@
             gap: 1rem;
             flex-wrap: wrap;
             margin-bottom: 3rem;
-            animation: fadeInUp 0.6s ease-out 0.2s backwards;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
         }
 
         .hero-stats {
@@ -6496,44 +6490,6 @@
             .cookie-btn-settings {
                 width: 100%;
                 order: 3;
-            }
-        }
-        
-        /* ============================================
-           REDUCED MOTION & MOBILE PERFORMANCE
-           ============================================ */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-        
-        /* Reduce animations on mobile for better performance */
-        @media (max-width: 768px) {
-            .device {
-                animation: none !important;
-            }
-            
-            .device-frame {
-                transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-            }
-            
-            .laptop::before,
-            .tablet::before,
-            .phone::before {
-                animation: none !important;
-            }
-            
-            /* Disable complex hover effects on mobile */
-            .device:hover {
-                transform: none !important;
-            }
-            
-            /* Simplify transitions */
-            * {
-                transition-property: opacity, transform !important;
             }
         }
     </style>
@@ -11087,5 +11043,8 @@
             CookieConsent.showBanner();
         }
     </script>
+    
+    <!-- Gumroad Script -->
+    <script src="https://gumroad.com/js/gumroad.js"></script>
 </body>
 </html>
