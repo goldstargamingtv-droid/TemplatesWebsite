@@ -14538,7 +14538,8 @@
             const deviceCap = device.charAt(0).toUpperCase() + device.slice(1);
             const uploadBtn = document.getElementById(`hero${deviceCap}UploadBtn`);
             const removeBtn = document.getElementById(`hero${deviceCap}RemoveBtn`);
-            const file = heroDeviceFiles[device];
+            const fileInput = document.getElementById(`hero${deviceCap}File`);
+            const file = fileInput.files[0];
             
             if (!file) {
                 showNotification('Please select a file first', 'error');
@@ -14547,6 +14548,9 @@
             
             uploadBtn.disabled = true;
             uploadBtn.textContent = 'Uploading...';
+            
+            // Debug: log file info
+            console.log('Uploading file:', file.name, file.type, file.size);
             
             try {
                 // First, try to remove any existing image for this device
@@ -14564,16 +14568,27 @@
                 }
                 
                 // Upload new image
-                const ext = file.name.split('.').pop();
+                const ext = file.name.split('.').pop().toLowerCase();
                 const timestamp = Date.now();
                 const path = `hero-${device}-${timestamp}.${ext}`;
+                
+                // Determine content type
+                const mimeTypes = {
+                    'png': 'image/png',
+                    'jpg': 'image/jpeg',
+                    'jpeg': 'image/jpeg',
+                    'gif': 'image/gif',
+                    'webp': 'image/webp'
+                };
+                const contentType = file.type || mimeTypes[ext] || 'image/png';
+                console.log('Content type:', contentType);
                 
                 const { error } = await supabaseClient.storage
                     .from('public-assets')
                     .upload(path, file, {
                         cacheControl: '3600',
                         upsert: true,
-                        contentType: file.type
+                        contentType: contentType
                     });
                 
                 if (error) throw error;
