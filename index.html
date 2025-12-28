@@ -2212,14 +2212,14 @@
             width: 100%;
             max-width: 480px;
             height: calc(100vh - 50px);
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-            border-left: 1px solid rgba(29, 154, 155, 0.3);
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-left: 1px solid rgba(29, 154, 155, 0.2);
             box-shadow: 
-                -8px 0 40px rgba(0, 0, 0, 0.5),
-                inset 1px 0 1px rgba(29, 154, 155, 0.15),
-                0 0 80px rgba(29, 154, 155, 0.08);
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(29, 154, 155, 0.1),
+                0 0 40px rgba(29, 154, 155, 0.05);
             z-index: 20000;
             transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
@@ -2229,14 +2229,14 @@
         
         /* Light mode glassmorphism for cart modal */
         [data-theme="light"] .cart-modal {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-            border-left: 1px solid rgba(13, 148, 136, 0.3);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-left: 1px solid rgba(13, 148, 136, 0.2);
             box-shadow: 
-                -8px 0 40px rgba(0, 0, 0, 0.15),
-                inset 1px 0 1px rgba(13, 148, 136, 0.15),
-                0 0 80px rgba(13, 148, 136, 0.05);
+                0 4px 24px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
         }
 
         .cart-modal.active {
@@ -2314,9 +2314,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
             opacity: 0;
             visibility: hidden;
             z-index: 19999;
@@ -2335,14 +2335,14 @@
             width: 100%;
             max-width: 480px;
             height: calc(100vh - 51px);
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-            border-left: 1px solid rgba(29, 154, 155, 0.3);
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-left: 1px solid rgba(29, 154, 155, 0.2);
             box-shadow: 
-                -8px 0 40px rgba(0, 0, 0, 0.5),
-                inset 1px 0 1px rgba(29, 154, 155, 0.15),
-                0 0 80px rgba(29, 154, 155, 0.08);
+                0 4px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(29, 154, 155, 0.1),
+                0 0 40px rgba(29, 154, 155, 0.05);
             z-index: 25000;
             transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
@@ -2356,18 +2356,18 @@
         
         /* Light mode */
         [data-theme="light"] .auth-panel {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(30px) saturate(200%);
-            -webkit-backdrop-filter: blur(30px) saturate(200%);
-            border-left: 1px solid rgba(13, 148, 136, 0.3);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-left: 1px solid rgba(13, 148, 136, 0.2);
             box-shadow: 
-                -8px 0 40px rgba(0, 0, 0, 0.15),
-                inset 1px 0 1px rgba(13, 148, 136, 0.15),
-                0 0 80px rgba(13, 148, 136, 0.05);
+                0 4px 24px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(13, 148, 136, 0.1),
+                0 0 40px rgba(13, 148, 136, 0.03);
         }
         
         [data-theme="light"] .auth-overlay {
-            background: rgba(255, 255, 255, 0.4);
+            background: transparent;
         }
         
         /* Auth Panel Header */
@@ -4704,7 +4704,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
+            background: transparent;
             display: none;
             align-items: center;
             justify-content: center;
@@ -4718,8 +4718,8 @@
         }
 
         .modal {
-            background: rgba(10, 10, 10, 0.7); /* Exact match */
-            backdrop-filter: blur(20px) saturate(180%); /* Exact match */
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-radius: var(--border-radius-lg);
             padding: 2.5rem;
@@ -4732,7 +4732,7 @@
             position: relative;
             animation: slideUpModal 0.3s ease-out;
             border: 1px solid rgba(29, 154, 155, 0.2);
-            margin-top: -1px;
+            margin-top: -3px;
         }
         
         /* Light mode glassmorphism for modal */
@@ -8829,36 +8829,9 @@
                 return;
             }
             
-            // Use Stripe Checkout
+            // Show on-site Stripe checkout modal
             if (CONFIG.USE_STRIPE) {
-                try {
-                    showNotification('Redirecting to checkout...', 'info');
-                    
-                    const response = await fetch('https://templates-website-one.vercel.app/api/create-checkout-session', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            items: [{
-                                id: templateSlug,
-                                name: templateName,
-                                price: price,
-                                description: `Premium website template - ${templateName}`
-                            }],
-                            userId: currentUser.id,
-                            userEmail: currentUser.email,
-                            successUrl: `${window.location.origin}/?payment=success&template=${templateSlug}`,
-                            cancelUrl: `${window.location.origin}/?payment=cancelled`
-                        })
-                    });
-                    
-                    if (!response.ok) throw new Error('Failed to create checkout session');
-                    
-                    const { url } = await response.json();
-                    window.location.href = url;
-                } catch (error) {
-                    console.error('Checkout error:', error);
-                    showNotification('Checkout failed. Please try again.', 'error');
-                }
+                showStripeCheckoutModal(templateSlug, templateName, price);
                 return;
             }
             
@@ -8873,6 +8846,336 @@
             pendingPurchase = { slug: templateSlug, name: templateName, price: price };
             const gumroadUrl = `https://goldstar06.gumroad.com/l/${gumroadPermalink}?email=${encodeURIComponent(currentUser.email)}`;
             showCheckoutModal(templateName, price, gumroadUrl, templateSlug);
+        }
+        
+        // Stripe Elements instance
+        let stripeCardElement = null;
+        let stripeElements = null;
+        
+        function showStripeCheckoutModal(templateSlug, templateName, price) {
+            // Remove existing modal
+            const existing = document.getElementById('stripeCheckoutModal');
+            if (existing) existing.remove();
+            
+            const modal = document.createElement('div');
+            modal.id = 'stripeCheckoutModal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.4);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 50000;
+                padding: 1rem;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+            
+            modal.innerHTML = `
+                <div class="stripe-checkout-panel" style="
+                    background: rgba(10, 10, 10, 0.7);
+                    backdrop-filter: blur(20px) saturate(180%);
+                    -webkit-backdrop-filter: blur(20px) saturate(180%);
+                    border: 1px solid rgba(29, 154, 155, 0.2);
+                    border-radius: 20px;
+                    box-shadow: 
+                        0 4px 24px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 1px rgba(29, 154, 155, 0.1),
+                        0 0 40px rgba(29, 154, 155, 0.05);
+                    max-width: 420px;
+                    width: 100%;
+                    overflow: hidden;
+                    transform: translateY(20px);
+                    transition: transform 0.3s ease;
+                ">
+                    <!-- Header -->
+                    <div style="
+                        padding: 1.5rem 1.75rem;
+                        border-bottom: 1px solid rgba(29, 154, 155, 0.15);
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    ">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="
+                                width: 40px;
+                                height: 40px;
+                                background: linear-gradient(135deg, var(--primary) 0%, #0d9488 100%);
+                                border-radius: 10px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            ">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--text-primary); font-size: 1.1rem;">Checkout</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">Secure payment</div>
+                            </div>
+                        </div>
+                        <button onclick="closeStripeCheckoutModal()" style="
+                            background: rgba(255,255,255,0.1);
+                            border: none;
+                            width: 36px;
+                            height: 36px;
+                            border-radius: 10px;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            transition: all 0.2s;
+                        " onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Order Summary -->
+                    <div style="padding: 1.25rem 1.75rem; border-bottom: 1px solid rgba(29, 154, 155, 0.1);">
+                        <div style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 1rem;
+                            background: rgba(29, 154, 155, 0.08);
+                            border-radius: 12px;
+                            border: 1px solid rgba(29, 154, 155, 0.1);
+                        ">
+                            <div>
+                                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">${templateName}</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">Lifetime access • Instant download</div>
+                            </div>
+                            <div style="
+                                font-size: 1.5rem;
+                                font-weight: 700;
+                                color: var(--primary);
+                            ">$${price}</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Form -->
+                    <div style="padding: 1.5rem 1.75rem;">
+                        <!-- Email -->
+                        <div style="margin-bottom: 1.25rem;">
+                            <label style="display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px;">Email</label>
+                            <div style="
+                                padding: 0.875rem 1rem;
+                                background: rgba(255,255,255,0.05);
+                                border: 1px solid rgba(29, 154, 155, 0.15);
+                                border-radius: 10px;
+                                color: var(--text-primary);
+                                font-size: 0.95rem;
+                            ">${currentUser?.email || ''}</div>
+                        </div>
+                        
+                        <!-- Card Element -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px;">Card Information</label>
+                            <div id="stripe-card-element" style="
+                                padding: 0.875rem 1rem;
+                                background: rgba(255,255,255,0.05);
+                                border: 2px solid rgba(29, 154, 155, 0.15);
+                                border-radius: 10px;
+                                transition: all 0.2s;
+                            "></div>
+                            <div id="stripe-card-errors" style="color: #ef4444; font-size: 0.8rem; margin-top: 0.5rem; min-height: 1.2rem;"></div>
+                        </div>
+                        
+                        <!-- Pay Button -->
+                        <button id="stripe-pay-button" onclick="processStripePayment('${templateSlug}', '${templateName}', ${price})" style="
+                            width: 100%;
+                            padding: 1rem;
+                            background: linear-gradient(135deg, var(--primary) 0%, #0d9488 100%);
+                            color: white;
+                            border: none;
+                            border-radius: 12px;
+                            font-weight: 600;
+                            font-size: 1rem;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 0.5rem;
+                            transition: all 0.3s;
+                            box-shadow: 0 4px 15px rgba(29, 154, 155, 0.3);
+                        " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(29, 154, 155, 0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 15px rgba(29, 154, 155, 0.3)'">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            Pay $${price}
+                        </button>
+                        
+                        <!-- Processing State -->
+                        <div id="stripe-processing" style="display: none; text-align: center; padding: 1rem 0;">
+                            <div style="
+                                width: 40px;
+                                height: 40px;
+                                border: 3px solid rgba(29, 154, 155, 0.2);
+                                border-top-color: var(--primary);
+                                border-radius: 50%;
+                                animation: spin 1s linear infinite;
+                                margin: 0 auto 1rem;
+                            "></div>
+                            <div style="color: var(--text-secondary); font-size: 0.95rem;">Processing payment...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Footer -->
+                    <div style="
+                        padding: 1rem 1.75rem;
+                        border-top: 1px solid rgba(29, 154, 155, 0.1);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 0.5rem;
+                    ">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Secured by</span>
+                        <svg width="45" height="20" viewBox="0 0 60 25" style="margin-left: 2px;">
+                            <path fill="var(--text-muted)" d="M8.3 10.3h-3v7.2h1.4v-2.6h1.6c1.7 0 2.8-1 2.8-2.3s-1.1-2.3-2.8-2.3zm0 3.4H6.7v-2.2h1.6c.9 0 1.4.4 1.4 1.1s-.5 1.1-1.4 1.1zm7.4-1.2c-.9 0-1.5.4-1.8.9l1.2.5c.2-.3.5-.4.8-.4.5 0 .9.3.9.8v.1c-.2-.1-.5-.2-.9-.2-1.1 0-2.1.6-2.1 1.6 0 .9.8 1.6 1.8 1.6.6 0 1-.3 1.2-.6v.5h1.3v-2.9c0-1.3-1-2-2.4-2zm-.2 3.9c-.4 0-.8-.2-.8-.6 0-.5.5-.7 1-.7.3 0 .6.1.8.2-.1.6-.5 1.1-1 1.1zm7.3-3.7l-1.5 3.9h-.1l-1.6-3.9h-1.5l2.5 5.6-1.4 3.1h1.4l3.8-8.7h-1.6zm-12.2 5.8h1.4v-8.5h-1.4v8.5z"/>
+                            <path fill="#4285F4" d="M22.5 10.3h-3.4v7.2h1.4v-2.7h2c1.6 0 3-1.2 3-2.7s-1.4-2.8-3-2.8zm0 4.2h-2v-2.9h2c1 0 1.6.7 1.6 1.4 0 .8-.6 1.5-1.6 1.5z"/>
+                            <path fill="#34A853" d="M31.1 12.5c-1.5 0-2.7 1.1-2.7 2.8s1.2 2.8 2.9 2.8c1.2 0 1.9-.5 2.4-1.1l-1-.7c-.3.4-.7.6-1.4.6-.6 0-1-.3-1.3-.8l3.5-1.4-.1-.3c-.4-.9-1.3-1.9-2.3-1.9zm0 1.1c.5 0 .9.3 1 .6l-2.4 1c0-.9.7-1.6 1.4-1.6z"/>
+                            <path fill="#FBBC04" d="M26.3 17.5h1.4v-8.5h-1.4v8.5z"/>
+                            <path fill="#EA4335" d="M37.8 12.5c-1.5 0-2.8 1.2-2.8 2.8 0 1.8 1.3 2.8 2.8 2.8.8 0 1.4-.2 1.9-.7v.5c0 1-.5 1.5-1.4 1.5-.7 0-1.2-.5-1.3-1l-1.2.5c.3.8 1.2 1.7 2.5 1.7 1.5 0 2.7-.9 2.7-3v-5h-1.3v.5c-.5-.4-1-.6-1.9-.6zm.1 4.4c-.9 0-1.5-.7-1.5-1.6s.6-1.6 1.5-1.6c.8 0 1.4.7 1.4 1.6s-.6 1.6-1.4 1.6z"/>
+                        </svg>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Animate in
+            requestAnimationFrame(() => {
+                modal.style.opacity = '1';
+                modal.querySelector('.stripe-checkout-panel').style.transform = 'translateY(0)';
+            });
+            
+            // Close on backdrop click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeStripeCheckoutModal();
+            });
+            
+            // Initialize Stripe Elements
+            initStripeElements();
+        }
+        
+        function initStripeElements() {
+            const elements = stripe.elements({
+                fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap' }]
+            });
+            
+            const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+            
+            const style = {
+                base: {
+                    color: isDark ? '#ffffff' : '#1a1a1a',
+                    fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': { color: isDark ? '#6b7280' : '#9ca3af' }
+                },
+                invalid: {
+                    color: '#ef4444',
+                    iconColor: '#ef4444'
+                }
+            };
+            
+            stripeCardElement = elements.create('card', { style, hidePostalCode: false });
+            stripeCardElement.mount('#stripe-card-element');
+            
+            stripeCardElement.on('change', (event) => {
+                const errorEl = document.getElementById('stripe-card-errors');
+                errorEl.textContent = event.error ? event.error.message : '';
+            });
+            
+            stripeCardElement.on('focus', () => {
+                document.getElementById('stripe-card-element').style.borderColor = 'var(--primary)';
+            });
+            stripeCardElement.on('blur', () => {
+                document.getElementById('stripe-card-element').style.borderColor = 'rgba(29, 154, 155, 0.15)';
+            });
+            
+            stripeElements = elements;
+        }
+        
+        async function processStripePayment(templateSlug, templateName, price) {
+            const payBtn = document.getElementById('stripe-pay-button');
+            const processingDiv = document.getElementById('stripe-processing');
+            const errorDiv = document.getElementById('stripe-card-errors');
+            
+            payBtn.style.display = 'none';
+            processingDiv.style.display = 'block';
+            errorDiv.textContent = '';
+            
+            try {
+                // Create payment intent
+                const response = await fetch('https://templates-website-one.vercel.app/api/create-payment-intent', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        amount: price,
+                        templateId: templateSlug,
+                        templateName: templateName,
+                        userId: currentUser?.id || '',
+                        email: currentUser?.email || ''
+                    })
+                });
+                
+                if (!response.ok) throw new Error('Failed to create payment');
+                
+                const { clientSecret } = await response.json();
+                
+                // Confirm payment
+                const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+                    payment_method: {
+                        card: stripeCardElement,
+                        billing_details: { email: currentUser?.email || '' }
+                    }
+                });
+                
+                if (error) throw new Error(error.message);
+                
+                if (paymentIntent.status === 'succeeded') {
+                    closeStripeCheckoutModal();
+                    showPurchaseSuccessModal({ slug: templateSlug, name: templateName });
+                    loadDashboard();
+                }
+                
+            } catch (error) {
+                console.error('Payment error:', error);
+                errorDiv.textContent = error.message || 'Payment failed. Please try again.';
+                payBtn.style.display = 'flex';
+                processingDiv.style.display = 'none';
+            }
+        }
+        
+        function closeStripeCheckoutModal() {
+            const modal = document.getElementById('stripeCheckoutModal');
+            if (modal) {
+                modal.style.opacity = '0';
+                modal.querySelector('.stripe-checkout-panel').style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    modal.remove();
+                    if (stripeCardElement) {
+                        stripeCardElement.destroy();
+                        stripeCardElement = null;
+                    }
+                    stripeElements = null;
+                }, 300);
+            }
         }
         
         function showCheckoutModal(templateName, price, gumroadUrl, templateSlug) {
@@ -9746,9 +10049,17 @@
             
             if (paymentStatus === 'success') {
                 window.history.replaceState({}, document.title, window.location.pathname);
+                const templateSlug = urlParams.get('template');
+                const templateNames = {
+                    'saas-landing': 'FlowMetrics - SaaS Landing',
+                    'portfolio': 'Creative Portfolio',
+                    'restaurant': 'Bella Vista - Restaurant'
+                };
+                const templateName = templateNames[templateSlug] || 'Your Template';
+                
                 setTimeout(() => {
-                    showNotification('🎉 Payment successful! Your template is now available in your dashboard.', 'success');
-                    if (currentUser) showPage('dashboard');
+                    showPurchaseSuccessModal({ slug: templateSlug, name: templateName });
+                    if (currentUser) loadDashboard();
                 }, 500);
             } else if (paymentStatus === 'cancelled') {
                 window.history.replaceState({}, document.title, window.location.pathname);
