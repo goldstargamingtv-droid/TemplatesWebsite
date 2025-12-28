@@ -9508,11 +9508,16 @@
                 const randomGradient = gradients[(displayedTemplates - templatesToShow.length + index) % gradients.length];
                 const price = template.price || 0;
                 const originalPrice = template.original_price || price;
+                const previewImage = template.preview_image || '';
                 
                 return `
                     <div class="template-card" data-category="${template.category || 'all'}">
                         <div class="template-image">
-                            <div class="preview-gradient ${randomGradient}"></div>
+                            ${previewImage ? 
+                                `<img src="${previewImage}" alt="${template.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                 <div class="preview-gradient ${randomGradient}" style="display: none;"></div>` :
+                                `<div class="preview-gradient ${randomGradient}"></div>`
+                            }
                             <div class="template-overlay">
                                 <button class="btn btn-white" onclick="event.preventDefault(); viewTemplateDetails('${template.slug}'); return false;">View Details</button>
                                 ${template.demo_url ? `<a href="${template.demo_url}" target="_blank" class="btn btn-outline-white">Live Preview</a>` : ''}
