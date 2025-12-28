@@ -14460,12 +14460,12 @@
                     const path = `previews/${template.slug}.${ext}`;
                     
                     const { error: uploadError } = await supabaseClient.storage
-                    .from('Templates')
+                    .from('public-assets')
                         .upload(path, previewImageFile, { upsert: true });
 
                     if (uploadError) throw uploadError;
 
-                    const { data: urlData } = supabaseClient.storage.from('Templates').getPublicUrl(path);
+                    const { data: urlData } = supabaseClient.storage.from('public-assets').getPublicUrl(path);
                     updateData.preview_image = urlData.publicUrl;
                 }
 
@@ -15111,7 +15111,7 @@
                 const previewImageExt = previewImage.name.split('.').pop();
                 const previewImagePath = `previews/${slug}.${previewImageExt}`;
                 const { error: imageError } = await supabaseClient.storage
-                    .from('Templates')
+                    .from('public-assets')
                     .upload(previewImagePath, previewImage, { upsert: true });
 
                 if (imageError) throw imageError;
@@ -15126,7 +15126,7 @@
 
                 // Get public URLs
                 const { data: previewUrlData } = supabaseClient.storage
-                    .from('Templates')
+                    .from('public-assets')
                     .getPublicUrl(previewImagePath);
 
                 const { data: zipUrlData } = supabaseClient.storage
