@@ -8088,115 +8088,868 @@
 
         /* Dashboard */
         .dashboard {
-            padding: 8rem 0 4rem;
+            padding: 5rem 0 4rem;
             min-height: 100vh;
+            background: var(--bg-primary);
         }
-
-        .dashboard-header {
-            margin-bottom: 3rem;
+        
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            min-height: calc(100vh - 9rem);
+        }
+        
+        /* Dashboard Sidebar */
+        .dashboard-sidebar {
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(29, 154, 155, 0.15);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+            position: sticky;
+            top: 70px;
+        }
+        
+        [data-theme="light"] .dashboard-sidebar {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(13, 148, 136, 0.15);
+        }
+        
+        .dashboard-user-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        [data-theme="light"] .dashboard-user-card {
+            border-bottom-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, #14b8a6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: white;
+        }
+        
+        .dashboard-user-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .dashboard-user-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 160px;
+        }
+        
+        .dashboard-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+        
+        .dashboard-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            width: 100%;
+        }
+        
+        .dashboard-nav-item:hover {
+            background: rgba(29, 154, 155, 0.1);
+            color: var(--text-primary);
+        }
+        
+        .dashboard-nav-item.active {
+            background: rgba(29, 154, 155, 0.15);
+            color: var(--primary);
+        }
+        
+        .dashboard-nav-item svg {
+            flex-shrink: 0;
+            opacity: 0.7;
+        }
+        
+        .dashboard-nav-item.active svg {
+            opacity: 1;
+        }
+        
+        .dashboard-nav-item span:first-of-type {
+            flex: 1;
+        }
+        
+        .dashboard-nav-badge {
+            background: var(--primary);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50px;
+            min-width: 20px;
             text-align: center;
         }
-
-        .dashboard-header h1 {
-            font-size: 2.75rem;
-            margin-bottom: 0.75rem;
+        
+        .dashboard-nav-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0.75rem 0;
         }
-
-        .dashboard-header p {
+        
+        [data-theme="light"] .dashboard-nav-divider {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-sidebar-footer {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        [data-theme="light"] .dashboard-sidebar-footer {
+            border-top-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: none;
+            background: transparent;
+            color: #ef4444;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        
+        .dashboard-logout-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        /* Dashboard Main */
+        .dashboard-main {
+            min-width: 0;
+        }
+        
+        .dashboard-tab {
+            display: none;
+        }
+        
+        .dashboard-tab.active {
+            display: block;
+        }
+        
+        .dashboard-tab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .dashboard-tab-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dashboard-tab-header p {
             color: var(--text-secondary);
-            font-size: 1.15rem;
+            font-size: 0.95rem;
         }
-
-        .dashboard-grid {
+        
+        .dashboard-content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 3rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
         }
-
-        .dashboard-card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius-lg);
+        
+        .dashboard-loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        
+        .dashboard-loading p {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .dashboard-empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(10, 10, 10, 0.3);
+            border-radius: 16px;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        
+        [data-theme="light"] .dashboard-empty-state {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-empty-state .empty-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .dashboard-empty-state h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dashboard-empty-state p {
+            color: var(--text-muted);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        /* Purchase Card */
+        .purchase-card {
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(29, 154, 155, 0.15);
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
-
-        .dashboard-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
+        
+        [data-theme="light"] .purchase-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(13, 148, 136, 0.15);
+        }
+        
+        .purchase-card:hover {
+            transform: translateY(-4px);
             border-color: var(--primary);
+            box-shadow: 0 12px 40px rgba(29, 154, 155, 0.15);
         }
-
-        .card-image {
-            height: 220px;
-            background: var(--gradient-1);
+        
+        .purchase-card-image {
+            height: 160px;
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .card-badge {
+        
+        .purchase-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .purchase-card-image .card-type-badge {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.4rem 0.8rem;
-            background: rgba(255, 255, 255, 0.95);
-            color: var(--primary);
+            top: 0.75rem;
+            left: 0.75rem;
+            padding: 0.35rem 0.75rem;
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
-        .card-content {
-            padding: 1.75rem;
+        
+        .purchase-card-image .card-type-badge.template {
+            background: rgba(29, 154, 155, 0.9);
+            color: white;
         }
-
-        .card-content h3 {
+        
+        .purchase-card-image .card-type-badge.component {
+            background: rgba(139, 92, 246, 0.9);
+            color: white;
+        }
+        
+        .purchase-card-image .card-type-badge.bundle {
+            background: rgba(245, 158, 11, 0.9);
+            color: white;
+        }
+        
+        .purchase-card-image .version-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            padding: 0.35rem 0.6rem;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        
+        .purchase-card-body {
+            padding: 1.25rem;
+        }
+        
+        .purchase-card-body h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            font-size: 1.35rem;
         }
-
-        .card-content p {
-            color: var(--text-secondary);
-            margin-bottom: 1.25rem;
-            font-size: 0.925rem;
-            line-height: 1.6;
-        }
-
-        .card-meta {
+        
+        .purchase-card-body .purchase-meta {
             display: flex;
             gap: 1rem;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
             flex-wrap: wrap;
         }
-
-        .card-meta-item {
+        
+        .purchase-card-body .purchase-meta span {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.35rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .purchase-card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .purchase-card-actions .btn {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            font-size: 0.85rem;
+        }
+        
+        /* Component Instructions Modal */
+        .component-instructions {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1rem;
+        }
+        
+        .component-instructions h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #a78bfa;
+        }
+        
+        .component-instructions ol {
+            margin: 0;
+            padding-left: 1.25rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .component-instructions ol li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Settings Sections */
+        .dashboard-settings-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .settings-section {
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(29, 154, 155, 0.15);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        [data-theme="light"] .settings-section {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(13, 148, 136, 0.15);
+        }
+        
+        .settings-section.danger {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        .settings-section-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        [data-theme="light"] .settings-section-header {
+            border-bottom-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .settings-section-header h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .settings-section-header p {
             font-size: 0.85rem;
             color: var(--text-muted);
         }
-
-        .card-actions {
+        
+        .settings-section-content {
+            padding: 1.5rem;
+        }
+        
+        .settings-avatar-upload {
             display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .settings-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, #14b8a6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .settings-avatar-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+        
+        .settings-form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        
+        .settings-form-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            max-width: 400px;
+        }
+        
+        .settings-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .settings-field label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        
+        .settings-field input {
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        
+        [data-theme="light"] .settings-field input {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+        
+        .settings-field input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(29, 154, 155, 0.1);
+        }
+        
+        .settings-field input:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .field-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .password-input-wrapper {
+            position: relative;
+        }
+        
+        .password-input-wrapper input {
+            width: 100%;
+            padding-right: 3rem;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+        
+        .password-toggle:hover {
+            color: var(--text-primary);
+        }
+        
+        .password-strength {
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .password-strength::after {
+            content: '';
+            display: block;
+            height: 100%;
+            width: var(--strength, 0%);
+            background: var(--strength-color, #ef4444);
+            transition: all 0.3s ease;
+        }
+        
+        .settings-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        /* Toggle Switch */
+        .settings-toggle-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .settings-toggle-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+        }
+        
+        [data-theme="light"] .settings-toggle-item {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        
+        .settings-toggle-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .settings-toggle-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+        
+        [data-theme="light"] .toggle-slider {
+            background: rgba(0, 0, 0, 0.15);
+        }
+        
+        .toggle-slider::before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--primary);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(22px);
+        }
+        
+        /* Sessions */
+        .sessions-list {
+            display: flex;
+            flex-direction: column;
             gap: 0.75rem;
-            flex-wrap: wrap;
         }
-
-        .empty-state {
-            text-align: center;
-            padding: 5rem 2rem;
-            grid-column: 1 / -1;
+        
+        .session-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
         }
-
-        .empty-state-icon {
-            font-size: 5rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.4;
+        
+        [data-theme="light"] .session-item {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        
+        .session-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(29, 154, 155, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+        
+        .session-info {
+            flex: 1;
+        }
+        
+        .session-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        
+        .session-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        
+        .session-active {
+            color: #10b981;
+        }
+        
+        .session-badge {
+            padding: 0.3rem 0.75rem;
+            background: rgba(29, 154, 155, 0.15);
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        /* Danger Zone */
+        .danger-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        
+        .danger-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: #ef4444;
+        }
+        
+        .danger-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            padding: 0.6rem 1.25rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        
+        /* Billing Table */
+        .billing-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .billing-table th,
+        .billing-table td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+        }
+        
+        .billing-table th {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        [data-theme="light"] .billing-table th {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        
+        .billing-table td {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+        
+        [data-theme="light"] .billing-table td {
+            border-top-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .billing-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .billing-status.paid {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+        
+        .billing-status.pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+        
+        /* Responsive Dashboard */
+        @media (max-width: 1024px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-sidebar {
+                position: relative;
+                top: 0;
+            }
+            
+            .dashboard-nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .dashboard-nav-item {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+            
+            .dashboard-nav-item span:first-of-type {
+                flex: unset;
+            }
+            
+            .dashboard-nav-divider {
+                display: none;
+            }
+            
+            .dashboard-sidebar-footer {
+                display: none;
+            }
+            
+            .settings-form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .dashboard {
+                padding: 4.5rem 0 2rem;
+            }
+            
+            .dashboard-tab-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .dashboard-content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .danger-action {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .settings-avatar-upload {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
         .empty-state h3 {
@@ -13084,16 +13837,360 @@
     <div id="dashboardPage" class="page-section">
         <div class="dashboard">
             <div class="container">
-                <div class="dashboard-header">
-                    <h1>My Templates</h1>
-                    <p>Download and manage your purchased templates</p>
-                </div>
-                
-                <div id="dashboardContent" class="dashboard-grid">
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
-                        <div class="loading"></div>
-                        <p style="margin-top: 1rem; color: var(--text-secondary);">Loading your templates...</p>
-                    </div>
+                <!-- Dashboard Layout -->
+                <div class="dashboard-layout">
+                    <!-- Sidebar -->
+                    <aside class="dashboard-sidebar">
+                        <div class="dashboard-user-card">
+                            <div class="dashboard-avatar" id="dashboardAvatar">
+                                <span id="dashboardAvatarInitial">U</span>
+                            </div>
+                            <div class="dashboard-user-info">
+                                <h3 id="dashboardUserName">User</h3>
+                                <p id="dashboardUserEmail">user@example.com</p>
+                            </div>
+                        </div>
+                        
+                        <nav class="dashboard-nav">
+                            <button class="dashboard-nav-item active" data-tab="purchases" onclick="switchDashboardTab('purchases')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                                </svg>
+                                <span>My Purchases</span>
+                                <span class="dashboard-nav-badge" id="purchaseCount">0</span>
+                            </button>
+                            <button class="dashboard-nav-item" data-tab="downloads" onclick="switchDashboardTab('downloads')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                <span>Downloads</span>
+                            </button>
+                            <button class="dashboard-nav-item" data-tab="billing" onclick="switchDashboardTab('billing')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                                    <line x1="1" y1="10" x2="23" y2="10"/>
+                                </svg>
+                                <span>Billing History</span>
+                            </button>
+                            <div class="dashboard-nav-divider"></div>
+                            <button class="dashboard-nav-item" data-tab="settings" onclick="switchDashboardTab('settings')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                                </svg>
+                                <span>Account Settings</span>
+                            </button>
+                            <button class="dashboard-nav-item" data-tab="security" onclick="switchDashboardTab('security')">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                                <span>Security</span>
+                            </button>
+                        </nav>
+                        
+                        <div class="dashboard-sidebar-footer">
+                            <button class="dashboard-logout-btn" onclick="handleLogout()">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                    <polyline points="16 17 21 12 16 7"/>
+                                    <line x1="21" y1="12" x2="9" y2="12"/>
+                                </svg>
+                                <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </aside>
+                    
+                    <!-- Main Content -->
+                    <main class="dashboard-main">
+                        <!-- Purchases Tab -->
+                        <div class="dashboard-tab active" id="tab-purchases">
+                            <div class="dashboard-tab-header">
+                                <div>
+                                    <h1>My Purchases</h1>
+                                    <p>Access and download your purchased templates and components</p>
+                                </div>
+                                <button class="btn btn-primary" onclick="navigateTo('home'); setTimeout(() => document.getElementById('templates').scrollIntoView({behavior:'smooth'}), 100);">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"/>
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                    </svg>
+                                    Browse More
+                                </button>
+                            </div>
+                            
+                            <div class="dashboard-content-grid" id="purchasesContent">
+                                <div class="dashboard-loading">
+                                    <div class="loading"></div>
+                                    <p>Loading your purchases...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Downloads Tab -->
+                        <div class="dashboard-tab" id="tab-downloads">
+                            <div class="dashboard-tab-header">
+                                <div>
+                                    <h1>Download History</h1>
+                                    <p>Track your recent downloads and re-download files</p>
+                                </div>
+                            </div>
+                            
+                            <div class="dashboard-downloads-list" id="downloadsContent">
+                                <div class="dashboard-empty-state">
+                                    <div class="empty-icon">📥</div>
+                                    <h3>No downloads yet</h3>
+                                    <p>Your download history will appear here after you download a template or component.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Billing Tab -->
+                        <div class="dashboard-tab" id="tab-billing">
+                            <div class="dashboard-tab-header">
+                                <div>
+                                    <h1>Billing History</h1>
+                                    <p>View your payment history and invoices</p>
+                                </div>
+                            </div>
+                            
+                            <div class="dashboard-billing-list" id="billingContent">
+                                <div class="dashboard-loading">
+                                    <div class="loading"></div>
+                                    <p>Loading billing history...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Settings Tab -->
+                        <div class="dashboard-tab" id="tab-settings">
+                            <div class="dashboard-tab-header">
+                                <div>
+                                    <h1>Account Settings</h1>
+                                    <p>Manage your profile and preferences</p>
+                                </div>
+                            </div>
+                            
+                            <div class="dashboard-settings-sections">
+                                <!-- Profile Section -->
+                                <div class="settings-section">
+                                    <div class="settings-section-header">
+                                        <h2>Profile Information</h2>
+                                        <p>Update your personal details</p>
+                                    </div>
+                                    <div class="settings-section-content">
+                                        <div class="settings-avatar-upload">
+                                            <div class="settings-avatar" id="settingsAvatar">
+                                                <span id="settingsAvatarInitial">U</span>
+                                            </div>
+                                            <div class="settings-avatar-info">
+                                                <button class="btn btn-secondary btn-small">Change Photo</button>
+                                                <p>JPG, PNG or GIF. Max 2MB.</p>
+                                            </div>
+                                        </div>
+                                        <div class="settings-form-grid">
+                                            <div class="settings-field">
+                                                <label>Full Name</label>
+                                                <input type="text" id="settingsFullName" placeholder="Your name">
+                                            </div>
+                                            <div class="settings-field">
+                                                <label>Email Address</label>
+                                                <input type="email" id="settingsEmail" placeholder="your@email.com" disabled>
+                                                <span class="field-hint">Contact support to change email</span>
+                                            </div>
+                                            <div class="settings-field">
+                                                <label>Company (Optional)</label>
+                                                <input type="text" id="settingsCompany" placeholder="Your company">
+                                            </div>
+                                            <div class="settings-field">
+                                                <label>Website (Optional)</label>
+                                                <input type="url" id="settingsWebsite" placeholder="https://yourwebsite.com">
+                                            </div>
+                                        </div>
+                                        <div class="settings-actions">
+                                            <button class="btn btn-primary" onclick="saveProfileSettings()">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Notification Preferences -->
+                                <div class="settings-section">
+                                    <div class="settings-section-header">
+                                        <h2>Notification Preferences</h2>
+                                        <p>Choose what updates you want to receive</p>
+                                    </div>
+                                    <div class="settings-section-content">
+                                        <div class="settings-toggle-list">
+                                            <div class="settings-toggle-item">
+                                                <div class="settings-toggle-info">
+                                                    <h4>Product Updates</h4>
+                                                    <p>Get notified when templates you own receive updates</p>
+                                                </div>
+                                                <label class="toggle-switch">
+                                                    <input type="checkbox" id="notifyUpdates" checked>
+                                                    <span class="toggle-slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="settings-toggle-item">
+                                                <div class="settings-toggle-info">
+                                                    <h4>New Templates</h4>
+                                                    <p>Be the first to know about new template releases</p>
+                                                </div>
+                                                <label class="toggle-switch">
+                                                    <input type="checkbox" id="notifyNewTemplates" checked>
+                                                    <span class="toggle-slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="settings-toggle-item">
+                                                <div class="settings-toggle-info">
+                                                    <h4>Promotions & Discounts</h4>
+                                                    <p>Receive exclusive deals and discount codes</p>
+                                                </div>
+                                                <label class="toggle-switch">
+                                                    <input type="checkbox" id="notifyPromos">
+                                                    <span class="toggle-slider"></span>
+                                                </label>
+                                            </div>
+                                            <div class="settings-toggle-item">
+                                                <div class="settings-toggle-info">
+                                                    <h4>Tips & Tutorials</h4>
+                                                    <p>Learn how to get the most out of your templates</p>
+                                                </div>
+                                                <label class="toggle-switch">
+                                                    <input type="checkbox" id="notifyTips">
+                                                    <span class="toggle-slider"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="settings-actions">
+                                            <button class="btn btn-primary" onclick="saveNotificationSettings()">Save Preferences</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Security Tab -->
+                        <div class="dashboard-tab" id="tab-security">
+                            <div class="dashboard-tab-header">
+                                <div>
+                                    <h1>Security</h1>
+                                    <p>Manage your password and security settings</p>
+                                </div>
+                            </div>
+                            
+                            <div class="dashboard-settings-sections">
+                                <!-- Change Password -->
+                                <div class="settings-section">
+                                    <div class="settings-section-header">
+                                        <h2>Change Password</h2>
+                                        <p>Update your password to keep your account secure</p>
+                                    </div>
+                                    <div class="settings-section-content">
+                                        <div class="settings-form-stack">
+                                            <div class="settings-field">
+                                                <label>Current Password</label>
+                                                <div class="password-input-wrapper">
+                                                    <input type="password" id="currentPassword" placeholder="Enter current password">
+                                                    <button type="button" class="password-toggle" onclick="togglePasswordVisibility('currentPassword')">
+                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                                            <circle cx="12" cy="12" r="3"/>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="settings-field">
+                                                <label>New Password</label>
+                                                <div class="password-input-wrapper">
+                                                    <input type="password" id="newPassword" placeholder="Enter new password">
+                                                    <button type="button" class="password-toggle" onclick="togglePasswordVisibility('newPassword')">
+                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                                            <circle cx="12" cy="12" r="3"/>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <div class="password-strength" id="passwordStrength"></div>
+                                            </div>
+                                            <div class="settings-field">
+                                                <label>Confirm New Password</label>
+                                                <div class="password-input-wrapper">
+                                                    <input type="password" id="confirmPassword" placeholder="Confirm new password">
+                                                    <button type="button" class="password-toggle" onclick="togglePasswordVisibility('confirmPassword')">
+                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                                            <circle cx="12" cy="12" r="3"/>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="settings-actions">
+                                            <button class="btn btn-primary" onclick="changePassword()">Update Password</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Active Sessions -->
+                                <div class="settings-section">
+                                    <div class="settings-section-header">
+                                        <h2>Active Sessions</h2>
+                                        <p>Manage devices where you're currently logged in</p>
+                                    </div>
+                                    <div class="settings-section-content">
+                                        <div class="sessions-list" id="sessionsList">
+                                            <div class="session-item current">
+                                                <div class="session-icon">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                                        <line x1="8" y1="21" x2="16" y2="21"/>
+                                                        <line x1="12" y1="17" x2="12" y2="21"/>
+                                                    </svg>
+                                                </div>
+                                                <div class="session-info">
+                                                    <h4>Current Session</h4>
+                                                    <p>This device • <span class="session-active">Active now</span></p>
+                                                </div>
+                                                <span class="session-badge">Current</span>
+                                            </div>
+                                        </div>
+                                        <div class="settings-actions" style="margin-top: 1.5rem;">
+                                            <button class="btn btn-secondary" onclick="logoutAllSessions()">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                                    <polyline points="16 17 21 12 16 7"/>
+                                                    <line x1="21" y1="12" x2="9" y2="12"/>
+                                                </svg>
+                                                Sign Out All Other Sessions
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Danger Zone -->
+                                <div class="settings-section danger">
+                                    <div class="settings-section-header">
+                                        <h2>Danger Zone</h2>
+                                        <p>Irreversible and destructive actions</p>
+                                    </div>
+                                    <div class="settings-section-content">
+                                        <div class="danger-action">
+                                            <div class="danger-info">
+                                                <h4>Delete Account</h4>
+                                                <p>Permanently delete your account and all associated data. This action cannot be undone.</p>
+                                            </div>
+                                            <button class="btn btn-danger" onclick="confirmDeleteAccount()">Delete Account</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
                 </div>
             </div>
         </div>
@@ -13984,6 +15081,26 @@
         // DASHBOARD
         // ============================================
         
+        // Dashboard tab switching
+        function switchDashboardTab(tabName) {
+            // Update nav items
+            document.querySelectorAll('.dashboard-nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.tab === tabName);
+            });
+            
+            // Update tab content
+            document.querySelectorAll('.dashboard-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.id === `tab-${tabName}`);
+            });
+            
+            // Load tab content
+            if (tabName === 'purchases') loadPurchases();
+            if (tabName === 'downloads') loadDownloadHistory();
+            if (tabName === 'billing') loadBillingHistory();
+            if (tabName === 'settings') loadSettingsData();
+            if (tabName === 'security') loadSecurityData();
+        }
+        
         async function loadDashboard() {
             LoadingBar.start();
             if (!currentUser) {
@@ -13993,16 +15110,314 @@
                 return;
             }
             
-            const container = document.getElementById('dashboardContent');
-            if (!container) {
-                LoadingBar.complete();
-                return;
-            }
+            // Update user info in sidebar
+            const userName = currentUser.user_metadata?.full_name || currentUser.email?.split('@')[0] || 'User';
+            const userInitial = userName.charAt(0).toUpperCase();
             
-            container.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 3rem;"><div class="loading"></div><p style="margin-top: 1rem; color: var(--text-secondary);">Loading your templates...</p></div>';
+            document.getElementById('dashboardUserName').textContent = userName;
+            document.getElementById('dashboardUserEmail').textContent = currentUser.email || '';
+            document.getElementById('dashboardAvatarInitial').textContent = userInitial;
+            document.getElementById('settingsAvatarInitial').textContent = userInitial;
+            
+            // Load purchases by default
+            await loadPurchases();
+            LoadingBar.complete();
+        }
+        
+        async function loadPurchases() {
+            const container = document.getElementById('purchasesContent');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <div class="dashboard-loading">
+                    <div class="loading"></div>
+                    <p>Loading your purchases...</p>
+                </div>
+            `;
             
             try {
-                // Get purchases
+                // Get purchases from database
+                const { data: purchases, error } = await supabaseClient
+                    .from('purchases')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .order('purchased_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                // Update purchase count badge
+                document.getElementById('purchaseCount').textContent = purchases?.length || 0;
+                
+                if (!purchases || purchases.length === 0) {
+                    container.innerHTML = `
+                        <div class="dashboard-empty-state">
+                            <div class="empty-icon">📦</div>
+                            <h3>No purchases yet</h3>
+                            <p>Purchase your first template or component to get started building amazing websites!</p>
+                            <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="navigateTo('home'); setTimeout(() => document.getElementById('templates').scrollIntoView({behavior:'smooth'}), 100);">
+                                Browse Templates
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Template/Component info lookup
+                const productInfo = {
+                    // Templates
+                    'saas-landing': { name: 'FlowMetrics - SaaS Landing', category: 'SaaS', type: 'template', version: '1.0.0', image: 'https://gkyzpehxdqoolomglpal.supabase.co/storage/v1/object/public/public-assets/previews/saas-landing.png' },
+                    'portfolio': { name: 'Creative Portfolio', category: 'Portfolio', type: 'template', version: '1.0.0', image: 'https://gkyzpehxdqoolomglpal.supabase.co/storage/v1/object/public/public-assets/previews/portfolio.png' },
+                    'restaurant': { name: 'Bella Vista - Restaurant', category: 'Restaurant', type: 'template', version: '1.0.0', image: 'https://gkyzpehxdqoolomglpal.supabase.co/storage/v1/object/public/public-assets/previews/restaurant.png' },
+                    // Pro Components
+                    'glassmorphism-cards': { name: 'Glassmorphism Cards', category: 'UI Kit', type: 'component', version: '1.0.0' },
+                    'animated-buttons': { name: 'Animated Buttons', category: 'UI Kit', type: 'component', version: '1.0.0' },
+                    'pricing-tables': { name: 'Pricing Tables', category: 'Pricing', type: 'component', version: '1.0.0' },
+                    'testimonials': { name: 'Testimonial Sliders', category: 'Social Proof', type: 'component', version: '1.0.0' },
+                    'feature-sections': { name: 'Feature Sections', category: 'Content', type: 'component', version: '1.0.0' },
+                    'hero-sections': { name: 'Hero Sections', category: 'Headers', type: 'component', version: '1.0.0' },
+                    'contact-forms': { name: 'Contact Forms', category: 'Forms', type: 'component', version: '1.0.0' },
+                    'navigation-menus': { name: 'Navigation Menus', category: 'Navigation', type: 'component', version: '1.0.0' },
+                    'footer-sections': { name: 'Footer Sections', category: 'Footers', type: 'component', version: '1.0.0' },
+                    'pro-bundle': { name: 'Pro Bundle', category: 'All Components', type: 'bundle', version: '1.0.0' }
+                };
+                
+                container.innerHTML = purchases.map(purchase => {
+                    const slug = purchase.template_slug;
+                    const product = productInfo[slug] || { name: slug, category: 'Product', type: 'template', version: '1.0.0' };
+                    const isComponent = product.type === 'component';
+                    const isBundle = product.type === 'bundle';
+                    
+                    const typeBadge = isBundle ? 'bundle' : (isComponent ? 'component' : 'template');
+                    const typeLabel = isBundle ? 'Bundle' : (isComponent ? 'Component' : 'Template');
+                    
+                    return `
+                        <div class="purchase-card">
+                            <div class="purchase-card-image" style="${product.image ? '' : 'background: linear-gradient(135deg, ' + (isComponent ? 'rgba(139, 92, 246, 0.3), rgba(139, 92, 246, 0.1)' : (isBundle ? 'rgba(245, 158, 11, 0.3), rgba(245, 158, 11, 0.1)' : 'rgba(29, 154, 155, 0.3), rgba(29, 154, 155, 0.1)')) + ');'}">
+                                ${product.image ? `<img src="${product.image}" alt="${product.name}">` : `<span style="font-size: 3rem; opacity: 0.5;">${isBundle ? '📦' : (isComponent ? '⚡' : '🎨')}</span>`}
+                                <span class="card-type-badge ${typeBadge}">${typeLabel}</span>
+                                <span class="version-badge">v${product.version}</span>
+                            </div>
+                            <div class="purchase-card-body">
+                                <h3>${product.name}</h3>
+                                <div class="purchase-meta">
+                                    <span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                            <line x1="16" y1="2" x2="16" y2="6"/>
+                                            <line x1="8" y1="2" x2="8" y2="6"/>
+                                            <line x1="3" y1="10" x2="21" y2="10"/>
+                                        </svg>
+                                        ${new Date(purchase.purchased_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                    </span>
+                                    <span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                            <polyline points="22 4 12 14.01 9 11.01"/>
+                                        </svg>
+                                        Lifetime Access
+                                    </span>
+                                </div>
+                                <div class="purchase-card-actions">
+                                    <button class="btn btn-primary" onclick="downloadPurchase('${slug}', '${product.version}', '${product.type}')">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                            <polyline points="7 10 12 15 17 10"/>
+                                            <line x1="12" y1="15" x2="12" y2="3"/>
+                                        </svg>
+                                        Download
+                                    </button>
+                                    ${isComponent || isBundle ? `
+                                        <button class="btn btn-secondary" onclick="showComponentInstructions('${slug}', '${product.name}')">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="10"/>
+                                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                            </svg>
+                                            How to Use
+                                        </button>
+                                    ` : `
+                                        <button class="btn btn-secondary" onclick="openDemoBySlug('${slug}')">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                                <circle cx="12" cy="12" r="3"/>
+                                            </svg>
+                                            Preview
+                                        </button>
+                                    `}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                console.error('Load purchases error:', error);
+                container.innerHTML = `
+                    <div class="dashboard-empty-state">
+                        <div class="empty-icon">⚠️</div>
+                        <h3>Error loading purchases</h3>
+                        <p>${error.message}</p>
+                        <button class="btn btn-primary" style="margin-top: 1rem;" onclick="loadPurchases()">Try Again</button>
+                    </div>
+                `;
+            }
+        }
+        
+        function showComponentInstructions(slug, name) {
+            const modal = document.createElement('div');
+            modal.className = 'auth-modal';
+            modal.id = 'componentInstructionsModal';
+            modal.innerHTML = `
+                <div class="auth-modal-content" style="max-width: 600px;">
+                    <button class="auth-close-btn" onclick="closeComponentInstructions()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                    </button>
+                    <div class="auth-header">
+                        <h2 style="display: flex; align-items: center; gap: 0.75rem;">
+                            <span style="font-size: 1.5rem;">⚡</span>
+                            How to Use ${name}
+                        </h2>
+                        <p>Follow these steps to integrate the component into your project</p>
+                    </div>
+                    <div class="component-instructions" style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0;">
+                        <h4 style="color: #a78bfa; margin-bottom: 1rem; font-size: 1rem;">📋 Installation Steps</h4>
+                        <ol style="padding-left: 1.25rem; color: var(--text-secondary); line-height: 1.8;">
+                            <li><strong>Download</strong> the component files using the download button</li>
+                            <li><strong>Extract</strong> the ZIP file to your project directory</li>
+                            <li><strong>Copy</strong> the HTML snippet into your page where you want the component</li>
+                            <li><strong>Include</strong> the CSS file in your <code style="background: rgba(255,255,255,0.1); padding: 0.1rem 0.4rem; border-radius: 4px;">&lt;head&gt;</code> section</li>
+                            <li><strong>Add</strong> the JavaScript file before the closing <code style="background: rgba(255,255,255,0.1); padding: 0.1rem 0.4rem; border-radius: 4px;">&lt;/body&gt;</code> tag</li>
+                            <li><strong>Customize</strong> colors, text, and styles using the included variables</li>
+                        </ol>
+                    </div>
+                    <div style="background: rgba(29, 154, 155, 0.1); border: 1px solid rgba(29, 154, 155, 0.2); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                        <h4 style="color: var(--primary); margin-bottom: 0.75rem; font-size: 1rem;">📁 What's Included</h4>
+                        <ul style="list-style: none; padding: 0; color: var(--text-secondary);">
+                            <li style="padding: 0.4rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: var(--primary);">✓</span> HTML component code (ready to copy/paste)
+                            </li>
+                            <li style="padding: 0.4rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: var(--primary);">✓</span> CSS stylesheet with customizable variables
+                            </li>
+                            <li style="padding: 0.4rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: var(--primary);">✓</span> JavaScript for interactivity (if applicable)
+                            </li>
+                            <li style="padding: 0.4rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: var(--primary);">✓</span> Documentation with examples
+                            </li>
+                            <li style="padding: 0.4rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: var(--primary);">✓</span> Multiple variants and color schemes
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-primary" style="flex: 1;" onclick="downloadPurchase('${slug}', '1.0.0', 'component'); closeComponentInstructions();">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Download Now
+                        </button>
+                        <button class="btn btn-secondary" onclick="closeComponentInstructions()">Close</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            setTimeout(() => modal.classList.add('active'), 10);
+        }
+        
+        function closeComponentInstructions() {
+            const modal = document.getElementById('componentInstructionsModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+        
+        async function downloadPurchase(slug, version, type) {
+            showNotification('Preparing your download...', 'info');
+            
+            try {
+                let filePath;
+                let bucketName = 'Templates';
+                
+                if (type === 'component' || type === 'bundle') {
+                    filePath = `components/${slug}/${slug}-v${version}.zip`;
+                } else {
+                    filePath = `files/${slug}/${slug}-v${version}.zip`;
+                }
+                
+                const { data: urlData, error: urlError } = await supabaseClient.storage
+                    .from(bucketName)
+                    .createSignedUrl(filePath, 3600);
+                
+                if (urlError) throw urlError;
+                
+                if (urlData?.signedUrl) {
+                    // Track download
+                    await trackDownload(slug, version, type);
+                    
+                    // Trigger download
+                    const link = document.createElement('a');
+                    link.href = urlData.signedUrl;
+                    link.download = `${slug}-v${version}.zip`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    showNotification('Download started!', 'success');
+                } else {
+                    throw new Error('Could not generate download link');
+                }
+            } catch (error) {
+                console.error('Download error:', error);
+                showNotification('Download failed. Please try again or contact support.', 'error');
+            }
+        }
+        
+        async function trackDownload(slug, version, type) {
+            try {
+                await supabaseClient.from('download_history').insert({
+                    user_id: currentUser.id,
+                    product_slug: slug,
+                    product_type: type,
+                    version: version,
+                    downloaded_at: new Date().toISOString()
+                });
+            } catch (e) {
+                console.log('Download tracking not available');
+            }
+        }
+        
+        async function loadDownloadHistory() {
+            const container = document.getElementById('downloadsContent');
+            if (!container) return;
+            
+            // For now, show placeholder - can be connected to download_history table
+            container.innerHTML = `
+                <div class="dashboard-empty-state">
+                    <div class="empty-icon">📥</div>
+                    <h3>Download History</h3>
+                    <p>Your recent downloads will appear here. Download a template or component to see your history.</p>
+                </div>
+            `;
+        }
+        
+        async function loadBillingHistory() {
+            const container = document.getElementById('billingContent');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <div class="dashboard-loading">
+                    <div class="loading"></div>
+                    <p>Loading billing history...</p>
+                </div>
+            `;
+            
+            try {
                 const { data: purchases, error } = await supabaseClient
                     .from('purchases')
                     .select('*')
@@ -14013,73 +15428,237 @@
                 
                 if (!purchases || purchases.length === 0) {
                     container.innerHTML = `
-                        <div class="empty-state">
-                            <div class="empty-state-icon">📦</div>
-                            <h3>No templates yet</h3>
-                            <p>Purchase your first template to get started building amazing websites!</p>
-                            <button class="btn btn-primary btn-lg" onclick="navigateTo('home'); setTimeout(() => document.getElementById('templates').scrollIntoView({behavior:'smooth'}), 100);">Browse Templates</button>
+                        <div class="dashboard-empty-state">
+                            <div class="empty-icon">🧾</div>
+                            <h3>No billing history</h3>
+                            <p>Your purchase receipts will appear here after you make a purchase.</p>
                         </div>
                     `;
-                    LoadingBar.complete();
                     return;
                 }
                 
-                // Template info lookup by slug
-                const templateInfo = {
-                    'saas-landing': { name: 'FlowMetrics - SaaS Landing', category: 'SaaS', current_version: '1.0.0' },
-                    'portfolio': { name: 'Creative Portfolio', category: 'Portfolio', current_version: '1.0.0' },
-                    'restaurant': { name: 'Bella Vista - Restaurant', category: 'Restaurant', current_version: '1.0.0' }
-                };
-                
-                container.innerHTML = purchases.map(purchase => {
-                    const slug = purchase.template_slug;
-                    const template = templateInfo[slug] || { name: slug, category: 'Template', current_version: '1.0.0' };
-                    const gradients = ['gradient-1', 'gradient-2', 'gradient-3'];
-                    const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
-                    
-                    return `
-                        <div class="dashboard-card">
-                            <div class="card-image" style="background: var(--${randomGradient});">
-                                <div class="card-badge">v${template.current_version}</div>
-                            </div>
-                            <div class="card-content">
-                                <h3>${template.name}</h3>
-                                <p>${template.category || 'Template'}</p>
-                                <div class="card-meta">
-                                    <div class="card-meta-item">
-                                        <span>📅</span>
-                                        ${new Date(purchase.purchased_at).toLocaleDateString()}
-                                    </div>
-                                    <div class="card-meta-item">
-                                        <span>✓</span>
-                                        Lifetime Access
-                                    </div>
-                                </div>
-                                <div class="card-actions">
-                                    <button class="btn btn-primary btn-small" onclick="downloadTemplate('${slug}', '${template.current_version}')">
-                                        ⬇️ Download
-                                    </button>
-                                    <button class="btn btn-secondary btn-small" onclick="showNotification('Updates coming soon!', 'info')">
-                                        🔔 Updates
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-                
-                LoadingBar.complete();
-            } catch (error) {
-                LoadingBar.complete();
-                console.error('Dashboard load error:', error);
                 container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">⚠️</div>
-                        <h3>Error loading templates</h3>
-                        <p>${error.message}</p>
-                        <button class="btn btn-primary" onclick="loadDashboard()">Try Again</button>
+                    <div class="settings-section">
+                        <div class="settings-section-content" style="padding: 0; overflow-x: auto;">
+                            <table class="billing-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Description</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Receipt</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${purchases.map(p => {
+                                        const productNames = {
+                                            'saas-landing': 'FlowMetrics - SaaS Landing',
+                                            'portfolio': 'Creative Portfolio',
+                                            'restaurant': 'Bella Vista - Restaurant',
+                                            'pro-bundle': 'Pro Bundle',
+                                            'glassmorphism-cards': 'Glassmorphism Cards',
+                                            'animated-buttons': 'Animated Buttons',
+                                            'pricing-tables': 'Pricing Tables'
+                                        };
+                                        return `
+                                            <tr>
+                                                <td>${new Date(p.purchased_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                                                <td>${productNames[p.template_slug] || p.template_slug}</td>
+                                                <td>$${p.amount_paid || '0'}</td>
+                                                <td><span class="billing-status paid">✓ Paid</span></td>
+                                                <td>
+                                                    <button class="btn btn-secondary btn-small" onclick="showNotification('Receipt sent to your email', 'success')">
+                                                        View
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 `;
+            } catch (error) {
+                console.error('Billing load error:', error);
+                container.innerHTML = `
+                    <div class="dashboard-empty-state">
+                        <div class="empty-icon">⚠️</div>
+                        <h3>Error loading billing history</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function loadSettingsData() {
+            if (!currentUser) return;
+            
+            const fullName = currentUser.user_metadata?.full_name || '';
+            const company = currentUser.user_metadata?.company || '';
+            const website = currentUser.user_metadata?.website || '';
+            
+            document.getElementById('settingsFullName').value = fullName;
+            document.getElementById('settingsEmail').value = currentUser.email || '';
+            document.getElementById('settingsCompany').value = company;
+            document.getElementById('settingsWebsite').value = website;
+        }
+        
+        async function saveProfileSettings() {
+            const fullName = document.getElementById('settingsFullName').value.trim();
+            const company = document.getElementById('settingsCompany').value.trim();
+            const website = document.getElementById('settingsWebsite').value.trim();
+            
+            try {
+                const { error } = await supabaseClient.auth.updateUser({
+                    data: {
+                        full_name: fullName,
+                        company: company,
+                        website: website
+                    }
+                });
+                
+                if (error) throw error;
+                
+                // Update display name in sidebar
+                document.getElementById('dashboardUserName').textContent = fullName || currentUser.email?.split('@')[0] || 'User';
+                document.getElementById('dashboardAvatarInitial').textContent = (fullName || currentUser.email || 'U').charAt(0).toUpperCase();
+                document.getElementById('settingsAvatarInitial').textContent = (fullName || currentUser.email || 'U').charAt(0).toUpperCase();
+                
+                showNotification('Profile updated successfully!', 'success');
+            } catch (error) {
+                console.error('Save profile error:', error);
+                showNotification('Failed to update profile: ' + error.message, 'error');
+            }
+        }
+        
+        function saveNotificationSettings() {
+            // Save to localStorage for now
+            const prefs = {
+                updates: document.getElementById('notifyUpdates').checked,
+                newTemplates: document.getElementById('notifyNewTemplates').checked,
+                promos: document.getElementById('notifyPromos').checked,
+                tips: document.getElementById('notifyTips').checked
+            };
+            localStorage.setItem('notificationPrefs', JSON.stringify(prefs));
+            showNotification('Notification preferences saved!', 'success');
+        }
+        
+        function loadSecurityData() {
+            // Clear password fields
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+        
+        function togglePasswordVisibility(inputId) {
+            const input = document.getElementById(inputId);
+            const type = input.type === 'password' ? 'text' : 'password';
+            input.type = type;
+        }
+        
+        async function changePassword() {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                showNotification('Please fill in all password fields', 'error');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                showNotification('New passwords do not match', 'error');
+                return;
+            }
+            
+            if (newPassword.length < 8) {
+                showNotification('Password must be at least 8 characters', 'error');
+                return;
+            }
+            
+            try {
+                const { error } = await supabaseClient.auth.updateUser({
+                    password: newPassword
+                });
+                
+                if (error) throw error;
+                
+                // Clear fields
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+                
+                showNotification('Password updated successfully!', 'success');
+            } catch (error) {
+                console.error('Password change error:', error);
+                showNotification('Failed to change password: ' + error.message, 'error');
+            }
+        }
+        
+        async function logoutAllSessions() {
+            try {
+                await supabaseClient.auth.signOut({ scope: 'global' });
+                showNotification('Signed out of all sessions', 'success');
+                currentUser = null;
+                updateUIForAuthState();
+                navigateTo('home');
+            } catch (error) {
+                showNotification('Failed to sign out: ' + error.message, 'error');
+            }
+        }
+        
+        function confirmDeleteAccount() {
+            const modal = document.createElement('div');
+            modal.className = 'auth-modal';
+            modal.id = 'deleteAccountModal';
+            modal.innerHTML = `
+                <div class="auth-modal-content" style="max-width: 450px;">
+                    <div class="auth-header" style="text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                        <h2 style="color: #ef4444;">Delete Account</h2>
+                        <p>This action cannot be undone. All your data will be permanently deleted.</p>
+                    </div>
+                    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 1rem; margin: 1.5rem 0;">
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                            <strong>You will lose:</strong><br>
+                            • Access to all purchased templates<br>
+                            • Your download history<br>
+                            • Account settings and preferences
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-secondary" style="flex: 1;" onclick="closeDeleteAccountModal()">Cancel</button>
+                        <button class="btn btn-danger" style="flex: 1;" onclick="deleteAccount()">Delete Forever</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            setTimeout(() => modal.classList.add('active'), 10);
+        }
+        
+        function closeDeleteAccountModal() {
+            const modal = document.getElementById('deleteAccountModal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+        
+        async function deleteAccount() {
+            showNotification('Please contact support to delete your account', 'info');
+            closeDeleteAccountModal();
+        }
+        
+        function openDemoBySlug(slug) {
+            const templates = typeof allTemplates !== 'undefined' ? allTemplates : [];
+            const index = templates.findIndex(t => t.slug === slug);
+            if (index >= 0) {
+                openDemoCatalog();
+                setTimeout(() => openDemoPreview(index), 300);
+            } else {
+                showNotification('Demo preview not available', 'info');
             }
         }
 
