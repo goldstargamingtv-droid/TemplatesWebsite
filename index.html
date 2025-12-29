@@ -1351,6 +1351,9 @@
             top: -5px;
             min-width: 5.5em;
             margin-left: 0.15em;
+            background: linear-gradient(90deg, #1d9a9b 0%, #14b8a6 40%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
         }
         
         .logo-text-template-inner {
@@ -1361,13 +1364,17 @@
             display: inline-block;
             opacity: 0;
             transition: opacity 0.05s ease;
-            color: #1d9a9b !important;
-            -webkit-text-fill-color: #1d9a9b !important;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        [data-theme="light"] .logo-text-template {
+            background: linear-gradient(90deg, #1d9a9b 0%, #14b8a6 40%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
         }
         
         [data-theme="light"] .logo-text-template-inner span {
-            color: #1d9a9b !important;
-            -webkit-text-fill-color: #1d9a9b !important;
+            -webkit-text-fill-color: transparent;
         }
         
         .logo-text-template-cursor {
@@ -1835,28 +1842,34 @@
             background: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-right: 1px solid var(--border-color);
+            border-right: 1px solid rgba(29, 154, 155, 0.4);
             z-index: 100;
             overflow-y: auto;
             overflow-x: hidden;
             transition: width 0.3s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .sidebar::-webkit-scrollbar {
+            display: none;
         }
         
         .sidebar:hover {
             width: 260px;
             background: rgba(10, 10, 10, 0.85);
-            border-right: 1px solid rgba(29, 154, 155, 0.3);
+            border-right: 1px solid rgba(29, 154, 155, 0.5);
             box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3), 0 0 30px rgba(29, 154, 155, 0.05);
         }
         
         [data-theme="light"] .sidebar {
             background: rgba(255, 255, 255, 0.95);
+            border-right: 1px solid rgba(13, 148, 136, 0.4);
         }
         
         [data-theme="light"] .sidebar:hover {
             background: rgba(255, 255, 255, 0.9);
-            border-right: 1px solid rgba(13, 148, 136, 0.3);
+            border-right: 1px solid rgba(13, 148, 136, 0.5);
             box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
         }
 
@@ -1871,10 +1884,18 @@
                 transform: translateX(0);
             }
             
-            .sidebar .sidebar-section-title,
+            .sidebar .sidebar-section-title .title-collapsed {
+                display: none !important;
+            }
+            
+            .sidebar .sidebar-section-title .title-expanded {
+                display: inline !important;
+            }
+            
             .sidebar .sidebar-menu-item > span:not(.badge),
-            .sidebar .sidebar-menu-item .badge {
-                opacity: 1;
+            .sidebar .sidebar-menu-item .badge,
+            .sidebar .sidebar-action-text {
+                opacity: 1 !important;
             }
         }
 
@@ -1905,7 +1926,9 @@
         }
 
         .sidebar-content {
-            padding: 0.25rem;
+            width: 260px;
+            min-width: 260px;
+            padding: 0.5rem 0;
             position: relative;
             z-index: 2;
             display: flex;
@@ -1913,71 +1936,59 @@
             height: 100%;
         }
         
-        .sidebar:hover .sidebar-content {
-            padding: 0.25rem;
-        }
-        
         .sidebar .sidebar-header {
             margin-bottom: 0.5rem;
+            padding: 0.5rem 0 0.5rem 15px;
         }
         
-        .sidebar:hover .sidebar-header {
-            margin-bottom: 0.5rem;
-        }
-        
-        .sidebar-action-text {
+        /* Hide text when collapsed, show on hover */
+        .sidebar-action-text,
+        .sidebar-menu-item > span:not(.badge),
+        .sidebar-menu-item .badge {
             opacity: 0;
             transition: opacity 0.2s ease;
-            white-space: nowrap;
         }
         
-        .sidebar:hover .sidebar-action-text {
+        .sidebar:hover .sidebar-action-text,
+        .sidebar:hover .sidebar-menu-item > span:not(.badge),
+        .sidebar:hover .sidebar-menu-item .badge {
             opacity: 1;
         }
         
         .sidebar .sidebar-footer {
-            padding: 0.25rem;
-            transition: none;
-        }
-        
-        .sidebar:hover .sidebar-footer {
-            padding: 0.25rem;
+            padding: 0.5rem 0 2rem 0;
         }
         
         .sidebar .sidebar-quick-action {
             justify-content: flex-start;
-            padding: 0.6rem 0.75rem 0.6rem 1.2rem;
+            padding: 0.5rem 0.75rem 0.5rem 22px;
             margin-bottom: 0.25rem;
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
         
         .sidebar .sidebar-quick-action:last-child {
             margin-bottom: 0;
         }
         
-        .sidebar:hover .sidebar-quick-action {
-            justify-content: flex-start;
-            margin-bottom: 0.25rem;
-            padding: 0.6rem 0.75rem 0.6rem 1.2rem;
+        .sidebar .sidebar-quick-action svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
         }
         
         .sidebar .sidebar-quick-action span {
-            display: none;
-        }
-        
-        .sidebar:hover .sidebar-quick-action span {
-            display: inline;
+            white-space: nowrap;
         }
 
         .sidebar-section {
             margin-bottom: 0.5rem;
         }
         
-        .sidebar:hover .sidebar-categories {
-            margin-top: 0;
-        }
-        
-        .sidebar:hover .sidebar-section {
-            margin-bottom: 0.5rem;
+        .sidebar-categories {
+            margin-top: 0.5rem;
         }
 
         .sidebar-section-title {
@@ -1986,15 +1997,14 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
-            padding: 0;
-            margin-bottom: 0.25rem;
+            padding: 0.4rem 0 0.4rem 2px;
+            margin-bottom: 0;
             white-space: nowrap;
-            text-align: center;
-        }
-        
-        .sidebar:hover .sidebar-section-title {
-            text-align: left;
-            padding: 0 1.2rem;
+            min-height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            opacity: 1;
         }
         
         .sidebar-section-title .title-collapsed {
@@ -2023,7 +2033,7 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.6rem 0.75rem 0.6rem 1.2rem;
+            padding: 0.5rem 0.75rem 0.5rem 22px;
             color: var(--text-secondary);
             text-decoration: none;
             border-radius: var(--border-radius);
@@ -2032,20 +2042,21 @@
             font-weight: 500;
             position: relative;
             overflow: hidden;
-        }
-        
-        .sidebar:hover .sidebar-menu-item {
-            padding: 0.6rem 0.75rem 0.6rem 1.2rem;
+            min-height: 36px;
         }
         
         .sidebar-menu-item > span:not(.badge) {
-            opacity: 0;
             white-space: nowrap;
-            transition: opacity 0.2s ease;
         }
         
-        .sidebar:hover .sidebar-menu-item > span:not(.badge) {
-            opacity: 1;
+        .sidebar-menu-item .badge {
+            margin-left: auto;
+            background: var(--primary);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
         }
 
         .sidebar-menu-item::before {
@@ -2097,40 +2108,43 @@
             transform: scaleY(1);
             background: var(--primary);
         }
+        
+        .sidebar-menu-item.active svg {
+            color: var(--primary);
+            stroke: var(--primary);
+        }
 
         .sidebar-menu-item svg {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             flex-shrink: 0;
-        }
-
-        .sidebar-menu-item .badge {
-            margin-left: auto;
-            background: var(--primary);
-            color: white;
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 0.15rem 0.5rem;
-            border-radius: 12px;
-            opacity: 0;
-            transition: opacity 0.2s ease;
+            transition: stroke 0.2s ease;
         }
         
-        .sidebar:hover .sidebar-menu-item .badge {
-            opacity: 1;
-        }
-        
-        /* PRO Badge styling */
+        /* PRO Badge styling - teal to purple gradient */
         .badge-pro {
-            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%) !important;
+            background: linear-gradient(135deg, #1d9a9b 0%, #14b8a6 50%, #8b5cf6 100%) !important;
             color: #fff !important;
             animation: proBadgeGlow 2s ease-in-out infinite;
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
         }
         
         @keyframes proBadgeGlow {
-            0%, 100% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
-            50% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.6), 0 0 30px rgba(245, 158, 11, 0.3); }
+            0%, 100% { box-shadow: 0 0 10px rgba(139, 92, 246, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.6), 0 0 30px rgba(29, 154, 155, 0.3); }
+        }
+        
+        /* SALE Badge styling - orange */
+        .badge-sale {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%) !important;
+            color: #fff !important;
+            animation: saleBadgeGlow 2s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
+        }
+        
+        @keyframes saleBadgeGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(249, 115, 22, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.6), 0 0 30px rgba(245, 158, 11, 0.3); }
         }
         
         .badge-save {
@@ -3579,9 +3593,13 @@
         .device {
             position: absolute;
             transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
-            cursor: pointer;
+            cursor: grab;
             will-change: transform;
             transform-style: preserve-3d;
+        }
+        
+        .device:active {
+            cursor: grabbing;
         }
         
         /* ============================================
@@ -3688,12 +3706,18 @@
             transform-style: preserve-3d;
             will-change: transform, opacity;
             opacity: 0;
-            pointer-events: none;
         }
         
         .laptop .device-frame,
         .laptop .device-base {
-            pointer-events: auto;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        .laptop .device-frame:active,
+        .laptop .device-base:active {
+            cursor: grabbing;
         }
         
         .laptop:has(.device-frame:hover),
@@ -3719,11 +3743,16 @@
             transform-style: preserve-3d;
             will-change: transform, opacity;
             opacity: 0;
-            pointer-events: none;
         }
         
         .tablet .device-frame {
-            pointer-events: auto;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        .tablet .device-frame:active {
+            cursor: grabbing;
         }
         
         @keyframes orbitTablet {
@@ -3748,11 +3777,16 @@
             transform-style: preserve-3d;
             will-change: transform, opacity;
             opacity: 0;
-            pointer-events: none;
         }
         
         .phone .device-frame {
-            pointer-events: auto;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        .phone .device-frame:active {
+            cursor: grabbing;
         }
         
         @keyframes orbitPhone {
@@ -4836,8 +4870,9 @@
             -webkit-backdrop-filter: blur(10px);
             border-radius: var(--border-radius-lg);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
             border: 1px solid rgba(29, 154, 155, 0.2);
+            will-change: transform, opacity;
         }
         
         [data-theme="light"] .feature-card {
@@ -4849,14 +4884,13 @@
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-            border-color: rgba(29, 154, 155, 0.4);
+            box-shadow: 0 15px 40px rgba(29, 154, 155, 0.25);
+            border-color: rgba(29, 154, 155, 0.5);
         }
         
         [data-theme="light"] .feature-card:hover {
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            border-color: rgba(13, 148, 136, 0.4);
+            box-shadow: 0 15px 40px rgba(13, 148, 136, 0.15);
+            border-color: rgba(13, 148, 136, 0.5);
         }
 
         .feature-icon {
@@ -4871,6 +4905,7 @@
             margin-bottom: 1.5rem;
             color: var(--primary);
             transition: all 0.3s ease;
+            will-change: transform, box-shadow, filter;
         }
         
         .feature-card:hover .feature-icon {
@@ -4890,34 +4925,135 @@
             stroke: var(--primary);
         }
         
-        .feature-icon svg path,
-        .feature-icon svg circle,
-        .feature-icon svg rect,
-        .feature-icon svg polyline,
-        .feature-icon svg line {
+        /* ============================================
+           FEATURE ICONS - STATIC BY DEFAULT
+           ============================================ */
+        
+        /* Icons are fully visible and static */
+        .feature-card[data-parallax] .feature-icon svg {
+            opacity: 1;
+            transform: none;
+        }
+        
+        /* Clock hands need transform origin set */
+        .feature-card[data-parallax="clock"] .clock-hands {
+            transform-origin: 12px 12px;
+        }
+        
+        /* SEO lens needs transform origin */
+        .feature-card[data-parallax="seo"] .magnifier-lens {
+            transform-origin: 11px 11px;
+        }
+        
+        /* Sun center needs transform origin */
+        .feature-card[data-parallax="darkmode"] .sun-center {
+            transform-origin: 12px 12px;
+        }
+        
+        /* ============================================
+           HOVER ANIMATIONS FOR FEATURE ICONS
+           ============================================ */
+        
+        /* Responsive - path draw effect */
+        .feature-card[data-parallax="responsive"].hover-animate .monitor-screen {
             stroke-dasharray: 100;
             stroke-dashoffset: 100;
-            animation: featureDrawLine 1s ease forwards;
+            animation: drawPath 1s ease-in-out forwards;
+        }
+        .feature-card[data-parallax="responsive"].hover-animate .monitor-stand {
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: drawPath 0.8s ease-in-out 0.3s forwards;
         }
         
-        @keyframes featureDrawLine {
-            to {
-                stroke-dashoffset: 0;
-            }
+        /* Clock - spin hands */
+        .feature-card[data-parallax="clock"].hover-animate .clock-hands {
+            animation: spinOnce 1.2s ease-in-out;
         }
         
-        .feature-card:hover .feature-icon svg path,
-        .feature-card:hover .feature-icon svg circle,
-        .feature-card:hover .feature-icon svg rect,
-        .feature-card:hover .feature-icon svg polyline,
-        .feature-card:hover .feature-icon svg line {
-            animation: featureDrawLine 0.5s ease forwards;
+        /* Lightning - path draw effect */
+        .feature-card[data-parallax="lightning"].hover-animate .lightning-bolt {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: drawPath 0.7s ease-in-out forwards;
+        }
+        
+        /* Customize - rotate */
+        .feature-card[data-parallax="customize"].hover-animate .feature-icon svg {
+            animation: rotateOnce 0.9s ease-in-out;
+        }
+        
+        /* Docs - path draw effect */
+        .feature-card[data-parallax="docs"].hover-animate .doc-page {
+            stroke-dasharray: 120;
+            stroke-dashoffset: 120;
+            animation: drawPath 0.9s ease-in-out forwards;
+        }
+        .feature-card[data-parallax="docs"].hover-animate .doc-fold {
+            stroke-dasharray: 40;
+            stroke-dashoffset: 40;
+            animation: drawPath 0.5s ease-in-out 0.4s forwards;
+        }
+        
+        /* Support - bounce */
+        .feature-card[data-parallax="support"].hover-animate .feature-icon svg {
+            animation: gentleBounce 0.8s ease-in-out;
+        }
+        
+        /* SEO - zoom pulse */
+        .feature-card[data-parallax="seo"].hover-animate .magnifier-lens {
+            animation: zoomPulse 0.8s ease-in-out;
+        }
+        
+        /* Darkmode - rotate sun */
+        .feature-card[data-parallax="darkmode"].hover-animate .feature-icon svg {
+            animation: rotateOnce 1s ease-in-out;
+        }
+        
+        /* Shared Keyframes */
+        @keyframes drawPath {
+            0% { stroke-dashoffset: 100; }
+            100% { stroke-dashoffset: 0; }
+        }
+        
+        @keyframes rotateOnce {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes spinOnce {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes gentleBounce {
+            0%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-8px); }
+            60% { transform: translateY(-3px); }
+        }
+        
+        @keyframes zoomPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
         
         /* Feature Accent Text */
         .feature-accent {
             color: var(--primary);
             font-weight: 600;
+            text-shadow: 0 0 0 transparent;
+            transition: text-shadow 0.4s ease, color 0.4s ease;
+        }
+        
+        /* Parallax glow effect for keywords */
+        .feature-accent.glow-active {
+            text-shadow: 0 0 8px rgba(29, 154, 155, 0.6), 0 0 16px rgba(29, 154, 155, 0.3);
+            color: #2dd4bf;
+        }
+        
+        [data-theme="light"] .feature-accent.glow-active {
+            text-shadow: 0 0 8px rgba(13, 148, 136, 0.5), 0 0 16px rgba(13, 148, 136, 0.25);
+            color: #0d9488;
         }
 
         .feature-card h3 {
@@ -10799,6 +10935,911 @@
                 order: 3;
             }
         }
+
+        /* ============================================
+           CREDITS SYSTEM STYLES
+           ============================================ */
+        
+        /* Credits Display in Navbar */
+        .credits-display {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+            border: 1px solid rgba(29, 154, 155, 0.3);
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .credits-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .credits-display:hover::before {
+            left: 100%;
+        }
+        
+        .credits-display:hover {
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.25) 0%, rgba(139, 92, 246, 0.25) 100%);
+            border-color: rgba(29, 154, 155, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(29, 154, 155, 0.3);
+        }
+        
+        .credits-icon {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+        }
+        
+        .credits-amount {
+            font-weight: 700;
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, var(--primary) 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .credits-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        .credits-add-btn {
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, var(--primary) 0%, #14b8a6 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            margin-left: 0.25rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .credits-display:hover .credits-add-btn {
+            transform: rotate(90deg);
+        }
+
+        /* Credits Modal */
+        .credits-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .credits-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .credits-modal {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            width: 95%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .credits-modal-overlay.active .credits-modal {
+            transform: scale(1) translateY(0);
+        }
+        
+        .credits-modal-header {
+            padding: 2rem 2rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .credits-modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-secondary);
+        }
+        
+        .credits-modal-close:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+        
+        .credits-modal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(249, 115, 22, 0.2) 100%);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #f59e0b;
+            margin-bottom: 1rem;
+        }
+        
+        .credits-modal-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        
+        .credits-modal-title span {
+            background: linear-gradient(135deg, var(--primary) 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .credits-modal-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .credits-current-balance {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(29, 154, 155, 0.1);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            border-radius: 100px;
+            margin-top: 1.5rem;
+        }
+        
+        .credits-current-balance .balance-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: white;
+        }
+        
+        .credits-current-balance .balance-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .credits-current-balance .balance-amount {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* Credits Packages Grid */
+        .credits-packages {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            padding: 1.5rem 2rem 2rem;
+        }
+        
+        @media (max-width: 900px) {
+            .credits-packages {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .credits-packages {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .credits-package {
+            background: rgba(255,255,255,0.02);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .credits-package::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .credits-package:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(29, 154, 155, 0.2);
+        }
+        
+        .credits-package:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .credits-package.popular {
+            border-color: rgba(139, 92, 246, 0.5);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(29, 154, 155, 0.05) 100%);
+        }
+        
+        .credits-package.popular::before {
+            transform: scaleX(1);
+            background: linear-gradient(90deg, #8b5cf6, var(--primary));
+        }
+        
+        .credits-package.best-value {
+            border-color: rgba(245, 158, 11, 0.5);
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%);
+        }
+        
+        .credits-package.best-value::before {
+            transform: scaleX(1);
+            background: linear-gradient(90deg, #f59e0b, #f97316);
+        }
+        
+        .package-badge {
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.25rem 1rem;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .credits-package.popular .package-badge {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+            color: white;
+        }
+        
+        .credits-package.best-value .package-badge {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            color: white;
+        }
+        
+        .package-credits {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1;
+            margin: 1rem 0 0.25rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .credits-package.popular .package-credits,
+        .credits-package.best-value .package-credits {
+            background: linear-gradient(135deg, var(--primary) 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .package-credits-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+        
+        .package-bonus {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.2) 100%);
+            color: #10b981;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 100px;
+            margin: 0.75rem 0;
+        }
+        
+        .package-bonus-placeholder {
+            height: 28px;
+            margin: 0.75rem 0;
+        }
+        
+        .package-price {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 0.5rem 0;
+        }
+        
+        .package-per-credit {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        
+        .package-per-credit span {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .package-btn {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .credits-package:hover .package-btn {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        .credits-package.popular .package-btn,
+        .credits-package.best-value .package-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #14b8a6 100%);
+            border-color: transparent;
+            color: white;
+        }
+
+        /* Credits Info Section */
+        .credits-info {
+            padding: 1.5rem 2rem 2rem;
+            border-top: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        
+        @media (max-width: 700px) {
+            .credits-info {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .credits-info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .credits-info-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(29, 154, 155, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .credits-info-icon svg {
+            width: 22px;
+            height: 22px;
+            color: var(--primary);
+        }
+        
+        .credits-info-text h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .credits-info-text p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Template Credit Price Display */
+        .template-credit-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .credit-coin {
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
+        }
+        
+        .credit-amount {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        
+        /* Low Credits Warning */
+        .low-credits-warning {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(249, 115, 22, 0.1) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .low-credits-warning svg {
+            width: 24px;
+            height: 24px;
+            color: #f59e0b;
+            flex-shrink: 0;
+        }
+        
+        .low-credits-warning p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .low-credits-warning strong {
+            color: #f59e0b;
+        }
+        
+        .low-credits-warning button {
+            margin-left: auto;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .low-credits-warning button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Credits Success Animation */
+        @keyframes creditsPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .credits-updated {
+            animation: creditsPop 0.4s ease;
+        }
+        
+        /* Floating Credits Indicator */
+        .floating-credits {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.95) 0%, rgba(20, 184, 166, 0.95) 100%);
+            border-radius: 100px;
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 8px 32px rgba(29, 154, 155, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        
+        .floating-credits.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .floating-credits:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(29, 154, 155, 0.5);
+        }
+        
+        .floating-credits .fc-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+            color: white;
+        }
+        
+        .floating-credits .fc-amount {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: white;
+        }
+        
+        .floating-credits .fc-label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Credits Earn Section */
+        .credits-earn-section {
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.08) 0%, rgba(139, 92, 246, 0.05) 100%);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .earn-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .earn-methods {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        
+        @media (max-width: 800px) {
+            .earn-methods {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .earn-methods {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+            }
+        }
+        
+        .earn-method {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+        
+        .earn-method:hover {
+            border-color: var(--primary);
+            background: rgba(29, 154, 155, 0.1);
+        }
+        
+        .earn-icon {
+            font-size: 1.5rem;
+        }
+        
+        .earn-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        
+        .earn-action {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .earn-reward {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Credits Shop */
+        .credits-shop {
+            padding: 1.5rem 2rem;
+        }
+        
+        .shop-section {
+            margin-bottom: 2rem;
+        }
+        
+        .shop-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .shop-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .shop-section-title svg {
+            width: 20px;
+            height: 20px;
+            color: var(--primary);
+        }
+        
+        .shop-items-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        
+        @media (max-width: 800px) {
+            .shop-items-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .shop-items-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .shop-item {
+            background: rgba(255,255,255,0.02);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shop-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .shop-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .shop-item:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .shop-item.available {
+            border-color: rgba(29, 154, 155, 0.4);
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.08) 0%, rgba(139, 92, 246, 0.05) 100%);
+        }
+        
+        .shop-item.available::before {
+            transform: scaleX(1);
+        }
+        
+        .shop-item.locked {
+            opacity: 0.7;
+        }
+        
+        .shop-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .shop-item-type {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+        
+        .shop-item-available {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 100px;
+        }
+        
+        .shop-item-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+            color: var(--text-primary);
+        }
+        
+        .shop-item-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+        
+        .shop-item-cost {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+        
+        .cost-credits {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        
+        .cost-credits .credit-coin {
+            width: 22px;
+            height: 22px;
+            font-size: 0.7rem;
+        }
+        
+        .cost-needed {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .shop-item-progress {
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 100px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+        }
+        
+        .shop-item-progress .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #8b5cf6);
+            border-radius: 100px;
+            transition: width 0.5s ease;
+        }
+        
+        .shop-item-btn {
+            width: 100%;
+            padding: 0.65rem 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+        
+        .shop-item-btn.btn-redeem {
+            background: linear-gradient(135deg, var(--primary) 0%, #14b8a6 100%);
+            color: white;
+        }
+        
+        .shop-item-btn.btn-redeem:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(29, 154, 155, 0.4);
+        }
+        
+        .shop-item-btn.btn-locked {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        /* Price Credits Badge */
+        .price-credits {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 100px;
+            margin-left: 0.5rem;
+        }
+        
+        .credit-coin-small {
+            display: inline-flex;
+            width: 14px;
+            height: 14px;
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.55rem;
+            font-weight: 800;
+            color: white;
+        }
+        
+        .balance-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
     </style>
 </head>
 <body>
@@ -10851,13 +11892,7 @@
         <div class="sidebar-content">
 
             <!-- Sidebar Header -->
-            <div class="sidebar-header" style="
-                padding: 0.25rem;
-                padding-left: calc(0.85rem - 5px);
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-            ">
+            <div class="sidebar-header">
                 <!-- Logo/Home Button -->
                 <a href="#" onclick="navigateTo('home'); return false;" class="sidebar-logo-btn" style="
                     width: 40px;
@@ -10879,6 +11914,39 @@
                 </a>
             </div>
 
+            <!-- Pro Components -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">
+                    <span class="title-collapsed">Pro</span>
+                    <span class="title-expanded">Enhance</span>
+                </div>
+                <div class="sidebar-menu">
+                    <a href="#" class="sidebar-menu-item pro-components-link" onclick="setSidebarActive(this); navigateTo('components'); return false;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/>
+                        </svg>
+                        <span>Pro Components</span>
+                        <span class="badge badge-pro">PRO</span>
+                    </a>
+                    <a href="#" class="sidebar-menu-item" onclick="setSidebarActive(this); navigateTo('components'); setTimeout(() => document.getElementById('component-bundles').scrollIntoView({behavior:'smooth'}), 100); return false;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                        <span>Bundles</span>
+                        <span class="badge badge-sale">SALE</span>
+                    </a>
+                    <a href="#" class="sidebar-menu-item" onclick="openCreditsModal(); return false;" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #f59e0b;">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                        <span>Rewards</span>
+                        <span class="badge" id="sidebarCredits" style="background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%) !important;">0</span>
+                    </a>
+                </div>
+            </div>
+
             <!-- Quick Filters -->
             <div class="sidebar-section">
                 <div class="sidebar-section-title">
@@ -10892,19 +11960,13 @@
                             <polyline points="12 6 12 12 16 14"/>
                         </svg>
                         <span>New Releases</span>
-                        <span class="badge">12</span>
+                        <span class="badge" id="newReleasesCount">0</span>
                     </a>
                     <a href="#filter-popular" class="sidebar-menu-item" onclick="filterByQuickFilter('popular'); return false;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                         </svg>
                         <span>Popular</span>
-                    </a>
-                    <a href="#filter-premium" class="sidebar-menu-item" onclick="filterByQuickFilter('premium'); return false;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/>
-                        </svg>
-                        <span>Premium</span>
                     </a>
                     <a href="#filter-free" class="sidebar-menu-item" onclick="filterByQuickFilter('free'); return false;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -10917,34 +11979,12 @@
                 </div>
             </div>
 
-            <!-- Pro Components -->
-            <div class="sidebar-section">
-                <div class="sidebar-section-title">
-                    <span class="title-collapsed">Pro</span>
-                    <span class="title-expanded">Enhance</span>
-                </div>
-                <div class="sidebar-menu">
-                    <a href="#" class="sidebar-menu-item pro-components-link" onclick="navigateTo('components'); return false;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                        </svg>
-                        <span>Pro Components</span>
-                        <span class="badge badge-pro">PRO</span>
-                    </a>
-                    <a href="#" class="sidebar-menu-item" onclick="navigateTo('components'); setTimeout(() => document.getElementById('component-bundles').scrollIntoView({behavior:'smooth'}), 100); return false;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-                            <line x1="12" y1="22.08" x2="12" y2="12"/>
-                        </svg>
-                        <span>Bundles</span>
-                        <span class="badge badge-save">SAVE 40%</span>
-                    </a>
-                </div>
-            </div>
-
             <!-- Categories -->
             <div class="sidebar-section sidebar-categories">
+                <div class="sidebar-section-title">
+                    <span class="title-collapsed">Browse</span>
+                    <span class="title-expanded">Categories</span>
+                </div>
                 <div class="sidebar-menu">
                     <a href="#category-all" class="sidebar-menu-item" onclick="filterByCategory('all'); return false;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -11114,8 +12154,7 @@
                     cursor: pointer;
                     display: flex;
                     align-items: center;
-                    justify-content: center;
-                    gap: 0.5rem;
+                    gap: 0.75rem;
                     font-size: 0.8rem;
                     transition: all 0.2s;
                 " onmouseover="this.style.background='rgba(29, 154, 155, 0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
@@ -11135,8 +12174,7 @@
                     cursor: pointer;
                     display: flex;
                     align-items: center;
-                    justify-content: center;
-                    gap: 0.5rem;
+                    gap: 0.75rem;
                     font-size: 0.8rem;
                     transition: all 0.2s;
                     text-decoration: none;
@@ -11159,8 +12197,7 @@
                     cursor: pointer;
                     display: flex;
                     align-items: center;
-                    justify-content: center;
-                    gap: 0.5rem;
+                    gap: 0.75rem;
                     font-size: 0.8rem;
                     transition: all 0.2s;
                 " onmouseover="this.style.background='rgba(29, 154, 155, 0.2)'" onmouseout="this.style.background='rgba(29, 154, 155, 0.1)'">
@@ -11226,6 +12263,19 @@
                 <li><a href="#custom-request" onclick="event.preventDefault(); scrollToSection('custom-request');">Custom</a></li>
                 <li><a href="#blog" onclick="event.preventDefault(); scrollToSection('blog');">Blog</a></li>
                 <li><a href="#faq" onclick="event.preventDefault(); scrollToSection('faq');">FAQ</a></li>
+                <li>
+                    <!-- Credits/Rewards Display -->
+                    <div class="credits-display" onclick="openCreditsModal()" title="View Rewards Shop">
+                        <div class="credits-icon">C</div>
+                        <span class="credits-amount" id="navCreditsAmount">0</span>
+                        <span class="credits-label">rewards</span>
+                        <div class="credits-add-btn">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                        </div>
+                    </div>
+                </li>
                 <li>
                     <div class="cart-icon-wrapper" onclick="toggleCartModal();" onmouseenter="showCartDropdown()" onmouseleave="hideCartDropdown()">
                         <div class="cart-icon-container">
@@ -11619,93 +12669,94 @@
             </div>
 
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card" data-parallax="responsive">
                     <div class="feature-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="2" y="3" width="20" height="14" rx="2"/>
-                            <path d="M8 21h8M12 17v4"/>
+                            <rect class="monitor-screen" x="2" y="3" width="20" height="14" rx="2"/>
+                            <path class="monitor-stand" d="M8 21h8M12 17v4"/>
                         </svg>
                     </div>
                     <h3>Fully Responsive</h3>
                     <p>Every template looks <span class="feature-accent">perfect on desktop, tablet, and mobile</span> devices. Your visitors get a <span class="feature-accent">great experience everywhere</span>.</p>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" data-parallax="clock">
                     <div class="feature-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
+                            <circle class="clock-face" cx="12" cy="12" r="10"/>
+                            <polyline class="clock-hands" points="12 6 12 12 16 14"/>
                         </svg>
                     </div>
                     <h3>Launch in Minutes</h3>
                     <p>Download, customize your content, and <span class="feature-accent">deploy instantly</span>. No complex setup or <span class="feature-accent">technical knowledge required</span>.</p>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" data-parallax="lightning">
                     <div class="feature-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            <path class="lightning-bolt" d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
                         </svg>
                     </div>
                     <h3>Blazing Fast</h3>
                     <p><span class="feature-accent">Optimized code</span> and lightweight design ensures your site <span class="feature-accent">loads instantly</span>. Better SEO, <span class="feature-accent">better conversions</span>.</p>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" data-parallax="customize">
                     <div class="feature-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2v20M2 12h20"/>
+                            <path class="plus-v" d="M12 2v20"/>
+                            <path class="plus-h" d="M2 12h20"/>
                         </svg>
                     </div>
                     <h3>Easy to Customize</h3>
                     <p><span class="feature-accent">Clean, well-organized code</span> with helpful comments. Change <span class="feature-accent">colors, fonts, and content</span> with ease.</p>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" data-parallax="docs">
                     <div class="feature-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                            <polyline points="14 2 14 8 20 8"/>
+                            <path class="doc-page" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline class="doc-fold" points="14 2 14 8 20 8"/>
                         </svg>
                     </div>
                     <h3>Complete Documentation</h3>
                     <p><span class="feature-accent">Step-by-step guides</span> and video tutorials help you get started and customize your template <span class="feature-accent">perfectly</span>.</p>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" data-parallax="support">
                     <div class="feature-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            <path class="chat-bubble" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                         </svg>
                     </div>
                     <h3>Premium Support</h3>
                     <p>Stuck on something? We're <span class="feature-accent">here to help</span>. <span class="feature-accent">Email support included</span> with every purchase.</p>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" data-parallax="seo">
                     <div class="feature-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="m21 21-4.35-4.35"/>
-                            <path d="M11 8v6M8 11h6"/>
+                            <circle class="magnifier-lens" cx="11" cy="11" r="8"/>
+                            <path class="magnifier-handle" d="m21 21-4.35-4.35"/>
+                            <path class="magnifier-plus" d="M11 8v6M8 11h6"/>
                         </svg>
                     </div>
                     <h3>SEO Optimized</h3>
                     <p>Built with <span class="feature-accent">semantic HTML</span>, meta tags, and <span class="feature-accent">schema markup</span>. Your site <span class="feature-accent">ranks higher</span> from day one.</p>
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card" data-parallax="darkmode">
                     <div class="feature-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="4"/>
-                            <path d="M12 2v2"/>
-                            <path d="M12 20v2"/>
-                            <path d="m4.93 4.93 1.41 1.41"/>
-                            <path d="m17.66 17.66 1.41 1.41"/>
-                            <path d="M2 12h2"/>
-                            <path d="M20 12h2"/>
-                            <path d="m6.34 17.66-1.41 1.41"/>
-                            <path d="m19.07 4.93-1.41 1.41"/>
+                            <circle class="sun-center" cx="12" cy="12" r="4"/>
+                            <path class="sun-ray ray-1" d="M12 2v2"/>
+                            <path class="sun-ray ray-2" d="M12 20v2"/>
+                            <path class="sun-ray ray-3" d="m4.93 4.93 1.41 1.41"/>
+                            <path class="sun-ray ray-4" d="m17.66 17.66 1.41 1.41"/>
+                            <path class="sun-ray ray-5" d="M2 12h2"/>
+                            <path class="sun-ray ray-6" d="M20 12h2"/>
+                            <path class="sun-ray ray-7" d="m6.34 17.66-1.41 1.41"/>
+                            <path class="sun-ray ray-8" d="m19.07 4.93-1.41 1.41"/>
                         </svg>
                     </div>
                     <h3>Dark Mode Ready</h3>
@@ -14298,6 +15349,378 @@
         let currentUser = null;
         let currentRoute = 'home';
         let currentTemplateSlug = null;
+        let userCredits = 0;
+
+        // ============================================
+        // CREDITS REWARDS SYSTEM
+        // ============================================
+        
+        // How users EARN credits
+        const CREDIT_REWARDS = {
+            purchase: 0.10,         // 10% of purchase price in credits (e.g., $49 template = 49 credits)
+            review: 25,             // Leave a review
+            referral: 100,          // Friend makes a purchase
+            firstPurchase: 50,      // Bonus on first purchase
+            newsletter: 10,         // Sign up for newsletter
+            socialShare: 5          // Share on social media
+        };
+        
+        // Credits Shop - What users can REDEEM
+        const CREDITS_SHOP = {
+            discounts: [
+                { id: 'discount10', name: '10% Off Any Template', credits: 75, type: 'discount', value: 10 },
+                { id: 'discount20', name: '20% Off Any Template', credits: 150, type: 'discount', value: 20 },
+                { id: 'discount50', name: '50% Off Any Template', credits: 350, type: 'discount', value: 50 }
+            ],
+            freeTemplates: [
+                { id: 'freeBasic', name: 'Free Basic Template', credits: 400, type: 'free', tier: 'basic', description: 'Any template under $29' },
+                { id: 'freeStandard', name: 'Free Standard Template', credits: 650, type: 'free', tier: 'standard', description: 'Any template under $49' },
+                { id: 'freePremium', name: 'Free Premium Template', credits: 1000, type: 'free', tier: 'premium', description: 'Any template, any price' }
+            ],
+            extras: [
+                { id: 'prioritySupport', name: '1 Month Priority Support', credits: 100, type: 'perk' },
+                { id: 'earlyAccess', name: 'Early Access Pass', credits: 200, type: 'perk', description: 'See new templates 1 week early' },
+                { id: 'customization', name: '1 Hour Customization Help', credits: 300, type: 'service' }
+            ]
+        };
+        
+        function initCredits() {
+            // Load credits from localStorage or user account
+            const savedCredits = localStorage.getItem('userCredits');
+            userCredits = savedCredits ? parseInt(savedCredits) : 0;
+            
+            // Load redemption history
+            const savedRedemptions = localStorage.getItem('userRedemptions');
+            window.userRedemptions = savedRedemptions ? JSON.parse(savedRedemptions) : [];
+            
+            updateCreditsDisplay();
+        }
+        
+        function updateCreditsDisplay() {
+            // Update navbar display
+            const navAmount = document.getElementById('navCreditsAmount');
+            if (navAmount) {
+                navAmount.textContent = userCredits.toLocaleString();
+                navAmount.classList.add('credits-updated');
+                setTimeout(() => navAmount.classList.remove('credits-updated'), 400);
+            }
+            
+            // Update modal display
+            const modalBalance = document.getElementById('modalCreditsBalance');
+            if (modalBalance) {
+                modalBalance.textContent = userCredits.toLocaleString();
+            }
+            
+            // Update sidebar display
+            const sidebarCredits = document.getElementById('sidebarCredits');
+            if (sidebarCredits) {
+                sidebarCredits.textContent = userCredits.toLocaleString();
+            }
+            
+            // Update shop items availability
+            updateShopAvailability();
+        }
+        
+        function updateShopAvailability() {
+            document.querySelectorAll('.shop-item').forEach(item => {
+                const cost = parseInt(item.dataset.credits);
+                if (userCredits >= cost) {
+                    item.classList.remove('locked');
+                    item.classList.add('available');
+                } else {
+                    item.classList.add('locked');
+                    item.classList.remove('available');
+                }
+            });
+        }
+        
+        function openCreditsModal() {
+            const overlay = document.getElementById('creditsModalOverlay');
+            if (overlay) {
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                updateCreditsDisplay();
+                renderCreditsShop();
+            }
+        }
+        
+        function closeCreditsModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const overlay = document.getElementById('creditsModalOverlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        function renderCreditsShop() {
+            const shopContainer = document.getElementById('creditsShopItems');
+            if (!shopContainer) return;
+            
+            // Render all shop sections
+            shopContainer.innerHTML = `
+                <!-- Free Templates Section -->
+                <div class="shop-section">
+                    <h3 class="shop-section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/>
+                            <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/>
+                            <line x1="2" y1="12" x2="22" y2="12"/>
+                        </svg>
+                        Free Templates
+                    </h3>
+                    <div class="shop-items-grid">
+                        ${CREDITS_SHOP.freeTemplates.map(item => renderShopItem(item)).join('')}
+                    </div>
+                </div>
+                
+                <!-- Discounts Section -->
+                <div class="shop-section">
+                    <h3 class="shop-section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/>
+                            <line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                        Discounts
+                    </h3>
+                    <div class="shop-items-grid">
+                        ${CREDITS_SHOP.discounts.map(item => renderShopItem(item)).join('')}
+                    </div>
+                </div>
+                
+                <!-- Extras & Perks Section -->
+                <div class="shop-section">
+                    <h3 class="shop-section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                        Extras & Perks
+                    </h3>
+                    <div class="shop-items-grid">
+                        ${CREDITS_SHOP.extras.map(item => renderShopItem(item)).join('')}
+                    </div>
+                </div>
+            `;
+            
+            updateShopAvailability();
+        }
+        
+        function renderShopItem(item) {
+            const canAfford = userCredits >= item.credits;
+            const progressPercent = Math.min((userCredits / item.credits) * 100, 100);
+            
+            return `
+                <div class="shop-item ${canAfford ? 'available' : 'locked'}" data-credits="${item.credits}" onclick="redeemShopItem('${item.id}')">
+                    <div class="shop-item-header">
+                        <span class="shop-item-type">${item.type === 'free' ? '🎁 FREE' : item.type === 'discount' ? '💰 SAVE' : '⭐ PERK'}</span>
+                        ${canAfford ? '<span class="shop-item-available">✓ Available</span>' : ''}
+                    </div>
+                    <h4 class="shop-item-name">${item.name}</h4>
+                    ${item.description ? `<p class="shop-item-desc">${item.description}</p>` : ''}
+                    <div class="shop-item-cost">
+                        <div class="cost-credits">
+                            <span class="credit-coin">C</span>
+                            <span>${item.credits.toLocaleString()}</span>
+                        </div>
+                        ${!canAfford ? `<span class="cost-needed">${(item.credits - userCredits).toLocaleString()} more needed</span>` : ''}
+                    </div>
+                    ${!canAfford ? `
+                        <div class="shop-item-progress">
+                            <div class="progress-bar" style="width: ${progressPercent}%"></div>
+                        </div>
+                    ` : ''}
+                    <button class="shop-item-btn ${canAfford ? 'btn-redeem' : 'btn-locked'}">
+                        ${canAfford ? 'Redeem Now' : 'Keep Earning'}
+                    </button>
+                </div>
+            `;
+        }
+        
+        function redeemShopItem(itemId) {
+            // Find the item
+            let item = null;
+            for (const category of Object.values(CREDITS_SHOP)) {
+                item = category.find(i => i.id === itemId);
+                if (item) break;
+            }
+            
+            if (!item) return;
+            
+            // Check if can afford
+            if (userCredits < item.credits) {
+                showNotification(`You need ${item.credits - userCredits} more credits for this reward!`, 'info');
+                return;
+            }
+            
+            // Check if logged in
+            if (!currentUser) {
+                showNotification('Please sign in to redeem rewards', 'info');
+                closeCreditsModal();
+                showLogin();
+                return;
+            }
+            
+            // Confirm redemption
+            if (confirm(`Redeem "${item.name}" for ${item.credits} credits?`)) {
+                // Deduct credits
+                userCredits -= item.credits;
+                localStorage.setItem('userCredits', userCredits.toString());
+                
+                // Save redemption
+                window.userRedemptions.push({
+                    id: item.id,
+                    name: item.name,
+                    type: item.type,
+                    value: item.value || null,
+                    redeemedAt: new Date().toISOString()
+                });
+                localStorage.setItem('userRedemptions', JSON.stringify(window.userRedemptions));
+                
+                // Update displays
+                updateCreditsDisplay();
+                renderCreditsShop();
+                
+                // Show success
+                celebrateRedemption(item);
+                showNotification(`🎉 "${item.name}" redeemed! Check your dashboard.`, 'success');
+            }
+        }
+        
+        // Award credits for actions
+        function awardCredits(action, customAmount = null) {
+            let amount = customAmount || CREDIT_REWARDS[action] || 0;
+            
+            if (amount <= 0) return;
+            
+            userCredits += Math.round(amount);
+            localStorage.setItem('userCredits', userCredits.toString());
+            updateCreditsDisplay();
+            
+            // Show floating +credits
+            showCreditsEarned(Math.round(amount), action);
+        }
+        
+        // Award credits on purchase (call this after successful purchase)
+        function awardPurchaseCredits(purchaseAmount) {
+            const creditsEarned = Math.round(purchaseAmount * CREDIT_REWARDS.purchase);
+            
+            // Check for first purchase bonus
+            const isFirstPurchase = !localStorage.getItem('hasFirstPurchase');
+            let totalEarned = creditsEarned;
+            
+            if (isFirstPurchase) {
+                totalEarned += CREDIT_REWARDS.firstPurchase;
+                localStorage.setItem('hasFirstPurchase', 'true');
+            }
+            
+            awardCredits('purchase', totalEarned);
+            
+            // Show special message
+            if (isFirstPurchase) {
+                showNotification(`🎉 +${creditsEarned} credits earned + ${CREDIT_REWARDS.firstPurchase} first purchase bonus!`, 'success');
+            } else {
+                showNotification(`🎉 +${creditsEarned} credits earned from your purchase!`, 'success');
+            }
+        }
+        
+        function showCreditsEarned(amount, action) {
+            const actionLabels = {
+                purchase: 'Purchase Reward',
+                review: 'Review Bonus',
+                referral: 'Referral Bonus',
+                firstPurchase: 'Welcome Bonus',
+                newsletter: 'Newsletter Signup',
+                socialShare: 'Social Share'
+            };
+            
+            // Create floating notification
+            const floater = document.createElement('div');
+            floater.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 24px;
+                background: linear-gradient(135deg, rgba(29, 154, 155, 0.95) 0%, rgba(20, 184, 166, 0.95) 100%);
+                border-radius: 16px;
+                padding: 1rem 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                box-shadow: 0 8px 32px rgba(29, 154, 155, 0.4);
+                z-index: 100000;
+                animation: slideInCredits 0.5s ease, slideOutCredits 0.5s ease 2.5s forwards;
+            `;
+            floater.innerHTML = `
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f59e0b, #f97316); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; color: white; font-size: 1.1rem;">C</div>
+                <div>
+                    <div style="font-size: 1.5rem; font-weight: 800; color: white;">+${amount}</div>
+                    <div style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">${actionLabels[action] || 'Credits Earned'}</div>
+                </div>
+            `;
+            
+            document.body.appendChild(floater);
+            
+            // Add animation keyframes if not exists
+            if (!document.getElementById('creditsEarnedStyle')) {
+                const style = document.createElement('style');
+                style.id = 'creditsEarnedStyle';
+                style.textContent = `
+                    @keyframes slideInCredits {
+                        from { opacity: 0; transform: translateX(100px); }
+                        to { opacity: 1; transform: translateX(0); }
+                    }
+                    @keyframes slideOutCredits {
+                        from { opacity: 1; transform: translateX(0); }
+                        to { opacity: 0; transform: translateX(100px); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            setTimeout(() => floater.remove(), 3000);
+        }
+        
+        function celebrateRedemption(item) {
+            // Create celebration effect
+            const celebration = document.createElement('div');
+            celebration.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 3rem;
+                z-index: 100001;
+                pointer-events: none;
+                animation: redeemCelebrate 1s ease-out forwards;
+            `;
+            celebration.textContent = item.type === 'free' ? '🎁' : item.type === 'discount' ? '💰' : '⭐';
+            document.body.appendChild(celebration);
+            
+            if (!document.getElementById('redeemCelebrateStyle')) {
+                const style = document.createElement('style');
+                style.id = 'redeemCelebrateStyle';
+                style.textContent = `
+                    @keyframes redeemCelebrate {
+                        0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+                        30% { opacity: 1; transform: translate(-50%, -50%) scale(1.5); }
+                        100% { opacity: 0; transform: translate(-50%, -150%) scale(1); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            setTimeout(() => celebration.remove(), 1000);
+        }
+        
+        function getActiveDiscounts() {
+            return window.userRedemptions ? window.userRedemptions.filter(r => r.type === 'discount') : [];
+        }
+        
+        function hasActiveReward(type, tier = null) {
+            if (!window.userRedemptions) return false;
+            return window.userRedemptions.some(r => r.type === type && (!tier || r.tier === tier));
+        }
 
         // ============================================
         // MOBILE MENU
@@ -14362,9 +15785,37 @@
             document.body.style.overflow = '';
         }
         
+        // Helper to set active state on sidebar item
+        function setSidebarActive(element) {
+            document.querySelectorAll('.sidebar-menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            if (element) {
+                const menuItem = element.closest('.sidebar-menu-item');
+                if (menuItem) menuItem.classList.add('active');
+            }
+        }
+        
+        // Update new releases count in sidebar
+        function updateNewReleasesCount() {
+            const newCount = allTemplates.filter(t => t.is_new === true).length;
+            const badge = document.getElementById('newReleasesCount');
+            if (badge) {
+                badge.textContent = newCount;
+                // Hide badge if count is 0
+                badge.style.display = newCount > 0 ? 'inline-block' : 'none';
+            }
+        }
+        
         // Filter templates by quick filter (new, popular, premium, free)
         function filterByQuickFilter(filter) {
             console.log('Quick filtering by:', filter);
+            
+            // Update active state in sidebar
+            if (event && event.target) {
+                setSidebarActive(event.target);
+            }
+            
             closeSidebar();
             scrollToSection('templates');
             
@@ -14401,12 +15852,8 @@
             console.log('Filtering category:', category);
             
             // Update active state in sidebar
-            document.querySelectorAll('.sidebar-menu-item').forEach(item => {
-                item.classList.remove('active');
-            });
             if (event && event.target) {
-                const menuItem = event.target.closest('.sidebar-menu-item');
-                if (menuItem) menuItem.classList.add('active');
+                setSidebarActive(event.target);
             }
             
             closeSidebar();
@@ -14604,6 +16051,10 @@
             let pageElement;
             if (page === 'home') {
                 pageElement = document.getElementById('homePage');
+                // Clear active states when going home
+                document.querySelectorAll('.sidebar-menu-item').forEach(item => {
+                    item.classList.remove('active');
+                });
             } else if (page === 'dashboard') {
                 pageElement = document.getElementById('dashboardPage');
             } else if (page === 'template-detail') {
@@ -16269,6 +17720,23 @@
             localStorage.setItem('cart', JSON.stringify(cart));
             try { updateCartUI(); } catch(e) { console.log('Cart UI update skipped'); }
             
+            // Award credits for purchase (estimate price if not provided)
+            const purchasePrice = purchaseInfo.price || 29; // Default to $29 if price unknown
+            const creditsEarned = Math.round(purchasePrice * CREDIT_REWARDS.purchase);
+            const isFirstPurchase = !localStorage.getItem('hasFirstPurchase');
+            const bonusCredits = isFirstPurchase ? CREDIT_REWARDS.firstPurchase : 0;
+            const totalCreditsEarned = creditsEarned + bonusCredits;
+            
+            // Award the credits
+            if (currentUser) {
+                userCredits += totalCreditsEarned;
+                localStorage.setItem('userCredits', userCredits.toString());
+                if (isFirstPurchase) {
+                    localStorage.setItem('hasFirstPurchase', 'true');
+                }
+                updateCreditsDisplay();
+            }
+            
             const modal = document.createElement('div');
             modal.className = 'modal-overlay';
             modal.id = 'purchaseSuccessModal';
@@ -16277,10 +17745,21 @@
                     <button class="modal-close" onclick="closePurchaseSuccessModal()">×</button>
                     <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
                     <h2 style="color: var(--text-primary); margin-bottom: 1rem;">Purchase Complete!</h2>
-                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
                         Thank you for purchasing <strong>${purchaseInfo.name}</strong>!<br>
                         Your template is ready to download.
                     </p>
+                    ${currentUser ? `
+                    <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(249, 115, 22, 0.1) 100%); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                            <span style="width: 24px; height: 24px; background: linear-gradient(135deg, #f59e0b, #f97316); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; color: white;">C</span>
+                            <span style="font-size: 1.5rem; font-weight: 800; color: #f59e0b;">+${totalCreditsEarned}</span>
+                            <span style="color: var(--text-muted); font-size: 0.9rem;">credits earned!</span>
+                        </div>
+                        ${isFirstPurchase ? `<div style="font-size: 0.8rem; color: #f59e0b;">Includes +${bonusCredits} first purchase bonus! 🎁</div>` : ''}
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">Redeem for discounts & free templates in the <a href="#" onclick="closePurchaseSuccessModal(); openCreditsModal(); return false;" style="color: var(--primary);">Rewards Shop</a></div>
+                    </div>
+                    ` : ''}
                     <button class="btn btn-primary btn-lg" onclick="downloadAfterPurchase('${purchaseInfo.slug}')" style="width: 100%; margin-bottom: 1rem;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
@@ -16380,6 +17859,9 @@
                 filteredTemplates = [...allTemplates];
                 displayedTemplates = 0;
                 
+                // Update new releases count
+                updateNewReleasesCount();
+                
                 renderTemplates();
                 setupBrowseListeners();
                 LoadingBar.complete();
@@ -16390,6 +17872,10 @@
                 allTemplates = getTemplates();
                 filteredTemplates = [...allTemplates];
                 displayedTemplates = 0;
+                
+                // Update new releases count
+                updateNewReleasesCount();
+                
                 renderTemplates();
                 setupBrowseListeners();
                 LoadingBar.complete();
@@ -16506,8 +17992,9 @@
                             </div>
                             <div class="template-footer">
                                 <div class="template-price">
-                                    ${originalPrice > price ? `<span class="price-original">$${originalPrice}</span>` : ''}
+                                    ${isOnSale ? `<span class="price-original">$${originalPrice}</span>` : ''}
                                     <span class="price-current ${isFree ? 'free' : ''}">${isFree ? 'FREE' : '$' + price}</span>
+                                    ${!isFree ? `<span class="price-credits" title="Earn ${Math.round(price * 0.1)} credits with purchase">+${Math.round(price * 0.1)} <span class="credit-coin-small">C</span></span>` : ''}
                                 </div>
                                 <div class="template-actions">
                                     <button class="btn btn-small btn-outline" 
@@ -16943,6 +18430,9 @@
             console.log('%c⚡ DeployTemplate', 'font-size: 20px; font-weight: bold; color: #1d9a9b;');
             console.log('%cPremium website templates marketplace', 'font-size: 12px; color: #71717a;');
             
+            // Initialize credits system
+            initCredits();
+            
             // Set theme icon
             const themeIcon = document.getElementById('themeIcon');
             if (themeIcon) {
@@ -16992,6 +18482,9 @@
                 console.error('Error loading templates:', error);
                 allTemplates = getTemplates();
             }
+            
+            // Update new releases count
+            updateNewReleasesCount();
             
             // Setup search suggestions
             setupSearchSuggestions();
@@ -18862,6 +20355,112 @@
             }
         }
     </script>
+    
+    <!-- Credits Rewards Shop Modal -->
+    <div class="credits-modal-overlay" id="creditsModalOverlay" onclick="closeCreditsModal(event)">
+        <div class="credits-modal" onclick="event.stopPropagation()">
+            <div class="credits-modal-header">
+                <button class="credits-modal-close" onclick="closeCreditsModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+                <div class="credits-modal-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                    Rewards Program
+                </div>
+                <h2 class="credits-modal-title">Your <span>Rewards Shop</span></h2>
+                <p class="credits-modal-subtitle">Earn credits with every purchase, then redeem them for free templates, discounts, and exclusive perks!</p>
+                <div class="credits-current-balance">
+                    <div class="balance-icon">C</div>
+                    <span class="balance-text">Your Balance:</span>
+                    <span class="balance-amount" id="modalCreditsBalance">0</span>
+                    <span class="balance-label">credits</span>
+                </div>
+            </div>
+            
+            <!-- How to Earn Section -->
+            <div class="credits-earn-section">
+                <h3 class="earn-title">How to Earn Credits</h3>
+                <div class="earn-methods">
+                    <div class="earn-method">
+                        <div class="earn-icon">🛒</div>
+                        <div class="earn-info">
+                            <span class="earn-action">Make a Purchase</span>
+                            <span class="earn-reward">+10% back in credits</span>
+                        </div>
+                    </div>
+                    <div class="earn-method">
+                        <div class="earn-icon">🎉</div>
+                        <div class="earn-info">
+                            <span class="earn-action">First Purchase</span>
+                            <span class="earn-reward">+50 bonus credits</span>
+                        </div>
+                    </div>
+                    <div class="earn-method">
+                        <div class="earn-icon">⭐</div>
+                        <div class="earn-info">
+                            <span class="earn-action">Leave a Review</span>
+                            <span class="earn-reward">+25 credits</span>
+                        </div>
+                    </div>
+                    <div class="earn-method">
+                        <div class="earn-icon">👥</div>
+                        <div class="earn-info">
+                            <span class="earn-action">Refer a Friend</span>
+                            <span class="earn-reward">+100 credits</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shop Items -->
+            <div class="credits-shop" id="creditsShopItems">
+                <!-- Populated by JavaScript -->
+            </div>
+            
+            <div class="credits-info">
+                <div class="credits-info-item">
+                    <div class="credits-info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <div class="credits-info-text">
+                        <h4>Never Expire</h4>
+                        <p>Your credits are yours forever. Take your time!</p>
+                    </div>
+                </div>
+                <div class="credits-info-item">
+                    <div class="credits-info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <div class="credits-info-text">
+                        <h4>Stack Rewards</h4>
+                        <p>Combine discounts and perks on a single order.</p>
+                    </div>
+                </div>
+                <div class="credits-info-item">
+                    <div class="credits-info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/>
+                            <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/>
+                            <line x1="2" y1="12" x2="22" y2="12"/>
+                        </svg>
+                    </div>
+                    <div class="credits-info-text">
+                        <h4>Free Templates</h4>
+                        <p>Save enough and get entire templates for free!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Cart Modal -->
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCartModal()"></div>
     <div class="cart-modal" id="cartModal">
@@ -20614,6 +22213,192 @@ git push -u origin main</code></pre>
                 document.body.style.overflow = '';
             }
         });
+        
+        // ============================================
+        // FEATURE ICONS - HOVER ANIMATIONS ONLY
+        // ============================================
+        (function() {
+            const featuresSection = document.getElementById('features');
+            if (!featuresSection) return;
+            
+            const featureCards = featuresSection.querySelectorAll('.feature-card[data-parallax]');
+            const featureAccents = featuresSection.querySelectorAll('.feature-accent');
+            
+            // ============================================
+            // HOVER ANIMATION FOR FEATURE ICONS
+            // ============================================
+            featureCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    // Remove class first to reset animation
+                    this.classList.remove('hover-animate');
+                    // Force reflow
+                    void this.offsetWidth;
+                    // Add class to trigger animation
+                    this.classList.add('hover-animate');
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    // Remove animation class after animation completes (1.5s for path drawing)
+                    setTimeout(() => {
+                        this.classList.remove('hover-animate');
+                    }, 1500);
+                });
+            });
+            
+            // ============================================
+            // SEQUENTIAL KEYWORD GLOW EFFECT
+            // ============================================
+            function updateKeywordGlows() {
+                const scrollY = window.pageYOffset;
+                const sectionTop = featuresSection.offsetTop;
+                const sectionHeight = featuresSection.offsetHeight;
+                // Start keyword glow earlier than nav activation (350px before section)
+                const glowActivationPoint = sectionTop - 450;
+                
+                // Check if in glow range
+                const isInGlowRange = scrollY >= glowActivationPoint && scrollY < sectionTop + sectionHeight;
+                
+                if (isInGlowRange) {
+                    const scrolledPastActivation = scrollY - glowActivationPoint;
+                    const totalRange = sectionHeight * 0.75;
+                    const overallProgress = Math.max(0, Math.min(1, scrolledPastActivation / totalRange));
+                    
+                    // Calculate how many keywords should be lit based on scroll progress
+                    const targetGlowCount = Math.floor(overallProgress * featureAccents.length);
+                    
+                    featureAccents.forEach((accent, index) => {
+                        if (index < targetGlowCount) {
+                            if (!accent.classList.contains('glow-active')) {
+                                accent.classList.add('glow-active');
+                            }
+                        } else {
+                            accent.classList.remove('glow-active');
+                        }
+                    });
+                } else {
+                    // Reset all glows when not in section
+                    featureAccents.forEach(accent => accent.classList.remove('glow-active'));
+                }
+            }
+            
+            // Add keyword glow to scroll listener
+            window.addEventListener('scroll', function() {
+                requestAnimationFrame(updateKeywordGlows);
+            }, { passive: true });
+            
+            // Initial keyword update
+            updateKeywordGlows();
+        })();
+        
+        // ============================================
+        // DRAGGABLE HERO DEVICES
+        // ============================================
+        (function() {
+            let activeDevice = null;
+            let startX = 0;
+            let startY = 0;
+            
+            const deviceConfigs = {
+                laptop: { rotateY: 0, rotateX: 5, rotateZ: null, hasTranslateX: true, yRange: [-30, 30], xRange: [-10, 20] },
+                tablet: { rotateY: -15, rotateX: 8, rotateZ: null, hasTranslateX: false, yRange: [-35, 5], xRange: [0, 20] },
+                phone: { rotateY: 12, rotateX: 3, rotateZ: -6, hasTranslateX: false, yRange: [-10, 35], xRange: [-5, 15] }
+            };
+            
+            function getConfig(device) {
+                if (device.classList.contains('laptop')) return deviceConfigs.laptop;
+                if (device.classList.contains('tablet')) return deviceConfigs.tablet;
+                if (device.classList.contains('phone')) return deviceConfigs.phone;
+                return null;
+            }
+            
+            function handleMouseDown(e) {
+                const device = e.target.closest('.device');
+                if (!device) return;
+                if (!device.closest('.device-mockups')) return;
+                
+                e.preventDefault();
+                activeDevice = device;
+                startX = e.clientX;
+                startY = e.clientY;
+                
+                device.style.setProperty('animation', 'none', 'important');
+                device.style.setProperty('transition', 'none', 'important');
+                device.style.setProperty('opacity', '1', 'important');
+            }
+            
+            function handleMouseMove(e) {
+                if (!activeDevice) return;
+                
+                const config = getConfig(activeDevice);
+                if (!config) return;
+                
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                
+                const sensitivity = 0.25;
+                const rotateY = Math.max(config.yRange[0], Math.min(config.yRange[1], config.rotateY + deltaX * sensitivity));
+                const rotateX = Math.max(config.xRange[0], Math.min(config.xRange[1], config.rotateX - deltaY * sensitivity * 0.5));
+                
+                let transform;
+                if (config.hasTranslateX) {
+                    transform = `translateX(-50%) perspective(1000px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+                } else if (config.rotateZ !== null) {
+                    transform = `perspective(1000px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) rotateZ(${config.rotateZ}deg)`;
+                } else {
+                    transform = `perspective(1000px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+                }
+                
+                activeDevice.style.setProperty('transform', transform, 'important');
+            }
+            
+            function handleMouseUp() {
+                if (!activeDevice) return;
+                
+                const config = getConfig(activeDevice);
+                const dev = activeDevice;
+                
+                if (config) {
+                    // Animate back to rest position
+                    dev.style.setProperty('transition', 'transform 0.5s ease-out', 'important');
+                    
+                    let resetTransform;
+                    if (config.hasTranslateX) {
+                        resetTransform = `translateX(-50%) perspective(1000px) rotateY(${config.rotateY}deg) rotateX(${config.rotateX}deg)`;
+                    } else if (config.rotateZ !== null) {
+                        resetTransform = `perspective(1000px) rotateY(${config.rotateY}deg) rotateX(${config.rotateX}deg) rotateZ(${config.rotateZ}deg)`;
+                    } else {
+                        resetTransform = `perspective(1000px) rotateY(${config.rotateY}deg) rotateX(${config.rotateX}deg)`;
+                    }
+                    
+                    dev.style.setProperty('transform', resetTransform, 'important');
+                    
+                    // Resume only the orbit animation (not the zoom-in)
+                    setTimeout(function() {
+                        dev.style.removeProperty('transition');
+                        dev.style.removeProperty('transform');
+                        
+                        // Set only the orbit animation, keep opacity at 1
+                        if (dev.classList.contains('laptop')) {
+                            dev.style.setProperty('animation', 'orbitLaptop 20s ease-in-out infinite', 'important');
+                        } else if (dev.classList.contains('tablet')) {
+                            dev.style.setProperty('animation', 'orbitTablet 25s ease-in-out infinite', 'important');
+                        } else if (dev.classList.contains('phone')) {
+                            dev.style.setProperty('animation', 'orbitPhone 18s ease-in-out infinite', 'important');
+                        }
+                        
+                        // Keep opacity visible
+                        dev.style.setProperty('opacity', '1', 'important');
+                    }, 500);
+                }
+                
+                activeDevice = null;
+            }
+            
+            // Listen for mousedown on the whole document
+            document.addEventListener('mousedown', handleMouseDown);
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+        })();
     </script>
 </body>
 </html>
