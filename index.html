@@ -438,6 +438,64 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
+        /* Nav Links - hidden by default, show on scroll */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-50%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute;
+            right: 240px;
+            top: calc(50% - 3px);
+        }
+
+        .nav-links a {
+            color: rgba(29, 154, 155, 0.4);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            padding: 10px;
+        }
+
+        .nav-links a:before {
+            position: absolute;
+            color: var(--primary);
+            top: 0px;
+            left: 0px;
+            padding: 10px;
+            overflow: hidden;
+            content: attr(data-text);
+            transition: all 0.3s;
+            transform: scale(1.2);
+            opacity: 0;
+        }
+
+        .nav-links a:hover {
+            color: rgba(29, 154, 155, 0.4);
+        }
+
+        .nav-links a:hover:before {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .hero-top.scrolled .nav-links {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
         [data-theme="light"] .hero-top.scrolled {
             background: rgba(255, 255, 255, 0.75);
             border-bottom: 1px solid rgba(0, 0, 0, 0.08);
@@ -927,10 +985,11 @@
             font-weight: 800;
             letter-spacing: -0.02em;
             line-height: 1.1;
+            color: #f97316;
         }
 
         .section-title span {
-            color: var(--primary);
+            color: #f97316;
         }
 
         .section-desc {
@@ -1906,6 +1965,10 @@
                     </svg>
                 </div>
                 <div class="hero-logo-dot"></div>
+            </div>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="#templates" data-text="Templates">Templates</a>
             </div>
             
             <div class="hero-cta-top" id="heroCta">
@@ -3062,7 +3125,7 @@
             // Crystal ball / glass material
             const geometry = new THREE.SphereGeometry(0.8, 128, 128);
             const material = new THREE.MeshPhysicalMaterial({
-                color: 0x2dd4d4,
+                color: 0xf97316,
                 metalness: 0.0,
                 roughness: 0.05,
                 transmission: 0.6,
@@ -3074,7 +3137,7 @@
                 clearcoat: 1,
                 clearcoatRoughness: 0.1,
                 specularIntensity: 1,
-                specularColor: 0x5fffff
+                specularColor: 0xffb380
             });
             
             // Lights
@@ -3082,11 +3145,11 @@
             lightTop.position.set(0, 500, 200);
             scene.add(lightTop);
             
-            const lightBottom = new THREE.DirectionalLight(0x1d9a9b, 0.4);
+            const lightBottom = new THREE.DirectionalLight(0xf97316, 0.4);
             lightBottom.position.set(0, -500, 400);
             scene.add(lightBottom);
             
-            const ambientLight = new THREE.AmbientLight(0x1d9a9b, 0.3);
+            const ambientLight = new THREE.AmbientLight(0xf97316, 0.3);
             scene.add(ambientLight);
             
             const sphere = new THREE.Mesh(geometry, material);
