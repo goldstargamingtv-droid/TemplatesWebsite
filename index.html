@@ -1109,10 +1109,14 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            border: none;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            color: white;
+            border: 1px solid rgba(29, 154, 155, 0.3);
+            background: rgba(29, 154, 155, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 
+                0 8px 32px rgba(29, 154, 155, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            color: var(--primary);
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
@@ -1124,8 +1128,12 @@
         .ext-next { right: 3%; }
 
         .ext-nav-btn:hover {
-            background: rgba(29, 154, 155, 0.4);
-            color: var(--primary);
+            background: rgba(29, 154, 155, 0.3);
+            border-color: rgba(29, 154, 155, 0.5);
+            box-shadow: 
+                0 8px 32px rgba(29, 154, 155, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            transform: translateY(-50%) scale(1.05);
         }
 
         @media (max-width: 768px) {
@@ -1998,7 +2006,8 @@
             <div class="section-header reveal">
                 <div class="section-count">05</div>
                 <p class="section-label">Browser Extensions</p>
-                <h2 class="section-title">Free Tools for <span>Developers</span></h2>
+                <h2 class="section-title" style="display: none;">Free Tools for <span>Developers</span></h2>
+                <img src="images/glass-text-test.avif" alt="Free Tools for Developers" class="glass-title-img" style="max-width: 100%; height: auto; margin: 1rem 0;">
                 <p class="section-desc">Productivity extensions to supercharge your workflow. All free, forever.</p>
             </div>
             
@@ -2011,27 +2020,27 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide" data-title="ZapReply" data-desc="AI Email Replies in Seconds">
                             <article class="extension-card">
-                                <img src="images/zapreply-sm.webp" alt="ZapReply">
+                                <img src="images/55.png" alt="ZapReply">
                             </article>
                         </div>
                         <div class="swiper-slide" data-title="ChromaPicker" data-desc="The Ultimate Color Picker">
                             <article class="extension-card">
-                                <img src="images/chromapicker-sm.webp" alt="ChromaPicker">
+                                <img src="images/11.png" alt="ChromaPicker">
                             </article>
                         </div>
                         <div class="swiper-slide" data-title="PolishAI" data-desc="AI-Powered Text Perfection">
                             <article class="extension-card">
-                                <img src="images/polishai-sm.webp" alt="PolishAI">
+                                <img src="images/44.png" alt="PolishAI">
                             </article>
                         </div>
                         <div class="swiper-slide" data-title="Twitch Ad Crusher" data-desc="Block Ads. Watch Streams. Save Time.">
                             <article class="extension-card">
-                                <img src="images/twitchadcrusher-sm.webp" alt="Twitch Ad Crusher">
+                                <img src="images/33.png" alt="Twitch Ad Crusher">
                             </article>
                         </div>
                         <div class="swiper-slide" data-title="Cookie Crusher" data-desc="Crush Cookie Popups Forever">
                             <article class="extension-card">
-                                <img src="images/cookiecrusher-sm.webp" alt="Cookie Crusher">
+                                <img src="images/22.png" alt="Cookie Crusher">
                             </article>
                         </div>
                     </div>
@@ -2042,27 +2051,27 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <article class="extension-card">
-                                <img src="images/zapreply.webp" alt="ZapReply">
+                                <img src="images/5.png" alt="ZapReply">
                             </article>
                         </div>
                         <div class="swiper-slide">
                             <article class="extension-card">
-                                <img src="images/chromapicker.webp" alt="ChromaPicker">
+                                <img src="images/1.png" alt="ChromaPicker">
                             </article>
                         </div>
                         <div class="swiper-slide">
                             <article class="extension-card">
-                                <img src="images/polishai.webp" alt="PolishAI">
+                                <img src="images/4.png" alt="PolishAI">
                             </article>
                         </div>
                         <div class="swiper-slide">
                             <article class="extension-card">
-                                <img src="images/twitchadcrusher.webp" alt="Twitch Ad Crusher">
+                                <img src="images/3.png" alt="Twitch Ad Crusher">
                             </article>
                         </div>
                         <div class="swiper-slide">
                             <article class="extension-card">
-                                <img src="images/cookiecrusher.webp" alt="Cookie Crusher">
+                                <img src="images/2.png" alt="Cookie Crusher">
                             </article>
                         </div>
                     </div>
