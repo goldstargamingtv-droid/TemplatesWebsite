@@ -209,16 +209,35 @@
         .preloader {
             position: fixed;
             inset: 0;
-            background: var(--bg);
             z-index: 100000;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .preloader-top, .preloader-bottom {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: var(--bg);
+            z-index: 99999;
+        }
+        
+        .preloader-top {
+            top: 0;
+        }
+        
+        .preloader-bottom {
+            bottom: 0;
         }
 
         .preloader-inner {
             text-align: center;
+            z-index: 100001;
+            position: relative;
         }
 
         .preloader-logo {
@@ -920,6 +939,11 @@
             z-index: 9999;
             pointer-events: none;
             opacity: 0.035;
+            transition: opacity 1.5s ease-out;
+        }
+        
+        .film-grain.subtle {
+            opacity: 0.005;
         }
         
         .film-grain canvas {
@@ -2444,6 +2468,8 @@
     <div class="vignette"></div>
 
     <!-- Preloader -->
+    <div class="preloader-top" id="preloaderTop"></div>
+    <div class="preloader-bottom" id="preloaderBottom"></div>
     <div class="preloader" id="preloader">
         <!-- Flying text top (outline, moves right) -->
         <div class="intro-text-top" id="introTextTop">
@@ -3181,8 +3207,15 @@
           .to('#introTextTop', { opacity: 0, duration: 0.4 })
           .to('#introTextBottom', { opacity: 0, duration: 0.4 }, '-=0.4')
           
-          // Slide preloader up
-          .to('#preloader', { yPercent: -100, duration: 0.8, ease: 'power4.inOut' }, '-=0.2')
+          // Split reveal - top goes up, bottom goes down
+          .to('#preloaderTop', { yPercent: -100, duration: 0.8, ease: 'power4.inOut' }, '-=0.2')
+          .to('#preloaderBottom', { yPercent: 100, duration: 0.8, ease: 'power4.inOut' }, '-=0.8')
+          .to('#preloader', { opacity: 0, duration: 0.4 }, '-=0.6')
+          
+          // Fade film grain to subtle after TV static effect
+          .add(() => {
+              document.getElementById('filmGrain').classList.add('subtle');
+          }, '-=0.2')
           
           // Hero elements fly in with blur
           .fromTo('#heroAnnouncement', 
@@ -3745,22 +3778,27 @@
             }, { passive: true });
         })();
 
-        // Film Grain Animation
+        // Film Grain Animation - optimized for performance
         (function() {
             const canvas = document.getElementById('grainCanvas');
             if (!canvas) return;
             
             const ctx = canvas.getContext('2d');
             
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            resize();
-            window.addEventListener('resize', resize);
+            // Use a much smaller canvas and scale up via CSS for performance
+            const grainSize = 128;
+            canvas.width = grainSize;
+            canvas.height = grainSize;
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            canvas.style.imageRendering = 'pixelated';
             
-            function generateGrain() {
-                const imageData = ctx.createImageData(canvas.width, canvas.height);
+            // Pre-generate a few grain frames and cycle through them
+            const grainFrames = [];
+            const numFrames = 4;
+            
+            for (let f = 0; f < numFrames; f++) {
+                const imageData = ctx.createImageData(grainSize, grainSize);
                 const data = imageData.data;
                 
                 for (let i = 0; i < data.length; i += 4) {
@@ -3770,13 +3808,18 @@
                     data[i + 2] = value;
                     data[i + 3] = 255;
                 }
-                
-                ctx.putImageData(imageData, 0, 0);
+                grainFrames.push(imageData);
             }
             
-            // Update grain at ~24fps for subtle animation
-            setInterval(generateGrain, 42);
-            generateGrain();
+            let frameIndex = 0;
+            function renderGrain() {
+                ctx.putImageData(grainFrames[frameIndex], 0, 0);
+                frameIndex = (frameIndex + 1) % numFrames;
+            }
+            
+            // Update at ~12fps - still looks like grain but way less CPU
+            setInterval(renderGrain, 83);
+            renderGrain();
         })();
 
         // ASCII Glitch Ripple Effect
