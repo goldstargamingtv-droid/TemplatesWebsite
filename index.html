@@ -301,6 +301,29 @@
 
         .intro-text-inner {
             display: inline-block;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        @keyframes marquee-left {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(-33.33%, 0, 0); }
+        }
+        
+        @keyframes marquee-right {
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(33.33%, 0, 0); }
+        }
+        
+        .intro-text-top .intro-text-inner.animate {
+            animation: marquee-left 2s linear forwards;
+        }
+        
+        .intro-text-bottom .intro-text-inner.animate {
+            animation: marquee-right 2s linear forwards;
         }
 
         /* =============================================
@@ -613,7 +636,14 @@
             margin-bottom: 0.5rem;
         }
 
-        .hero-brand-abbr {
+        .hero-brand-dt {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #f97316;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-brand-dash {
             font-size: 0.85rem;
             font-weight: 600;
             color: var(--text);
@@ -623,7 +653,7 @@
         .hero-brand-full {
             font-size: 0.85rem;
             font-weight: 400;
-            color: var(--text-dim);
+            color: var(--primary);
         }
 
         .hero-tagline {
@@ -880,24 +910,36 @@
             .hero-blob { display: none; }
         }
 
-        /* Wave Grid Background */
-        .hero-wave-grid {
+        /* Film grain overlay */
+        .film-grain {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
+            z-index: 9999;
             pointer-events: none;
-            opacity: 0.4;
+            opacity: 0.035;
         }
-
-        .hero-wave-grid canvas {
+        
+        .film-grain canvas {
             width: 100%;
             height: 100%;
         }
+        
+        /* Vignette overlay */
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9998;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(0,0,0,0.3) 100%);
+        }
 
-        /* Main content wrapper scrolls over wave */
+        /* Main content wrapper */
         .main-content {
             position: relative;
             z-index: 1;
@@ -2393,10 +2435,13 @@
     <div class="cursor" id="cursor"></div>
     <div class="cursor-dot" id="cursorDot"></div>
 
-    <!-- Wave Grid Background (fixed, everything scrolls over it) -->
-    <div class="hero-wave-grid" id="heroWaveGrid">
-        <canvas id="waveCanvas"></canvas>
+    <!-- Film grain overlay -->
+    <div class="film-grain" id="filmGrain">
+        <canvas id="grainCanvas"></canvas>
     </div>
+    
+    <!-- Vignette overlay -->
+    <div class="vignette"></div>
 
     <!-- Preloader -->
     <div class="preloader" id="preloader">
@@ -2469,8 +2514,7 @@
         <div class="hero-main">
             <div class="hero-left" id="heroLeft">
                 <div class="hero-brand">
-                    <span class="hero-brand-abbr">DT — </span>
-                    <span class="hero-brand-full">[DEPLOY-TEMPLATE]</span>
+                    <span class="hero-brand-dt">DT</span><span class="hero-brand-dash"> — </span><span class="hero-brand-full">[DEPLOY-TEMPLATE]</span>
                 </div>
                 <p class="hero-tagline">Free Tools & Custom Development</p>
                 
@@ -3120,17 +3164,12 @@
         tl.to('#introTextTop', { opacity: 1, duration: 0.3 })
           .to('#introTextBottom', { opacity: 1, duration: 0.3 }, '-=0.2')
           
-          // Fly the text across
-          .to('#introTextTop .intro-text-inner', { 
-              x: '-33.33%', 
-              duration: 2, 
-              ease: 'power1.inOut' 
+          // Fly the text across using CSS animation
+          .add(() => {
+              document.querySelector('#introTextTop .intro-text-inner').classList.add('animate');
+              document.querySelector('#introTextBottom .intro-text-inner').classList.add('animate');
           }, '-=0.2')
-          .to('#introTextBottom .intro-text-inner', { 
-              x: '33.33%', 
-              duration: 2, 
-              ease: 'power1.inOut' 
-          }, '-=2')
+          .to({}, { duration: 2 }) // Wait for CSS animation
           
           // Show center logo during text fly
           .to('#preloaderLogo', { opacity: 1, scale: 1, rotation: 0, duration: 0.6, ease: 'back.out(1.7)' }, '-=1.5')
@@ -3701,163 +3740,44 @@
             // Scroll interaction - set TARGET values, actual values lerp towards them
             window.addEventListener('scroll', () => {
                 const scrollY = window.scrollY;
-                targetSpeed = 3 + (scrollY * 0.01);
-                targetSpikes = 0.4 + (scrollY * 0.0005);
+                targetSpeed = 3 + (scrollY * 0.005);
+                targetSpikes = 0.4 + (scrollY * 0.00025);
             }, { passive: true });
         })();
 
-        // Wave Grid Animation
+        // Film Grain Animation
         (function() {
-            const waveCanvas = document.getElementById('waveCanvas');
-            if (!waveCanvas) return;
+            const canvas = document.getElementById('grainCanvas');
+            if (!canvas) return;
             
-            const waveScene = new THREE.Scene();
-            const waveCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const ctx = canvas.getContext('2d');
             
-            const waveRenderer = new THREE.WebGLRenderer({
-                canvas: waveCanvas,
-                antialias: true,
-                alpha: true
-            });
-            waveRenderer.setSize(window.innerWidth, window.innerHeight);
-            waveRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-            // Wave parameters
-            const waveSize = 300;
-            const pointSpacing = 5;
-            const pointCount = Math.floor(waveSize / pointSpacing);
-            const totalPoints = pointCount * pointCount;
-
-            // Create points geometry
-            const pointsGeometry = new THREE.BufferGeometry();
-            const positions = new Float32Array(totalPoints * 3);
-            const colors = new Float32Array(totalPoints * 3);
-
-            // Fill positions and colors with teal gradient
-            let index = 0;
-            for (let i = 0; i < pointCount; i++) {
-                for (let j = 0; j < pointCount; j++) {
-                    const x = (i - pointCount / 2) * pointSpacing;
-                    const z = (j - pointCount / 2) * pointSpacing;
-                    
-                    positions[index * 3] = x;
-                    positions[index * 3 + 1] = 0;
-                    positions[index * 3 + 2] = z;
-                    
-                    // Teal color gradient
-                    const distance = Math.sqrt(x*x + z*z) / (waveSize/2);
-                    const intensity = 1 - Math.min(distance, 1) * 0.7;
-                    
-                    colors[index * 3] = intensity * 0.11;     // R (29/255)
-                    colors[index * 3 + 1] = intensity * 0.60; // G (154/255)
-                    colors[index * 3 + 2] = intensity * 0.61; // B (155/255)
-                    
-                    index++;
-                }
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             }
-
-            pointsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            pointsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-            // Points material
-            const pointsMaterial = new THREE.PointsMaterial({
-                size: 0.12,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.9,
-                sizeAttenuation: true,
-                blending: THREE.AdditiveBlending
-            });
-
-            const wavePoints = new THREE.Points(pointsGeometry, pointsMaterial);
-            waveScene.add(wavePoints);
-
-            // Create lines geometry
-            const linesGeometry = new THREE.BufferGeometry();
-            const lineIndices = [];
+            resize();
+            window.addEventListener('resize', resize);
             
-            for (let i = 0; i < pointCount - 1; i++) {
-                for (let j = 0; j < pointCount - 1; j++) {
-                    const currentIndex = i * pointCount + j;
-                    if (j < pointCount - 1) {
-                        lineIndices.push(currentIndex, currentIndex + 1);
-                    }
-                    if (i < pointCount - 1) {
-                        lineIndices.push(currentIndex, currentIndex + pointCount);
-                    }
-                }
-            }
-            
-            linesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            linesGeometry.setIndex(lineIndices);
-            
-            const lineMaterial = new THREE.LineBasicMaterial({
-                color: 0x1d9a9b,
-                transparent: true,
-                opacity: 0.3
-            });
-            
-            const linesMesh = new THREE.LineSegments(linesGeometry, lineMaterial);
-            waveScene.add(linesMesh);
-
-            // Camera setup
-            waveCamera.position.set(0, 15, 40);
-            waveCamera.lookAt(0, 0, 0);
-
-            // Animation
-            const waveClock = new THREE.Clock();
-            
-            function animateWave() {
-                requestAnimationFrame(animateWave);
+            function generateGrain() {
+                const imageData = ctx.createImageData(canvas.width, canvas.height);
+                const data = imageData.data;
                 
-                const time = waveClock.getElapsedTime();
-                const pos = pointsGeometry.attributes.position.array;
-                
-                // Wave animation
-                for (let i = 0; i < pointCount; i++) {
-                    for (let j = 0; j < pointCount; j++) {
-                        const idx = (i * pointCount + j) * 3;
-                        const x = pos[idx];
-                        const z = pos[idx + 2];
-                        
-                        const wave1 = Math.sin((x * 0.08) + time * 0.8) * 2;
-                        const wave2 = Math.cos((z * 0.08) + time * 0.6) * 2;
-                        const wave3 = Math.sin((x * 0.04 + z * 0.04) + time) * 1.5;
-                        
-                        pos[idx + 1] = wave1 + wave2 + wave3;
-                    }
+                for (let i = 0; i < data.length; i += 4) {
+                    const value = Math.random() * 255;
+                    data[i] = value;
+                    data[i + 1] = value;
+                    data[i + 2] = value;
+                    data[i + 3] = 255;
                 }
                 
-                pointsGeometry.attributes.position.needsUpdate = true;
-                linesGeometry.attributes.position.needsUpdate = true;
-                
-                waveRenderer.render(waveScene, waveCamera);
+                ctx.putImageData(imageData, 0, 0);
             }
-
-            // Handle resize
-            window.addEventListener('resize', () => {
-                waveCamera.aspect = window.innerWidth / window.innerHeight;
-                waveCamera.updateProjectionMatrix();
-                waveRenderer.setSize(window.innerWidth, window.innerHeight);
-            });
             
-            // Store camera ref globally for scroll
-            window.waveCamera = waveCamera;
-
-            animateWave();
+            // Update grain at ~24fps for subtle animation
+            setInterval(generateGrain, 42);
+            generateGrain();
         })();
-
-        // Wave scroll effect - camera moves through wave as you scroll
-        lenis.on('scroll', (e) => {
-            if (window.waveCamera) {
-                const scrollY = e.scroll;
-                const scrollLimit = window.innerHeight * 2; // Only animate for first 2 viewport heights
-                const scrolledPercent = Math.min(scrollY / scrollLimit, 1);
-                
-                // Camera Y goes from 15 to -70 (wave rises up and over)
-                window.waveCamera.position.y = 15 - (85 * scrolledPercent);
-            }
-        });
 
         // ASCII Glitch Ripple Effect
         const createASCIIShift = (el, opts = {}) => {
