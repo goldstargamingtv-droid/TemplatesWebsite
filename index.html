@@ -448,40 +448,25 @@
             transform: translateY(-50%);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: absolute;
-            right: 240px;
-            top: calc(50% - 3px);
+            right: 320px;
+            top: 50%;
         }
 
         .nav-links a {
-            color: rgba(29, 154, 155, 0.4);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            position: relative;
-            transition: color 0.3s ease;
-            padding: 10px;
-        }
-
-        .nav-links a:before {
-            position: absolute;
             color: var(--primary);
-            top: 0px;
-            left: 0px;
-            padding: 10px;
-            overflow: hidden;
-            content: attr(data-text);
-            transition: all 0.3s;
-            transform: scale(1.2);
-            opacity: 0;
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            position: relative;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+            display: inline-block;
         }
 
         .nav-links a:hover {
-            color: rgba(29, 154, 155, 0.4);
-        }
-
-        .nav-links a:hover:before {
-            transform: scale(1);
-            opacity: 1;
+            opacity: 0.7;
         }
 
         .hero-top.scrolled .nav-links {
@@ -535,8 +520,8 @@
         }
 
         .hero-logo-icon {
-            width: 50px;
-            height: 50px;
+            width: 42px;
+            height: 42px;
             background: rgba(29, 154, 155, 0.2);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -544,15 +529,15 @@
             box-shadow: 
                 0 8px 32px rgba(29, 154, 155, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .hero-logo-icon svg {
-            width: 26px;
-            height: 26px;
+            width: 22px;
+            height: 22px;
             stroke: white;
             fill: none;
             stroke-width: 2;
@@ -568,51 +553,30 @@
         .hero-cta-top {
             position: relative;
             opacity: 0;
-        }
-
-        .hero-cta-top a {
-            display: inline-block;
-            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.7rem;
             font-weight: 600;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--text);
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 100px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+            white-space: nowrap;
         }
 
-        .hero-cta-top a span {
-            position: relative;
-            z-index: 1;
+        .hero-cta-top a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+            display: inline-block;
         }
 
         .hero-cta-top a:hover {
-            background: rgba(29, 154, 155, 0.1);
-            border-color: rgba(29, 154, 155, 0.3);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            transform: translateY(-2px);
-            box-shadow: 
-                0 8px 32px rgba(29, 154, 155, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            color: var(--primary);
+            opacity: 0.7;
         }
 
-        [data-theme="light"] .hero-cta-top a {
-            background: rgba(0, 0, 0, 0.03);
-            border-color: rgba(0, 0, 0, 0.1);
-        }
-
-        [data-theme="light"] .hero-cta-top a:hover {
-            background: rgba(29, 154, 155, 0.1);
-            border-color: rgba(29, 154, 155, 0.3);
+        .hero-cta-top .cta-label {
+            color: var(--text-muted);
         }
 
         /* Hero Main Content */
@@ -1381,20 +1345,30 @@
         .form-submit {
             width: 100%;
             padding: 1rem;
-            background: var(--primary);
-            border: none;
+            background: rgba(29, 154, 155, 0.2);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(29, 154, 155, 0.3);
             border-radius: 10px;
             color: white;
             font-size: 0.9rem;
             font-weight: 700;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 8px 32px rgba(29, 154, 155, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .form-submit:hover {
+            background: rgba(29, 154, 155, 0.35);
+            border-color: rgba(29, 154, 155, 0.5);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px -10px var(--primary-glow);
+            box-shadow: 
+                0 12px 40px rgba(29, 154, 155, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         /* =============================================
@@ -1893,8 +1867,8 @@
             width: 280px;
             height: 220px;
             perspective: 500px;
-            left: calc(50% - 100px);
-            top: calc(50% + 200px);
+            left: calc(50% - 130px);
+            top: calc(50% + 181px);
             transform: translate(-50%, -50%);
             z-index: 5;
         }
@@ -1909,10 +1883,15 @@
             bottom: 0;
             width: 280px;
             height: 194px;
-            background: #000;
-            border: 2px solid #dedede;
+            background: rgba(29, 154, 155, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(29, 154, 155, 0.3);
             border-radius: 14px;
             box-sizing: border-box;
+            box-shadow: 
+                0 8px 32px rgba(29, 154, 155, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             z-index: 10;
             transform: translate3d(0,0,0) rotate3d(0,0,1,0deg) scale3d(1,1,1);
             animation: device-morph 8s infinite;
@@ -1926,7 +1905,7 @@
             left: 7px;
             height: 4px;
             width: 4px;
-            background: #adacad;
+            background: rgba(255, 255, 255, 0.5);
             border-radius: 50%;
             z-index: 12;
             animation: device-cam 8s infinite;
@@ -1937,8 +1916,11 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: var(--bg-secondary);
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             z-index: 12;
         }
 
@@ -1956,19 +1938,19 @@
         }
 
         .device-scr-1 {
-            background: linear-gradient(135deg, #1d9a9b 0%, #0f766e 100%);
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.8) 0%, rgba(15, 118, 110, 0.8) 100%);
             z-index: 12;
             animation: scr1 8s infinite;
         }
 
         .device-scr-2 {
-            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.8) 0%, rgba(109, 40, 217, 0.8) 100%);
             z-index: 13;
             animation: scr2 8s infinite;
         }
 
         .device-scr-3 {
-            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.8) 0%, rgba(234, 88, 12, 0.8) 100%);
             z-index: 14;
             animation: scr3 8s infinite;
         }
@@ -1980,7 +1962,10 @@
             bottom: 0;
             height: 7px;
             width: calc(100% + 36px);
-            background: #eee;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 2px;
             z-index: 11;
             animation: device-keyboard 8s infinite;
@@ -1995,7 +1980,7 @@
             transform: translateX(-50%);
             height: 8px;
             width: 50px;
-            background: #adadad;
+            background: rgba(255, 255, 255, 0.3);
             border-radius: 50% 50% 6px 6px;
             clip-path: polygon(0 4px, 50px 4px, 50px 8px, 0 8px);
             z-index: 12;
@@ -2007,7 +1992,7 @@
             bottom: -3px;
             height: 6px;
             width: 100%;
-            background: #dedede;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 30px / 6px;
             clip-path: polygon(0 3px, 100% 3px, 100% 6px, 0 6px);
         }
@@ -2065,6 +2050,322 @@
         @media (max-width: 768px) {
             .device-wrapper {
                 display: none;
+            }
+        }
+
+        /* Template Scanner Carousel */
+        .template-scanner {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            margin-top: 3rem;
+        }
+
+        .template-card-stream {
+            position: absolute;
+            width: 100%;
+            height: 250px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            overflow: visible;
+        }
+
+        .template-card-line {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            white-space: nowrap;
+            cursor: grab;
+            user-select: none;
+            will-change: transform;
+        }
+
+        .template-card-line:active,
+        .template-card-line.dragging {
+            cursor: grabbing;
+        }
+
+        .template-card-wrapper {
+            position: relative;
+            width: 350px;
+            height: 220px;
+            flex-shrink: 0;
+        }
+
+        .template-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 350px;
+            height: 220px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .template-card-normal {
+            background: transparent;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            z-index: 2;
+            clip-path: inset(0 0 0 var(--clip-right, 0%));
+        }
+
+        .template-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            filter: brightness(1.1) contrast(1.1);
+        }
+
+        .template-card-image:hover {
+            filter: brightness(1.2) contrast(1.2);
+        }
+
+        .template-card-ascii {
+            background: transparent;
+            z-index: 1;
+            clip-path: inset(0 calc(100% - var(--clip-left, 0%)) 0 0);
+        }
+
+        .template-ascii-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: rgba(29, 154, 155, 0.7);
+            font-family: "Courier New", monospace;
+            font-size: 10px;
+            line-height: 12px;
+            overflow: hidden;
+            white-space: pre;
+            animation: asciiGlitch 0.1s infinite linear alternate-reverse;
+            -webkit-mask-image: linear-gradient(
+                to right,
+                rgba(0, 0, 0, 1) 0%,
+                rgba(0, 0, 0, 0.8) 30%,
+                rgba(0, 0, 0, 0.6) 50%,
+                rgba(0, 0, 0, 0.4) 80%,
+                rgba(0, 0, 0, 0.2) 100%
+            );
+            mask-image: linear-gradient(
+                to right,
+                rgba(0, 0, 0, 1) 0%,
+                rgba(0, 0, 0, 0.8) 30%,
+                rgba(0, 0, 0, 0.6) 50%,
+                rgba(0, 0, 0, 0.4) 80%,
+                rgba(0, 0, 0, 0.2) 100%
+            );
+        }
+
+        @keyframes asciiGlitch {
+            0% { opacity: 1; }
+            15% { opacity: 0.9; }
+            16% { opacity: 1; }
+            49% { opacity: 0.8; }
+            50% { opacity: 1; }
+            99% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
+
+        #templateParticleCanvas {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 250px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        #templateScannerCanvas {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 300px;
+            z-index: 15;
+            pointer-events: none;
+        }
+
+        .template-scan-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(29, 154, 155, 0.4), transparent);
+            animation: templateScanEffect 0.6s ease-out;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes templateScanEffect {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Template Glow Cards */
+        .template-cards-section {
+            position: relative;
+            margin-top: 4rem;
+            padding: 4rem 0;
+        }
+
+        .template-cards-inner {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .template-glow-card {
+            --hsl: var(--hue), var(--saturation), var(--lightness);
+            flex: 1 1 280px;
+            max-width: 350px;
+            padding: 2em;
+            display: grid;
+            grid-template-rows: auto auto auto 1fr auto;
+            align-items: start;
+            gap: 1em;
+            color: var(--text);
+            background-color: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            transition: 400ms background ease;
+            will-change: background;
+        }
+
+        .template-glow-card:nth-child(1) {
+            --hue: 174;
+            --saturation: 72%;
+            --lightness: 36%;
+        }
+
+        .template-glow-card:nth-child(2) {
+            --hue: 262;
+            --saturation: 83%;
+            --lightness: 58%;
+        }
+
+        .template-glow-card:nth-child(3) {
+            --hue: 27;
+            --saturation: 96%;
+            --lightness: 53%;
+        }
+
+        .template-glow-card:hover {
+            --lightness: 95%;
+            background: hsla(var(--hsl), 0.1);
+        }
+
+        .template-glow-card__heading {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: hsl(var(--hsl));
+        }
+
+        .template-glow-card__price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: hsl(var(--hsl));
+        }
+
+        .template-glow-card__bullets {
+            list-style: none;
+            line-height: 1.6;
+        }
+
+        .template-glow-card__bullets li {
+            position: relative;
+            padding-left: 1.5em;
+            margin-bottom: 0.5em;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .template-glow-card__bullets li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5em;
+            width: 8px;
+            height: 8px;
+            background: hsl(var(--hsl));
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+
+        .template-glow-card__cta {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.8em 1.5em;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: auto;
+        }
+
+        .template-glow-card__cta:hover {
+            background-color: hsl(var(--hsl));
+            border-color: hsl(var(--hsl));
+        }
+
+        /* Overlay glow effect */
+        .template-cards-overlay {
+            position: absolute;
+            top: 0;
+            left: -100px;
+            right: -100px;
+            bottom: 0;
+            padding: 4rem 100px;
+            pointer-events: none;
+            user-select: none;
+            opacity: var(--overlay-opacity, 0);
+            -webkit-mask: radial-gradient(
+                35rem 35rem at var(--mouse-x) var(--mouse-y),
+                #000 1%,
+                transparent 50%
+            );
+            mask: radial-gradient(
+                35rem 35rem at var(--mouse-x) var(--mouse-y),
+                #000 1%,
+                transparent 50%
+            );
+            transition: 400ms mask ease;
+            will-change: mask;
+        }
+
+        .template-cards-overlay .template-glow-card {
+            background-color: hsla(var(--hsl), 0.15);
+            border-color: hsla(var(--hsl), 1);
+            box-shadow: 0 0 0 1px inset hsl(var(--hsl));
+        }
+
+        .template-cards-overlay .template-glow-card__cta {
+            background-color: hsl(var(--hsl));
+            box-shadow: 0 0 0 1px hsl(var(--hsl));
+        }
+
+        @media (max-width: 768px) {
+            .template-cards-inner {
+                flex-direction: column;
+                align-items: center;
+            }
+            .template-glow-card {
+                max-width: 100%;
             }
         }
 
@@ -2150,11 +2451,12 @@
             </div>
             
             <div class="nav-links" id="navLinks">
-                <a href="#templates" data-text="Templates">Templates</a>
+                <a href="#templates">→ Templates ←</a>
             </div>
             
             <div class="hero-cta-top" id="heroCta">
-                <a href="#custom"><span>Have a Project?</span></a>
+                <a href="#custom">→ Have a Project? ←</a>
+                <span class="cta-label">Let's collaborate</span>
             </div>
         </div>
 
@@ -2431,72 +2733,52 @@
                 <p class="section-desc">Production-ready templates to kickstart your next project.</p>
             </div>
             
-            <div class="templates-pinned">
-                <!-- Left: Text blocks that scroll -->
-                <div class="templates-left">
-                    <div class="template-info-block" id="template-saas">
-                        <div class="content">
-                            <h2>FlowMetrics SaaS</h2>
-                            <p>Modern SaaS landing page with pricing tables, feature sections, testimonials, and full dark mode support. Perfect for your next startup.</p>
-                            <a class="template-link" href="#" style="background-color: #1d9a9b;">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                <span>View Demo</span>
-                            </a>
-                        </div>
-                    </div>
+            <div class="template-scanner">
+                <canvas id="templateParticleCanvas"></canvas>
+                <canvas id="templateScannerCanvas"></canvas>
+                <div class="template-card-stream" id="templateCardStream">
+                    <div class="template-card-line" id="templateCardLine"></div>
+                </div>
+            </div>
 
-                    <div class="template-info-block" id="template-portfolio">
-                        <div class="content">
-                            <h2>Creative Portfolio</h2>
-                            <p>Stunning portfolio template for designers, developers, and creative professionals. Showcase your work with style and elegance.</p>
-                            <a class="template-link" href="#" style="background-color: #8b5cf6;">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                <span>View Demo</span>
-                            </a>
-                        </div>
+            <!-- Template Cards -->
+            <div class="template-cards-section">
+                <div class="template-cards-inner">
+                    <div class="template-glow-card">
+                        <h3 class="template-glow-card__heading">FlowMetrics SaaS</h3>
+                        <p class="template-glow-card__price">Free</p>
+                        <ul class="template-glow-card__bullets">
+                            <li>Modern SaaS landing page</li>
+                            <li>Pricing tables & feature sections</li>
+                            <li>Testimonials & social proof</li>
+                            <li>Full dark mode support</li>
+                        </ul>
+                        <a href="#" class="template-glow-card__cta">View Demo</a>
                     </div>
-
-                    <div class="template-info-block" id="template-restaurant">
-                        <div class="content">
-                            <h2>Bella Vista Restaurant</h2>
-                            <p>Elegant restaurant template with menu sections, reservation system, gallery, and contact forms. Perfect for cafes and fine dining.</p>
-                            <a class="template-link" href="#" style="background-color: #f97316;">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                <span>View Demo</span>
-                            </a>
-                        </div>
+                    <div class="template-glow-card">
+                        <h3 class="template-glow-card__heading">Creative Portfolio</h3>
+                        <p class="template-glow-card__price">Free</p>
+                        <ul class="template-glow-card__bullets">
+                            <li>Stunning portfolio showcase</li>
+                            <li>Project galleries & case studies</li>
+                            <li>Smooth animations & transitions</li>
+                            <li>Contact form integration</li>
+                        </ul>
+                        <a href="#" class="template-glow-card__cta">View Demo</a>
+                    </div>
+                    <div class="template-glow-card">
+                        <h3 class="template-glow-card__heading">Bella Vista Restaurant</h3>
+                        <p class="template-glow-card__price">Free</p>
+                        <ul class="template-glow-card__bullets">
+                            <li>Elegant restaurant design</li>
+                            <li>Menu sections & reservation system</li>
+                            <li>Image gallery & reviews</li>
+                            <li>Mobile-first responsive</li>
+                        </ul>
+                        <a href="#" class="template-glow-card__cta">View Demo</a>
                     </div>
                 </div>
-
-                <!-- Right: Pinned images that stack -->
-                <div class="templates-right">
-                    <div class="templates-images">
-                        <div class="template-img-wrapper" data-index="1" style="z-index: 1;">
-                            <div class="template-preview-gradient" style="background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);">
-                                <div class="template-preview-icon">
-                                    <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-                                </div>
-                                <span style="position: absolute; bottom: 20px; left: 20px; font-size: 1.5rem; font-weight: 700; color: white;">Restaurant</span>
-                            </div>
-                        </div>
-                        <div class="template-img-wrapper" data-index="2" style="z-index: 2;">
-                            <div class="template-preview-gradient" style="background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);">
-                                <div class="template-preview-icon">
-                                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                                </div>
-                                <span style="position: absolute; bottom: 20px; left: 20px; font-size: 1.5rem; font-weight: 700; color: white;">Portfolio</span>
-                            </div>
-                        </div>
-                        <div class="template-img-wrapper" data-index="3" style="z-index: 3;">
-                            <div class="template-preview-gradient" style="background: linear-gradient(135deg, #1d9a9b 0%, #0d5f5f 100%);">
-                                <div class="template-preview-icon">
-                                    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                                </div>
-                                <span style="position: absolute; bottom: 20px; left: 20px; font-size: 1.5rem; font-weight: 700; color: white;">SaaS</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="template-cards-overlay template-cards-inner"></div>
             </div>
         </div>
     </section>
@@ -3316,10 +3598,10 @@
             const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
             camera.position.z = 5;
             
-            // Crystal ball / glass material
+            // Crystal ball / glass material - neutral white to show light colors
             const geometry = new THREE.SphereGeometry(0.8, 128, 128);
             const material = new THREE.MeshPhysicalMaterial({
-                color: 0xf97316,
+                color: 0xffffff,
                 metalness: 0.0,
                 roughness: 0.05,
                 transmission: 0.6,
@@ -3331,19 +3613,25 @@
                 clearcoat: 1,
                 clearcoatRoughness: 0.1,
                 specularIntensity: 1,
-                specularColor: 0xffb380
+                specularColor: 0xffffff
             });
             
-            // Lights
-            const lightTop = new THREE.DirectionalLight(0xffffff, 0.8);
+            // Lights - separate teal and orange zones, no mixing
+            const lightTop = new THREE.DirectionalLight(0xffffff, 0.4);
             lightTop.position.set(0, 500, 200);
             scene.add(lightTop);
             
-            const lightBottom = new THREE.DirectionalLight(0xf97316, 0.4);
-            lightBottom.position.set(0, -500, 400);
-            scene.add(lightBottom);
+            // Teal point light on one side - darker/richer teal
+            const tealLight = new THREE.PointLight(0x0f766e, 2.5, 10);
+            tealLight.position.set(-2, 1, 2);
+            scene.add(tealLight);
             
-            const ambientLight = new THREE.AmbientLight(0xf97316, 0.3);
+            // Orange point light on opposite side
+            const orangeLight = new THREE.PointLight(0xff5500, 2, 10);
+            orangeLight.position.set(2, -1, 2);
+            scene.add(orangeLight);
+            
+            const ambientLight = new THREE.AmbientLight(0x111111, 0.3);
             scene.add(ambientLight);
             
             const sphere = new THREE.Mesh(geometry, material);
@@ -3570,6 +3858,585 @@
                 window.waveCamera.position.y = 15 - (85 * scrolledPercent);
             }
         });
+
+        // ASCII Glitch Ripple Effect
+        const createASCIIShift = (el, opts = {}) => {
+            const WAVE_THRESH = 3;
+            const CHAR_MULT = 3;
+            const ANIM_STEP = 40;
+            const WAVE_BUF = 5;
+
+            let origTxt = el.textContent;
+            let origChars = origTxt.split("");
+            let isAnim = false;
+            let cursorPos = 0;
+            let waves = [];
+            let animId = null;
+            let isHover = false;
+            let origW = null;
+
+            const cfg = {
+                dur: 600,
+                chars: '.,·-─~+:;=*π""┐┌┘┴┬╗╔╝╚╬╠╣╩╦║░▒▓█▄▀▌▐■!?&#$@0123456789*',
+                preserveSpaces: true,
+                spread: 0.3,
+                ...opts
+            };
+
+            const updateCursorPos = (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const len = origTxt.length;
+                const pos = Math.round((x / rect.width) * len);
+                cursorPos = Math.max(0, Math.min(pos, len - 1));
+            };
+
+            const startWave = () => {
+                waves.push({
+                    startPos: cursorPos,
+                    startTime: Date.now(),
+                    id: Math.random()
+                });
+                if (!isAnim) start();
+            };
+
+            const cleanupWaves = (t) => {
+                waves = waves.filter((w) => t - w.startTime < cfg.dur);
+            };
+
+            const calcWaveEffect = (charIdx, t) => {
+                let shouldAnim = false;
+                let resultChar = origChars[charIdx];
+
+                for (const w of waves) {
+                    const age = t - w.startTime;
+                    const prog = Math.min(age / cfg.dur, 1);
+                    const dist = Math.abs(charIdx - w.startPos);
+                    const maxDist = Math.max(w.startPos, origChars.length - w.startPos - 1);
+                    const rad = (prog * (maxDist + WAVE_BUF)) / cfg.spread;
+
+                    if (dist <= rad) {
+                        shouldAnim = true;
+                        const intens = Math.max(0, rad - dist);
+                        if (intens <= WAVE_THRESH && intens > 0) {
+                            const cIdx = (dist * CHAR_MULT + Math.floor(age / ANIM_STEP)) % cfg.chars.length;
+                            resultChar = cfg.chars[cIdx];
+                        }
+                    }
+                }
+                return { shouldAnim, char: resultChar };
+            };
+
+            const genScrambledTxt = (t) =>
+                origChars.map((char, i) => {
+                    if (cfg.preserveSpaces && char === " ") return " ";
+                    const res = calcWaveEffect(i, t);
+                    return res.shouldAnim ? res.char : char;
+                }).join("");
+
+            const stop = () => {
+                el.textContent = origTxt;
+                if (origW !== null) {
+                    el.style.width = "";
+                    origW = null;
+                }
+                isAnim = false;
+            };
+
+            const start = () => {
+                if (isAnim) return;
+                if (origW === null) {
+                    origW = el.getBoundingClientRect().width;
+                    el.style.width = `${origW}px`;
+                }
+                isAnim = true;
+
+                const animate = () => {
+                    const t = Date.now();
+                    cleanupWaves(t);
+                    if (waves.length === 0) {
+                        stop();
+                        return;
+                    }
+                    el.textContent = genScrambledTxt(t);
+                    animId = requestAnimationFrame(animate);
+                };
+                animId = requestAnimationFrame(animate);
+            };
+
+            const handleEnter = (e) => {
+                isHover = true;
+                updateCursorPos(e);
+                startWave();
+            };
+
+            const handleMove = (e) => {
+                if (!isHover) return;
+                const old = cursorPos;
+                updateCursorPos(e);
+                if (cursorPos !== old) startWave();
+            };
+
+            const handleLeave = () => {
+                isHover = false;
+            };
+
+            el.addEventListener("mouseenter", handleEnter);
+            el.addEventListener("mousemove", handleMove);
+            el.addEventListener("mouseleave", handleLeave);
+
+            return { stop };
+        };
+
+        // Apply ASCII effect to nav links, browse free tools, and have a project
+        document.querySelectorAll('.nav-links a, .hero-announcement a, .hero-cta-top a').forEach(link => {
+            createASCIIShift(link, { dur: 800, spread: 0.8 });
+        });
+
+        // Template Scanner Carousel
+        class TemplateScannerCarousel {
+            constructor() {
+                this.container = document.getElementById('templateCardStream');
+                this.cardLine = document.getElementById('templateCardLine');
+                if (!this.container || !this.cardLine) return;
+
+                this.position = 0;
+                this.velocity = 80;
+                this.direction = -1;
+                this.isAnimating = true;
+                this.isDragging = false;
+                this.lastTime = performance.now();
+                this.lastMouseX = 0;
+                this.mouseVelocity = 0;
+                this.friction = 0.95;
+                this.minVelocity = 40;
+                this.containerWidth = 0;
+                this.cardLineWidth = 0;
+
+                this.templateImages = [
+                    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&h=440&fit=crop',
+                    'https://images.unsplash.com/photo-1555421689-d68471e189f2?w=700&h=440&fit=crop',
+                    'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=700&h=440&fit=crop',
+                    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&h=440&fit=crop',
+                    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=700&h=440&fit=crop'
+                ];
+
+                this.init();
+            }
+
+            init() {
+                this.populateCards();
+                this.setupEventListeners();
+                // Delay dimension calculation to ensure cards are rendered
+                setTimeout(() => {
+                    this.calculateDimensions();
+                    this.position = 0; // Start at beginning
+                    this.direction = -1; // Move left first
+                    this.animate();
+                    this.startPeriodicUpdates();
+                }, 100);
+            }
+
+            calculateDimensions() {
+                this.containerWidth = this.container.offsetWidth;
+                const cardWidth = 350;
+                const cardGap = 40;
+                const cardCount = this.cardLine.children.length;
+                // Total width: all cards + gaps between them
+                this.cardLineWidth = (cardWidth * cardCount) + (cardGap * (cardCount - 1));
+                console.log('Container:', this.containerWidth, 'CardLine:', this.cardLineWidth, 'Cards:', cardCount);
+            }
+
+            setupEventListeners() {
+                this.cardLine.addEventListener('mousedown', (e) => this.startDrag(e));
+                document.addEventListener('mousemove', (e) => this.onDrag(e));
+                document.addEventListener('mouseup', () => this.endDrag());
+                window.addEventListener('resize', () => this.calculateDimensions());
+            }
+
+            startDrag(e) {
+                e.preventDefault();
+                this.isDragging = true;
+                this.isAnimating = false;
+                this.lastMouseX = e.clientX;
+                this.mouseVelocity = 0;
+                this.cardLine.classList.add('dragging');
+            }
+
+            onDrag(e) {
+                if (!this.isDragging) return;
+                const deltaX = e.clientX - this.lastMouseX;
+                this.position += deltaX;
+                this.mouseVelocity = deltaX * 60;
+                this.lastMouseX = e.clientX;
+                this.cardLine.style.transform = `translateX(${this.position}px)`;
+                this.updateCardClipping();
+            }
+
+            endDrag() {
+                if (!this.isDragging) return;
+                this.isDragging = false;
+                this.cardLine.classList.remove('dragging');
+                if (Math.abs(this.mouseVelocity) > this.minVelocity) {
+                    this.velocity = Math.abs(this.mouseVelocity);
+                    this.direction = this.mouseVelocity > 0 ? 1 : -1;
+                } else {
+                    this.velocity = 80;
+                }
+                this.isAnimating = true;
+            }
+
+            animate() {
+                const currentTime = performance.now();
+                const deltaTime = (currentTime - this.lastTime) / 1000;
+                this.lastTime = currentTime;
+
+                if (this.isAnimating && !this.isDragging) {
+                    if (this.velocity > this.minVelocity) {
+                        this.velocity *= this.friction;
+                    } else {
+                        this.velocity = Math.max(this.minVelocity, this.velocity);
+                    }
+                    this.position += this.velocity * this.direction * deltaTime;
+                    this.updateCardPosition();
+                }
+
+                requestAnimationFrame(() => this.animate());
+            }
+
+            updateCardPosition() {
+                // maxPosition = 0 means first card aligned to left edge
+                const maxPosition = 0;
+                // minPosition = negative value so last card aligns to right edge
+                const minPosition = this.containerWidth - this.cardLineWidth;
+                
+                // Bounce when hitting edges
+                if (this.position <= minPosition) {
+                    this.position = minPosition;
+                    this.direction = 1; // Reverse to go right
+                } else if (this.position >= maxPosition) {
+                    this.position = maxPosition;
+                    this.direction = -1; // Reverse to go left
+                }
+                
+                this.cardLine.style.transform = `translateX(${this.position}px)`;
+                this.updateCardClipping();
+            }
+
+            generateCode(width, height) {
+                const lines = [
+                    '// DeployTemplate - Premium Templates',
+                    'const template = new Template();',
+                    'import { React, useState } from "react";',
+                    'export default function App() {',
+                    '  const [data, setData] = useState([]);',
+                    '  return <div className="app">{children}</div>;',
+                    '}',
+                    'const styles = { display: "flex" };',
+                    'function handleClick(e) { e.preventDefault(); }',
+                    'const API_URL = "https://api.deploy.com";',
+                    'async function fetchData() { return await fetch(API_URL); }',
+                    'const config = { theme: "dark", lang: "en" };',
+                    '.container { max-width: 1200px; margin: 0 auto; }',
+                    '@media (max-width: 768px) { .nav { display: none; } }',
+                    'const router = createBrowserRouter([{ path: "/" }]);',
+                ];
+                let code = '';
+                for (let i = 0; i < height; i++) {
+                    let line = lines[i % lines.length];
+                    while (line.length < width) line += ' ' + lines[(i + line.length) % lines.length];
+                    code += line.substring(0, width) + '\n';
+                }
+                return code;
+            }
+
+            createCard(index) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'template-card-wrapper';
+
+                const normalCard = document.createElement('div');
+                normalCard.className = 'template-card template-card-normal';
+
+                const img = document.createElement('img');
+                img.className = 'template-card-image';
+                img.src = this.templateImages[index % this.templateImages.length];
+                img.alt = 'Template Preview';
+                normalCard.appendChild(img);
+
+                const asciiCard = document.createElement('div');
+                asciiCard.className = 'template-card template-card-ascii';
+
+                const asciiContent = document.createElement('div');
+                asciiContent.className = 'template-ascii-content';
+                asciiContent.textContent = this.generateCode(60, 20);
+                asciiCard.appendChild(asciiContent);
+
+                wrapper.appendChild(normalCard);
+                wrapper.appendChild(asciiCard);
+                return wrapper;
+            }
+
+            populateCards() {
+                for (let i = 0; i < 5; i++) {
+                    this.cardLine.appendChild(this.createCard(i));
+                }
+            }
+
+            updateCardClipping() {
+                const scannerX = this.container.getBoundingClientRect().left + this.container.offsetWidth / 2;
+                const scannerWidth = 8;
+                const scannerLeft = scannerX - scannerWidth / 2;
+                const scannerRight = scannerX + scannerWidth / 2;
+
+                document.querySelectorAll('.template-card-wrapper').forEach((wrapper) => {
+                    const rect = wrapper.getBoundingClientRect();
+                    const cardLeft = rect.left;
+                    const cardRight = rect.right;
+                    const cardWidth = rect.width;
+
+                    const normalCard = wrapper.querySelector('.template-card-normal');
+                    const asciiCard = wrapper.querySelector('.template-card-ascii');
+
+                    if (cardLeft < scannerRight && cardRight > scannerLeft) {
+                        const scannerIntersectLeft = Math.max(scannerLeft - cardLeft, 0);
+                        const scannerIntersectRight = Math.min(scannerRight - cardLeft, cardWidth);
+
+                        const normalClipRight = (scannerIntersectLeft / cardWidth) * 100;
+                        const asciiClipLeft = (scannerIntersectRight / cardWidth) * 100;
+
+                        normalCard.style.setProperty('--clip-right', `${normalClipRight}%`);
+                        asciiCard.style.setProperty('--clip-left', `${asciiClipLeft}%`);
+
+                        if (!wrapper.hasAttribute('data-scanned') && scannerIntersectLeft > 0) {
+                            wrapper.setAttribute('data-scanned', 'true');
+                            const scanEffect = document.createElement('div');
+                            scanEffect.className = 'template-scan-effect';
+                            wrapper.appendChild(scanEffect);
+                            setTimeout(() => scanEffect.remove(), 600);
+                        }
+                    } else {
+                        if (cardRight < scannerLeft) {
+                            normalCard.style.setProperty('--clip-right', '100%');
+                            asciiCard.style.setProperty('--clip-left', '100%');
+                        } else {
+                            normalCard.style.setProperty('--clip-right', '0%');
+                            asciiCard.style.setProperty('--clip-left', '0%');
+                        }
+                        wrapper.removeAttribute('data-scanned');
+                    }
+                });
+            }
+
+            startPeriodicUpdates() {
+                const updateClipping = () => {
+                    this.updateCardClipping();
+                    requestAnimationFrame(updateClipping);
+                };
+                updateClipping();
+            }
+        }
+
+        // Template Scanner Beam
+        class TemplateScannerBeam {
+            constructor() {
+                this.canvas = document.getElementById('templateScannerCanvas');
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.w = this.canvas.parentElement.offsetWidth;
+                this.h = 300;
+                this.particles = [];
+                this.maxParticles = 400;
+                this.lightBarX = this.w / 2;
+                this.lightBarWidth = 3;
+                this.fadeZone = 40;
+
+                this.setupCanvas();
+                this.createGradientCache();
+                this.initParticles();
+                this.animate();
+                window.addEventListener('resize', () => this.onResize());
+            }
+
+            setupCanvas() {
+                this.canvas.width = this.w;
+                this.canvas.height = this.h;
+            }
+
+            onResize() {
+                this.w = this.canvas.parentElement.offsetWidth;
+                this.lightBarX = this.w / 2;
+                this.setupCanvas();
+            }
+
+            createGradientCache() {
+                this.gradientCanvas = document.createElement('canvas');
+                this.gradientCtx = this.gradientCanvas.getContext('2d');
+                this.gradientCanvas.width = 16;
+                this.gradientCanvas.height = 16;
+                const half = 8;
+                const gradient = this.gradientCtx.createRadialGradient(half, half, 0, half, half, half);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+                gradient.addColorStop(0.3, 'rgba(29, 154, 155, 0.8)');
+                gradient.addColorStop(0.7, 'rgba(29, 154, 155, 0.4)');
+                gradient.addColorStop(1, 'transparent');
+                this.gradientCtx.fillStyle = gradient;
+                this.gradientCtx.beginPath();
+                this.gradientCtx.arc(half, half, half, 0, Math.PI * 2);
+                this.gradientCtx.fill();
+            }
+
+            createParticle() {
+                return {
+                    x: this.lightBarX + (Math.random() - 0.5) * this.lightBarWidth,
+                    y: Math.random() * this.h,
+                    vx: Math.random() * 0.8 + 0.2,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    radius: Math.random() * 0.6 + 0.4,
+                    alpha: Math.random() * 0.4 + 0.6,
+                    life: 1.0,
+                    decay: Math.random() * 0.02 + 0.005
+                };
+            }
+
+            initParticles() {
+                for (let i = 0; i < this.maxParticles; i++) {
+                    this.particles.push(this.createParticle());
+                }
+            }
+
+            drawLightBar() {
+                const verticalGradient = this.ctx.createLinearGradient(0, 0, 0, this.h);
+                verticalGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+                verticalGradient.addColorStop(this.fadeZone / this.h, 'rgba(255, 255, 255, 1)');
+                verticalGradient.addColorStop(1 - this.fadeZone / this.h, 'rgba(255, 255, 255, 1)');
+                verticalGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+                this.ctx.globalCompositeOperation = 'lighter';
+
+                // Core glow
+                const coreGradient = this.ctx.createLinearGradient(
+                    this.lightBarX - this.lightBarWidth, 0,
+                    this.lightBarX + this.lightBarWidth, 0
+                );
+                coreGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+                coreGradient.addColorStop(0.5, 'rgba(255, 255, 255, 1)');
+                coreGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+                this.ctx.globalAlpha = 1;
+                this.ctx.fillStyle = coreGradient;
+                this.ctx.beginPath();
+                this.ctx.roundRect(this.lightBarX - this.lightBarWidth, 0, this.lightBarWidth * 2, this.h, 15);
+                this.ctx.fill();
+
+                // Outer glow - teal
+                const glowGradient = this.ctx.createLinearGradient(
+                    this.lightBarX - this.lightBarWidth * 4, 0,
+                    this.lightBarX + this.lightBarWidth * 4, 0
+                );
+                glowGradient.addColorStop(0, 'rgba(29, 154, 155, 0)');
+                glowGradient.addColorStop(0.5, 'rgba(29, 154, 155, 0.6)');
+                glowGradient.addColorStop(1, 'rgba(29, 154, 155, 0)');
+
+                this.ctx.globalAlpha = 0.8;
+                this.ctx.fillStyle = glowGradient;
+                this.ctx.beginPath();
+                this.ctx.roundRect(this.lightBarX - this.lightBarWidth * 4, 0, this.lightBarWidth * 8, this.h, 25);
+                this.ctx.fill();
+
+                // Fade edges
+                this.ctx.globalCompositeOperation = 'destination-in';
+                this.ctx.globalAlpha = 1;
+                this.ctx.fillStyle = verticalGradient;
+                this.ctx.fillRect(0, 0, this.w, this.h);
+            }
+
+            render() {
+                this.ctx.globalCompositeOperation = 'source-over';
+                this.ctx.clearRect(0, 0, this.w, this.h);
+
+                this.drawLightBar();
+
+                this.ctx.globalCompositeOperation = 'lighter';
+                for (let p of this.particles) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.life -= p.decay;
+
+                    if (p.x > this.w + 10 || p.life <= 0) {
+                        Object.assign(p, this.createParticle());
+                    }
+
+                    let fadeAlpha = 1;
+                    if (p.y < this.fadeZone) fadeAlpha = p.y / this.fadeZone;
+                    else if (p.y > this.h - this.fadeZone) fadeAlpha = (this.h - p.y) / this.fadeZone;
+
+                    this.ctx.globalAlpha = p.alpha * p.life * Math.max(0, fadeAlpha);
+                    this.ctx.drawImage(this.gradientCanvas, p.x - p.radius, p.y - p.radius, p.radius * 2, p.radius * 2);
+                }
+
+                if (this.particles.length < this.maxParticles && Math.random() < 0.5) {
+                    this.particles.push(this.createParticle());
+                }
+            }
+
+            animate() {
+                this.render();
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize template scanner
+        new TemplateScannerCarousel();
+        new TemplateScannerBeam();
+
+        // Template Cards Glow Effect
+        const templateCardsSection = document.querySelector('.template-cards-section');
+        const templateCardsOverlay = document.querySelector('.template-cards-overlay');
+        const templateGlowCards = Array.from(document.querySelectorAll('.template-cards-inner:not(.template-cards-overlay) .template-glow-card'));
+
+        if (templateCardsSection && templateCardsOverlay) {
+            // Create overlay cards - clone full structure
+            templateGlowCards.forEach((card, index) => {
+                const overlayCard = card.cloneNode(true);
+                overlayCard.setAttribute('aria-hidden', 'true');
+                
+                // Remove links from overlay (it's just visual)
+                const links = overlayCard.querySelectorAll('a');
+                links.forEach(link => {
+                    link.removeAttribute('href');
+                    link.style.pointerEvents = 'none';
+                });
+                
+                templateCardsOverlay.appendChild(overlayCard);
+
+                // Observe size changes
+                const resizeObserver = new ResizeObserver((entries) => {
+                    entries.forEach((entry) => {
+                        const width = entry.borderBoxSize[0].inlineSize;
+                        const height = entry.borderBoxSize[0].blockSize;
+                        if (templateCardsOverlay.children[index]) {
+                            templateCardsOverlay.children[index].style.width = `${width}px`;
+                            templateCardsOverlay.children[index].style.height = `${height}px`;
+                        }
+                    });
+                });
+                resizeObserver.observe(card);
+            });
+
+            // Apply glow mask on mouse move
+            templateCardsSection.addEventListener('pointermove', (e) => {
+                const rect = templateCardsSection.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                templateCardsOverlay.style.setProperty('--overlay-opacity', '1');
+                templateCardsOverlay.style.setProperty('--mouse-x', `${x}px`);
+                templateCardsOverlay.style.setProperty('--mouse-y', `${y}px`);
+            });
+
+            templateCardsSection.addEventListener('pointerleave', () => {
+                templateCardsOverlay.style.setProperty('--overlay-opacity', '0');
+            });
+        }
     </script>
 </body>
 </html>
