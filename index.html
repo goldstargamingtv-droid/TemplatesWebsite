@@ -1056,96 +1056,6 @@
         }
 
         /* =============================================
-           FLYING GLASS ELEMENTS
-           ============================================= */
-        .flying-glass {
-            position: absolute;
-            top: calc(50% - 500px);
-            left: 0;
-            transform: translateY(-50%) rotate(-15deg) translateX(-100vw);
-            width: 400px;
-            height: 600px;
-            background: linear-gradient(135deg, 
-                rgba(29, 154, 155, 0.03) 0%, 
-                rgba(255, 255, 255, 0.02) 50%,
-                rgba(29, 154, 155, 0.03) 100%);
-            backdrop-filter: blur(12px) saturate(120%);
-            -webkit-backdrop-filter: blur(12px) saturate(120%);
-            border: 1px solid rgba(29, 154, 155, 0.15);
-            border-radius: 30px;
-            z-index: 999;
-            pointer-events: none;
-            opacity: 0;
-            box-shadow: 
-                0 25px 60px -20px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.05);
-        }
-
-        .flying-glass::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            background: linear-gradient(135deg, 
-                rgba(29, 154, 155, 0.1), 
-                transparent 40%, 
-                transparent 60%, 
-                rgba(29, 154, 155, 0.1));
-            border-radius: 31px;
-            z-index: -1;
-            opacity: 0.5;
-        }
-
-        .flying-glass-small {
-            position: absolute;
-            top: calc(50% - 500px);
-            right: 0;
-            transform: translateY(-50%) rotate(15deg) translateX(100vw);
-            width: 200px;
-            height: 300px;
-            background: linear-gradient(135deg, 
-                rgba(29, 154, 155, 0.03) 0%, 
-                rgba(255, 255, 255, 0.02) 50%,
-                rgba(29, 154, 155, 0.03) 100%);
-            backdrop-filter: blur(12px) saturate(120%);
-            -webkit-backdrop-filter: blur(12px) saturate(120%);
-            border: 1px solid rgba(29, 154, 155, 0.15);
-            border-radius: 20px;
-            z-index: 998;
-            pointer-events: none;
-            opacity: 0;
-            box-shadow: 
-                0 25px 60px -20px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.05);
-        }
-
-        .flying-glass-small::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            background: linear-gradient(135deg, 
-                rgba(29, 154, 155, 0.1), 
-                transparent 40%, 
-                transparent 60%, 
-                rgba(29, 154, 155, 0.1));
-            border-radius: 21px;
-            z-index: -1;
-            opacity: 0.5;
-        }
-
-        @media (max-width: 768px) {
-            .flying-glass {
-                width: 250px;
-                height: 400px;
-            }
-            .flying-glass-small {
-                width: 125px;
-                height: 200px;
-            }
-        }
-
-        /* =============================================
            HERO SECTION
            ============================================= */
         .hero {
@@ -1153,7 +1063,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            padding: 2rem;
+            padding: 1rem;
             overflow: hidden;
         }
 
@@ -1330,20 +1240,21 @@
             color: var(--text-muted);
         }
 
-        /* Hero Main Content */
+        /* Hero Main Content - Two Column Split */
         .hero-main {
             flex: 1;
             display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 4rem;
+            grid-template-columns: 0.6fr 1.4fr;
+            gap: 2rem;
             align-items: center;
             position: relative;
             z-index: 20;
+            width: 100%;
+            padding: 0 1rem 0 7rem;
         }
 
         @media (max-width: 1200px) {
             .hero-main {
-                grid-template-columns: 280px 1fr;
                 gap: 2rem;
             }
         }
@@ -1355,9 +1266,200 @@
             }
         }
 
-        /* Left Side - Branding */
+        /* Left Side - Branding & Content */
         .hero-left {
             opacity: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-top: 33px;
+        }
+
+        .hero-headline {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: var(--text);
+        }
+
+        .hero-headline .accent {
+            color: #f97316;
+        }
+
+        .hero-subline {
+            font-size: 1rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            max-width: 380px;
+        }
+
+        .hero-cta-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.25rem;
+            padding-bottom: calc(1.25rem + 20px);
+            position: relative;
+            width: fit-content;
+        }
+
+        .hero-cta-buttons::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(29, 154, 155, 0.5), transparent);
+        }
+
+        .hero-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.5rem;
+            background: rgba(29, 154, 155, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(29, 154, 155, 0.3);
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 4px 20px rgba(29, 154, 155, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-btn-primary svg {
+            width: 16px;
+            height: 16px;
+            fill: #f97316;
+            color: #f97316;
+        }
+
+        .hero-btn-primary:hover {
+            transform: translateY(-2px);
+            background: rgba(29, 154, 155, 0.25);
+            box-shadow: 
+                0 8px 30px rgba(29, 154, 155, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.5rem;
+            background: transparent;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn-secondary svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: #f97316;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .hero-btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Right Side - Nav Links (Vertical Stack) */
+        .hero-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .hero-nav-links {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .hero-nav-link {
+            position: relative;
+            display: block;
+            font-size: clamp(4rem, 9vw, 9rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            text-transform: uppercase;
+            transition: all 0.4s ease, filter 0.4s ease;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .hero-nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f97316, transparent);
+            transition: width 0.4s ease;
+        }
+
+        .hero-nav-link:hover {
+            color: #f97316;
+        }
+
+        .hero-nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hero-nav-links:hover .hero-nav-link {
+            opacity: 0.3;
+            filter: blur(2px);
+        }
+
+        .hero-nav-links:hover .hero-nav-link:hover {
+            opacity: 1;
+            filter: blur(0px);
+        }
+
+        @media (max-width: 900px) {
+            .hero-right {
+                justify-content: center;
+            }
+            
+            .hero-nav-links {
+                align-items: center;
+            }
+            
+            .hero-nav-link {
+                text-align: center;
+            }
+            
+            .hero-nav-link::after {
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+            }
+            
+            .hero-cta-buttons {
+                justify-content: center;
+            }
+            
+            .hero-subline {
+                margin: 0 auto;
+            }
         }
 
         .hero-brand {
@@ -1396,16 +1498,15 @@
         .hero-qr {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            gap: 1rem;
         }
 
         .hero-qr-code {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: var(--text);
             border-radius: 8px;
-            padding: 6px;
+            padding: 5px;
         }
 
         .hero-qr-code svg {
@@ -1414,17 +1515,20 @@
         }
 
         .hero-qr-text {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 500;
-            line-height: 1.6;
+            line-height: 1.5;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
         .hero-subscribe {
-            border-top: 1px solid var(--border);
-            padding-top: 2rem;
+            padding-top: 1.25rem;
+            margin-top: -10px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .hero-subscribe-label {
@@ -1433,88 +1537,90 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--text-muted);
-            margin-bottom: 0.75rem;
         }
 
         .hero-subscribe-btn {
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--text);
-            background: none;
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             border: none;
-            padding: 0;
-            transition: color 0.3s;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-subscribe-btn::before {
+            content: '✉';
+            font-size: 0.7rem;
         }
 
         .hero-subscribe-btn:hover {
-            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(29, 154, 155, 0.4);
         }
 
         @media (max-width: 900px) {
             .hero-left {
-                display: none;
+                text-align: center;
             }
         }
 
-        /* Right Side - Nav Links */
-        .hero-nav-links {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0;
-            margin-left: -403px;
-        }
-
-        .hero-nav-link {
-            position: relative;
-            display: block;
-            font-size: clamp(4rem, 12vw, 11rem);
-            font-weight: 800;
-            line-height: 0.95;
-            letter-spacing: -0.03em;
-            color: var(--text);
-            text-transform: uppercase;
-            transition: filter 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
-            padding: 0.1em 0;
-        }
-
-        .hero-nav-link:hover {
-            color: var(--text);
-        }
-
-        .hero-nav-links:hover .hero-nav-link {
-            filter: blur(4px);
-            opacity: 0.3;
-        }
-
-        .hero-nav-links:hover .hero-nav-link:hover {
-            filter: blur(0);
-            opacity: 1;
-            transform: translateX(20px);
-        }
-
-        .hero-nav-dot {
-            width: 8px;
-            height: 8px;
-            background: #f97316;
-            border-radius: 50%;
-            margin: 0.5rem auto;
-            opacity: 0;
-            transform: scale(0);
-        }
-
-        /* Hero Tagline Center */
-        .hero-tagline-center {
+        /* Hero Intro Content (cinematic intro) */
+        .hero-intro-content {
             position: absolute;
             top: calc(15% - 50px);
             left: 50%;
             transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            z-index: 100;
+            opacity: 0;
+            padding-bottom: 2rem;
+        }
+
+        /* Subtle divider line under tagline */
+        .hero-intro-content::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(29, 154, 155, 0.5), transparent);
+        }
+
+        .hero-intro-brand {
+            text-align: center;
+            opacity: 1;
+        }
+
+        .hero-intro-brand .hero-brand-dt {
+            font-size: 0.85rem;
+        }
+
+        .hero-intro-brand .hero-brand-dash {
+            font-size: 0.85rem;
+        }
+
+        .hero-intro-brand .hero-brand-full {
+            font-size: 0.85rem;
+        }
+
+        /* Hero Tagline Center */
+        .hero-tagline-center {
             text-align: center;
             max-width: 600px;
-            z-index: 15;
-            opacity: 0;
+            opacity: 1;
         }
 
         .hero-tagline-center p {
@@ -1528,10 +1634,6 @@
 
         @media (max-width: 900px) {
             .hero-tagline-center {
-                position: relative;
-                top: auto;
-                left: auto;
-                transform: none;
                 margin-bottom: 2rem;
             }
         }
@@ -3715,6 +3817,7 @@
         /* Template Glow Cards */
         .template-cards-section {
             position: relative;
+            margin-top: 3rem;
         }
 
         .template-cards-inner {
@@ -4154,9 +4257,6 @@
 
     <!-- Hero -->
     <section class="hero" id="hero">
-        <!-- Flying Glass Elements -->
-        <div class="flying-glass" id="flyingGlass"></div>
-        <div class="flying-glass-small" id="flyingGlassSmall"></div>
         
         <!-- Top -->
         <div class="hero-top">
@@ -4186,42 +4286,46 @@
             </div>
         </div>
 
-        <!-- Tagline -->
-        <div class="hero-tagline-center" id="heroTagline">
-            <p>We build free browser extensions and offer<br>custom development for modern makers.</p>
+        <!-- Cinematic Intro Content (becomes hero tagline) -->
+        <div class="hero-intro-content" id="heroIntroContent">
+            <div class="hero-intro-brand" id="heroIntroBrand">
+                <span class="hero-brand-dt">DT</span><span class="hero-brand-dash"> — </span><span class="hero-brand-full">[DEPLOY-TEMPLATE]</span>
+            </div>
+            <div class="hero-tagline-center" id="heroTagline">
+                <p>AI-driven development studio.<br>Custom projects delivered in days, not weeks.</p>
+            </div>
         </div>
 
-        <!-- Main -->
+        <!-- Main - Two Column Split -->
         <div class="hero-main">
             <div class="hero-left" id="heroLeft">
-                <div class="hero-brand">
-                    <span class="hero-brand-dt">DT</span><span class="hero-brand-dash"> — </span><span class="hero-brand-full">[DEPLOY-TEMPLATE]</span>
-                </div>
-                <p class="hero-tagline">Free Tools & Custom Development</p>
+                <h1 class="hero-headline"><span class="glitch-line">AI-Powered</span><br><span class="glitch-line accent">Web Development</span></h1>
+                
+                <p class="hero-subline">Custom websites and apps built with AI precision. What takes agencies weeks, we ship in days.</p>
                 
                 <div class="hero-qr">
                     <div class="hero-qr-code">
                         <svg viewBox="0 0 100 100">
-                            <rect x="10" y="10" width="25" height="25" fill="#0a0a0a"/>
-                            <rect x="65" y="10" width="25" height="25" fill="#0a0a0a"/>
-                            <rect x="10" y="65" width="25" height="25" fill="#0a0a0a"/>
-                            <rect x="15" y="15" width="15" height="15" fill="white"/>
-                            <rect x="70" y="15" width="15" height="15" fill="white"/>
-                            <rect x="15" y="70" width="15" height="15" fill="white"/>
-                            <rect x="18" y="18" width="9" height="9" fill="#0a0a0a"/>
-                            <rect x="73" y="18" width="9" height="9" fill="#0a0a0a"/>
-                            <rect x="18" y="73" width="9" height="9" fill="#0a0a0a"/>
-                            <rect x="40" y="10" width="5" height="5" fill="#0a0a0a"/>
-                            <rect x="50" y="15" width="5" height="5" fill="#0a0a0a"/>
-                            <rect x="45" y="25" width="5" height="5" fill="#0a0a0a"/>
-                            <rect x="40" y="40" width="20" height="20" fill="#0a0a0a"/>
-                            <rect x="65" y="45" width="5" height="5" fill="#0a0a0a"/>
-                            <rect x="75" y="55" width="5" height="5" fill="#0a0a0a"/>
-                            <rect x="10" y="45" width="5" height="5" fill="#0a0a0a"/>
-                            <rect x="20" y="50" width="5" height="5" fill="#0a0a0a"/>
-                            <rect x="65" y="65" width="25" height="25" fill="#0a0a0a"/>
-                            <rect x="70" y="70" width="15" height="15" fill="white"/>
-                            <rect x="73" y="73" width="9" height="9" fill="#0a0a0a"/>
+                            <rect x="10" y="10" width="25" height="25" fill="currentColor"/>
+                            <rect x="65" y="10" width="25" height="25" fill="currentColor"/>
+                            <rect x="10" y="65" width="25" height="25" fill="currentColor"/>
+                            <rect x="15" y="15" width="15" height="15" fill="var(--bg)"/>
+                            <rect x="70" y="15" width="15" height="15" fill="var(--bg)"/>
+                            <rect x="15" y="70" width="15" height="15" fill="var(--bg)"/>
+                            <rect x="18" y="18" width="9" height="9" fill="currentColor"/>
+                            <rect x="73" y="18" width="9" height="9" fill="currentColor"/>
+                            <rect x="18" y="73" width="9" height="9" fill="currentColor"/>
+                            <rect x="40" y="10" width="5" height="5" fill="currentColor"/>
+                            <rect x="50" y="15" width="5" height="5" fill="currentColor"/>
+                            <rect x="45" y="25" width="5" height="5" fill="currentColor"/>
+                            <rect x="40" y="40" width="20" height="20" fill="currentColor"/>
+                            <rect x="65" y="45" width="5" height="5" fill="currentColor"/>
+                            <rect x="75" y="55" width="5" height="5" fill="currentColor"/>
+                            <rect x="10" y="45" width="5" height="5" fill="currentColor"/>
+                            <rect x="20" y="50" width="5" height="5" fill="currentColor"/>
+                            <rect x="65" y="65" width="25" height="25" fill="currentColor"/>
+                            <rect x="70" y="70" width="15" height="15" fill="var(--bg)"/>
+                            <rect x="73" y="73" width="9" height="9" fill="currentColor"/>
                         </svg>
                     </div>
                     <div class="hero-qr-text">
@@ -4231,19 +4335,30 @@
                     </div>
                 </div>
                 
+                <div class="hero-cta-buttons">
+                    <a href="#extensions" class="hero-btn-primary">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        Browse Extensions
+                    </a>
+                    <a href="#custom" class="hero-btn-secondary">
+                        Start a Project
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+                
                 <div class="hero-subscribe">
                     <p class="hero-subscribe-label">Updates & News</p>
                     <button class="hero-subscribe-btn">Subscribe</button>
                 </div>
             </div>
             
-            <nav class="hero-nav-links" id="heroNavLinks">
-                <a href="#extensions" class="hero-nav-link" data-hover="extensions">Extensions</a>
-                <div class="hero-nav-dot"></div>
-                <a href="#custom" class="hero-nav-link" data-hover="custom">Custom Work</a>
-                <div class="hero-nav-dot"></div>
-                <a href="#templates" class="hero-nav-link" data-hover="templates">Templates</a>
-            </nav>
+            <div class="hero-right" id="heroRight">
+                <nav class="hero-nav-links" id="heroNavLinks">
+                    <a href="#extensions" class="hero-nav-link" data-hover="extensions">Extensions</a>
+                    <a href="#custom" class="hero-nav-link" data-hover="custom">Custom Work</a>
+                    <a href="#templates" class="hero-nav-link" data-hover="templates">Templates</a>
+                </nav>
+            </div>
         </div>
 
         <!-- Bottom (hidden container) -->
@@ -4437,7 +4552,7 @@
                     <div class="device-keyboard"></div>
                 </div>
                 
-                <div class="reveal">
+                <div class="custom-left-content">
                     <div class="section-header" style="margin-bottom: 2rem;">
                         <p class="section-label">Custom Development</p>
                         <h2 class="section-title" id="custom-title" itemprop="name">
@@ -4478,7 +4593,7 @@
                     </div>
                 </div>
                 
-                <div class="contact-form reveal" itemscope itemtype="https://schema.org/ContactPoint">
+                <div class="contact-form" itemscope itemtype="https://schema.org/ContactPoint">
                     <h3 class="form-title">Let's Talk</h3>
                     <p class="form-subtitle">Share your idea, we'll handle the rest</p>
                     
@@ -5190,141 +5305,221 @@
                     e.preventDefault();
                     lenis.scrollTo(target, {
                         offset: -80, // Account for fixed navbar
-                        duration: 1.5,
-                        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                        duration: 2.5,
+                        easing: (t) => 1 - Math.pow(1 - t, 4)
                     });
                 }
             });
         });
 
+        // =============================================
+        // HERO PARALLAX EXIT - Elements float away on scroll
+        // =============================================
+        
+        // Intro content (brand + tagline) floats up
+        gsap.fromTo('#heroIntroContent', 
+            {
+                y: 0,
+                opacity: 1,
+                scale: 1
+            },
+            {
+                y: -150,
+                opacity: 0,
+                scale: 0.9,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.hero',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1
+                }
+            }
+        );
+
+        // Left content slides out left
+        gsap.fromTo('#heroLeft', 
+            {
+                x: 0,
+                opacity: 1
+            },
+            {
+                x: '-30vw',
+                opacity: 0,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.hero',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1
+                }
+            }
+        );
+
+        // Right content slides out right
+        gsap.fromTo('#heroRight', 
+            {
+                x: 0,
+                opacity: 1
+            },
+            {
+                x: '30vw',
+                opacity: 0,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.hero',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1
+                }
+            }
+        );
+
+        // =============================================
+        // HERO SCROLL SNAP - One scroll jumps to extensions
+        // =============================================
+        let heroScrolled = false;
+        const extensionsSection = document.getElementById('extensions');
+        
+        if (extensionsSection) {
+            window.addEventListener('wheel', (e) => {
+                // Only trigger if at top of page and scrolling down
+                if (window.scrollY < 100 && e.deltaY > 0 && !heroScrolled) {
+                    heroScrolled = true;
+                    lenis.scrollTo(extensionsSection, { 
+                        duration: 2.5,
+                        easing: (t) => 1 - Math.pow(1 - t, 4)
+                    });
+                    
+                    // Reset after animation completes
+                    setTimeout(() => {
+                        heroScrolled = false;
+                    }, 3000);
+                }
+            }, { passive: false });
+        }
+
         const tl = gsap.timeline();
 
-        // Intro sequence
+        // =============================================
+        // CINEMATIC INTRO SEQUENCE
+        // =============================================
+        
+        // Phase 1: Preloader with flying text
         tl.to('#introTextTop', { opacity: 1, duration: 0.3 })
           .to('#introTextBottom', { opacity: 1, duration: 0.3 }, '-=0.2')
           
-          // Fly the text across using CSS animation
           .add(() => {
               document.querySelector('#introTextTop .intro-text-inner').classList.add('animate');
               document.querySelector('#introTextBottom .intro-text-inner').classList.add('animate');
           }, '-=0.2')
-          .to({}, { duration: 2 }) // Wait for CSS animation
+          .to({}, { duration: 2 })
           
-          // Show center logo during text fly
           .to('#preloaderLogo', { opacity: 1, scale: 1, rotation: 0, duration: 0.6, ease: 'back.out(1.7)' }, '-=1.5')
           .to('#preloaderText', { opacity: 1, duration: 0.3 }, '-=0.8')
           .to('#preloaderBar', { opacity: 1, duration: 0.2 }, '-=0.5')
           .to('#preloaderFill', { width: '100%', duration: 0.8, ease: 'power2.inOut' }, '-=0.3')
           
-          // Fade out flying text
+          // Fade out flying text and loading bar (but NOT the logo!)
           .to('#introTextTop', { opacity: 0, duration: 0.4 })
           .to('#introTextBottom', { opacity: 0, duration: 0.4 }, '-=0.4')
+          .to('#preloaderText', { opacity: 0, duration: 0.3 }, '-=0.3')
+          .to('#preloaderBar', { opacity: 0, duration: 0.3 }, '-=0.3')
           
-          // Split reveal - top goes up, bottom goes down
-          .to('#preloaderTop', { yPercent: -100, duration: 0.8, ease: 'power4.inOut' }, '-=0.2')
-          .to('#preloaderBottom', { yPercent: 100, duration: 0.8, ease: 'power4.inOut' }, '-=0.8')
-          .to('#preloader', { opacity: 0, duration: 0.4 }, '-=0.6')
+          // Split reveal (logo stays visible)
+          .to('#preloaderTop', { yPercent: -100, duration: 1, ease: 'power4.inOut' }, '-=0.2')
+          .to('#preloaderBottom', { yPercent: 100, duration: 1, ease: 'power4.inOut' }, '-=1')
+          .set('#preloader', { background: 'transparent', pointerEvents: 'none' }, '-=0.5')
           
-          // Fade film grain to subtle after TV static effect
+          // Phase 2 & 3 combined: Brand + tagline fade in WHILE sliding up
           .add(() => {
               document.getElementById('filmGrain').classList.add('subtle');
+          }, '-=0.3')
+          
+          // Everything happens together - fade in + slide up simultaneously
+          .to('#heroIntroContent', { 
+              opacity: 1, 
+              duration: 1.2, 
+              ease: 'power2.out' 
           }, '-=0.2')
           
-          // Hero elements fly in with blur
-          .fromTo('#heroAnnouncement', 
-              { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
-              { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.5 }, '-=0.3')
-          .fromTo('#heroLogoCenter', 
-              { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
-              { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.5 }, '-=0.4')
-          .fromTo('#heroCta', 
-              { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
-              { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.5 }, '-=0.4')
-          .fromTo('#navLinks', 
-              { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
-              { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.5 }, '-=0.4')
-          .fromTo('#heroTagline', 
-              { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
-              { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.6 }, '-=0.4')
+          // Logo slides up at the same time
+          .to('.preloader-inner', {
+              y: '-45vh',
+              scale: 0.525,
+              duration: 1.8,
+              ease: 'power2.inOut'
+          }, '<')
+          
+          // Brand + tagline slide up at the same time
+          .to('#heroIntroContent', {
+              y: 0,
+              duration: 1.8,
+              ease: 'power2.inOut'
+          }, '<')
+          
+          // Swap logos - instant switch
+          .set('#preloaderLogo', { opacity: 0 })
+          .set('#heroLogoCenter', { opacity: 1 })
+          
+          // Hide preloader completely
+          .set('#preloader', { display: 'none' })
+          
+          // Navbar elements fade in during slide
+          .to('#heroAnnouncement', { 
+              opacity: 1, 
+              duration: 1, 
+              ease: 'power2.out' 
+          }, '-=1.5')
+          
+          .to('#navLinks', { 
+              opacity: 1, 
+              duration: 1, 
+              ease: 'power2.out' 
+          }, '-=1.3')
+          
+          .to('#heroCta', { 
+              opacity: 1, 
+              duration: 1, 
+              ease: 'power2.out' 
+          }, '-=1.3')
+          
+          // Left content slides in
           .fromTo('#heroLeft', 
-              { opacity: 0, x: -50, filter: 'blur(10px)' },
-              { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.6 }, '-=0.4')
+              { opacity: 0, x: -50 },
+              { opacity: 1, x: 0, duration: 1.4, ease: 'power3.out' }, '-=1.2')
+          
+          // Right content slides in
+          .fromTo('#heroRight', 
+              { opacity: 0, x: 50 },
+              { opacity: 1, x: 0, duration: 1.4, ease: 'power3.out' }, '-=1.3')
+          
+          // Nav links stagger in
           .fromTo('.hero-nav-link', 
-              { opacity: 0, y: 80, filter: 'blur(15px)' },
+              { opacity: 0, x: 30 },
               { 
                   opacity: 1, 
-                  y: 0, 
-                  filter: 'blur(0px)',
-                  duration: 1, 
-                  stagger: 0.12, 
-                  ease: 'power3.out',
-                  onComplete: function() {
-                      // Clear inline filter so CSS hover effects work
-                      document.querySelectorAll('.hero-nav-link').forEach(link => {
-                          link.style.filter = '';
-                      });
-                  }
-              }, '-=0.5')
-          .to('.hero-nav-dot', { 
-              opacity: 1, 
-              scale: 1, 
-              duration: 0.3, 
-              stagger: 0.1 
-          }, '-=0.6')
-          .to('#heroTheme', { opacity: 1, duration: 0.3 }, '-=0.4')
-          .to('#heroCopyright', { opacity: 1, duration: 0.3 }, '-=0.3')
-          .to('#heroBlob', { opacity: 1, duration: 0.4 }, '-=0.3');
-
-        // Flying glass - infinite loop while in hero section
-        function createFlyingGlassLoop() {
-            const flyingGlassTL = gsap.timeline({ 
-                delay: 4,
-                repeat: -1,
-                repeatDelay: 2
-            });
-            
-            // Big glass flies left to right
-            flyingGlassTL
-              .set('#flyingGlass', { x: '-100vw', opacity: 0 })
-              .to('#flyingGlass', { 
-                  opacity: 1, 
-                  x: '120vw',
-                  duration: 4, 
-                  ease: 'none'
-              })
-              .to('#flyingGlass', { opacity: 0, duration: 0.8 }, '-=0.5')
-              
-              // 4 second pause before small glass
-              .set('#flyingGlassSmall', { x: '100vw', opacity: 0 })
-              .to('#flyingGlassSmall', { 
-                  opacity: 1, 
-                  x: '-120vw',
-                  duration: 3.5, 
-                  ease: 'none',
-                  delay: 4
-              })
-              .to('#flyingGlassSmall', { opacity: 0, duration: 0.8 }, '-=0.5');
-            
-            return flyingGlassTL;
-        }
-        
-        let flyingGlassAnimation = createFlyingGlassLoop();
-        
-        // Pause/play based on hero visibility
-        ScrollTrigger.create({
-            trigger: '#hero',
-            start: 'top bottom',
-            end: 'bottom top',
-            onEnter: () => flyingGlassAnimation.play(),
-            onLeave: () => flyingGlassAnimation.pause(),
-            onEnterBack: () => flyingGlassAnimation.play(),
-            onLeaveBack: () => flyingGlassAnimation.pause()
-        });
+                  x: 0, 
+                  duration: 1.2, 
+                  stagger: 0.1, 
+                  ease: 'power3.out'
+              }, '-=1.3')
+          
+          // Bottom elements
+          .to('#heroTheme', { opacity: 1, duration: 0.8 }, '-=1')
+          .to('#heroCopyright', { opacity: 1, duration: 0.8 }, '-=1')
+          .to('#heroBlob', { opacity: 1, duration: 1 }, '-=0.8');
 
         // Set initial states
-        gsap.set('.hero-nav-link', { opacity: 0, y: 50 });
-        gsap.set('.hero-nav-dot', { opacity: 0, scale: 0 });
-        gsap.set('#heroLeft', { opacity: 0, x: -30 });
+        gsap.set('.hero-nav-link', { opacity: 0, x: 30 });
+        gsap.set('#heroLeft', { opacity: 0 });
+        gsap.set('#heroRight', { opacity: 0 });
+        // Position intro content clearly below the centered logo
+        gsap.set('#heroIntroContent', { opacity: 0, y: '42vh' });
+        gsap.set('#heroAnnouncement', { opacity: 0 });
+        gsap.set('#heroLogoCenter', { opacity: 0 });
+        gsap.set('#navLinks', { opacity: 0 });
+        gsap.set('#heroCta', { opacity: 0 });
 
         // =============================================
         // WORD-BY-WORD BLUR REVEAL ON SCROLL (TYPEWRITER STYLE)
@@ -5349,16 +5544,14 @@
         `;
         document.head.appendChild(blurStyle);
 
-        // Apply to section titles and descriptions (except those with glitch-line children)
-        document.querySelectorAll('.section-title, .section-desc').forEach(el => {
-            // Skip elements that contain glitch-line spans
-            if (el.querySelector('.glitch-line')) return;
-            
+        // Apply to section descriptions only (titles use ASCII glitch)
+        document.querySelectorAll('.section-desc').forEach(el => {
             const words = wrapWordsInSpans(el);
             
             ScrollTrigger.create({
                 trigger: el,
                 start: 'top 80%',
+                end: 'bottom 20%',
                 onEnter: () => {
                     words.forEach((word, i) => {
                         gsap.to(word, {
@@ -5370,7 +5563,42 @@
                         });
                     });
                 },
-                once: true
+                onLeave: () => {
+                    // Reverse blur out when scrolling past
+                    [...words].reverse().forEach((word, i) => {
+                        gsap.to(word, {
+                            filter: 'blur(8px)',
+                            opacity: 0,
+                            duration: 0.2,
+                            ease: 'power2.in',
+                            delay: i * 0.06
+                        });
+                    });
+                },
+                onEnterBack: () => {
+                    // Blur back in when scrolling back up
+                    words.forEach((word, i) => {
+                        gsap.to(word, {
+                            filter: 'blur(0px)',
+                            opacity: 1,
+                            duration: 0.25,
+                            ease: 'power2.out',
+                            delay: i * 0.12
+                        });
+                    });
+                },
+                onLeaveBack: () => {
+                    // Reverse blur out when scrolling back up past
+                    [...words].reverse().forEach((word, i) => {
+                        gsap.to(word, {
+                            filter: 'blur(8px)',
+                            opacity: 0,
+                            duration: 0.2,
+                            ease: 'power2.in',
+                            delay: i * 0.06
+                        });
+                    });
+                }
             });
         });
 
@@ -5396,6 +5624,466 @@
                 once: true
             });
         });
+
+        // =============================================
+        // SECTION HEADERS - FADE IN/OUT ON SCROLL
+        // =============================================
+        document.querySelectorAll('.section-header').forEach(header => {
+            gsap.set(header, { opacity: 0, y: 50 });
+            
+            ScrollTrigger.create({
+                trigger: header,
+                start: 'top 85%',
+                end: 'bottom 5%',
+                onEnter: () => {
+                    gsap.to(header, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: 'power3.out'
+                    });
+                },
+                onLeave: () => {
+                    gsap.to(header, {
+                        opacity: 0,
+                        y: -30,
+                        duration: 0.4,
+                        ease: 'power2.in'
+                    });
+                },
+                onEnterBack: () => {
+                    gsap.to(header, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: 'power2.out'
+                    });
+                },
+                onLeaveBack: () => {
+                    gsap.to(header, {
+                        opacity: 0,
+                        y: 50,
+                        duration: 0.4,
+                        ease: 'power2.in'
+                    });
+                }
+            });
+        });
+
+        // =============================================
+        // EXTENSION CARDS - STAGGERED ENTRANCE
+        // =============================================
+        const extensionCards = gsap.utils.toArray('.extensions-grid .electric-card-container');
+        if (extensionCards.length) {
+            gsap.set(extensionCards, { opacity: 0, y: 80, scale: 0.9 });
+            
+            ScrollTrigger.create({
+                trigger: '.extensions-grid',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                onEnter: () => {
+                    gsap.to(extensionCards, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        stagger: 0.15,
+                        delay: 0.3,
+                        ease: 'power3.out'
+                    });
+                },
+                onLeave: () => {
+                    gsap.to(extensionCards, {
+                        opacity: 0,
+                        y: -40,
+                        scale: 0.95,
+                        duration: 0.4,
+                        stagger: 0.03,
+                        ease: 'power2.in'
+                    });
+                },
+                onEnterBack: () => {
+                    gsap.to(extensionCards, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.6,
+                        stagger: 0.08,
+                        ease: 'power2.out'
+                    });
+                },
+                onLeaveBack: () => {
+                    gsap.to(extensionCards, {
+                        opacity: 0,
+                        y: 80,
+                        scale: 0.9,
+                        duration: 0.4,
+                        stagger: 0.03,
+                        ease: 'power2.in'
+                    });
+                }
+            });
+        }
+
+        // =============================================
+        // CUSTOM WORK SECTION - PARALLAX SPLIT (like hero)
+        // =============================================
+        const customSection = document.querySelector('#custom');
+        if (customSection) {
+            const customLeft = customSection.querySelector('.custom-left-content');
+            const customForm = customSection.querySelector('.contact-form');
+            const device = customSection.querySelector('.device-wrapper');
+            
+            // Left content - slides in from left, holds, then out to left
+            if (customLeft) {
+                const tlLeft = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: customSection,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: 1
+                    }
+                });
+                
+                tlLeft.fromTo(customLeft,
+                    { x: '-30vw', opacity: 0 },
+                    { x: 0, opacity: 1, ease: 'none', duration: 1 }
+                )
+                .to(customLeft, { x: 0, opacity: 1, duration: 1 })
+                .to(customLeft, { x: '-30vw', opacity: 0, ease: 'none', duration: 1 });
+            }
+            
+            // Device follows left content
+            if (device) {
+                const tlDevice = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: customSection,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: 1
+                    }
+                });
+                
+                tlDevice.fromTo(device,
+                    { x: '-30vw', opacity: 0 },
+                    { x: 0, opacity: 1, ease: 'none', duration: 1 }
+                )
+                .to(device, { x: 0, opacity: 1, duration: 1 })
+                .to(device, { x: '-30vw', opacity: 0, ease: 'none', duration: 1 });
+            }
+            
+            // Form - slides in from right, holds, then out to right
+            if (customForm) {
+                const tlRight = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: customSection,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: 1
+                    }
+                });
+                
+                tlRight.fromTo(customForm,
+                    { x: '30vw', opacity: 0 },
+                    { x: 0, opacity: 1, ease: 'none', duration: 1 }
+                )
+                .to(customForm, { x: 0, opacity: 1, duration: 1 })
+                .to(customForm, { x: '30vw', opacity: 0, ease: 'none', duration: 1 });
+            }
+        }
+
+        // =============================================
+        // TEMPLATE CAROUSEL - SLIDE IN/OUT
+        // =============================================
+        const templateScanner = document.querySelector('.template-scanner');
+        if (templateScanner) {
+            const tlScanner = gsap.timeline({
+                scrollTrigger: {
+                    trigger: templateScanner,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1
+                }
+            });
+            
+            tlScanner.fromTo(templateScanner,
+                { x: '-50vw', opacity: 0 },
+                { x: 0, opacity: 1, ease: 'none', duration: 1 }
+            )
+            .to(templateScanner, { x: 0, opacity: 1, duration: 1 })
+            .to(templateScanner, { x: '-50vw', opacity: 0, ease: 'none', duration: 1 });
+        }
+
+        // =============================================
+        // TEMPLATE CARDS - STAGGERED
+        // =============================================
+        const templateCards = gsap.utils.toArray('.template-cards-inner .electric-card-container');
+        if (templateCards.length) {
+            gsap.set(templateCards, { opacity: 0, y: 60, scale: 0.95 });
+            
+            ScrollTrigger.create({
+                trigger: '.template-cards-inner',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                onEnter: () => {
+                    gsap.to(templateCards, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        stagger: 0.15,
+                        delay: 0.3,
+                        ease: 'power3.out'
+                    });
+                },
+                onLeave: () => {
+                    gsap.to(templateCards, {
+                        opacity: 0,
+                        y: -40,
+                        scale: 0.95,
+                        duration: 0.4,
+                        stagger: 0.03,
+                        ease: 'power2.in'
+                    });
+                },
+                onEnterBack: () => {
+                    gsap.to(templateCards, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.6,
+                        stagger: 0.08,
+                        ease: 'power2.out'
+                    });
+                },
+                onLeaveBack: () => {
+                    gsap.to(templateCards, {
+                        opacity: 0,
+                        y: 60,
+                        scale: 0.95,
+                        duration: 0.4,
+                        stagger: 0.03,
+                        ease: 'power2.in'
+                    });
+                }
+            });
+        }
+
+        // =============================================
+        // BLOG CARDS - FADE UP STAGGER  
+        // =============================================
+        const blogCards = gsap.utils.toArray('.blog-cards-grid .electric-card-container');
+        if (blogCards.length) {
+            gsap.set(blogCards, { opacity: 0, y: 60 });
+            
+            ScrollTrigger.create({
+                trigger: '.blog-cards-grid',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                onEnter: () => {
+                    gsap.to(blogCards, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        stagger: 0.12,
+                        delay: 0.3,
+                        ease: 'power3.out'
+                    });
+                },
+                onLeave: () => {
+                    gsap.to(blogCards, {
+                        opacity: 0,
+                        y: -40,
+                        duration: 0.4,
+                        stagger: 0.03,
+                        ease: 'power2.in'
+                    });
+                },
+                onEnterBack: () => {
+                    gsap.to(blogCards, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        stagger: 0.08,
+                        ease: 'power2.out'
+                    });
+                },
+                onLeaveBack: () => {
+                    gsap.to(blogCards, {
+                        opacity: 0,
+                        y: 60,
+                        duration: 0.4,
+                        stagger: 0.03,
+                        ease: 'power2.in'
+                    });
+                }
+            });
+        }
+
+        // =============================================
+        // HOW WE BUILD CARDS - STAGGER
+        // =============================================
+        const buildCards = gsap.utils.toArray('.how-we-build-section .electric-card-container');
+        if (buildCards.length) {
+            gsap.set(buildCards, { opacity: 0, y: 60, scale: 0.95 });
+            
+            ScrollTrigger.create({
+                trigger: '.how-we-build-section .build-process-grid',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                onEnter: () => {
+                    gsap.to(buildCards, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        stagger: 0.12,
+                        delay: 0.3,
+                        ease: 'power3.out'
+                    });
+                },
+                onLeave: () => {
+                    gsap.to(buildCards, {
+                        opacity: 0,
+                        y: -40,
+                        scale: 0.95,
+                        duration: 0.4,
+                        stagger: 0.03,
+                        ease: 'power2.in'
+                    });
+                },
+                onEnterBack: () => {
+                    gsap.to(buildCards, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.6,
+                        stagger: 0.08,
+                        ease: 'power2.out'
+                    });
+                },
+                onLeaveBack: () => {
+                    gsap.to(buildCards, {
+                        opacity: 0,
+                        y: 60,
+                        scale: 0.95,
+                        duration: 0.4,
+                        stagger: 0.03,
+                        ease: 'power2.in'
+                    });
+                }
+            });
+        }
+
+        // =============================================
+        // FAQ ACCORDION - SLIDE IN
+        // =============================================
+        const faqItems = gsap.utils.toArray('.faq-item');
+        if (faqItems.length) {
+            gsap.set(faqItems, { opacity: 0, x: -50 });
+            
+            ScrollTrigger.create({
+                trigger: '.faq-list',
+                start: 'top 80%',
+                onEnter: () => {
+                    gsap.to(faqItems, {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.6,
+                        stagger: 0.1,
+                        delay: 0.3,
+                        ease: 'power2.out'
+                    });
+                },
+                onLeaveBack: () => {
+                    gsap.to(faqItems, {
+                        opacity: 0,
+                        x: -50,
+                        duration: 0.3,
+                        stagger: 0.03,
+                        ease: 'power2.in'
+                    });
+                }
+            });
+        }
+
+        // =============================================
+        // POWERED BY SECTION - DRAMATIC REVEAL
+        // =============================================
+        const poweredBySection = document.querySelector('.powered-by-section');
+        if (poweredBySection) {
+            const poweredByBadge = poweredBySection.querySelector('.powered-by-badge');
+            const poweredByDesc = poweredBySection.querySelector('.powered-by-description');
+            
+            if (poweredByBadge) {
+                gsap.set(poweredByBadge, { opacity: 0, scale: 0.5 });
+                ScrollTrigger.create({
+                    trigger: poweredByBadge,
+                    start: 'top 80%',
+                    onEnter: () => {
+                        gsap.to(poweredByBadge, {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 1,
+                            ease: 'back.out(1.7)'
+                        });
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(poweredByBadge, {
+                            opacity: 0,
+                            scale: 0.5,
+                            duration: 0.5,
+                            ease: 'power2.in'
+                        });
+                    }
+                });
+            }
+            
+            if (poweredByDesc) {
+                gsap.set(poweredByDesc, { opacity: 0, y: 40 });
+                ScrollTrigger.create({
+                    trigger: poweredByDesc,
+                    start: 'top 85%',
+                    onEnter: () => {
+                        gsap.to(poweredByDesc, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 1,
+                            ease: 'power2.out'
+                        });
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(poweredByDesc, {
+                            opacity: 0,
+                            y: 40,
+                            duration: 0.5,
+                            ease: 'power2.in'
+                        });
+                    }
+                });
+            }
+        }
+
+        // =============================================
+        // FOOTER - ELEGANT FADE IN
+        // =============================================
+        const footer = document.querySelector('.site-footer');
+        if (footer) {
+            gsap.set(footer, { opacity: 0, y: 30 });
+            ScrollTrigger.create({
+                trigger: footer,
+                start: 'top 95%',
+                onEnter: () => {
+                    gsap.to(footer, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: 'power2.out'
+                    });
+                },
+                once: true
+            });
+        }
 
         // Extension cards - Fade in on scroll
         gsap.set('.extensions-grid', { opacity: 0, y: 40 });
@@ -5506,19 +6194,8 @@
         });
 
         // =============================================
-        // SMOOTH SCROLL
+        // SMOOTH SCROLL (using Lenis - already handled above)
         // =============================================
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offset = 50;
-                    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                    window.scrollTo({ top, behavior: 'smooth' });
-                }
-            });
-        });
 
         // =============================================
         // FORM
