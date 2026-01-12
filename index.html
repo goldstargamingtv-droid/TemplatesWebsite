@@ -5401,6 +5401,33 @@
 
         const tl = gsap.timeline();
 
+        // Skip intro if coming from another page (has hash or referrer is same site)
+        const skipIntro = window.location.hash || document.referrer.includes('deploytemplate.com');
+        
+        if (skipIntro) {
+            // Instantly hide preloader and show everything
+            gsap.set('#preloader', { display: 'none' });
+            gsap.set('#preloaderTop', { yPercent: -100 });
+            gsap.set('#preloaderBottom', { yPercent: 100 });
+            gsap.set('#introTextTop, #introTextBottom', { display: 'none' });
+            gsap.set('#heroIntroContent', { opacity: 1, y: 0 });
+            gsap.set('#heroLogoCenter', { opacity: 1 });
+            gsap.set('#heroAnnouncement, #navLinks, #heroCta', { opacity: 1 });
+            gsap.set('#heroLeft, #heroRight', { opacity: 1, x: 0 });
+            gsap.set('.hero-nav-link', { opacity: 1, x: 0 });
+            gsap.set('#heroTheme, #heroCopyright, #heroBlob', { opacity: 1 });
+            document.getElementById('filmGrain').classList.add('subtle');
+            
+            // Scroll to hash target if present
+            if (window.location.hash) {
+                setTimeout(() => {
+                    const target = document.querySelector(window.location.hash);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 100);
+            }
+        } else {
         // =============================================
         // CINEMATIC INTRO SEQUENCE
         // =============================================
@@ -5520,6 +5547,7 @@
         gsap.set('#heroLogoCenter', { opacity: 0 });
         gsap.set('#navLinks', { opacity: 0 });
         gsap.set('#heroCta', { opacity: 0 });
+        } // end skipIntro else block
 
         // =============================================
         // WORD-BY-WORD BLUR REVEAL ON SCROLL (TYPEWRITER STYLE)
