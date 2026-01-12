@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolishAI - AI Text Rewriter | DeployTemplate</title>
+    <meta name="description" content="Transform any text with AI-powered rewriting. 9 polish modes. Free Chrome extension.">
+    <link rel="icon" href="images/icon128.png" type="image/png">
+    <meta name="theme-color" content="#1d9a9b">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <style>
+        @property --rotate { syntax: "<number>"; inherits: true; initial-value: 0; }
+        @property --bg-y { syntax: "<number>"; inherits: true; initial-value: 0; }
+        @property --bg-x { syntax: "<number>"; inherits: true; initial-value: 0; }
+        @property --bg-size { syntax: "<number>"; inherits: true; initial-value: 0; }
+        @property --glow-opacity { syntax: "<number>"; inherits: true; initial-value: 0; }
+        @property --glow-blur { syntax: "<number>"; inherits: true; initial-value: 0; }
+        @property --glow-scale { syntax: "<number>"; inherits: true; initial-value: 2; }
+        @property --glow-radius { syntax: "<number>"; inherits: true; initial-value: 2; }
+        @property --glow-translate-y { syntax: "<number>"; inherits: true; initial-value: 0; }
+        @property --white-shadow { syntax: "<number>"; inherits: true; initial-value: 0; }
+
+        :root { --primary: #1d9a9b; --bg: #0a0a0a; --text: #ffffff; --text-dim: rgba(255,255,255,0.6); --text-muted: rgba(255,255,255,0.3); --border: rgba(255,255,255,0.08); }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--primary) var(--bg); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        ::selection { background: var(--primary); color: white; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+
+        /* Glitch Line Effect */
+        .glitch-line { display: inline-block; white-space: nowrap; cursor: pointer; user-select: none; }
+        .glitch-line .accent { color: #f97316; }
+
+        /* Film grain overlay */
+        .film-grain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; pointer-events: none; opacity: 0.005; }
+        .film-grain canvas { width: 100%; height: 100%; }
+
+        .navbar { position: fixed; top: 0; left: 0; right: 0; padding: 1rem 2rem; z-index: 1000; transition: all 0.4s ease; }
+        .navbar.scrolled { background: rgba(10,10,10,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .navbar-inner { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .navbar-left { display: flex; align-items: center; gap: 1.5rem; }
+        .navbar-logo { width: 40px; height: 40px; background: rgba(29,154,155,0.2); border: 1px solid rgba(29,154,155,0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .navbar-logo svg { width: 22px; height: 22px; stroke: white; fill: none; stroke-width: 2; }
+        .navbar-links { display: flex; gap: 2rem; align-items: center; }
+        .navbar-links a { color: var(--primary); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+        .nav-dash { color: var(--primary); margin: 0 0.5rem; opacity: 0.5; }
+        .back-link { display: flex; align-items: center; gap: 0.5rem; }
+        .back-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 8rem 2rem 4rem; }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center; max-width: 1400px; margin: 0 auto; width: 100%; }
+        .hero-content { opacity: 0; }
+        .hero-badge { display: inline-flex; padding: 0.5rem 1rem; background: rgba(29,154,155,0.1); border: 1px solid rgba(29,154,155,0.3); border-radius: 100px; font-size: 0.75rem; font-weight: 600; color: var(--primary); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .hero-title { font-size: clamp(3rem,6vw,5rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+        .hero-title .accent { color: #f97316; }
+        .hero-subtitle { font-size: 1.5rem; color: #f97316; font-weight: 600; margin-bottom: 1.5rem; }
+        .hero-desc { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 2rem; max-width: 500px; }
+        .hero-features { display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+        .hero-feature { padding: 0.6rem 1.2rem; background: rgba(29,154,155,0.08); border: 1px solid rgba(29,154,155,0.2); border-radius: 8px; font-size: 0.85rem; color: var(--text-dim); }
+        .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.5rem; background: rgba(29,154,155,0.15); border: 1px solid rgba(29,154,155,0.3); color: white; font-weight: 600; font-size: 0.85rem; border-radius: 10px; transition: all 0.3s; box-shadow: 0 4px 20px rgba(29,154,155,0.2); }
+        .btn-primary svg { width: 16px; height: 16px; fill: #f97316; }
+        .btn-primary:hover { transform: translateY(-2px); background: rgba(29,154,155,0.25); }
+        .btn-secondary { padding: 0.85rem 1.5rem; background: transparent; border: 1px solid var(--border); color: var(--text); font-weight: 600; font-size: 0.85rem; border-radius: 10px; transition: all 0.3s; }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+        .powered-by { margin-top: 1.5rem; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; }
+        .powered-by span { color: #f97316; font-weight: 600; }
+
+        .hero-visual { opacity: 0; }
+        .hero-screenshot { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 20px 80px rgba(0,0,0,0.5); }
+        .hero-screenshot img { width: 100%; height: auto; }
+
+        .section { padding: 6rem 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section-header { margin-bottom: 4rem; opacity: 0; }
+        .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--primary); margin-bottom: 1rem; }
+        .section-title { font-size: clamp(2.5rem,6vw,4.5rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+        .section-title .accent { color: #f97316; }
+        .section-desc { font-size: 1.1rem; color: var(--text-dim); max-width: 500px; margin-top: 1.5rem; }
+
+        .modes-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+
+        .electric-card-container { --card-color: hsl(0deg 0% 4%); --card-radius: 20px; --border-width: 3px; --bg-size: 1; --rotate: 0; --animation-speed: 8s; --interaction-speed: 0.55s; --glow-scale: 1.5; --scale-factor: 1; --glow-blur: 6; --glow-opacity: 1; --glow-radius: 100; --glow-rotate-unit: 1deg; color: white; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; border-radius: var(--card-radius); cursor: pointer; width: 100%; height: 200px; }
+        .electric-card-container:hover > .electric-inner-container { mix-blend-mode: darken; box-shadow: 0 0 calc(var(--white-shadow)*1vw) calc(var(--white-shadow)*0.15vw) rgb(255 255 255/20%); animation: shadow-pulse calc(var(--animation-speed)*2) linear infinite; }
+        .electric-card-container:hover > .electric-inner-container:before { --bg-size: 15; }
+        .electric-card-container:hover .glow { --glow-blur: 1.5; --glow-opacity: 0.6; --glow-scale: 2.5; --glow-radius: 0; --scale-factor: 1.25; animation-play-state: paused; }
+        .electric-inner-container { position: absolute; width: 100%; height: 100%; background: var(--card-color); border-radius: calc(var(--card-radius)*0.9); }
+        .electric-inner-container:before { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: calc(100% + var(--border-width)); height: calc(100% + var(--border-width)); border-radius: calc(var(--card-radius)*0.9); box-shadow: 0 0 20px black; mix-blend-mode: color-burn; z-index: -1; background: hsl(0deg 0% 16%) radial-gradient(30% 30% at calc(var(--bg-x)*1%) calc(var(--bg-y)*1%),hsl(24deg 100% 90%) calc(0%*var(--bg-size)),hsl(24deg 100% 80%) calc(20%*var(--bg-size)),hsl(24deg 100% 60%) calc(40%*var(--bg-size)),transparent 100%); animation: rotate-bg var(--animation-speed) linear infinite; }
+        .glow { display: block; position: absolute; width: 60px; height: 60px; animation: rotate var(--animation-speed) linear infinite; transform: rotateZ(calc(var(--rotate)*var(--glow-rotate-unit))); border-radius: calc(var(--glow-radius)*10vw); z-index: 1; }
+        .glow:after { content: ""; display: block; z-index: -2; filter: blur(calc(var(--glow-blur)*10px)); width: 130%; height: 130%; left: -15%; top: -15%; background: #1d9a9b; position: relative; border-radius: calc(var(--glow-radius)*10vw); transform: scaleY(calc(var(--glow-scale)*var(--scale-factor)/1.1)) scaleX(calc(var(--glow-scale)*var(--scale-factor)*1.2)) translateY(calc(var(--glow-translate-y)*1%)); opacity: var(--glow-opacity); }
+        .electric-content-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 1.5rem; display: flex; flex-direction: column; z-index: 10; }
+        .electric-tag { display: inline-block; padding: 0.3em 0.8em; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #1d9a9b; background: rgba(29,154,155,0.15); border: 1px solid rgba(29,154,155,0.3); border-radius: 20px; width: fit-content; margin-bottom: 0.75rem; }
+        .electric-tag.pro { background: rgba(249,115,22,0.15); border-color: rgba(249,115,22,0.3); color: #f97316; }
+        .electric-tag.free { background: rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.3); color: #22c55e; }
+        .electric-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .electric-desc { font-size: 0.85rem; color: var(--text-dim); }
+        .electric-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+
+        @keyframes shadow-pulse { 0%,24%,46%,73%,96% { --white-shadow: 0.5; } 12%,28%,41%,63%,75%,82%,98% { --white-shadow: 2.5; } 6%,32%,57% { --white-shadow: 1.3; } 18%,52%,88% { --white-shadow: 3.5; } }
+        @keyframes rotate-bg { 0% { --bg-x: 0; --bg-y: 0; } 25% { --bg-x: 100; --bg-y: 0; } 50% { --bg-x: 100; --bg-y: 100; } 75% { --bg-x: 0; --bg-y: 100; } 100% { --bg-x: 0; --bg-y: 0; } }
+        @keyframes rotate { from { --rotate: -70; --glow-translate-y: -65; } to { --rotate: 290; --glow-translate-y: -65; } }
+
+        .comparison-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: center; }
+        .comparison-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; }
+        .comparison-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); margin-bottom: 1rem; }
+        .comparison-text { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; }
+        .comparison-arrow { font-size: 2rem; color: var(--primary); }
+        .comparison-result { border-color: rgba(29,154,155,0.3); background: rgba(29,154,155,0.05); }
+        .comparison-result .comparison-text { color: var(--text); }
+        .comparison-actions { display: flex; gap: 0.5rem; margin-top: 1.5rem; }
+        .comparison-btn { padding: 0.5rem 1rem; background: rgba(29,154,155,0.1); border: 1px solid rgba(29,154,155,0.3); border-radius: 8px; font-size: 0.8rem; color: var(--text); cursor: pointer; }
+
+        .stats-grid { display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; margin-top: 3rem; }
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg,var(--primary),#0f766e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-label { font-size: 0.9rem; color: var(--text-dim); }
+
+        .pricing-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2rem; max-width: 800px; margin: 0 auto; }
+        .pricing-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 24px; padding: 2.5rem; position: relative; transition: transform 0.3s; }
+        .pricing-card:hover { transform: translateY(-4px); }
+        .pricing-card.featured { border-color: rgba(29,154,155,0.5); }
+        .pricing-card.featured::before { content: 'BEST VALUE'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg,var(--primary),#0f766e); color: white; font-size: 0.65rem; font-weight: 700; padding: 0.4rem 1rem; border-radius: 100px; }
+        .pricing-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .pricing-price { font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .pricing-price span { font-size: 1rem; font-weight: 500; color: var(--text-dim); }
+        .pricing-desc { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 2rem; }
+        .pricing-features { list-style: none; margin-bottom: 2rem; }
+        .pricing-features li { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
+        .pricing-features li:last-child { border-bottom: none; }
+        .pricing-features svg { width: 18px; height: 18px; stroke: var(--primary); fill: none; stroke-width: 2; }
+        .pricing-cta { display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; padding: 1rem; border-radius: 10px; font-weight: 600; }
+        .pricing-card:not(.featured) .pricing-cta { background: transparent; border: 1px solid var(--border); color: var(--text); }
+        .pricing-card.featured .pricing-cta { background: rgba(29,154,155,0.15); border: 1px solid rgba(29,154,155,0.3); color: white; }
+        .pricing-cta svg { width: 16px; height: 16px; fill: #f97316; }
+
+        footer { padding: 3rem 2rem; border-top: 1px solid var(--border); }
+        .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-brand { display: flex; align-items: center; gap: 0.75rem; }
+        .footer-logo { width: 32px; height: 32px; background: rgba(29,154,155,0.2); border: 1px solid rgba(29,154,155,0.3); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+        .footer-logo svg { width: 18px; height: 18px; stroke: white; fill: none; stroke-width: 2; }
+        .footer-copyright { color: var(--text-muted); font-size: 0.85rem; }
+        .footer-links { display: flex; gap: 2rem; }
+        .footer-links a { color: var(--text-dim); font-size: 0.85rem; }
+
+        @media (max-width: 1024px) { .hero-grid { grid-template-columns: 1fr; text-align: center; } .hero-content { order: 1; } .hero-visual { order: 0; margin-bottom: 2rem; } .hero-desc { margin: 0 auto 2rem; } .hero-features,.hero-cta { justify-content: center; } .modes-grid { grid-template-columns: repeat(2,1fr); } .comparison-grid { grid-template-columns: 1fr; } .comparison-arrow { transform: rotate(90deg); justify-self: center; } }
+        @media (max-width: 768px) { .navbar-links { display: none; } .modes-grid,.pricing-grid { grid-template-columns: 1fr; } .footer-inner { flex-direction: column; text-align: center; } }
+    </style>
+</head>
+<body>
+    <div class="film-grain" id="filmGrain"><canvas id="grainCanvas"></canvas></div>
+    <nav class="navbar" id="navbar"><div class="navbar-inner"><div class="navbar-left"><div class="navbar-logo"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><a href="/" class="glitch-line">← Back to Home</a></div><div class="navbar-links"><a href="/#extensions" class="glitch-line">→ All Extensions ←</a></div></div></nav>
+
+    <section class="hero">
+        <div class="hero-grid">
+            <div class="hero-content" id="heroContent">
+                <div class="hero-badge">Free Chrome Extension</div>
+                <h1 class="hero-title"><span class="glitch-line">Polish<span class="accent">AI</span></span></h1>
+                <p class="hero-subtitle">AI Text Rewriter</p>
+                <p class="hero-desc">Transform any text with AI-powered rewriting. Right-click → Choose a mode → Done.</p>
+                <div class="hero-features"><div class="hero-feature">✨ 9 Polish Modes</div><div class="hero-feature">⚡ Instant Results</div><div class="hero-feature">🌐 Works Everywhere</div></div>
+                <div class="hero-cta"><a href="#" class="btn-primary"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Get Started Free</a><a href="#modes" class="btn-secondary">View All Modes</a></div>
+                <div class="powered-by">Powered by <span>Claude</span></div>
+            </div>
+            <div class="hero-visual" id="heroVisual"><div class="hero-screenshot"><img src="images/hero.png" alt="PolishAI"></div></div>
+        </div>
+    </section>
+
+    <section class="section" id="modes">
+        <div class="container">
+            <div class="section-header"><p class="section-label">Polish Modes</p><h2 class="section-title"><span class="glitch-line">9 Ways to Polish <span class="accent">Your Text</span></span></h2><p class="section-desc">Free modes + Pro modes for unlimited creativity.</p></div>
+            <div class="modes-grid">
+                <div class="electric-card-container"><span class="glow"></span><div class="electric-inner-container"></div><div class="electric-content-container"><div class="electric-tag free">Free</div><div class="electric-icon">✨</div><p class="electric-title">Rewrite</p><p class="electric-desc">Same meaning, fresh words</p></div></div>
+                <div class="electric-card-container"><span class="glow"></span><div class="electric-inner-container"></div><div class="electric-content-container"><div class="electric-tag free">Free</div><div class="electric-icon">📝</div><p class="electric-title">Simplify</p><p class="electric-desc">Make it easier to read</p></div></div>
+                <div class="electric-card-container"><span class="glow"></span><div class="electric-inner-container"></div><div class="electric-content-container"><div class="electric-tag free">Free</div><div class="electric-icon">✓</div><p class="electric-title">Fix Grammar</p><p class="electric-desc">Correct errors only</p></div></div>
+                <div class="electric-card-container"><span class="glow"></span><div class="electric-inner-container"></div><div class="electric-content-container"><div class="electric-tag pro">Pro</div><div class="electric-icon">📋</div><p class="electric-title">Formalize</p><p class="electric-desc">Professional business tone</p></div></div>
+                <div class="electric-card-container"><span class="glow"></span><div class="electric-inner-container"></div><div class="electric-content-container"><div class="electric-tag pro">Pro</div><div class="electric-icon">😊</div><p class="electric-title">Casual</p><p class="electric-desc">Friendly & relaxed</p></div></div>
+                <div class="electric-card-container"><span class="glow"></span><div class="electric-inner-container"></div><div class="electric-content-container"><div class="electric-tag pro">Pro</div><div class="electric-icon">📄</div><p class="electric-title">Shorten</p><p class="electric-desc">Condense it down</p></div></div>
+                <div class="electric-card-container"><span class="glow"></span><div class="electric-inner-container"></div><div class="electric-content-container"><div class="electric-tag pro">Pro</div><div class="electric-icon">📖</div><p class="electric-title">Expand</p><p class="electric-desc">Add more detail</p></div></div>
+                <div class="electric-card-container"><span class="glow"></span><div class="electric-inner-container"></div><div class="electric-content-container"><div class="electric-tag pro">Pro</div><div class="electric-icon">🌐</div><p class="electric-title">Translate</p><p class="electric-desc">Convert to English</p></div></div>
+                <div class="electric-card-container"><span class="glow"></span><div class="electric-inner-container"></div><div class="electric-content-container"><div class="electric-tag pro">Pro</div><div class="electric-icon">⚡</div><p class="electric-title">Custom</p><p class="electric-desc">Your own prompt</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header"><p class="section-label">Before & After</p><h2 class="section-title"><span class="glitch-line">See the <span class="accent">Magic</span></span></h2><p class="section-desc">Watch your text transform in real-time.</p></div>
+            <div class="comparison-grid">
+                <div class="comparison-card"><div class="comparison-label">Original Text</div><p class="comparison-text">The meeting was really good and we talked about a lot of stuff that was important for the project going forward.</p></div>
+                <div class="comparison-arrow">→</div>
+                <div class="comparison-card comparison-result"><div class="comparison-label">✨ Polished <span style="float:right;color:#f97316">FORMALIZE</span></div><p class="comparison-text">The meeting was productive, covering key topics essential to the project's continued progress.</p><div class="comparison-actions"><button class="comparison-btn">📋 Copy</button><button class="comparison-btn">🔄 Replace</button><button class="comparison-btn">🔁 Retry</button></div></div>
+            </div>
+            <div class="stats-grid"><div class="stat-item"><div class="stat-value">50%</div><div class="stat-label">Shorter</div></div><div class="stat-item"><div class="stat-value">100%</div><div class="stat-label">Professional</div></div><div class="stat-item"><div class="stat-value">&lt;2s</div><div class="stat-label">Speed</div></div></div>
+        </div>
+    </section>
+
+    <section class="section" id="pricing">
+        <div class="container">
+            <div class="section-header"><p class="section-label">Pricing</p><h2 class="section-title"><span class="glitch-line">Start Free, <span class="accent">Go Pro</span></span></h2><p class="section-desc">Try it free, upgrade when you need more.</p></div>
+            <div class="pricing-grid">
+                <div class="pricing-card"><h3 class="pricing-name">Free</h3><div class="pricing-price">$0 <span>forever</span></div><p class="pricing-desc">Perfect for trying it out</p><ul class="pricing-features"><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>3 uses per day</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>3 polish modes</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Right-click integration</li></ul><a href="#" class="pricing-cta">Add to Chrome</a></div>
+                <div class="pricing-card featured"><h3 class="pricing-name">Pro</h3><div class="pricing-price">$4.99 <span>one-time</span></div><p class="pricing-desc">Unlimited AI polish power</p><ul class="pricing-features"><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Unlimited uses</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>All 9 polish modes</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Custom instructions</li><li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Priority processing</li></ul><a href="#" class="pricing-cta"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Get Pro - $4.99</a></div>
+            </div>
+        </div>
+    </section>
+
+    <footer><div class="footer-inner"><div class="footer-brand"><div class="footer-logo"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="footer-copyright">© 2025 DeployTemplate</span></div><nav class="footer-links"><a href="/#extensions" class="glitch-line">Extensions</a><a href="/#custom" class="glitch-line">Custom Work</a><a href="/#templates" class="glitch-line">Templates</a></nav></div></footer>
+
+    <script>
+        // Film grain effect
+        (function() {
+            const canvas = document.getElementById('grainCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const grainSize = 128;
+            canvas.width = grainSize;
+            canvas.height = grainSize;
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            canvas.style.imageRendering = 'pixelated';
+            const grainFrames = [];
+            const numFrames = 4;
+            for (let f = 0; f < numFrames; f++) {
+                const imageData = ctx.createImageData(grainSize, grainSize);
+                const data = imageData.data;
+                for (let i = 0; i < data.length; i += 4) {
+                    const value = Math.random() * 255;
+                    data[i] = value;
+                    data[i + 1] = value;
+                    data[i + 2] = value;
+                    data[i + 3] = 255;
+                }
+                grainFrames.push(imageData);
+            }
+            let frameIndex = 0;
+            function renderGrain() {
+                ctx.putImageData(grainFrames[frameIndex], 0, 0);
+                frameIndex = (frameIndex + 1) % numFrames;
+            }
+            setInterval(renderGrain, 83);
+            renderGrain();
+        })();
+
+        // Navbar scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
+
+        // GSAP + Lenis
+        gsap.registerPlugin(ScrollTrigger);
+        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        function raf(time) { lenis.raf(time); ScrollTrigger.update(); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // Hero animations
+        gsap.to('#heroContent', { opacity: 1, duration: 1, delay: 0.2 });
+        gsap.to('#heroVisual', { opacity: 1, duration: 1, delay: 0.4 });
+
+        // Section header animations
+        document.querySelectorAll('.section-header').forEach(h => { gsap.set(h, { opacity: 0, y: 50 }); ScrollTrigger.create({ trigger: h, start: 'top 85%', onEnter: () => gsap.to(h, { opacity: 1, y: 0, duration: 0.8 }) }); });
+
+        // Card animations
+        const cards = gsap.utils.toArray('.modes-grid .electric-card-container');
+        gsap.set(cards, { opacity: 0, y: 60 });
+        ScrollTrigger.create({ trigger: '.modes-grid', start: 'top 80%', onEnter: () => gsap.to(cards, { opacity: 1, y: 0, duration: 0.6, stagger: 0.1 }) });
+
+        // Smooth anchor scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', function(e) { const t = document.querySelector(this.getAttribute('href')); if (t) { e.preventDefault(); lenis.scrollTo(t, { offset: -80, duration: 1.5 }); } }); });
+
+        // ASCII Glitch Effect
+        const createASCIIShift = (el, opts = {}) => {
+            const WAVE_THRESH = 3;
+            const CHAR_MULT = 3;
+            const ANIM_STEP = 40;
+            const WAVE_BUF = 5;
+
+            let origHTML = el.innerHTML;
+            let origTxt = el.textContent;
+            let origChars = origTxt.split("");
+            let isAnim = false;
+            let cursorPos = 0;
+            let waves = [];
+            let animId = null;
+            let isHover = false;
+            let origW = null;
+            
+            let accentRanges = [];
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = origHTML;
+            const accentSpans = tempDiv.querySelectorAll('.accent');
+            if (accentSpans.length > 0) {
+                let pos = 0;
+                const walkNodes = (node) => {
+                    if (node.nodeType === 3) {
+                        pos += node.textContent.length;
+                    } else if (node.nodeType === 1) {
+                        if (node.classList && node.classList.contains('accent')) {
+                            const start = pos;
+                            pos += node.textContent.length;
+                            accentRanges.push({ start, end: pos });
+                        } else {
+                            node.childNodes.forEach(walkNodes);
+                        }
+                    }
+                };
+                tempDiv.childNodes.forEach(walkNodes);
+            }
+
+            const cfg = {
+                dur: 600,
+                chars: '.,·-─~+:;=*π""┐┌┘┴┬╗╔╝╚╬╠╣╩╦║░▒▓█▄▀▌▐■!?&#$@0123456789*',
+                preserveSpaces: true,
+                spread: 0.3,
+                ...opts
+            };
+
+            const updateCursorPos = (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const len = origTxt.length;
+                const pos = Math.round((x / rect.width) * len);
+                cursorPos = Math.max(0, Math.min(pos, len - 1));
+            };
+
+            const startWave = () => {
+                waves.push({ startPos: cursorPos, startTime: Date.now(), id: Math.random() });
+                if (!isAnim) start();
+            };
+
+            const cleanupWaves = (t) => { waves = waves.filter((w) => t - w.startTime < cfg.dur); };
+
+            const calcWaveEffect = (charIdx, t) => {
+                let shouldAnim = false;
+                let resultChar = origChars[charIdx];
+                for (const w of waves) {
+                    const age = t - w.startTime;
+                    const prog = Math.min(age / cfg.dur, 1);
+                    const dist = Math.abs(charIdx - w.startPos);
+                    const maxDist = Math.max(w.startPos, origChars.length - w.startPos - 1);
+                    const rad = (prog * (maxDist + WAVE_BUF)) / cfg.spread;
+                    if (dist <= rad) {
+                        shouldAnim = true;
+                        const intens = Math.max(0, rad - dist);
+                        if (intens <= WAVE_THRESH && intens > 0) {
+                            const cIdx = (dist * CHAR_MULT + Math.floor(age / ANIM_STEP)) % cfg.chars.length;
+                            resultChar = cfg.chars[cIdx];
+                        }
+                    }
+                }
+                return { shouldAnim, char: resultChar };
+            };
+            
+            const isInAccent = (idx) => {
+                for (const range of accentRanges) {
+                    if (idx >= range.start && idx < range.end) return true;
+                }
+                return false;
+            };
+
+            const genScrambledHTML = (t) => {
+                let result = '';
+                let inAccent = false;
+                for (let i = 0; i < origChars.length; i++) {
+                    const char = origChars[i];
+                    const wasInAccent = inAccent;
+                    inAccent = isInAccent(i);
+                    if (inAccent && !wasInAccent) result += '<span class="accent">';
+                    if (!inAccent && wasInAccent) result += '</span>';
+                    if (cfg.preserveSpaces && char === " ") {
+                        result += " ";
+                    } else {
+                        const res = calcWaveEffect(i, t);
+                        result += res.shouldAnim ? res.char : char;
+                    }
+                }
+                if (inAccent) result += '</span>';
+                return result;
+            };
+
+            const stop = () => {
+                el.innerHTML = origHTML;
+                if (origW !== null) { el.style.width = ""; origW = null; }
+                isAnim = false;
+            };
+
+            const start = () => {
+                if (isAnim) return;
+                if (origW === null) { origW = el.getBoundingClientRect().width; el.style.width = `${origW}px`; }
+                isAnim = true;
+                const animate = () => {
+                    const t = Date.now();
+                    cleanupWaves(t);
+                    if (waves.length === 0) { stop(); return; }
+                    el.innerHTML = genScrambledHTML(t);
+                    animId = requestAnimationFrame(animate);
+                };
+                animId = requestAnimationFrame(animate);
+            };
+
+            const handleEnter = (e) => { isHover = true; updateCursorPos(e); startWave(); };
+            const handleMove = (e) => { if (!isHover) return; const old = cursorPos; updateCursorPos(e); if (cursorPos !== old) startWave(); };
+            const handleLeave = () => { isHover = false; };
+
+            el.addEventListener("mouseenter", handleEnter);
+            el.addEventListener("mousemove", handleMove);
+            el.addEventListener("mouseleave", handleLeave);
+            return { stop };
+        };
+
+        // Apply glitch effect to all .glitch-line elements
+        setTimeout(() => {
+            document.querySelectorAll('.glitch-line').forEach(el => {
+                createASCIIShift(el, { dur: 1000, spread: 1.0 });
+            });
+        }, 500);
+    </script>
+</body>
+</html>
