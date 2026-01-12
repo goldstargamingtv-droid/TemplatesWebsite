@@ -846,6 +846,25 @@
             color: white;
         }
 
+        /* =============================================
+           GPU ACCELERATION & PERFORMANCE
+           ============================================= */
+        /* Note: Only apply GPU hints to specific elements that need it,
+           not globally, as it can interfere with GSAP transforms */
+
+        /* Optimized transitions - matching wantedfornothing.com */
+        .transition-fast {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .transition-medium {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .transition-slow {
+            transition: all 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -5730,6 +5749,24 @@
         // =============================================
         gsap.registerPlugin(ScrollTrigger);
 
+        // Throttle helper (125ms like wantedfornothing.com)
+        function throttle(func, limit = 125) {
+            let inThrottle;
+            return function(...args) {
+                if (!inThrottle) {
+                    func.apply(this, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            }
+        }
+
+        // Optimized resize with throttling
+        const optimizedResize = throttle(() => {
+            window.dispatchEvent(new CustomEvent('optimizedResize'));
+        }, 125);
+        window.addEventListener('resize', optimizedResize, { passive: true });
+
         // Initialize Lenis smooth scroll (matched to wantedfornothing.com)
         const lenis = new Lenis({
             duration: 1.2,
@@ -6819,12 +6856,24 @@
                 sphere.geometry.computeVertexNormals();
             }
             
+            let isAnimating = true;
+            
             function animate() {
-                update();
-                sphere.rotation.y += 0.0008;
-                renderer.render(scene, camera);
+                if (isAnimating) {
+                    update();
+                    sphere.rotation.y += 0.0008;
+                    renderer.render(scene, camera);
+                }
                 requestAnimationFrame(animate);
             }
+            
+            // IntersectionObserver to pause when off-screen (like wantedfornothing.com)
+            const blobObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isAnimating = entry.isIntersecting;
+                });
+            }, { threshold: 0.1 });
+            blobObserver.observe(container);
             
             animate();
             
@@ -6842,6 +6891,7 @@
             if (!canvas) return;
             
             const ctx = canvas.getContext('2d');
+            const grainContainer = canvas.parentElement;
             
             // Use a much smaller canvas and scale up via CSS for performance
             const grainSize = 128;
@@ -6870,13 +6920,24 @@
             }
             
             let frameIndex = 0;
+            let isGrainVisible = true;
+            let grainInterval;
+            
             function renderGrain() {
-                ctx.putImageData(grainFrames[frameIndex], 0, 0);
-                frameIndex = (frameIndex + 1) % numFrames;
+                if (isGrainVisible) {
+                    ctx.putImageData(grainFrames[frameIndex], 0, 0);
+                    frameIndex = (frameIndex + 1) % numFrames;
+                }
             }
             
+            // IntersectionObserver to pause grain when hero is off-screen
+            const grainObserver = new IntersectionObserver((entries) => {
+                isGrainVisible = entries[0].isIntersecting;
+            }, { threshold: 0.1 });
+            if (grainContainer) grainObserver.observe(grainContainer);
+            
             // Update at ~12fps - still looks like grain but way less CPU
-            setInterval(renderGrain, 83);
+            grainInterval = setInterval(renderGrain, 83);
             renderGrain();
         })();
 
