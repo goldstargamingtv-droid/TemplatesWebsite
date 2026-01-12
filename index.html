@@ -878,7 +878,7 @@
         .ascii-cursor {
             position: fixed;
             pointer-events: none;
-            z-index: 100001;
+            z-index: 100010;
             transform: translate(-50%, -50%);
             font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
             font-size: 18px;
@@ -908,7 +908,7 @@
         .cursor-trail {
             position: fixed;
             pointer-events: none;
-            z-index: 100001;
+            z-index: 100010;
             font-family: 'SF Mono', Monaco, monospace;
             font-size: 14px;
             color: var(--primary);
@@ -1880,8 +1880,21 @@
            ============================================= */
         .how-we-build-section {
             position: relative;
+            z-index: 1;
             content-visibility: auto;
             contain-intrinsic-size: auto 1000px;
+            background: transparent;
+        }
+        
+        .how-we-build-section::before {
+            content: '';
+            position: absolute;
+            top: 140px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg);
+            z-index: -1;
         }
 
         .build-process-grid {
@@ -2833,6 +2846,11 @@
             background: var(--bg-secondary);
             content-visibility: auto;
             contain-intrinsic-size: auto 800px;
+            position: relative;
+            z-index: 10;
+            overflow: visible;
+            padding-bottom: 120px;
+            margin-bottom: -80px;
         }
 
         /* Blog - Pinned Scroll Effect (reversed) */
@@ -2843,6 +2861,7 @@
             gap: 2rem;
             justify-content: center;
             margin-top: 2rem;
+            overflow: visible;
         }
 
         .electric-blog-container {
@@ -2851,9 +2870,10 @@
             padding: 2px;
             border-radius: 24px;
             position: relative;
-            background: var(--bg-secondary);
+            background: transparent;
             width: 350px;
             height: 420px;
+            overflow: visible;
         }
 
         .electric-blog-inner {
@@ -3975,7 +3995,7 @@
         .glow:after {
             content: "";
             display: block;
-            z-index: -2;
+            z-index: 0;
             filter: blur(calc(var(--glow-blur) * 10px));
             width: 130%;
             height: 130%;
@@ -5710,14 +5730,17 @@
         // =============================================
         gsap.registerPlugin(ScrollTrigger);
 
-        // Initialize Lenis smooth scroll
+        // Initialize Lenis smooth scroll (maximum butter)
         const lenis = new Lenis({
-            duration: 1.2,
+            duration: 2.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true,
             gestureDirection: "vertical",
             smoothTouch: false,
-            touchMultiplier: 2
+            touchMultiplier: 2,
+            lerp: 0.025,         // Maximum smooth - long dreamy coast
+            wheelMultiplier: 1,
+            infinite: false
         });
         
         function raf(time) {
@@ -6202,7 +6225,7 @@
                         trigger: customSection,
                         start: 'top bottom',
                         end: 'bottom top',
-                        scrub: 1
+                        scrub: 2.5
                     }
                 });
                 
@@ -6221,7 +6244,7 @@
                         trigger: customSection,
                         start: 'top bottom',
                         end: 'bottom top',
-                        scrub: 1
+                        scrub: 2.5
                     }
                 });
                 
@@ -6240,7 +6263,7 @@
                         trigger: customSection,
                         start: 'top bottom',
                         end: 'bottom top',
-                        scrub: 1
+                        scrub: 2.5
                     }
                 });
                 
@@ -6263,7 +6286,7 @@
                     trigger: templateScanner,
                     start: 'top bottom',
                     end: 'bottom top',
-                    scrub: 1
+                    scrub: 2.5
                 }
             });
             
@@ -6587,45 +6610,6 @@
                 element.style.zIndex = order;
             }
         });
-        
-        // Only run on desktop
-        if (window.innerWidth > 768) {
-            const imgs = gsap.utils.toArray('.template-img-wrapper');
-            
-            const mainTimeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: '.templates-pinned',
-                    start: 'top top',
-                    end: 'bottom bottom',
-                    pin: '.templates-right',
-                    scrub: true
-                }
-            });
-            
-            gsap.set(imgs, {
-                clipPath: 'inset(0% 0% 0% 0%)'
-            });
-            
-            // We have 3 images stacked: index 3 (SaaS) on top, index 2 (Portfolio), index 1 (Restaurant) on bottom
-            // We need to clip away index 3 first, then index 2
-            const imgsSorted = [...imgs].sort((a, b) => {
-                return parseInt(b.dataset.index) - parseInt(a.dataset.index);
-            });
-            
-            imgsSorted.forEach((img, index) => {
-                const nextImg = imgsSorted[index + 1];
-                if (nextImg) {
-                    mainTimeline.to(
-                        img,
-                        {
-                            clipPath: 'inset(0% 0% 100% 0%)',
-                            duration: 1,
-                            ease: 'none'
-                        }
-                    );
-                }
-            });
-        }
 
         // Blog cards - fade in animation
         gsap.set('.blog-cards-grid', { opacity: 0, y: 40 });
@@ -6754,15 +6738,12 @@
                 metalness: 0.0,
                 roughness: 0.05,
                 transmission: 0.6,
-                thickness: 1.5,
                 transparent: true,
                 opacity: 0.95,
                 ior: 1.5,
                 envMapIntensity: 1,
                 clearcoat: 1,
-                clearcoatRoughness: 0.1,
-                specularIntensity: 1,
-                specularColor: 0xffffff
+                clearcoatRoughness: 0.1
             });
             
             // Lights - separate teal and orange zones, no mixing
