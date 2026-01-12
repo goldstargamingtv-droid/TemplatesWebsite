@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Web Design Trends Dominating 2025 | DeployTemplate Blog</title>
+    <meta name="description" content="Discover the ten most influential web design trends shaping the digital landscape in 2025, from glassmorphism to AI-powered personalization.">
+    <meta name="keywords" content="web design trends 2025, glassmorphism, dark mode, micro-interactions, bento layouts, modern web design">
+    <meta property="og:title" content="10 Web Design Trends Dominating 2025 | DeployTemplate">
+    <meta property="og:description" content="Discover the ten most influential web design trends shaping the digital landscape in 2025.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://deploytemplate.com/blog/design-trends-2025/">
+    <link rel="canonical" href="https://deploytemplate.com/blog/design-trends-2025/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+    <style>
+        :root { --primary: #1d9a9b; --accent: #f97316; --bg: #0a0a0a; --text: #ffffff; --text-dim: rgba(255,255,255,0.6); --text-muted: rgba(255,255,255,0.4); --border: rgba(255,255,255,0.08); }
+        [data-theme="light"] { --bg: #fafafa; --text: #0a0a0a; --text-dim: rgba(10,10,10,0.7); --text-muted: rgba(10,10,10,0.4); --border: rgba(0,0,0,0.1); }
+        [data-theme="light"] .navbar.scrolled { background: rgba(250,250,250,0.9); }
+        [data-theme="light"] .article-content code { background: rgba(0,0,0,0.08); color: var(--text); }
+        [data-theme="light"] .article-content pre { background: rgba(0,0,0,0.05); }
+        [data-theme="light"] .article-content blockquote { color: var(--text-dim); }
+        [data-theme="light"] .tip-box { background: rgba(29,154,155,0.08); border-color: rgba(29,154,155,0.15); }
+        [data-theme="light"] .share-btn { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
+        [data-theme="light"] footer { border-color: rgba(0,0,0,0.08); }
+        [data-theme="light"] .film-grain { opacity: 0.015; mix-blend-mode: multiply; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--primary) var(--bg); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; overflow-x: hidden; cursor: none; }
+        @media (max-width: 768px) { body { cursor: auto; } }
+        ::selection { background: var(--primary); color: white; }
+        a { text-decoration: none; color: var(--primary); transition: color 0.2s; }
+        a:hover { color: var(--accent); }
+        button { font-family: inherit; cursor: none; }
+        img { max-width: 100%; display: block; }
+
+        .glitch-line { display: inline-block; white-space: nowrap; cursor: pointer; user-select: none; }
+        .glitch-line .accent { color: var(--accent); }
+
+        .film-grain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; pointer-events: none; opacity: 0.005; }
+        .film-grain canvas { width: 100%; height: 100%; }
+
+        .navbar { position: fixed; top: 0; left: 0; right: 0; padding: 1rem 2rem; z-index: 1000; transition: all 0.4s ease; }
+        .navbar.scrolled { background: rgba(10,10,10,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .navbar-inner { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .navbar-left { display: flex; align-items: center; gap: 1.5rem; }
+        .navbar-logo { width: 40px; height: 40px; background: rgba(29,154,155,0.2); border: 1px solid rgba(29,154,155,0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .navbar-logo svg { width: 22px; height: 22px; stroke: white; fill: none; stroke-width: 2; }
+        .navbar-links { display: flex; gap: 2rem; align-items: center; }
+        .navbar-left > a { color: var(--text); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+        .navbar-links a { color: var(--primary); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+
+        .article-container { max-width: 800px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+        
+        .article-header { margin-bottom: 3rem; }
+        .article-category { display: inline-block; padding: 0.4rem 1rem; background: rgba(29, 154, 155, 0.15); color: var(--primary); font-size: 0.8rem; font-weight: 600; border-radius: 20px; margin-bottom: 1.5rem; }
+        .article-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; }
+        .article-meta { display: flex; gap: 2rem; color: var(--text-muted); font-size: 0.9rem; flex-wrap: wrap; }
+        .article-meta span { display: flex; align-items: center; gap: 0.5rem; }
+        .article-meta svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        .article-content { color: var(--text-dim); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content a { position: relative; color: var(--primary); font-weight: 500; }
+        .article-content a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s ease; }
+        .article-content a:hover { color: var(--accent); }
+        .article-content a:hover::after { width: 100%; }
+        .article-content h3 { font-size: 1.5rem; font-weight: 700; color: var(--text); margin: 3rem 0 1rem; }
+        .article-content h3 .accent, .article-content h4 .accent { color: var(--accent); }
+        .article-content h4 { font-size: 1.2rem; font-weight: 600; color: var(--text); margin: 2rem 0 1rem; }
+        .article-content ul, .article-content ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content strong { color: var(--text); font-weight: 600; }
+        .article-content .highlight { color: var(--primary); font-weight: 500; }
+        .article-content blockquote { border-left: 3px solid var(--primary); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: var(--text); }
+        .article-content code { background: rgba(255,255,255,0.1); padding: 0.2rem 0.5rem; border-radius: 4px; font-family: 'SF Mono', Monaco, monospace; font-size: 0.9em; }
+        .article-content pre { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; overflow-x: auto; margin: 1.5rem 0; }
+        .article-content pre code { background: none; padding: 0; }
+
+        .tip-box { background: rgba(29, 154, 155, 0.1); border: 1px solid rgba(29, 154, 155, 0.2); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+        .tip-box h5 { color: var(--primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .tip-box p { margin-bottom: 0; color: var(--text-dim); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .share-buttons { display: flex; gap: 1rem; align-items: center; }
+        .share-label { color: var(--text-muted); font-size: 0.9rem; }
+        .share-btn { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-dim); transition: all 0.3s; cursor: pointer; }
+        .share-btn:hover { background: var(--primary); border-color: var(--primary); color: white; transform: translateY(-2px); }
+        .share-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-dim); font-size: 0.9rem; margin-top: 2rem; transition: color 0.2s; }
+        .back-link:hover { color: var(--primary); }
+        .back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        footer { padding: 2rem; border-top: 1px solid var(--border); margin-top: 4rem; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-brand { display: flex; align-items: center; gap: 1rem; }
+        .footer-logo { width: 24px; height: 24px; }
+        .footer-logo svg { width: 100%; height: 100%; stroke: var(--primary); fill: none; stroke-width: 1.5; }
+        .footer-copyright { color: var(--text-muted); font-size: 0.85rem; }
+        .footer-links { display: flex; gap: 2rem; }
+        .footer-links a { color: var(--text-dim); font-size: 0.85rem; }
+
+        /* ASCII Cursor */
+        .ascii-cursor { position: fixed; pointer-events: none; z-index: 100001; transform: translate(-50%, -50%); font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; font-size: 18px; font-weight: 600; color: var(--primary); text-shadow: 0 0 10px rgba(29, 154, 155, 0.8), 0 0 20px rgba(29, 154, 155, 0.4), 0 0 30px rgba(29, 154, 155, 0.2); transition: transform 0.1s ease, font-size 0.2s ease; will-change: transform, left, top; }
+        .ascii-cursor.hover { font-size: 28px; color: var(--accent); text-shadow: 0 0 10px rgba(249, 115, 22, 0.8), 0 0 20px rgba(249, 115, 22, 0.4), 0 0 30px rgba(249, 115, 22, 0.2); }
+        .ascii-cursor.clicking { transform: translate(-50%, -50%) scale(0.7); }
+        .cursor-trail { position: fixed; pointer-events: none; z-index: 100001; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: var(--primary); opacity: 0; transform: translate(-50%, -50%); transition: opacity 0.1s; }
+        @media (max-width: 768px) { .ascii-cursor, .cursor-trail { display: none !important; } }
+
+        /* Morphing Blob */
+        .hero-blob { position: fixed; bottom: 10%; right: 2rem; width: 200px; height: 200px; z-index: 30; opacity: 1; }
+        .hero-blob canvas { width: 100%; height: 100%; }
+        @media (max-width: 768px) { .hero-blob { display: none; } }
+
+        /* Theme Toggle */
+        .theme-toggle { position: fixed; bottom: 2rem; left: 2rem; display: flex; align-items: center; gap: 0.75rem; z-index: 100; }
+        .theme-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+        .theme-btn { width: 36px; height: 36px; background: var(--border); border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; cursor: none; }
+        .theme-btn:hover { background: var(--primary); border-color: var(--primary); }
+        .theme-btn svg { width: 16px; height: 16px; stroke: var(--text); fill: none; stroke-width: 2; }
+        @media (max-width: 768px) { .theme-toggle { bottom: 1rem; left: 1rem; } .theme-label { display: none; } }
+
+        @media (max-width: 768px) {
+            .navbar-links { display: none; }
+            .article-container { padding: 6rem 1.5rem 3rem; }
+            .article-meta { gap: 1rem; }
+            .footer-inner { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ASCII Cursor -->
+    <div class="ascii-cursor" id="asciiCursor">_</div>
+    <div class="cursor-trail" id="cursorTrail1">·</div>
+    <div class="cursor-trail" id="cursorTrail2">·</div>
+    <div class="cursor-trail" id="cursorTrail3">·</div>
+
+    <div class="film-grain" id="filmGrain"><canvas id="grainCanvas"></canvas></div>
+
+    <nav class="navbar" id="navbar"><div class="navbar-inner"><div class="navbar-left"><div class="navbar-logo"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><a href="/" class="glitch-line">← Back to Home</a></div><div class="navbar-links"><a href="/#blog" class="glitch-line">→ All Articles ←</a></div></div></nav>
+
+    <article class="article-container">
+        <header class="article-header">
+            <span class="article-category">Design</span>
+            <h1 class="article-title">10 Web Design Trends Dominating <span style="color: var(--accent);">2025</span></h1>
+            <div class="article-meta">
+                <span>
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    12 min read
+                </span>
+                <span>
+                    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    December 15, 2024
+                </span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>The web design landscape in 2025 has evolved dramatically, pushing the boundaries of what's possible while simultaneously returning to fundamentals that prioritize user experience. As businesses compete for attention in an increasingly digital world, the designs that stand out are those that masterfully blend innovation with accessibility, aesthetics with performance.</p>
+            
+            <p>After analyzing hundreds of award-winning websites and consulting with leading designers, we've identified the ten most influential design trends shaping the digital landscape this year. Whether you're redesigning an existing site or starting from scratch, understanding these trends will help you create experiences that resonate with modern audiences.</p>
+            
+            <h3>1. Glassmorphism 2.0: <span class="accent">Beyond the Blur</span></h3>
+            <p>Glassmorphism has matured significantly since its initial surge in popularity. The frosted-glass aesthetic has evolved beyond simple blur effects to incorporate <span class="highlight">dynamic transparency layers</span> that respond to scroll position, cursor movement, and even time of day.</p>
+            
+            <p>Modern implementations use variable blur intensities and subtle gradient overlays that create depth without sacrificing readability. The key to successful glassmorphism in 2025 is restraint—using the effect strategically to highlight important UI elements rather than applying it universally.</p>
+            
+            <div class="tip-box">
+                <h5>💡 Pro Tip</h5>
+                <p>When implementing glassmorphism, always ensure sufficient contrast between text and backgrounds. Use the <code>backdrop-filter</code> property with fallbacks for older browsers, and test thoroughly on different background colors.</p>
+            </div>
+            
+            <h3>2. AI-Powered <span class="accent">Personalization</span></h3>
+            <p>2025 marks the year AI moved from backend optimization to front-end personalization. Websites now dynamically adjust their layouts, color schemes, and content presentation based on individual user behavior patterns.</p>
+            
+            <p>This goes far beyond simple A/B testing. Modern AI systems analyze how users interact with interfaces—scroll speed, hover patterns, click behavior—and automatically optimize the experience in real-time. Some cutting-edge implementations even adjust typography and spacing based on detected reading patterns.</p>
+            
+            <h4>Key <span class="accent">Implementation Areas:</span></h4>
+            <ul>
+                <li><strong>Dynamic hero sections</strong> that showcase products based on browsing history</li>
+                <li><strong>Adaptive navigation</strong> that promotes frequently-used features</li>
+                <li><strong>Personalized color themes</strong> based on user preferences and accessibility needs</li>
+                <li><strong>Smart content ordering</strong> that prioritizes relevant information</li>
+            </ul>
+            
+            <h3>3. Micro-Interactions <span class="accent">That Delight</span></h3>
+            <p>The best websites in 2025 understand that every interaction is an opportunity to delight users. Micro-interactions have evolved from simple hover effects to <span class="highlight">sophisticated choreographed animations</span> that provide feedback, guide attention, and create emotional connections.</p>
+            
+            <p>These small details—a button that morphs on click, icons that animate to indicate state changes, or subtle particles that respond to cursor movement—collectively transform mundane tasks into memorable experiences. The trend emphasizes purposeful animation that aids usability rather than mere decoration.</p>
+            
+            <blockquote>
+                <p>"The magic is in the details. A thoughtfully animated toggle switch can do more for user satisfaction than a complete visual redesign."</p>
+            </blockquote>
+            
+            <h3>4. 3D Elements and <span class="accent">Spatial Design</span></h3>
+            <p>With improved browser capabilities and WebGL performance, 3D elements have become practical for mainstream websites. We're seeing subtle 3D transformations, floating elements with realistic shadows, and even full 3D product viewers becoming standard features.</p>
+            
+            <p>The key trend isn't overwhelming 3D scenes, but rather <span class="highlight">the strategic integration of depth and dimension</span> into otherwise flat designs. Think product cards that tilt slightly on hover, hero images with parallax depth layers, or navigation elements that exist in a subtle 3D space.</p>
+            
+            <h3>5. Dark Mode <span class="accent">as Default</span></h3>
+            <p>Dark mode has transitioned from an alternative option to the default choice for many premium websites. The aesthetic preferences of users, combined with practical benefits like reduced eye strain and battery savings on OLED screens, have made dark themes the expected standard.</p>
+            
+            <p>However, the trend isn't just about inverting colors. Modern dark mode implementations feature:</p>
+            <ul>
+                <li>Carefully calibrated gray scales that maintain hierarchy without harsh contrast</li>
+                <li>Vibrant accent colors that pop against dark backgrounds</li>
+                <li>Subtle gradients that add depth and visual interest</li>
+                <li>Thoughtful light-leak effects that prevent the "black void" feeling</li>
+            </ul>
+            
+            <h3>6. Variable Fonts and <span class="accent">Kinetic Typography</span></h3>
+            <p>Typography has become dynamic. Variable fonts allow designers to animate weight, width, and other properties smoothly, creating text that literally comes alive. We're seeing headlines that morph based on scroll position, paragraph text that subtly adjusts for optimal readability, and creative uses of animated letterforms.</p>
+            
+            <p>The performance benefits are significant too—a single variable font file can replace multiple static weights, improving load times while enabling new creative possibilities.</p>
+            
+            <h3>7. Bento Box <span class="accent">Layouts</span></h3>
+            <p>Inspired by Apple's presentation style, the bento box layout has become ubiquitous in 2025. This grid-based approach features asymmetric card arrangements with varying sizes, creating visual interest through intentional imbalance while maintaining underlying order.</p>
+            
+            <p>These layouts excel at presenting diverse content types—statistics, features, testimonials, images—in a cohesive yet dynamic arrangement. The key is the interplay between uniform grid alignment and varied content sizes.</p>
+            
+            <div class="tip-box">
+                <h5>💡 Design Principle</h5>
+                <p>Effective bento layouts follow the rule of intentional contrast: if most cards are rectangular, include one circular element. If most are small, include one large feature. The exception proves the rule.</p>
+            </div>
+            
+            <h3>8. Scroll-Triggered <span class="accent">Narratives</span></h3>
+            <p>Long-form storytelling through scroll has matured into a sophisticated art form. Websites now guide users through carefully orchestrated narratives where scrolling controls animation playback, reveals content progressively, and creates immersive experiences.</p>
+            
+            <p>These aren't mere parallax effects—they're <span class="highlight">full interactive stories</span> where the scroll bar becomes a timeline. Used effectively for product launches, brand stories, and educational content, scroll-triggered narratives transform passive browsing into active engagement.</p>
+            
+            <h3>9. Sustainable <span class="accent">Web Design</span></h3>
+            <p>Environmental consciousness has reached web design. Sustainable web design minimizes energy consumption through optimized images, efficient code, reduced data transfer, and thoughtful color choices (darker colors on OLED screens consume less energy).</p>
+            
+            <p>Beyond performance benefits, this trend resonates with environmentally-conscious consumers. Websites now proudly display their carbon footprint metrics and sustainability commitments, making eco-friendly design a competitive advantage.</p>
+            
+            <h3>10. Inclusive Design <span class="accent">First</span></h3>
+            <p>Accessibility is no longer an afterthought—it's the foundation. The best designs in 2025 are built from the ground up with inclusivity in mind, ensuring that beautiful aesthetics never compromise usability for any user.</p>
+            
+            <p>This manifests in color contrast ratios that exceed minimums, keyboard navigation that's logical and comprehensive, screen reader optimization, and interfaces that work equally well for users with motor impairments, visual differences, or cognitive considerations.</p>
+            
+            <h3>Putting It <span class="accent">All Together</span></h3>
+            <p>The overarching theme of 2025's design trends is <span class="highlight">purposeful innovation</span>. The most successful websites don't adopt trends blindly—they selectively implement elements that serve their users and business goals.</p>
+            
+            <p>As you apply these trends to your own projects, remember that the best design is invisible. Every glassmorphism effect, micro-interaction, and animated element should feel natural and inevitable, enhancing the experience without calling attention to itself.</p>
+            
+            <p>The future of web design belongs to those who can balance technical capability with human-centered thinking. These trends are your tools—use them wisely to create experiences that inform, delight, and endure.</p>
+        </div>
+
+        <footer class="article-footer">
+            <div class="share-buttons">
+                <span class="share-label">Share this article:</span>
+                <button class="share-btn" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(window.location.href)+'&text='+encodeURIComponent(document.title), '_blank')" title="Share on X">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </button>
+                <button class="share-btn" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent(window.location.href), '_blank')" title="Share on LinkedIn">
+                    <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </button>
+                <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied!'))" title="Copy Link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                </button>
+            </div>
+            <a href="/#blog" class="back-link glitch-line">
+                <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to all articles
+            </a>
+        </footer>
+    </article>
+
+    <!-- Morphing Blob -->
+    <div class="hero-blob" id="heroBlob"><canvas id="blobCanvas"></canvas></div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <span class="theme-label">Theme</span>
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="themeIcon">
+                <circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+        </button>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="footer-logo"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+                <span class="footer-copyright">© 2025 DeployTemplate</span>
+            </div>
+            <nav class="footer-links">
+                <a href="/#extensions" class="glitch-line">Extensions</a>
+                <a href="/#custom" class="glitch-line">Custom Work</a>
+                <a href="/#templates" class="glitch-line">Templates</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('dt-theme', theme);
+            themeIcon.innerHTML = theme === 'light' 
+                ? '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
+                : '<circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+        }
+        setTheme(localStorage.getItem('dt-theme') || 'dark');
+        themeBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        // Film Grain
+        (function() {
+            const canvas = document.getElementById('grainCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const grainSize = 128;
+            canvas.width = grainSize;
+            canvas.height = grainSize;
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            canvas.style.imageRendering = 'pixelated';
+            const grainFrames = [];
+            for (let f = 0; f < 4; f++) {
+                const imageData = ctx.createImageData(grainSize, grainSize);
+                for (let i = 0; i < imageData.data.length; i += 4) {
+                    const value = Math.random() * 255;
+                    imageData.data[i] = value;
+                    imageData.data[i + 1] = value;
+                    imageData.data[i + 2] = value;
+                    imageData.data[i + 3] = 255;
+                }
+                grainFrames.push(imageData);
+            }
+            let frameIndex = 0;
+            function renderGrain() {
+                ctx.putImageData(grainFrames[frameIndex], 0, 0);
+                frameIndex = (frameIndex + 1) % grainFrames.length;
+            }
+            setInterval(renderGrain, 83);
+            renderGrain();
+        })();
+
+        // Navbar scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
+
+        // Lenis smooth scroll
+        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // ASCII Cursor
+        const asciiCursor = document.getElementById('asciiCursor');
+        const trails = [document.getElementById('cursorTrail1'), document.getElementById('cursorTrail2'), document.getElementById('cursorTrail3')];
+        const chars = ['_', '▊', '◈', '◇', '⬡', '⌬', '▪', '◉', '⟐', '⬢'];
+        const hoverChars = ['▶', '◀', '●', '★', '◆', '⬢'];
+        const glitchChars = ['#', '@', '!', '%', '&', '*', '█', '▓', '░'];
+        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, isHovering = false, currentCharIndex = 0, glitchInterval = null;
+        let trailPositions = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
+
+        setInterval(() => { if (!isHovering) { currentCharIndex = (currentCharIndex + 1) % chars.length; asciiCursor.textContent = chars[currentCharIndex]; } }, 150);
+        document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+        document.addEventListener('mousedown', () => { asciiCursor.classList.add('clicking'); asciiCursor.textContent = '×'; });
+        document.addEventListener('mouseup', () => { asciiCursor.classList.remove('clicking'); });
+
+        function cursorLoop() {
+            cursorX += (mouseX - cursorX) * 0.5; cursorY += (mouseY - cursorY) * 0.5;
+            asciiCursor.style.left = cursorX + 'px'; asciiCursor.style.top = cursorY + 'px';
+            for (let i = 0; i < trails.length; i++) {
+                trailPositions[i].x += (mouseX - trailPositions[i].x) * (0.25 - i * 0.05);
+                trailPositions[i].y += (mouseY - trailPositions[i].y) * (0.25 - i * 0.05);
+                trails[i].style.left = trailPositions[i].x + 'px'; trails[i].style.top = trailPositions[i].y + 'px';
+                trails[i].style.opacity = 0.4 - (i * 0.12); trails[i].textContent = chars[(currentCharIndex + i + 1) % chars.length];
+            }
+            requestAnimationFrame(cursorLoop);
+        }
+        cursorLoop();
+
+        function startGlitch() { isHovering = true; asciiCursor.classList.add('hover'); let gc = 0; glitchInterval = setInterval(() => { if (gc < 6) { asciiCursor.textContent = glitchChars[Math.floor(Math.random() * glitchChars.length)]; gc++; } else { asciiCursor.textContent = hoverChars[Math.floor(Math.random() * hoverChars.length)]; } }, 50); }
+        function stopGlitch() { isHovering = false; asciiCursor.classList.remove('hover'); clearInterval(glitchInterval); asciiCursor.textContent = chars[currentCharIndex]; }
+        document.querySelectorAll('a, button, .share-btn').forEach(el => { el.addEventListener('mouseenter', startGlitch); el.addEventListener('mouseleave', stopGlitch); });
+
+        // ASCII Glitch Effect for .glitch-line elements
+        const createASCIIShift = (el, opts = {}) => {
+            const WAVE_THRESH = 3, CHAR_MULT = 3, ANIM_STEP = 40, WAVE_BUF = 5;
+            let origHTML = el.innerHTML, origTxt = el.textContent, origChars = origTxt.split("");
+            let isAnim = false, cursorPos = 0, waves = [], animId = null, isHover = false, origW = null;
+            let accentRanges = [];
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = origHTML;
+            const accentSpans = tempDiv.querySelectorAll('.accent');
+            if (accentSpans.length > 0) {
+                let pos = 0;
+                const walkNodes = (node) => {
+                    if (node.nodeType === 3) { pos += node.textContent.length; }
+                    else if (node.nodeType === 1) {
+                        if (node.classList && node.classList.contains('accent')) { const start = pos; pos += node.textContent.length; accentRanges.push({ start, end: pos }); }
+                        else { node.childNodes.forEach(walkNodes); }
+                    }
+                };
+                tempDiv.childNodes.forEach(walkNodes);
+            }
+            const cfg = { dur: 600, chars: '.,·-─~+:;=*π""┐┌┘┴┬╗╔╝╚╬╠╣╩╦║░▒▓█▄▀▌▐■!?&#$@0123456789*', preserveSpaces: true, spread: 0.3, ...opts };
+            const updateCursorPos = (e) => { const rect = el.getBoundingClientRect(); const x = e.clientX - rect.left; const len = origTxt.length; const pos = Math.round((x / rect.width) * len); cursorPos = Math.max(0, Math.min(pos, len - 1)); };
+            const startWave = () => { waves.push({ startPos: cursorPos, startTime: Date.now(), id: Math.random() }); if (!isAnim) start(); };
+            const cleanupWaves = (t) => { waves = waves.filter((w) => t - w.startTime < cfg.dur); };
+            const calcWaveEffect = (charIdx, t) => { let shouldAnim = false; let resultChar = origChars[charIdx]; for (const w of waves) { const age = t - w.startTime; const prog = Math.min(age / cfg.dur, 1); const dist = Math.abs(charIdx - w.startPos); const maxDist = Math.max(w.startPos, origChars.length - w.startPos - 1); const rad = (prog * (maxDist + WAVE_BUF)) / cfg.spread; if (dist <= rad) { shouldAnim = true; const intens = Math.max(0, rad - dist); if (intens <= WAVE_THRESH && intens > 0) { const cIdx = (dist * CHAR_MULT + Math.floor(age / ANIM_STEP)) % cfg.chars.length; resultChar = cfg.chars[cIdx]; } } } return { shouldAnim, char: resultChar }; };
+            const isInAccent = (idx) => { for (const range of accentRanges) { if (idx >= range.start && idx < range.end) return true; } return false; };
+            const genScrambledHTML = (t) => { let result = ''; let inAccent = false; for (let i = 0; i < origChars.length; i++) { const char = origChars[i]; const wasInAccent = inAccent; inAccent = isInAccent(i); if (inAccent && !wasInAccent) result += '<span class="accent">'; if (!inAccent && wasInAccent) result += '</span>'; if (cfg.preserveSpaces && char === " ") { result += " "; } else { const res = calcWaveEffect(i, t); result += res.shouldAnim ? res.char : char; } } if (inAccent) result += '</span>'; return result; };
+            const stop = () => { el.innerHTML = origHTML; if (origW !== null) { el.style.width = ""; origW = null; } isAnim = false; };
+            const start = () => { if (isAnim) return; if (origW === null) { origW = el.getBoundingClientRect().width; el.style.width = `${origW}px`; } isAnim = true; const animate = () => { const t = Date.now(); cleanupWaves(t); if (waves.length === 0) { stop(); return; } el.innerHTML = genScrambledHTML(t); animId = requestAnimationFrame(animate); }; animId = requestAnimationFrame(animate); };
+            const handleEnter = (e) => { isHover = true; updateCursorPos(e); startWave(); };
+            const handleMove = (e) => { if (!isHover) return; const old = cursorPos; updateCursorPos(e); if (cursorPos !== old) startWave(); };
+            const handleLeave = () => { isHover = false; };
+            el.addEventListener("mouseenter", handleEnter);
+            el.addEventListener("mousemove", handleMove);
+            el.addEventListener("mouseleave", handleLeave);
+            return { stop };
+        };
+        setTimeout(() => { document.querySelectorAll('.glitch-line').forEach(el => { createASCIIShift(el, { dur: 1000, spread: 1.0 }); }); }, 500);
+
+        // THREE.JS MORPHING BLOB
+        (function() {
+            const canvas = document.getElementById('blobCanvas');
+            const container = document.getElementById('heroBlob');
+            if (!canvas || !container) return;
+            
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(200, 200);
+            renderer.setPixelRatio(window.devicePixelRatio || 1);
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+            camera.position.z = 5;
+            
+            const geometry = new THREE.SphereGeometry(0.8, 128, 128);
+            const material = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff, metalness: 0.0, roughness: 0.05, transmission: 0.6, thickness: 1.5,
+                transparent: true, opacity: 0.95, ior: 1.5, envMapIntensity: 1, clearcoat: 1,
+                clearcoatRoughness: 0.1, specularIntensity: 1, specularColor: 0xffffff
+            });
+            
+            const lightTop = new THREE.DirectionalLight(0xffffff, 0.4);
+            lightTop.position.set(0, 500, 200);
+            scene.add(lightTop);
+            
+            const tealLight = new THREE.PointLight(0x0f766e, 2.5, 10);
+            tealLight.position.set(-2, 1, 2);
+            scene.add(tealLight);
+            
+            const orangeLight = new THREE.PointLight(0xff5500, 2, 10);
+            orangeLight.position.set(2, -1, 2);
+            scene.add(orangeLight);
+            
+            const ambientLight = new THREE.AmbientLight(0x111111, 0.3);
+            scene.add(ambientLight);
+            
+            const sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+            
+            const simplex = new SimplexNoise();
+            const originalVertices = [];
+            const positionAttribute = sphere.geometry.getAttribute('position');
+            for (let i = 0; i < positionAttribute.count; i++) {
+                originalVertices.push(new THREE.Vector3(positionAttribute.getX(i), positionAttribute.getY(i), positionAttribute.getZ(i)));
+            }
+            
+            let speed = 3, spikes = 0.4, processing = 1;
+            let targetSpeed = 3, targetSpikes = 0.4;
+            
+            function lerp(start, end, factor) { return start + (end - start) * factor; }
+            
+            function update() {
+                speed = lerp(speed, targetSpeed, 0.03);
+                spikes = lerp(spikes, targetSpikes, 0.03);
+                const time = performance.now() * 0.00001 * speed * Math.pow(processing, 3);
+                const spikeAmount = spikes * processing;
+                const posAttr = sphere.geometry.getAttribute('position');
+                for (let i = 0; i < posAttr.count; i++) {
+                    const vertex = originalVertices[i].clone();
+                    vertex.normalize();
+                    const noise = simplex.noise3D(vertex.x * spikeAmount, vertex.y * spikeAmount, vertex.z * spikeAmount + time);
+                    vertex.multiplyScalar(1 + 0.3 * noise);
+                    posAttr.setXYZ(i, vertex.x, vertex.y, vertex.z);
+                }
+                posAttr.needsUpdate = true;
+                sphere.geometry.computeVertexNormals();
+            }
+            
+            function animate() {
+                update();
+                sphere.rotation.y += 0.0008;
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            }
+            animate();
+            
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                targetSpeed = 3 + (scrollY * 0.005);
+                targetSpikes = 0.4 + (scrollY * 0.00025);
+            }, { passive: true });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Complete Guide to Deploying Your First Website | DeployTemplate Blog</title>
+    <meta name="description" content="Learn everything you need to know to deploy your website, from choosing platforms like Vercel and Netlify to setting up custom domains and continuous deployment.">
+    <meta name="keywords" content="website deployment, Vercel, Netlify, deploy website, continuous deployment, custom domain, web hosting">
+    <meta property="og:title" content="The Complete Guide to Deploying Your First Website | DeployTemplate">
+    <meta property="og:description" content="Learn everything you need to know to deploy your website live in minutes.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://deploytemplate.com/blog/deployment-guide/">
+    <link rel="canonical" href="https://deploytemplate.com/blog/deployment-guide/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+    <style>
+        :root { --primary: #1d9a9b; --accent: #f97316; --bg: #0a0a0a; --text: #ffffff; --text-dim: rgba(255,255,255,0.6); --text-muted: rgba(255,255,255,0.4); --border: rgba(255,255,255,0.08); }
+        [data-theme="light"] { --bg: #fafafa; --text: #0a0a0a; --text-dim: rgba(10,10,10,0.7); --text-muted: rgba(10,10,10,0.4); --border: rgba(0,0,0,0.1); }
+        [data-theme="light"] .navbar.scrolled { background: rgba(250,250,250,0.9); }
+        [data-theme="light"] .article-content code { background: rgba(0,0,0,0.08); color: var(--text); }
+        [data-theme="light"] .article-content pre { background: rgba(0,0,0,0.05); }
+        [data-theme="light"] .article-content blockquote { color: var(--text-dim); }
+        [data-theme="light"] .tip-box { background: rgba(29,154,155,0.08); border-color: rgba(29,154,155,0.15); }
+        [data-theme="light"] .share-btn { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
+        [data-theme="light"] footer { border-color: rgba(0,0,0,0.08); }
+        [data-theme="light"] .film-grain { opacity: 0.015; mix-blend-mode: multiply; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--primary) var(--bg); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; overflow-x: hidden; cursor: none; }
+        @media (max-width: 768px) { body { cursor: auto; } }
+        ::selection { background: var(--primary); color: white; }
+        a { text-decoration: none; color: var(--primary); transition: color 0.2s; }
+        a:hover { color: var(--accent); }
+        button { font-family: inherit; cursor: none; }
+        img { max-width: 100%; display: block; }
+
+        .glitch-line { display: inline-block; white-space: nowrap; cursor: pointer; user-select: none; }
+        .glitch-line .accent { color: var(--accent); }
+
+        .film-grain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; pointer-events: none; opacity: 0.005; }
+        .film-grain canvas { width: 100%; height: 100%; }
+
+        .navbar { position: fixed; top: 0; left: 0; right: 0; padding: 1rem 2rem; z-index: 1000; transition: all 0.4s ease; }
+        .navbar.scrolled { background: rgba(10,10,10,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .navbar-inner { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .navbar-left { display: flex; align-items: center; gap: 1.5rem; }
+        .navbar-logo { width: 40px; height: 40px; background: rgba(29,154,155,0.2); border: 1px solid rgba(29,154,155,0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .navbar-logo svg { width: 22px; height: 22px; stroke: white; fill: none; stroke-width: 2; }
+        .navbar-links { display: flex; gap: 2rem; align-items: center; }
+        .navbar-left > a { color: var(--text); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+        .navbar-links a { color: var(--primary); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+
+        .article-container { max-width: 800px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+        
+        .article-header { margin-bottom: 3rem; }
+        .article-category { display: inline-block; padding: 0.4rem 1rem; background: rgba(29, 154, 155, 0.15); color: var(--primary); font-size: 0.8rem; font-weight: 600; border-radius: 20px; margin-bottom: 1.5rem; }
+        .article-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; }
+        .article-meta { display: flex; gap: 2rem; color: var(--text-muted); font-size: 0.9rem; flex-wrap: wrap; }
+        .article-meta span { display: flex; align-items: center; gap: 0.5rem; }
+        .article-meta svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        .article-content { color: var(--text-dim); }
+        .article-content p { margin-bottom: 1.5rem; }
+        .article-content a { position: relative; color: var(--primary); font-weight: 500; }
+        .article-content a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s ease; }
+        .article-content a:hover { color: var(--accent); }
+        .article-content a:hover::after { width: 100%; }
+        .article-content h3 { font-size: 1.5rem; font-weight: 700; color: var(--text); margin: 3rem 0 1rem; }
+        .article-content h3 .accent, .article-content h4 .accent { color: var(--accent); }
+        .article-content h4 { font-size: 1.2rem; font-weight: 600; color: var(--text); margin: 2rem 0 1rem; }
+        .article-content ul, .article-content ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+        .article-content li { margin-bottom: 0.5rem; }
+        .article-content strong { color: var(--text); font-weight: 600; }
+        .article-content .highlight { color: var(--primary); font-weight: 500; }
+        .article-content blockquote { border-left: 3px solid var(--primary); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: var(--text); }
+        .article-content code { background: rgba(255,255,255,0.1); padding: 0.2rem 0.5rem; border-radius: 4px; font-family: 'SF Mono', Monaco, monospace; font-size: 0.9em; }
+        .article-content pre { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; overflow-x: auto; margin: 1.5rem 0; }
+        .article-content pre code { background: none; padding: 0; }
+
+        .tip-box { background: rgba(29, 154, 155, 0.1); border: 1px solid rgba(29, 154, 155, 0.2); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+        .tip-box h5 { color: var(--primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .tip-box p { margin-bottom: 0; color: var(--text-dim); }
+
+        .article-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+        .share-buttons { display: flex; gap: 1rem; align-items: center; }
+        .share-label { color: var(--text-muted); font-size: 0.9rem; }
+        .share-btn { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-dim); transition: all 0.3s; cursor: pointer; }
+        .share-btn:hover { background: var(--primary); border-color: var(--primary); color: white; transform: translateY(-2px); }
+        .share-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-dim); font-size: 0.9rem; margin-top: 2rem; transition: color 0.2s; }
+        .back-link:hover { color: var(--primary); }
+        .back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+
+        footer { padding: 2rem; border-top: 1px solid var(--border); margin-top: 4rem; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-brand { display: flex; align-items: center; gap: 1rem; }
+        .footer-logo { width: 24px; height: 24px; }
+        .footer-logo svg { width: 100%; height: 100%; stroke: var(--primary); fill: none; stroke-width: 1.5; }
+        .footer-copyright { color: var(--text-muted); font-size: 0.85rem; }
+        .footer-links { display: flex; gap: 2rem; }
+        .footer-links a { color: var(--text-dim); font-size: 0.85rem; }
+
+        /* ASCII Cursor */
+        .ascii-cursor { position: fixed; pointer-events: none; z-index: 100001; transform: translate(-50%, -50%); font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace; font-size: 18px; font-weight: 600; color: var(--primary); text-shadow: 0 0 10px rgba(29, 154, 155, 0.8), 0 0 20px rgba(29, 154, 155, 0.4), 0 0 30px rgba(29, 154, 155, 0.2); transition: transform 0.1s ease, font-size 0.2s ease; will-change: transform, left, top; }
+        .ascii-cursor.hover { font-size: 28px; color: var(--accent); text-shadow: 0 0 10px rgba(249, 115, 22, 0.8), 0 0 20px rgba(249, 115, 22, 0.4), 0 0 30px rgba(249, 115, 22, 0.2); }
+        .ascii-cursor.clicking { transform: translate(-50%, -50%) scale(0.7); }
+        .cursor-trail { position: fixed; pointer-events: none; z-index: 100001; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: var(--primary); opacity: 0; transform: translate(-50%, -50%); transition: opacity 0.1s; }
+        @media (max-width: 768px) { .ascii-cursor, .cursor-trail { display: none !important; } }
+
+        /* Morphing Blob */
+        .hero-blob { position: fixed; bottom: 10%; right: 2rem; width: 200px; height: 200px; z-index: 30; opacity: 1; }
+        .hero-blob canvas { width: 100%; height: 100%; }
+        @media (max-width: 768px) { .hero-blob { display: none; } }
+
+        /* Theme Toggle */
+        .theme-toggle { position: fixed; bottom: 2rem; left: 2rem; display: flex; align-items: center; gap: 0.75rem; z-index: 100; }
+        .theme-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+        .theme-btn { width: 36px; height: 36px; background: var(--border); border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; cursor: none; }
+        .theme-btn:hover { background: var(--primary); border-color: var(--primary); }
+        .theme-btn svg { width: 16px; height: 16px; stroke: var(--text); fill: none; stroke-width: 2; }
+        @media (max-width: 768px) { .theme-toggle { bottom: 1rem; left: 1rem; } .theme-label { display: none; } }
+
+        @media (max-width: 768px) {
+            .navbar-links { display: none; }
+            .article-container { padding: 6rem 1.5rem 3rem; }
+            .article-meta { gap: 1rem; }
+            .footer-inner { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ASCII Cursor -->
+    <div class="ascii-cursor" id="asciiCursor">_</div>
+    <div class="cursor-trail" id="cursorTrail1">·</div>
+    <div class="cursor-trail" id="cursorTrail2">·</div>
+    <div class="cursor-trail" id="cursorTrail3">·</div>
+
+    <div class="film-grain" id="filmGrain"><canvas id="grainCanvas"></canvas></div>
+
+    <nav class="navbar" id="navbar"><div class="navbar-inner"><div class="navbar-left"><div class="navbar-logo"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><a href="/" class="glitch-line">← Back to Home</a></div><div class="navbar-links"><a href="/#blog" class="glitch-line">→ All Articles ←</a></div></div></nav>
+
+    <article class="article-container">
+        <header class="article-header">
+            <span class="article-category">Development</span>
+            <h1 class="article-title">The Complete Guide to <span style="color: var(--accent);">Deploying</span> Your First Website</h1>
+            <div class="article-meta">
+                <span>
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    15 min read
+                </span>
+                <span>
+                    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    December 8, 2024
+                </span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>You've built something amazing. Your website looks beautiful in the browser, every feature works perfectly on localhost, and you're ready to share it with the world. But between your local development environment and a live URL sits a process that intimidates many developers: deployment.</p>
+            
+            <p>The good news? Modern deployment platforms have made this process remarkably simple. In this comprehensive guide, we'll walk through everything you need to know to get your website live—from choosing the right platform to configuring custom domains and setting up continuous deployment.</p>
+            
+            <h3>Understanding Modern <span class="accent">Web Deployment</span></h3>
+            <p>Before diving into the how-to, let's understand what happens when you deploy a website. At its core, deployment means transferring your files from your computer to a server that's accessible via the internet. Modern platforms have abstracted away most of the complexity, but understanding the fundamentals helps you make better decisions.</p>
+            
+            <p>There are three main types of web hosting to consider:</p>
+            <ul>
+                <li><strong>Static Hosting:</strong> Serves pre-built files (HTML, CSS, JavaScript) directly. Ideal for most marketing sites, portfolios, and applications built with frameworks that compile to static files.</li>
+                <li><strong>Server-Side Hosting:</strong> Runs code on the server for each request. Required for applications with databases, authentication, and dynamic content generation.</li>
+                <li><strong>Hybrid (Edge/Serverless):</strong> Combines static delivery with server-side capabilities at the edge. The modern approach used by platforms like Vercel and Netlify.</li>
+            </ul>
+            
+            <h3>Choosing Your <span class="accent">Deployment Platform</span></h3>
+            <p>For most developers deploying their first (or hundredth) website, <span class="highlight">Vercel and Netlify</span> are the go-to choices. Both offer generous free tiers, excellent developer experience, and handle everything from SSL certificates to global CDN distribution automatically.</p>
+            
+            <h4><span class="accent">Vercel</span></h4>
+            <p>Vercel is the company behind Next.js, and their platform is optimized for modern JavaScript frameworks. Key strengths include:</p>
+            <ul>
+                <li>Zero-configuration deployment for most frameworks</li>
+                <li>Automatic preview deployments for every pull request</li>
+                <li>Edge Functions for server-side logic without managing servers</li>
+                <li>Excellent performance with their global edge network</li>
+                <li>Built-in analytics and performance monitoring</li>
+            </ul>
+            
+            <h4><span class="accent">Netlify</span></h4>
+            <p>Netlify pioneered the modern JAMstack deployment workflow and offers:</p>
+            <ul>
+                <li>Simple drag-and-drop deployment option</li>
+                <li>Powerful build plugins ecosystem</li>
+                <li>Built-in forms and identity (authentication) features</li>
+                <li>Split testing and gradual rollouts</li>
+                <li>Excellent documentation and community</li>
+            </ul>
+            
+            <div class="tip-box">
+                <h5>💡 Our Recommendation</h5>
+                <p>For simple static sites and HTML templates, either platform works beautifully. If you're using Next.js, Vercel provides the most seamless experience. For sites that need built-in forms or identity management, Netlify's integrated features save development time.</p>
+            </div>
+            
+            <h3>Step-by-Step: <span class="accent">Deploying with Vercel</span></h3>
+            <p>Let's walk through deploying a website template to Vercel. This process takes about 5 minutes from start to finish.</p>
+            
+            <h4>Step 1: <span class="accent">Prepare Your Project</span></h4>
+            <p>Ensure your project has a clear structure:</p>
+            <pre><code>my-website/
+├── index.html
+├── css/
+│   └── styles.css
+├── js/
+│   └── main.js
+├── images/
+│   └── hero.jpg
+└── README.md</code></pre>
+            
+            <h4>Step 2: <span class="accent">Push to GitHub</span></h4>
+            <p>If your project isn't already on GitHub, create a new repository:</p>
+            <pre><code>git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/yourusername/my-website.git
+git push -u origin main</code></pre>
+            
+            <h4>Step 3: <span class="accent">Connect to Vercel</span></h4>
+            <ol>
+                <li>Go to <a href="https://vercel.com" target="_blank" class="glitch-line">vercel.com</a> and sign up (GitHub login recommended)</li>
+                <li>Click "Add New Project"</li>
+                <li>Import your GitHub repository</li>
+                <li>Vercel auto-detects your project type—for static HTML, no configuration needed</li>
+                <li>Click "Deploy"</li>
+            </ol>
+            
+            <p>Within seconds, your site is live on a <code>.vercel.app</code> subdomain.</p>
+            
+            <h4>Step 4: <span class="accent">Set Up Continuous Deployment</span></h4>
+            <p>The magic happens automatically. Every time you push to your main branch, Vercel:</p>
+            <ul>
+                <li>Detects the new commit</li>
+                <li>Builds your project</li>
+                <li>Runs any tests (if configured)</li>
+                <li>Deploys to production if successful</li>
+                <li>Invalidates the CDN cache globally</li>
+            </ul>
+            <p>For pull requests, Vercel creates a unique preview URL so you can test changes before merging.</p>
+            
+            <h3>Configuring a <span class="accent">Custom Domain</span></h3>
+            <p>A <code>.vercel.app</code> URL works, but a custom domain looks professional. Here's how to set it up:</p>
+            
+            <h4>Option A: <span class="accent">Register Through Vercel</span></h4>
+            <p>Vercel can be your domain registrar. Navigate to your project settings, go to Domains, and search for available domains. Purchasing and configuration happens automatically.</p>
+            
+            <h4>Option B: <span class="accent">Use an External Registrar</span></h4>
+            <p>If you already own a domain or prefer another registrar (Namecheap, GoDaddy, Google Domains, etc.):</p>
+            <ol>
+                <li>In Vercel, add your domain in Project Settings → Domains</li>
+                <li>Vercel provides the DNS records you need to add</li>
+                <li>In your registrar's DNS settings, add the provided records (usually an A record and CNAME)</li>
+                <li>DNS propagation takes 1-48 hours (usually under 1 hour)</li>
+                <li>SSL certificate is provisioned automatically</li>
+            </ol>
+            
+            <h3>Environment Variables <span class="accent">and Secrets</span></h3>
+            <p>For sites that connect to APIs or services, you'll need to manage environment variables securely. <span class="highlight">Never commit API keys or secrets to your repository.</span></p>
+            
+            <p>Both Vercel and Netlify provide secure environment variable management:</p>
+            <ol>
+                <li>Go to Project Settings → Environment Variables</li>
+                <li>Add your variables (e.g., <code>API_KEY</code>, <code>DATABASE_URL</code>)</li>
+                <li>Choose which environments they apply to (Production, Preview, Development)</li>
+                <li>Access them in your code via <code>process.env.VARIABLE_NAME</code></li>
+            </ol>
+            
+            <h3>Deployment <span class="accent">Best Practices</span></h3>
+            <p>After deploying hundreds of projects, here are the practices that consistently lead to success:</p>
+            
+            <h4>1. Always Use <span class="accent">Version Control</span></h4>
+            <p>Even for simple projects, Git provides history, backup, and enables collaboration. It also unlocks automated deployments.</p>
+            
+            <h4>2. Set Up <span class="accent">Branch Protection</span></h4>
+            <p>Require pull request reviews before merging to your production branch. This catches bugs before they reach users.</p>
+            
+            <h4>3. Preview <span class="accent">Every Change</span></h4>
+            <p>Use preview deployments religiously. Test on a real URL with production settings before going live.</p>
+            
+            <h4>4. Monitor <span class="accent">Performance</span></h4>
+            <p>Both platforms offer analytics. Track Core Web Vitals, watch for errors, and understand your traffic patterns.</p>
+            
+            <h4>5. Set Up <span class="accent">Notifications</span></h4>
+            <p>Configure Slack, email, or Discord notifications for deployment status. Know immediately if something fails.</p>
+            
+            <blockquote>
+                <p>"The best deployment is the one you don't have to think about. Set up automation once, and let it protect you forever."</p>
+            </blockquote>
+            
+            <h3>Troubleshooting <span class="accent">Common Issues</span></h3>
+            <p>When deployments fail, don't panic. Here are the most common issues and solutions:</p>
+            
+            <p><strong>Build Fails:</strong> Check the build logs for specific error messages. Common causes include missing dependencies, case-sensitivity issues (local filesystems often ignore case, servers don't), and missing environment variables.</p>
+            
+            <p><strong>404 Errors:</strong> For single-page applications, you need to configure redirects so all routes serve your index.html. Add a <code>vercel.json</code> with rewrite rules or a <code>_redirects</code> file for Netlify.</p>
+            
+            <p><strong>Slow Performance:</strong> Optimize images, enable compression, and leverage caching headers. Both platforms provide optimization features—make sure they're enabled.</p>
+            
+            <p><strong>SSL Issues:</strong> Custom domains sometimes have certificate delays. Wait for propagation, check your DNS records are correct, and the platform will handle the rest.</p>
+            
+            <h3>Beyond <span class="accent">Basic Deployment</span></h3>
+            <p>Once you're comfortable with basic deployment, explore these advanced features:</p>
+            <ul>
+                <li><strong>Edge Functions:</strong> Run server-side code at the edge for personalization, authentication, and A/B testing</li>
+                <li><strong>Monorepos:</strong> Deploy multiple projects from a single repository</li>
+                <li><strong>Preview Comments:</strong> Allow stakeholders to leave feedback directly on preview deployments</li>
+                <li><strong>Instant Rollbacks:</strong> Revert to any previous deployment instantly if issues arise</li>
+            </ul>
+            
+            <h3><span class="accent">Conclusion</span></h3>
+            <p>Modern deployment platforms have democratized web publishing. What once required server administration knowledge, command-line expertise, and hours of configuration now takes minutes and a few clicks.</p>
+            
+            <p>The key is to start simple. Deploy your first project today, even if it's just a single HTML file. Experience the workflow, understand the feedback loops, and build confidence. From there, you can layer in complexity—custom domains, environment variables, advanced features—as your needs grow.</p>
+            
+            <p>Your website deserves to be seen. Now you know exactly how to make that happen.</p>
+        </div>
+
+        <footer class="article-footer">
+            <div class="share-buttons">
+                <span class="share-label">Share this article:</span>
+                <button class="share-btn" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(window.location.href)+'&text='+encodeURIComponent(document.title), '_blank')" title="Share on X">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </button>
+                <button class="share-btn" onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&url='+encodeURIComponent(window.location.href), '_blank')" title="Share on LinkedIn">
+                    <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </button>
+                <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied!'))" title="Copy Link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                </button>
+            </div>
+            <a href="/#blog" class="back-link glitch-line">
+                <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back to all articles
+            </a>
+        </footer>
+    </article>
+
+    <!-- Morphing Blob -->
+    <div class="hero-blob" id="heroBlob"><canvas id="blobCanvas"></canvas></div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <span class="theme-label">Theme</span>
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" id="themeIcon">
+                <circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+        </button>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="footer-logo"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+                <span class="footer-copyright">© 2025 DeployTemplate</span>
+            </div>
+            <nav class="footer-links">
+                <a href="/#extensions" class="glitch-line">Extensions</a>
+                <a href="/#custom" class="glitch-line">Custom Work</a>
+                <a href="/#templates" class="glitch-line">Templates</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('dt-theme', theme);
+            themeIcon.innerHTML = theme === 'light' 
+                ? '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
+                : '<circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+        }
+        setTheme(localStorage.getItem('dt-theme') || 'dark');
+        themeBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        // Film Grain
+        (function() {
+            const canvas = document.getElementById('grainCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const grainSize = 128;
+            canvas.width = grainSize;
+            canvas.height = grainSize;
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            canvas.style.imageRendering = 'pixelated';
+            const grainFrames = [];
+            for (let f = 0; f < 4; f++) {
+                const imageData = ctx.createImageData(grainSize, grainSize);
+                for (let i = 0; i < imageData.data.length; i += 4) {
+                    const value = Math.random() * 255;
+                    imageData.data[i] = value;
+                    imageData.data[i + 1] = value;
+                    imageData.data[i + 2] = value;
+                    imageData.data[i + 3] = 255;
+                }
+                grainFrames.push(imageData);
+            }
+            let frameIndex = 0;
+            function renderGrain() {
+                ctx.putImageData(grainFrames[frameIndex], 0, 0);
+                frameIndex = (frameIndex + 1) % grainFrames.length;
+            }
+            setInterval(renderGrain, 83);
+            renderGrain();
+        })();
+
+        // Navbar scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
+
+        // Lenis smooth scroll
+        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // ASCII Cursor
+        const asciiCursor = document.getElementById('asciiCursor');
+        const trails = [document.getElementById('cursorTrail1'), document.getElementById('cursorTrail2'), document.getElementById('cursorTrail3')];
+        const chars = ['_', '▊', '◈', '◇', '⬡', '⌬', '▪', '◉', '⟐', '⬢'];
+        const hoverChars = ['▶', '◀', '●', '★', '◆', '⬢'];
+        const glitchChars = ['#', '@', '!', '%', '&', '*', '█', '▓', '░'];
+        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, isHovering = false, currentCharIndex = 0, glitchInterval = null;
+        let trailPositions = [{x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}];
+
+        setInterval(() => { if (!isHovering) { currentCharIndex = (currentCharIndex + 1) % chars.length; asciiCursor.textContent = chars[currentCharIndex]; } }, 150);
+        document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+        document.addEventListener('mousedown', () => { asciiCursor.classList.add('clicking'); asciiCursor.textContent = '×'; });
+        document.addEventListener('mouseup', () => { asciiCursor.classList.remove('clicking'); });
+
+        function cursorLoop() {
+            cursorX += (mouseX - cursorX) * 0.5; cursorY += (mouseY - cursorY) * 0.5;
+            asciiCursor.style.left = cursorX + 'px'; asciiCursor.style.top = cursorY + 'px';
+            for (let i = 0; i < trails.length; i++) {
+                trailPositions[i].x += (mouseX - trailPositions[i].x) * (0.25 - i * 0.05);
+                trailPositions[i].y += (mouseY - trailPositions[i].y) * (0.25 - i * 0.05);
+                trails[i].style.left = trailPositions[i].x + 'px'; trails[i].style.top = trailPositions[i].y + 'px';
+                trails[i].style.opacity = 0.4 - (i * 0.12); trails[i].textContent = chars[(currentCharIndex + i + 1) % chars.length];
+            }
+            requestAnimationFrame(cursorLoop);
+        }
+        cursorLoop();
+
+        function startGlitch() { isHovering = true; asciiCursor.classList.add('hover'); let gc = 0; glitchInterval = setInterval(() => { if (gc < 6) { asciiCursor.textContent = glitchChars[Math.floor(Math.random() * glitchChars.length)]; gc++; } else { asciiCursor.textContent = hoverChars[Math.floor(Math.random() * hoverChars.length)]; } }, 50); }
+        function stopGlitch() { isHovering = false; asciiCursor.classList.remove('hover'); clearInterval(glitchInterval); asciiCursor.textContent = chars[currentCharIndex]; }
+        document.querySelectorAll('a, button, .share-btn').forEach(el => { el.addEventListener('mouseenter', startGlitch); el.addEventListener('mouseleave', stopGlitch); });
+
+        // ASCII Glitch Effect for .glitch-line elements
+        const createASCIIShift = (el, opts = {}) => {
+            const WAVE_THRESH = 3, CHAR_MULT = 3, ANIM_STEP = 40, WAVE_BUF = 5;
+            let origHTML = el.innerHTML, origTxt = el.textContent, origChars = origTxt.split("");
+            let isAnim = false, cursorPos = 0, waves = [], animId = null, isHover = false, origW = null;
+            let accentRanges = [];
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = origHTML;
+            const accentSpans = tempDiv.querySelectorAll('.accent');
+            if (accentSpans.length > 0) {
+                let pos = 0;
+                const walkNodes = (node) => {
+                    if (node.nodeType === 3) { pos += node.textContent.length; }
+                    else if (node.nodeType === 1) {
+                        if (node.classList && node.classList.contains('accent')) { const start = pos; pos += node.textContent.length; accentRanges.push({ start, end: pos }); }
+                        else { node.childNodes.forEach(walkNodes); }
+                    }
+                };
+                tempDiv.childNodes.forEach(walkNodes);
+            }
+            const cfg = { dur: 600, chars: '.,·-─~+:;=*π""┐┌┘┴┬╗╔╝╚╬╠╣╩╦║░▒▓█▄▀▌▐■!?&#$@0123456789*', preserveSpaces: true, spread: 0.3, ...opts };
+            const updateCursorPos = (e) => { const rect = el.getBoundingClientRect(); const x = e.clientX - rect.left; const len = origTxt.length; const pos = Math.round((x / rect.width) * len); cursorPos = Math.max(0, Math.min(pos, len - 1)); };
+            const startWave = () => { waves.push({ startPos: cursorPos, startTime: Date.now(), id: Math.random() }); if (!isAnim) start(); };
+            const cleanupWaves = (t) => { waves = waves.filter((w) => t - w.startTime < cfg.dur); };
+            const calcWaveEffect = (charIdx, t) => { let shouldAnim = false; let resultChar = origChars[charIdx]; for (const w of waves) { const age = t - w.startTime; const prog = Math.min(age / cfg.dur, 1); const dist = Math.abs(charIdx - w.startPos); const maxDist = Math.max(w.startPos, origChars.length - w.startPos - 1); const rad = (prog * (maxDist + WAVE_BUF)) / cfg.spread; if (dist <= rad) { shouldAnim = true; const intens = Math.max(0, rad - dist); if (intens <= WAVE_THRESH && intens > 0) { const cIdx = (dist * CHAR_MULT + Math.floor(age / ANIM_STEP)) % cfg.chars.length; resultChar = cfg.chars[cIdx]; } } } return { shouldAnim, char: resultChar }; };
+            const isInAccent = (idx) => { for (const range of accentRanges) { if (idx >= range.start && idx < range.end) return true; } return false; };
+            const genScrambledHTML = (t) => { let result = ''; let inAccent = false; for (let i = 0; i < origChars.length; i++) { const char = origChars[i]; const wasInAccent = inAccent; inAccent = isInAccent(i); if (inAccent && !wasInAccent) result += '<span class="accent">'; if (!inAccent && wasInAccent) result += '</span>'; if (cfg.preserveSpaces && char === " ") { result += " "; } else { const res = calcWaveEffect(i, t); result += res.shouldAnim ? res.char : char; } } if (inAccent) result += '</span>'; return result; };
+            const stop = () => { el.innerHTML = origHTML; if (origW !== null) { el.style.width = ""; origW = null; } isAnim = false; };
+            const start = () => { if (isAnim) return; if (origW === null) { origW = el.getBoundingClientRect().width; el.style.width = `${origW}px`; } isAnim = true; const animate = () => { const t = Date.now(); cleanupWaves(t); if (waves.length === 0) { stop(); return; } el.innerHTML = genScrambledHTML(t); animId = requestAnimationFrame(animate); }; animId = requestAnimationFrame(animate); };
+            const handleEnter = (e) => { isHover = true; updateCursorPos(e); startWave(); };
+            const handleMove = (e) => { if (!isHover) return; const old = cursorPos; updateCursorPos(e); if (cursorPos !== old) startWave(); };
+            const handleLeave = () => { isHover = false; };
+            el.addEventListener("mouseenter", handleEnter);
+            el.addEventListener("mousemove", handleMove);
+            el.addEventListener("mouseleave", handleLeave);
+            return { stop };
+        };
+        setTimeout(() => { document.querySelectorAll('.glitch-line').forEach(el => { createASCIIShift(el, { dur: 1000, spread: 1.0 }); }); }, 500);
+
+        // THREE.JS MORPHING BLOB
+        (function() {
+            const canvas = document.getElementById('blobCanvas');
+            const container = document.getElementById('heroBlob');
+            if (!canvas || !container) return;
+            
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(200, 200);
+            renderer.setPixelRatio(window.devicePixelRatio || 1);
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+            camera.position.z = 5;
+            
+            const geometry = new THREE.SphereGeometry(0.8, 128, 128);
+            const material = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff, metalness: 0.0, roughness: 0.05, transmission: 0.6, thickness: 1.5,
+                transparent: true, opacity: 0.95, ior: 1.5, envMapIntensity: 1, clearcoat: 1,
+                clearcoatRoughness: 0.1, specularIntensity: 1, specularColor: 0xffffff
+            });
+            
+            const lightTop = new THREE.DirectionalLight(0xffffff, 0.4);
+            lightTop.position.set(0, 500, 200);
+            scene.add(lightTop);
+            
+            const tealLight = new THREE.PointLight(0x0f766e, 2.5, 10);
+            tealLight.position.set(-2, 1, 2);
+            scene.add(tealLight);
+            
+            const orangeLight = new THREE.PointLight(0xff5500, 2, 10);
+            orangeLight.position.set(2, -1, 2);
+            scene.add(orangeLight);
+            
+            const ambientLight = new THREE.AmbientLight(0x111111, 0.3);
+            scene.add(ambientLight);
+            
+            const sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+            
+            const simplex = new SimplexNoise();
+            const originalVertices = [];
+            const positionAttribute = sphere.geometry.getAttribute('position');
+            for (let i = 0; i < positionAttribute.count; i++) {
+                originalVertices.push(new THREE.Vector3(positionAttribute.getX(i), positionAttribute.getY(i), positionAttribute.getZ(i)));
+            }
+            
+            let speed = 3, spikes = 0.4, processing = 1;
+            let targetSpeed = 3, targetSpikes = 0.4;
+            
+            function lerp(start, end, factor) { return start + (end - start) * factor; }
+            
+            function update() {
+                speed = lerp(speed, targetSpeed, 0.03);
+                spikes = lerp(spikes, targetSpikes, 0.03);
+                const time = performance.now() * 0.00001 * speed * Math.pow(processing, 3);
+                const spikeAmount = spikes * processing;
+                const posAttr = sphere.geometry.getAttribute('position');
+                for (let i = 0; i < posAttr.count; i++) {
+                    const vertex = originalVertices[i].clone();
+                    vertex.normalize();
+                    const noise = simplex.noise3D(vertex.x * spikeAmount, vertex.y * spikeAmount, vertex.z * spikeAmount + time);
+                    vertex.multiplyScalar(1 + 0.3 * noise);
+                    posAttr.setXYZ(i, vertex.x, vertex.y, vertex.z);
+                }
+                posAttr.needsUpdate = true;
+                sphere.geometry.computeVertexNormals();
+            }
+            
+            function animate() {
+                update();
+                sphere.rotation.y += 0.0008;
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            }
+            animate();
+            
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                targetSpeed = 3 + (scrollY * 0.005);
+                targetSpikes = 0.4 + (scrollY * 0.00025);
+            }, { passive: true });
+        })();
+    </script>
+</body>
+</html>
