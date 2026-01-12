@@ -827,6 +827,7 @@
             cursor: none;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeSpeed;
         }
 
         @media (max-width: 768px) {
@@ -934,6 +935,8 @@
             height: 50%;
             background: var(--bg);
             z-index: 99999;
+            will-change: transform;
+            backface-visibility: hidden;
         }
         
         .preloader-top {
@@ -1751,6 +1754,8 @@
             pointer-events: none;
             opacity: 0.035;
             transition: opacity 1.5s ease-out;
+            will-change: opacity;
+            contain: strict;
         }
         
         .film-grain.subtle {
@@ -1868,6 +1873,8 @@
            ============================================= */
         .how-we-build-section {
             position: relative;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 1000px;
         }
 
         .build-process-grid {
@@ -2817,6 +2824,8 @@
            ============================================= */
         #blog {
             background: var(--bg-secondary);
+            content-visibility: auto;
+            contain-intrinsic-size: auto 800px;
         }
 
         /* Blog - Pinned Scroll Effect (reversed) */
@@ -3127,6 +3136,8 @@
             padding: 4rem 2rem;
             border-top: 1px solid var(--border);
             background: var(--bg);
+            content-visibility: auto;
+            contain-intrinsic-size: auto 400px;
         }
 
         .footer-content {
@@ -3948,6 +3959,7 @@
             height: calc(var(--card-width) / 5);
             animation: rotate var(--animation-speed) linear infinite;
             transform: rotateZ(calc(var(--rotate) * var(--glow-rotate-unit)));
+            backface-visibility: hidden;
             transform-origin: center;
             border-radius: calc(var(--glow-radius) * 10vw);
             z-index: 1;
@@ -4480,10 +4492,12 @@
             align-items: center;
             justify-content: center;
             visibility: hidden;
+            pointer-events: none;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .download-modal-overlay.active {
             visibility: visible;
+            pointer-events: auto;
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -5602,7 +5616,7 @@
         document.addEventListener('mousemove', e => {
             mouseX = e.clientX;
             mouseY = e.clientY;
-        });
+        }, { passive: true });
         
         // Click effect
         document.addEventListener('mousedown', () => {
@@ -6416,35 +6430,50 @@
         }
 
         // =============================================
-        // FAQ ACCORDION - SLIDE IN
+        // FAQ SECTION - PARALLAX SPLIT (like hero/contact)
         // =============================================
-        const faqItems = gsap.utils.toArray('.faq-item');
-        if (faqItems.length) {
-            gsap.set(faqItems, { opacity: 0, x: -50 });
+        const faqSection = document.querySelector('#faq');
+        if (faqSection) {
+            const faqHeader = faqSection.querySelector('.section-header');
+            const faqList = faqSection.querySelector('.faq-list');
             
-            ScrollTrigger.create({
-                trigger: '.faq-list',
-                start: 'top 80%',
-                onEnter: () => {
-                    gsap.to(faqItems, {
-                        opacity: 1,
-                        x: 0,
-                        duration: 0.6,
-                        stagger: 0.1,
-                        delay: 0.3,
-                        ease: 'power2.out'
-                    });
-                },
-                onLeaveBack: () => {
-                    gsap.to(faqItems, {
-                        opacity: 0,
-                        x: -50,
-                        duration: 0.3,
-                        stagger: 0.03,
-                        ease: 'power2.in'
-                    });
-                }
-            });
+            // Header slides in from left, holds, slides out left
+            if (faqHeader) {
+                const tlFaqLeft = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: faqSection,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: 1
+                    }
+                });
+                
+                tlFaqLeft.fromTo(faqHeader,
+                    { x: '-30vw', opacity: 0 },
+                    { x: 0, opacity: 1, ease: 'none', duration: 1 }
+                )
+                .to(faqHeader, { x: 0, opacity: 1, duration: 1 })
+                .to(faqHeader, { x: '-30vw', opacity: 0, ease: 'none', duration: 1 });
+            }
+            
+            // FAQ list slides in from right, holds, slides out right
+            if (faqList) {
+                const tlFaqRight = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: faqSection,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: 1
+                    }
+                });
+                
+                tlFaqRight.fromTo(faqList,
+                    { x: '30vw', opacity: 0 },
+                    { x: 0, opacity: 1, ease: 'none', duration: 1 }
+                )
+                .to(faqList, { x: 0, opacity: 1, duration: 1 })
+                .to(faqList, { x: '30vw', opacity: 0, ease: 'none', duration: 1 });
+            }
         }
 
         // =============================================
@@ -6700,18 +6729,19 @@
             const renderer = new THREE.WebGLRenderer({
                 canvas: canvas,
                 antialias: true,
-                alpha: true
+                alpha: true,
+                powerPreference: 'high-performance'
             });
             
             renderer.setSize(200, 200);
-            renderer.setPixelRatio(window.devicePixelRatio || 1);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
             
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
             camera.position.z = 5;
             
             // Crystal ball / glass material - neutral white to show light colors
-            const geometry = new THREE.SphereGeometry(0.8, 128, 128);
+            const geometry = new THREE.SphereGeometry(0.8, 64, 64);
             const material = new THREE.MeshPhysicalMaterial({
                 color: 0xffffff,
                 metalness: 0.0,
@@ -7044,7 +7074,7 @@
             };
 
             el.addEventListener("mouseenter", handleEnter);
-            el.addEventListener("mousemove", handleMove);
+            el.addEventListener("mousemove", handleMove, { passive: true });
             el.addEventListener("mouseleave", handleLeave);
 
             return { stop };
@@ -7121,9 +7151,9 @@
 
             setupEventListeners() {
                 this.cardLine.addEventListener('mousedown', (e) => this.startDrag(e));
-                document.addEventListener('mousemove', (e) => this.onDrag(e));
+                document.addEventListener('mousemove', (e) => this.onDrag(e), { passive: true });
                 document.addEventListener('mouseup', () => this.endDrag());
-                window.addEventListener('resize', () => this.calculateDimensions());
+                window.addEventListener('resize', () => this.calculateDimensions(), { passive: true });
             }
 
             startDrag(e) {
@@ -7360,7 +7390,7 @@
                 this.initParticles();
                 this.animate();
 
-                window.addEventListener('resize', () => this.onResize());
+                window.addEventListener('resize', () => this.onResize(), { passive: true });
                 
                 // Expose globally for carousel to call
                 window.templateScannerBeam = this;
@@ -7714,15 +7744,17 @@
                 this.renderer = new THREE.WebGLRenderer({
                     canvas: this.canvas,
                     alpha: true,
-                    antialias: true
+                    antialias: false,
+                    powerPreference: 'high-performance'
                 });
                 this.renderer.setSize(width, height);
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
                 this.renderer.setClearColor(0x000000, 0);
                 
                 this.createParticles(width, height);
                 this.animate();
                 
-                window.addEventListener('resize', () => this.onResize());
+                window.addEventListener('resize', () => this.onResize(), { passive: true });
             }
             
             createParticles(width, height) {
@@ -7985,11 +8017,11 @@
             useEffect(() => {
                 const handleMove = (e) => handleMouseMove(e);
                 const handleUp = () => setDragging(false);
-                window.addEventListener("mousemove", handleMove);
+                window.addEventListener("mousemove", handleMove, { passive: true });
                 window.addEventListener("mouseup", handleUp);
-                window.addEventListener("touchmove", handleMove);
+                window.addEventListener("touchmove", handleMove, { passive: true });
                 window.addEventListener("touchend", handleUp);
-                window.addEventListener("resize", refreshSlider);
+                window.addEventListener("resize", refreshSlider, { passive: true });
                 return () => {
                     window.removeEventListener("mousemove", handleMove);
                     window.removeEventListener("mouseup", handleUp);
@@ -8254,7 +8286,7 @@
             <p class="download-modal-template" id="downloadTemplateName">Template Name</p>
             <p class="download-modal-desc">
                 You're about to download a <strong>free template</strong> from DeployTemplate. 
-                This includes all HTML, CSS, and JavaScript files ready to customize and deploy.
+                This includes a single HTML file with all CSS and JavaScript built-in, ready to customize and deploy.
             </p>
             <div class="download-modal-actions">
                 <button class="download-modal-btn download-modal-cancel" onclick="closeDownloadModal()">Cancel</button>
