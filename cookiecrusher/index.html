@@ -74,6 +74,14 @@
         .hero-screenshot { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 20px 80px rgba(0,0,0,0.5); }
         .hero-screenshot img { width: 100%; height: auto; }
 
+        .screenshot-gallery { background: rgba(29,154,155,0.02); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .gallery-item { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); transition: transform 0.3s, border-color 0.3s; }
+        .gallery-item:hover { transform: translateY(-4px); border-color: var(--primary); }
+        .gallery-item.large { grid-column: span 2; }
+        .gallery-item img { width: 100%; height: auto; display: block; }
+        @media (max-width: 768px) { .gallery-grid { grid-template-columns: 1fr; } .gallery-item.large { grid-column: span 1; } }
+
         .section { padding: 6rem 2rem; }
         .container { max-width: 1200px; margin: 0 auto; }
         .section-header { margin-bottom: 4rem; opacity: 0; }
@@ -155,7 +163,18 @@
                 <div class="hero-features"><div class="hero-feature">🍪 Auto-Dismiss</div><div class="hero-feature">🛡️ Privacy First</div><div class="hero-feature">⚡ Zero Config</div></div>
                 <div class="hero-cta"><a href="#" class="btn-primary"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Get Started Free</a><a href="#features" class="btn-secondary">See Features</a></div>
             </div>
-            <div class="hero-visual" id="heroVisual"><div class="hero-screenshot"><img src="images/hero.png" alt="Cookie Crusher"></div></div>
+            <div class="hero-visual" id="heroVisual"><div class="hero-screenshot"><img src="/images/cookiecrusher-hero.png" alt="Cookie Crusher"></div></div>
+        </div>
+    </section>
+
+    <section class="section screenshot-gallery">
+        <div class="container">
+            <div class="section-header"><p class="section-label">See It In Action</p><h2 class="section-title"><span class="glitch-line">Screenshots & <span class="accent">Features</span></span></h2></div>
+            <div class="gallery-grid">
+                <div class="gallery-item large"><img src="/images/cookiecrusher-1.png" alt="Cookie Crusher browse in peace"></div>
+                <div class="gallery-item"><img src="/images/cookiecrusher-2.png" alt="Cookie Crusher features"></div>
+                <div class="gallery-item"><img src="/images/cookiecrusher-3.png" alt="Cookie Crusher before and after"></div>
+            </div>
         </div>
     </section>
 
