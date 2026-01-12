@@ -3,31 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- ============================================
-         BASIC INFO - CUSTOMIZE THESE
-         ============================================ -->
     <title>Bella Vista - Italian Restaurant</title>
-    <meta name="description" content="Authentic Italian cuisine in San Francisco. Fresh ingredients, traditional recipes, and warm hospitality since 1985.">
-    <meta name="keywords" content="Italian restaurant, fine dining, pasta, pizza, San Francisco">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍝</text></svg>">
-    
-    <!-- SEO -->
-    <meta property="og:title" content="Bella Vista - Italian Restaurant">
-    <meta property="og:description" content="Authentic Italian cuisine in San Francisco.">
-    <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
-    <meta property="og:type" content="restaurant.restaurant">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="theme-color" content="#c8a882">
-    
     <style>
-        /* ============================================
-           RESET & VARIABLES
-           ============================================ */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             --primary: #c8a882;
             --primary-dark: #a88c6a;
@@ -37,64 +20,28 @@
             --gray: #6b6158;
         }
 
-        [data-theme="dark"] {
-            --cream: #1a1612;
-            --white: #2c2416;
-            --dark: #faf8f3;
-            --gray: #a89d94;
-        }
-
         body {
-            font-family: Georgia, serif;
-            background: var(--cream);
-            color: var(--dark);
+            font-family: 'Garamond', Georgia, serif;
             line-height: 1.6;
-        }
-
-        html { scroll-behavior: smooth; }
-        *:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--primary);
             color: var(--dark);
-            padding: 8px 16px;
-            z-index: 10000;
-            text-decoration: none;
-        }
-        .skip-link:focus { top: 0; }
-
-        /* Loader */
-        .loader {
-            position: fixed;
-            inset: 0;
             background: var(--cream);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            transition: opacity 0.5s, visibility 0.5s;
         }
-        .loader.hidden { opacity: 0; visibility: hidden; }
-        .loader-logo { font-size: 3rem; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
 
-        /* ============================================
-           NAVIGATION
-           ============================================ */
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255,255,255,0.98);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             z-index: 1000;
-            padding: 1rem 0;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
         }
-        [data-theme="dark"] nav { background: rgba(26,22,18,0.98); }
 
         .nav-container {
             max-width: 1200px;
@@ -106,15 +53,17 @@
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--dark);
             text-decoration: none;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             list-style: none;
             align-items: center;
         }
@@ -122,10 +71,15 @@
         .nav-links a {
             text-decoration: none;
             color: var(--dark);
-            font-size: 0.95rem;
+            font-size: 1rem;
             transition: color 0.3s;
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
         }
-        .nav-links a:hover { color: var(--primary); }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
 
         .btn {
             padding: 0.75rem 1.5rem;
@@ -135,446 +89,477 @@
             transition: all 0.3s;
             border: none;
             cursor: pointer;
-            font-size: 0.95rem;
+            display: inline-block;
+            font-family: 'Lato', sans-serif;
         }
 
         .btn-primary {
             background: var(--primary);
             color: var(--dark);
         }
+
         .btn-primary:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(200, 168, 130, 0.3);
         }
 
-        .theme-toggle {
-            background: none;
-            border: 2px solid var(--gray);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-
-        /* Mobile Menu */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-        }
-        .menu-toggle span {
-            display: block;
-            width: 25px;
-            height: 2px;
-            background: var(--dark);
-            transition: all 0.3s;
-        }
-        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .menu-toggle.active span:nth-child(2) { opacity: 0; }
-        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 100%;
-            height: 100dvh;
-            background: var(--cream);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            transition: right 0.4s;
-            z-index: 999;
-        }
-        .mobile-menu.active { right: 0; }
-        .mobile-menu a {
-            color: var(--dark);
-            text-decoration: none;
-            font-size: 1.8rem;
-        }
-
-        /* ============================================
-           HERO
-           ============================================ */
+        /* Hero Section */
         .hero {
-            min-height: 100dvh;
-            background: linear-gradient(rgba(44,36,22,0.6), rgba(44,36,22,0.6)), var(--primary);
+            height: 100vh;
+            background: linear-gradient(rgba(44, 36, 22, 0.5), rgba(44, 36, 22, 0.5)),
+                        url('data:image/svg+xml,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="%23c8a882"/><text x="50%" y="50%" font-size="200" fill="%23a88c6a" opacity="0.1" text-anchor="middle" dominant-baseline="middle">🍝</text></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: white;
+            color: var(--white);
             position: relative;
-            /* ADD YOUR HERO IMAGE: background: linear-gradient(...), url('hero.jpg') center/cover; */
         }
 
-        .hero-content { max-width: 800px; padding: 2rem; }
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
         .hero h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
+            font-size: 5rem;
+            margin-bottom: 1rem;
             font-weight: 400;
             letter-spacing: 2px;
-            margin-bottom: 1rem;
         }
-        .hero .subtitle {
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-        .hero p { font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9; }
-        .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid white;
-            color: white;
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+            opacity: 0.95;
         }
-        .btn-outline:hover { background: white; color: var(--dark); }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
         .scroll-down {
             position: absolute;
-            bottom: 2rem;
+            bottom: 3rem;
             left: 50%;
             transform: translateX(-50%);
+            color: white;
             animation: bounce 2s infinite;
-            font-size: 1.5rem;
         }
+
         @keyframes bounce {
-            0%,20%,50%,80%,100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
         }
 
-        .hero-placeholder {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.5);
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-
-        /* ============================================
-           ABOUT
-           ============================================ */
+        /* About Section */
         .about {
-            padding: 80px 2rem;
+            padding: 100px 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
+
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
         }
+
         .about-image {
-            height: 400px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 8px;
-            position: relative;
-            /* ADD IMAGE: background: url('about.jpg') center/cover; */
-        }
-        .about-image-placeholder {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            background: rgba(0,0,0,0.2);
-        }
-        .about-text h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 1.5rem;
-        }
-        .about-text p {
-            color: var(--gray);
-            margin-bottom: 1rem;
-            line-height: 1.8;
-        }
-        .signature {
-            font-family: 'Brush Script MT', cursive;
-            font-size: 2rem;
-            color: var(--primary);
-            margin-top: 1.5rem;
-        }
-
-        /* ============================================
-           MENU
-           ============================================ */
-        .menu-section { padding: 80px 2rem; background: var(--white); }
-        .menu-header {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto 3rem;
-        }
-        .menu-header h2 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 0.5rem;
-        }
-        .menu-header p { color: var(--gray); font-style: italic; }
-
-        .menu-categories {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        .menu-category {
-            padding: 0.6rem 1.2rem;
-            border: 2px solid var(--primary);
-            background: transparent;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.3s;
-        }
-        .menu-category:hover, .menu-category.active {
-            background: var(--primary);
-        }
-
-        .menu-grid {
-            max-width: 800px;
-            margin: 0 auto;
-            display: grid;
-            gap: 1.5rem;
-        }
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(200,168,130,0.3);
-        }
-        .menu-item-info h3 { font-size: 1.1rem; margin-bottom: 0.3rem; }
-        .menu-item-info p { color: var(--gray); font-size: 0.9rem; }
-        .menu-item-price {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-left: 1rem;
-        }
-
-        /* ============================================
-           GALLERY
-           ============================================ */
-        .gallery {
-            padding: 80px 2rem;
-            background: var(--dark);
-            color: var(--cream);
-        }
-        [data-theme="dark"] .gallery { background: #0f0d0a; }
-
-        .gallery h2 {
-            text-align: center;
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 2rem;
-        }
-        .gallery-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-        .gallery-item {
-            aspect-ratio: 4/3;
+            width: 100%;
+            height: 500px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border-radius: 8px;
             position: relative;
             overflow: hidden;
+        }
+
+        .about-image::after {
+            content: '🍷';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10rem;
+            opacity: 0.2;
+        }
+
+        .about-text h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-top: 2rem;
+        }
+
+        /* Menu Section */
+        .menu {
+            padding: 100px 2rem;
+            background: var(--white);
+        }
+
+        .menu-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .menu-header h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .menu-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+        }
+
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .menu-category {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .menu-category.active,
+        .menu-category:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        .menu-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            gap: 2rem;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(200, 168, 130, 0.3);
+        }
+
+        .menu-item-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .menu-item-info p {
+            color: var(--gray);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .menu-item-price {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 100px 2rem;
+        }
+
+        .gallery h2 {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--dark);
+        }
+
+        .gallery-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            height: 300px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
             cursor: pointer;
             transition: transform 0.3s;
-            /* ADD IMAGE: background: url('gallery-1.jpg') center/cover; */
         }
-        .gallery-item:hover { transform: scale(1.02); }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
         .gallery-item::after {
             content: attr(data-label);
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 1rem;
+            padding: 1.5rem;
             background: linear-gradient(transparent, rgba(0,0,0,0.7));
             color: white;
-            font-size: 0.9rem;
+            font-size: 1.2rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
         }
 
-        /* ============================================
-           RESERVATION
-           ============================================ */
-        .reservation { padding: 80px 2rem; }
+        .gallery-item:hover::after {
+            transform: translateY(0);
+        }
+
+        /* Reservation Section */
+        .reservation {
+            padding: 100px 2rem;
+            background: var(--dark);
+            color: var(--white);
+        }
+
         .reservation-content {
             max-width: 600px;
             margin: 0 auto;
             text-align: center;
         }
+
         .reservation h2 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 0.5rem;
-        }
-        .reservation-content > p {
-            color: var(--gray);
-            margin-bottom: 2rem;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
         }
 
-        .reservation-form { text-align: left; }
+        .reservation p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .reservation-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
         .form-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 1.5rem;
         }
-        .form-group.full { grid-template-columns: 1fr; }
 
         .reservation-form input,
         .reservation-form select,
         .reservation-form textarea {
-            width: 100%;
-            padding: 0.9rem;
-            border: 2px solid #e0d5c8;
+            padding: 1rem;
+            border: 2px solid rgba(200, 168, 130, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
             border-radius: 4px;
             font-size: 1rem;
-            font-family: inherit;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .reservation-form input::placeholder,
+        .reservation-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .reservation-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .reservation-form button {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Info Section */
+        .info {
+            padding: 80px 2rem;
             background: var(--white);
-            color: var(--dark);
         }
-        [data-theme="dark"] .reservation-form input,
-        [data-theme="dark"] .reservation-form select,
-        [data-theme="dark"] .reservation-form textarea {
-            background: #2c2416;
-            border-color: #4a3f32;
-        }
-        .reservation-form input:focus,
-        .reservation-form select:focus,
-        .reservation-form textarea:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-        .reservation-form input.error { border-color: #c44; }
-        .error-message { color: #c44; font-size: 0.8rem; display: none; }
-        .has-error .error-message { display: block; }
-        .reservation-form textarea { min-height: 80px; resize: vertical; }
-        .reservation-form .btn { width: 100%; margin-top: 1rem; padding: 1rem; }
 
-        .form-status {
-            text-align: center;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-top: 1rem;
-            display: none;
-        }
-        .form-status.success { display: block; background: rgba(40,160,64,0.1); color: #28a040; }
-        .form-status.error { display: block; background: rgba(200,60,60,0.1); color: #c44; }
-
-        /* ============================================
-           INFO & FOOTER
-           ============================================ */
-        .info { padding: 60px 2rem; background: var(--white); }
         .info-grid {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4rem;
+        }
+
+        .info-item {
             text-align: center;
         }
-        .info-icon { font-size: 2rem; margin-bottom: 0.5rem; }
-        .info-item h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-        .info-item p { color: var(--gray); line-height: 1.7; }
-        .info-item a { color: var(--primary-dark); text-decoration: none; }
 
+        .info-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .info-item p {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* Footer */
         footer {
             background: var(--dark);
-            color: var(--cream);
-            padding: 50px 2rem 20px;
+            color: var(--white);
+            padding: 60px 2rem 30px;
         }
-        [data-theme="dark"] footer { background: #0a0806; }
-        
+
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
+
         .footer-section h4 {
+            margin-bottom: 1.5rem;
             color: var(--primary);
-            margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
-        .footer-section p { color: var(--gray); }
+
+        .footer-section p,
         .footer-section a {
-            display: block;
-            color: var(--gray);
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            margin-bottom: 0.5rem;
+            line-height: 2;
+            display: block;
         }
-        .footer-section a:hover { color: var(--primary); }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
 
         .social-links {
             display: flex;
-            gap: 0.8rem;
+            gap: 1.5rem;
             margin-top: 1rem;
         }
+
         .social-links a {
-            width: 36px;
-            height: 36px;
-            border: 1px solid var(--gray);
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s;
         }
 
-        .footer-bottom {
-            text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(200,168,130,0.2);
-            color: var(--gray);
-            font-size: 0.9rem;
+        .social-links a:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: var(--dark);
         }
 
-        /* ============================================
-           RESPONSIVE
-           ============================================ */
-        @media (max-width: 968px) {
-            .about-content { grid-template-columns: 1fr; }
-            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-            .footer-content { grid-template-columns: 1fr; text-align: center; }
-            .social-links { justify-content: center; }
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .menu-toggle { display: flex; }
-            .form-group { grid-template-columns: 1fr; }
-            .info-grid { grid-template-columns: 1fr; }
-            .gallery-grid { grid-template-columns: 1fr; }
-        }
+            .nav-links {
+                display: none;
+            }
 
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-header h2,
+            .gallery h2,
+            .reservation h2,
+            .about-text h2 {
+                font-size: 2.5rem;
+            }
+
+            .form-group {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                gap: 3rem;
             }
         }
     </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-    
-    <div class="loader"><div class="loader-logo">🍝</div></div>
-
-    <!-- NAV -->
+    <!-- Navigation -->
     <nav>
         <div class="nav-container">
             <a href="#" class="logo">Bella Vista</a>
@@ -583,254 +568,214 @@
                 <li><a href="#menu">Menu</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#reservation" class="btn btn-primary">Reserve Table</a></li>
-                <li><button class="theme-toggle" aria-label="Toggle theme">🌙</button></li>
             </ul>
-            <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
         </div>
     </nav>
 
-    <div class="mobile-menu">
-        <a href="#about">About</a>
-        <a href="#menu">Menu</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#reservation">Reserve</a>
-        <button class="theme-toggle">🌙 Dark Mode</button>
-    </div>
-
-    <main id="main-content">
-        <!-- HERO -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Bella Vista</h1>
-                <p class="subtitle">Authentic Italian Cuisine</p>
-                <p>Experience the taste of Italy in the heart of the city. Fresh ingredients, traditional recipes, and warm hospitality.</p>
-                <div class="hero-buttons">
-                    <a href="#menu" class="btn btn-primary">View Menu</a>
-                    <a href="#reservation" class="btn btn-outline">Book a Table</a>
-                </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Bella Vista</h1>
+            <p class="subtitle">Authentic Italian Cuisine</p>
+            <p>Experience the taste of Italy in the heart of the city. Fresh ingredients, traditional recipes, and warm hospitality.</p>
+            <div class="hero-buttons">
+                <a href="#menu" class="btn btn-primary">View Menu</a>
+                <a href="#reservation" class="btn btn-primary" style="background: transparent; border: 2px solid white; color: white;">Book a Table</a>
             </div>
-            <div class="scroll-down">↓</div>
-            <div class="hero-placeholder">📸 Add hero image</div>
-        </section>
+        </div>
+        <div class="scroll-down">↓</div>
+    </section>
 
-        <!-- ABOUT -->
-        <section class="about" id="about">
-            <div class="about-content">
-                <div class="about-image">
-                    <div class="about-image-placeholder">📸 Restaurant Photo<br><small>Add in CSS</small></div>
-                </div>
-                <div class="about-text">
-                    <h2>Our Story</h2>
-                    <p>Since 1985, Bella Vista has been serving authentic Italian cuisine crafted with passion and tradition. Our recipes have been passed down through generations.</p>
-                    <p>We believe in using only the finest ingredients—imported Italian olive oil, San Marzano tomatoes, and fresh pasta made daily in our kitchen.</p>
-                    <div class="signature">— Chef Marco Rossi</div>
-                </div>
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <div class="about-image"></div>
+            <div class="about-text">
+                <h2>Our Story</h2>
+                <p>Since 1985, Bella Vista has been serving authentic Italian cuisine crafted with passion and tradition. Our recipes have been passed down through generations, bringing the true flavors of Tuscany to your table.</p>
+                <p>We believe in using only the finest ingredients—imported Italian olive oil, San Marzano tomatoes, and fresh pasta made daily in our kitchen. Every dish is prepared with love and attention to detail.</p>
+                <p>Join us for an unforgettable dining experience where every meal feels like coming home.</p>
+                <div class="signature">— Chef Marco Rossi</div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- MENU -->
-        <section class="menu-section" id="menu">
-            <div class="menu-header">
-                <h2>Our Menu</h2>
-                <p>Crafted with passion, served with love</p>
-            </div>
+    <!-- Menu Section -->
+    <section class="menu" id="menu">
+        <div class="menu-header">
+            <h2>Our Menu</h2>
+            <p>Crafted with passion, served with love</p>
+        </div>
 
-            <div class="menu-categories">
-                <button class="menu-category active">Antipasti</button>
-                <button class="menu-category">Pasta</button>
-                <button class="menu-category">Secondi</button>
-                <button class="menu-category">Dolci</button>
+        <div class="menu-categories">
+            <button class="menu-category active">Antipasti</button>
+            <button class="menu-category">Pasta</button>
+            <button class="menu-category">Secondi</button>
+            <button class="menu-category">Dolci</button>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-item">
+                <div class="menu-item-info">
+                    <h3>Bruschetta al Pomodoro</h3>
+                    <p>Toasted bread topped with fresh tomatoes, garlic, basil, and extra virgin olive oil</p>
+                </div>
+                <div class="menu-item-price">$12</div>
             </div>
 
-            <div class="menu-grid">
-                <div class="menu-item">
-                    <div class="menu-item-info">
-                        <h3>Bruschetta al Pomodoro</h3>
-                        <p>Toasted bread with fresh tomatoes, garlic, basil, olive oil</p>
-                    </div>
-                    <div class="menu-item-price">$12</div>
+            <div class="menu-item">
+                <div class="menu-item-info">
+                    <h3>Carpaccio di Manzo</h3>
+                    <p>Thinly sliced beef tenderloin with arugula, parmesan, and lemon dressing</p>
                 </div>
-                <div class="menu-item">
-                    <div class="menu-item-info">
-                        <h3>Carpaccio di Manzo</h3>
-                        <p>Thinly sliced beef with arugula, parmesan, lemon</p>
-                    </div>
-                    <div class="menu-item-price">$18</div>
-                </div>
-                <div class="menu-item">
-                    <div class="menu-item-info">
-                        <h3>Burrata e Prosciutto</h3>
-                        <p>Creamy burrata with prosciutto and balsamic reduction</p>
-                    </div>
-                    <div class="menu-item-price">$16</div>
-                </div>
-                <div class="menu-item">
-                    <div class="menu-item-info">
-                        <h3>Calamari Fritti</h3>
-                        <p>Lightly fried calamari with marinara sauce</p>
-                    </div>
-                    <div class="menu-item-price">$15</div>
-                </div>
+                <div class="menu-item-price">$18</div>
             </div>
-        </section>
 
-        <!-- GALLERY -->
-        <section class="gallery" id="gallery">
-            <h2>Atmosphere</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item" data-label="Dining Room"></div>
-                <div class="gallery-item" data-label="Wine Collection"></div>
-                <div class="gallery-item" data-label="Chef's Kitchen"></div>
-                <div class="gallery-item" data-label="Outdoor Terrace"></div>
-                <div class="gallery-item" data-label="Private Events"></div>
-                <div class="gallery-item" data-label="Bar Area"></div>
-            </div>
-        </section>
-
-        <!-- RESERVATION -->
-        <section class="reservation" id="reservation">
-            <div class="reservation-content">
-                <h2>Reserve Your Table</h2>
-                <p>Join us for an unforgettable dining experience</p>
-                
-                <form class="reservation-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
-                    <div class="form-group">
-                        <div><input type="text" name="name" placeholder="Your Name" required><span class="error-message">Required</span></div>
-                        <div><input type="email" name="email" placeholder="Email" required><span class="error-message">Valid email required</span></div>
-                    </div>
-                    <div class="form-group">
-                        <div><input type="tel" name="phone" placeholder="Phone" required><span class="error-message">Required</span></div>
-                        <div>
-                            <select name="guests" required>
-                                <option value="">Guests</option>
-                                <option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div><input type="date" name="date" required></div>
-                        <div><input type="time" name="time" required></div>
-                    </div>
-                    <div class="form-group full">
-                        <textarea name="requests" placeholder="Special Requests (optional)"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Confirm Reservation</button>
-                    <div class="form-status success">Thank you! We'll confirm your reservation shortly.</div>
-                    <div class="form-status error">Something went wrong. Please call us instead.</div>
-                </form>
-            </div>
-        </section>
-
-        <!-- INFO -->
-        <section class="info">
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-icon">📍</div>
-                    <h3>Location</h3>
-                    <p>123 Via Roma Street<br>San Francisco, CA 94102</p>
+            <div class="menu-item">
+                <div class="menu-item-info">
+                    <h3>Burrata e Prosciutto</h3>
+                    <p>Creamy burrata cheese with prosciutto di Parma, heirloom tomatoes, and balsamic reduction</p>
                 </div>
-                <div class="info-item">
-                    <div class="info-icon">🕐</div>
-                    <h3>Hours</h3>
-                    <p>Tue-Thu: 5-10pm<br>Fri-Sat: 5-11pm<br>Sun: 4-9pm</p>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">📞</div>
-                    <h3>Contact</h3>
-                    <p><a href="tel:+14155550123">(415) 555-0123</a><br><a href="mailto:info@bellavista.com">info@bellavista.com</a></p>
-                </div>
+                <div class="menu-item-price">$16</div>
             </div>
-        </section>
-    </main>
 
-    <!-- FOOTER -->
+            <div class="menu-item">
+                <div class="menu-item-info">
+                    <h3>Calamari Fritti</h3>
+                    <p>Lightly fried calamari served with spicy marinara sauce and lemon</p>
+                </div>
+                <div class="menu-item-price">$15</div>
+            </div>
+
+            <div class="menu-item">
+                <div class="menu-item-info">
+                    <h3>Caprese Salad</h3>
+                    <p>Fresh mozzarella, vine-ripened tomatoes, basil, and aged balsamic</p>
+                </div>
+                <div class="menu-item-price">$14</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <h2>Atmosphere</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item" data-label="Dining Room"></div>
+            <div class="gallery-item" data-label="Wine Collection"></div>
+            <div class="gallery-item" data-label="Chef's Kitchen"></div>
+            <div class="gallery-item" data-label="Outdoor Terrace"></div>
+            <div class="gallery-item" data-label="Private Events"></div>
+            <div class="gallery-item" data-label="Bar Area"></div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section class="reservation" id="reservation">
+        <div class="reservation-content">
+            <h2>Reserve Your Table</h2>
+            <p>Join us for an unforgettable dining experience</p>
+            <form class="reservation-form">
+                <div class="form-group">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="Phone Number" required>
+                    <select required>
+                        <option value="">Number of Guests</option>
+                        <option value="1">1 Guest</option>
+                        <option value="2">2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                        <option value="5">5+ Guests</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="date" required>
+                    <input type="time" required>
+                </div>
+                <textarea placeholder="Special Requests (Optional)"></textarea>
+                <button type="submit" class="btn btn-primary">Confirm Reservation</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="info">
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-icon">📍</div>
+                <h3>Location</h3>
+                <p>123 Via Roma Street<br>San Francisco, CA 94102</p>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">🕐</div>
+                <h3>Hours</h3>
+                <p>Tuesday - Thursday: 5pm - 10pm<br>
+                Friday - Saturday: 5pm - 11pm<br>
+                Sunday: 4pm - 9pm<br>
+                Monday: Closed</p>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">📞</div>
+                <h3>Contact</h3>
+                <p>Phone: (415) 555-0123<br>
+                Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e1888f878ea183848d8d809788929580cf828e8c">[email&#160;protected]</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
                 <h4>Bella Vista</h4>
-                <p>Authentic Italian flavors since 1985.</p>
+                <p>Bringing authentic Italian flavors to San Francisco since 1985.</p>
                 <div class="social-links">
-                    <a href="#">f</a><a href="#">📷</a><a href="#">𝕏</a>
+                    <a href="#">f</a>
+                    <a href="#">𝕏</a>
+                    <a href="#">in</a>
                 </div>
             </div>
             <div class="footer-section">
                 <h4>Quick Links</h4>
                 <a href="#menu">Menu</a>
                 <a href="#reservation">Reservations</a>
+                <a href="#">Private Events</a>
                 <a href="#">Gift Cards</a>
             </div>
             <div class="footer-section">
                 <h4>Policies</h4>
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Service</a>
+                <a href="#">Cancellation Policy</a>
+                <a href="#">Accessibility</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; <span id="year"></span> Bella Vista Restaurant</p>
+            <p>&copy; 2024 Bella Vista Restaurant. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => document.querySelector('.loader').classList.add('hidden'), 500);
-            document.getElementById('year').textContent = new Date().getFullYear();
-
-            // Mobile Menu
-            const toggle = document.querySelector('.menu-toggle');
-            const menu = document.querySelector('.mobile-menu');
-            toggle.addEventListener('click', () => {
-                toggle.classList.toggle('active');
-                menu.classList.toggle('active');
-                document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
-            });
-            menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-                toggle.classList.remove('active');
-                menu.classList.remove('active');
-                document.body.style.overflow = '';
-            }));
-
-            // Theme
-            const toggles = document.querySelectorAll('.theme-toggle');
-            if (localStorage.getItem('theme')) document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
-            toggles.forEach(btn => btn.addEventListener('click', () => {
-                const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', next);
-                localStorage.setItem('theme', next);
-                toggles.forEach(b => b.innerHTML = next === 'dark' ? '☀️' : '🌙');
-            }));
-
-            // Menu Tabs
-            document.querySelectorAll('.menu-category').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.menu-category').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                });
-            });
-
-            // Form
-            const form = document.querySelector('.reservation-form');
-            form.addEventListener('submit', async (e) => {
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                let valid = true;
-                form.querySelectorAll('[required]').forEach(input => {
-                    const hasValue = input.value.trim();
-                    input.parentElement.classList.toggle('has-error', !hasValue);
-                    input.classList.toggle('error', !hasValue);
-                    if (!hasValue) valid = false;
-                });
-                if (!valid) return;
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
 
-                const btn = form.querySelector('button');
-                btn.textContent = 'Sending...';
-                btn.disabled = true;
-                try {
-                    const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' }});
-                    form.querySelector('.form-status.success').style.display = res.ok ? 'block' : 'none';
-                    form.querySelector('.form-status.error').style.display = res.ok ? 'none' : 'block';
-                    if (res.ok) form.reset();
-                } catch { form.querySelector('.form-status.error').style.display = 'block'; }
-                btn.textContent = 'Confirm Reservation';
-                btn.disabled = false;
+        // Menu category switching
+        const menuCategories = document.querySelectorAll('.menu-category');
+        menuCategories.forEach(category => {
+            category.addEventListener('click', function() {
+                menuCategories.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
             });
         });
     </script>
