@@ -870,7 +870,7 @@
         .ascii-cursor {
             position: fixed;
             pointer-events: none;
-            z-index: 99999;
+            z-index: 100001;
             transform: translate(-50%, -50%);
             font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
             font-size: 18px;
@@ -900,7 +900,7 @@
         .cursor-trail {
             position: fixed;
             pointer-events: none;
-            z-index: 99998;
+            z-index: 100001;
             font-family: 'SF Mono', Monaco, monospace;
             font-size: 14px;
             color: var(--primary);
@@ -4205,6 +4205,400 @@
             section { padding: 4rem 1.5rem; }
             .hero { padding: 1.5rem; }
         }
+
+        /* =============================================
+           DEMO MODAL
+           ============================================= */
+        .demo-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0);
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            z-index: 100000;
+            display: flex;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .demo-modal-overlay.active {
+            visibility: visible;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .demo-modal {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.95) translateY(20px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .demo-modal-overlay.active .demo-modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        .demo-modal-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 10, 0.3);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 1.5rem;
+            flex-shrink: 0;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+        }
+        .demo-modal-overlay.active .demo-modal-header {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .demo-modal-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            flex: 1;
+            letter-spacing: -0.01em;
+        }
+        .demo-modal-title span {
+            color: var(--primary);
+            font-weight: 400;
+        }
+        .demo-modal-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .demo-device-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255,255,255,0.5);
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .demo-device-btn:hover {
+            background: rgba(29, 154, 155, 0.15);
+            border-color: rgba(29, 154, 155, 0.3);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .demo-device-btn.active {
+            background: rgba(29, 154, 155, 0.2);
+            border-color: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(29, 154, 155, 0.3);
+        }
+        .demo-live-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(249, 115, 22, 0.1);
+            border: 1px solid rgba(249, 115, 22, 0.25);
+            color: #f97316;
+            padding: 0.7rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-left: 0.75rem;
+        }
+        .demo-live-btn:hover {
+            background: rgba(249, 115, 22, 0.2);
+            border-color: rgba(249, 115, 22, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.2);
+        }
+        .demo-modal-close {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255,255,255,0.7);
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-left: 0.75rem;
+        }
+        .demo-modal-close:hover {
+            background: rgba(255, 100, 100, 0.15);
+            border-color: rgba(255, 100, 100, 0.3);
+            color: #ff6b6b;
+            transform: rotate(90deg);
+        }
+        .demo-modal-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+        }
+        .demo-modal-overlay.active .demo-modal-container {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .demo-modal-frame {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                0 25px 80px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(29, 154, 155, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .demo-modal-frame.preview-desktop {
+            width: 100%;
+            max-width: 1200px;
+            height: calc(100vh - 140px);
+            border-radius: 16px;
+        }
+        .demo-modal-frame.preview-tablet {
+            width: 768px;
+            max-width: 90%;
+            height: calc(100vh - 140px);
+            max-height: 1024px;
+            border-radius: 20px;
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                0 0 0 8px rgba(50, 50, 50, 0.8),
+                0 25px 80px rgba(0, 0, 0, 0.5);
+        }
+        .demo-modal-frame.preview-mobile {
+            width: 375px;
+            max-width: 90%;
+            height: calc(100vh - 140px);
+            max-height: 812px;
+            border-radius: 44px;
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                0 0 0 12px rgba(40, 40, 40, 0.9),
+                0 25px 80px rgba(0, 0, 0, 0.5);
+        }
+        .demo-modal-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            opacity: 0;
+            transition: opacity 0.4s ease 0.3s;
+        }
+        .demo-modal-frame iframe.loaded {
+            opacity: 1;
+        }
+        /* Loading spinner */
+        .demo-modal-frame::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            margin: -20px 0 0 -20px;
+            border: 3px solid rgba(29, 154, 155, 0.2);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: demoSpin 0.8s linear infinite;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        .demo-modal-frame.loaded::before {
+            opacity: 0;
+        }
+        @keyframes demoSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* =============================================
+           TEMPLATE CARD BUTTONS
+           ============================================= */
+        .electric-cta-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+        .electric-cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .electric-cta-secondary svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+        .electric-cta-secondary:hover {
+            background: rgba(29, 154, 155, 0.15);
+            border-color: rgba(29, 154, 155, 0.4);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* =============================================
+           DOWNLOAD CONFIRMATION MODAL
+           ============================================= */
+        .download-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0);
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            z-index: 100002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .download-modal-overlay.active {
+            visibility: visible;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .download-modal {
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid rgba(29, 154, 155, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9) translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5), 0 0 100px rgba(29, 154, 155, 0.1);
+        }
+        .download-modal-overlay.active .download-modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        .download-modal-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(29, 154, 155, 0.15);
+            border: 1px solid rgba(29, 154, 155, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        .download-modal-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2;
+        }
+        .download-modal-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .download-modal-template {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .download-modal-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .download-modal-desc strong {
+            color: #fff;
+        }
+        .download-modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+        .download-modal-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .download-modal-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+        .download-modal-cancel {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .download-modal-cancel:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        .download-modal-confirm {
+            background: rgba(29, 154, 155, 0.2);
+            border: 1px solid rgba(29, 154, 155, 0.4);
+            color: #fff;
+        }
+        .download-modal-confirm svg {
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2;
+        }
+        .download-modal-confirm:hover {
+            background: rgba(29, 154, 155, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(29, 154, 155, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .demo-modal-header { flex-wrap: wrap; padding: 1rem; gap: 0.75rem; }
+            .demo-modal-title { order: 1; width: 100%; text-align: center; font-size: 1rem; }
+            .demo-modal-actions { order: 2; flex: 1; justify-content: center; }
+            .demo-modal-close { order: 3; margin-left: auto; }
+            .demo-live-btn span { display: none; }
+            .demo-modal-container { padding: 1rem; }
+            .demo-modal-frame.preview-desktop,
+            .demo-modal-frame.preview-tablet,
+            .demo-modal-frame.preview-mobile { width: 100%; max-width: 100%; height: calc(100vh - 160px); border-radius: 12px; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5); }
+        }
     </style>
 </head>
 <body>
@@ -4736,10 +5130,16 @@
                                 <li>Trust badges & social proof built-in</li>
                                 <li><span class="orange">Dark mode</span> that looks incredible</li>
                             </ul>
-                            <a href="#" class="electric-cta" aria-label="View FlowMetrics SaaS template demo">
-                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                                <span>View Demo</span>
-                            </a>
+                            <div class="electric-cta-group">
+                                <a href="javascript:void(0)" onclick="openDemoModal(0)" class="electric-cta" aria-label="View FlowMetrics SaaS template demo">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                    <span>View Demo</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="openDownloadModal(0)" class="electric-cta-secondary" aria-label="Download FlowMetrics SaaS template">
+                                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    <span>Download</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -4767,10 +5167,16 @@
                                 <li>Buttery smooth animations</li>
                                 <li>Ready to <span class="orange">impress clients</span></li>
                             </ul>
-                            <a href="#" class="electric-cta" aria-label="View Creative Portfolio template demo">
-                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                                <span>View Demo</span>
-                            </a>
+                            <div class="electric-cta-group">
+                                <a href="javascript:void(0)" onclick="openDemoModal(1)" class="electric-cta" aria-label="View Creative Portfolio template demo">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                    <span>View Demo</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="openDownloadModal(1)" class="electric-cta-secondary" aria-label="Download Creative Portfolio template">
+                                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    <span>Download</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -4798,10 +5204,16 @@
                                 <li>Menu that makes mouths water</li>
                                 <li>Looks <span class="orange">perfect</span> on every device</li>
                             </ul>
-                            <a href="#" class="electric-cta" aria-label="View Bella Vista Restaurant template demo">
-                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                                <span>View Demo</span>
-                            </a>
+                            <div class="electric-cta-group">
+                                <a href="javascript:void(0)" onclick="openDemoModal(2)" class="electric-cta" aria-label="View Bella Vista Restaurant template demo">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                    <span>View Demo</span>
+                                </a>
+                                <a href="javascript:void(0)" onclick="openDownloadModal(2)" class="electric-cta-secondary" aria-label="Download Bella Vista Restaurant template">
+                                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    <span>Download</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -7830,6 +8242,205 @@
         if (root) {
             createRoot(root).render(React.createElement(App));
         }
+    </script>
+
+    <!-- Download Confirmation Modal -->
+    <div class="download-modal-overlay" id="downloadModalOverlay">
+        <div class="download-modal">
+            <div class="download-modal-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <h3 class="download-modal-title">Free Template Download</h3>
+            <p class="download-modal-template" id="downloadTemplateName">Template Name</p>
+            <p class="download-modal-desc">
+                You're about to download a <strong>free template</strong> from DeployTemplate. 
+                This includes all HTML, CSS, and JavaScript files ready to customize and deploy.
+            </p>
+            <div class="download-modal-actions">
+                <button class="download-modal-btn download-modal-cancel" onclick="closeDownloadModal()">Cancel</button>
+                <button class="download-modal-btn download-modal-confirm" id="downloadConfirmBtn" onclick="confirmDownload()">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Modal -->
+    <div class="demo-modal-overlay" id="demoModalOverlay">
+        <div class="demo-modal">
+            <div class="demo-modal-header">
+                <div class="demo-modal-title" id="demoModalTitle">Template Name</div>
+                <div class="demo-modal-actions">
+                    <button class="demo-device-btn active" data-device="desktop" onclick="setDemoDevice('desktop')">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2"/>
+                            <path d="M8 21h8M12 17v4"/>
+                        </svg>
+                    </button>
+                    <button class="demo-device-btn" data-device="tablet" onclick="setDemoDevice('tablet')">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="4" y="2" width="16" height="20" rx="2"/>
+                            <line x1="12" y1="18" x2="12" y2="18"/>
+                        </svg>
+                    </button>
+                    <button class="demo-device-btn" data-device="mobile" onclick="setDemoDevice('mobile')">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2"/>
+                            <line x1="12" y1="18" x2="12" y2="18"/>
+                        </svg>
+                    </button>
+                    <a href="#" id="demoLiveLink" class="demo-live-btn" target="_blank">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        <span>Live Preview</span>
+                    </a>
+                </div>
+                <button class="demo-modal-close" onclick="closeDemoModal()">&times;</button>
+            </div>
+            <div class="demo-modal-container">
+                <div class="demo-modal-frame preview-desktop" id="demoModalFrame">
+                    <iframe id="demoIframe" src="" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Download Modal Functionality
+        const downloadTemplates = [
+            { name: 'FlowMetrics SaaS', file: '/downloads/flowmetrics-saas.zip' },
+            { name: 'Creative Portfolio', file: '/downloads/creative-portfolio.zip' },
+            { name: 'Bella Vista Restaurant', file: '/downloads/bella-vista-restaurant.zip' }
+        ];
+        
+        let currentDownloadIndex = null;
+
+        function openDownloadModal(index) {
+            currentDownloadIndex = index;
+            const template = downloadTemplates[index];
+            const overlay = document.getElementById('downloadModalOverlay');
+            const templateName = document.getElementById('downloadTemplateName');
+            
+            templateName.textContent = template.name;
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDownloadModal() {
+            const overlay = document.getElementById('downloadModalOverlay');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            currentDownloadIndex = null;
+        }
+
+        function confirmDownload() {
+            if (currentDownloadIndex === null) return;
+            
+            const template = downloadTemplates[currentDownloadIndex];
+            
+            // Create temporary link and trigger download
+            const link = document.createElement('a');
+            link.href = template.file;
+            link.download = template.file.split('/').pop();
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            closeDownloadModal();
+        }
+
+        // Close download modal on escape or overlay click
+        document.getElementById('downloadModalOverlay').addEventListener('click', (e) => {
+            if (e.target.id === 'downloadModalOverlay') closeDownloadModal();
+        });
+
+        // Demo Modal Functionality
+        const demoTemplates = [
+            { name: 'FlowMetrics SaaS', slug: 'saas', path: '/demos/saas/' },
+            { name: 'Creative Portfolio', slug: 'portfolio', path: '/demos/portfolio/' },
+            { name: 'Bella Vista Restaurant', slug: 'restaurant', path: '/demos/restaurant/' }
+        ];
+
+        function openDemoModal(index) {
+            const template = demoTemplates[index];
+            const overlay = document.getElementById('demoModalOverlay');
+            const title = document.getElementById('demoModalTitle');
+            const iframe = document.getElementById('demoIframe');
+            const liveLink = document.getElementById('demoLiveLink');
+            const frame = document.getElementById('demoModalFrame');
+            
+            title.innerHTML = template.name + ' <span>Demo</span>';
+            liveLink.href = template.path;
+            
+            // Reset states
+            iframe.classList.remove('loaded');
+            frame.classList.remove('loaded');
+            frame.style.position = 'relative';
+            
+            // Show modal first
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Reset to desktop view
+            setDemoDevice('desktop');
+            
+            // Load iframe after animation starts
+            setTimeout(() => {
+                iframe.src = template.path;
+            }, 200);
+            
+            // Handle iframe load
+            iframe.onload = function() {
+                iframe.classList.add('loaded');
+                frame.classList.add('loaded');
+            };
+        }
+
+        function closeDemoModal() {
+            const overlay = document.getElementById('demoModalOverlay');
+            const iframe = document.getElementById('demoIframe');
+            
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // Clear iframe after animation
+            setTimeout(() => {
+                iframe.src = '';
+                iframe.classList.remove('loaded');
+                document.getElementById('demoModalFrame').classList.remove('loaded');
+            }, 500);
+        }
+
+        function setDemoDevice(device) {
+            const frame = document.getElementById('demoModalFrame');
+            const buttons = document.querySelectorAll('.demo-device-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.demo-device-btn[data-device="${device}"]`).classList.add('active');
+            
+            frame.classList.remove('preview-desktop', 'preview-tablet', 'preview-mobile');
+            
+            // Small delay for smoother transition
+            requestAnimationFrame(() => {
+                frame.classList.add('preview-' + device);
+            });
+        }
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeDemoModal();
+        });
+
+        // Close on overlay click
+        document.getElementById('demoModalOverlay').addEventListener('click', (e) => {
+            if (e.target.id === 'demoModalOverlay' || e.target.classList.contains('demo-modal-container')) {
+                closeDemoModal();
+            }
+        });
     </script>
 </body>
 </html>
