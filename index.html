@@ -5730,16 +5730,16 @@
         // =============================================
         gsap.registerPlugin(ScrollTrigger);
 
-        // Initialize Lenis smooth scroll (smooth but accessible)
+        // Initialize Lenis smooth scroll (matched to wantedfornothing.com)
         const lenis = new Lenis({
-            duration: 2.0,
+            duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true,
             gestureDirection: "vertical",
             smoothTouch: false,
-            touchMultiplier: 2,
-            lerp: 0.05,          // Balanced smooth - works across all setups
-            wheelMultiplier: 1.5,
+            touchMultiplier: 3,
+            lerp: 0.075,
+            wheelMultiplier: 1,
             infinite: false
         });
         
