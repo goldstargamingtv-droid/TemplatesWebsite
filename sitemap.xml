@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+                            http://www.google.com/schemas/sitemap-image/1.1
+                            http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+
+  <!-- Homepage - Highest Priority -->
+  <url>
+    <loc>https://deploytemplate.com/</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/og-image.webp</image:loc>
+      <image:title>DeployTemplate - Free Browser Extensions and Custom Web Development</image:title>
+    </image:image>
+  </url>
+
+  <!-- Browser Extensions - High Priority -->
+  <url>
+    <loc>https://deploytemplate.com/extensions/polishai/</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/extensions/polishai/images/icon128.png</image:loc>
+      <image:title>PolishAI - AI Writing Assistant Chrome Extension</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://deploytemplate.com/extensions/zapreply/</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/extensions/zapreply/images/icon128.png</image:loc>
+      <image:title>ZapReply - AI Email Reply Generator Chrome Extension</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://deploytemplate.com/extensions/chromapicker/</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/extensions/chromapicker/images/icon128.png</image:loc>
+      <image:title>ChromaPicker - Color Picker Chrome Extension</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://deploytemplate.com/extensions/cookiecrusher/</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/extensions/cookiecrusher/images/icon128.png</image:loc>
+      <image:title>Cookie Crusher - Auto Cookie Banner Blocker Extension</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://deploytemplate.com/extensions/twitchadcrusher/</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/extensions/twitchadcrusher/images/icon128.png</image:loc>
+      <image:title>Twitch Ad Crusher - Ad Blocker for Twitch Extension</image:title>
+    </image:image>
+  </url>
+
+  <!-- Template Demos - High Priority -->
+  <url>
+    <loc>https://deploytemplate.com/demos/saas/</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/demos/saas/preview.webp</image:loc>
+      <image:title>FlowMetrics - Free SaaS Landing Page Template</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://deploytemplate.com/demos/portfolio/</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/demos/portfolio/preview.webp</image:loc>
+      <image:title>Creative Portfolio - Free Portfolio Website Template</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://deploytemplate.com/demos/restaurant/</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://deploytemplate.com/demos/restaurant/preview.webp</image:loc>
+      <image:title>Bella Vista - Free Restaurant Website Template</image:title>
+    </image:image>
+  </url>
+
+  <!-- Blog Posts - Medium Priority -->
+  <url>
+    <loc>https://deploytemplate.com/blogs/design/</loc>
+    <lastmod>2025-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://deploytemplate.com/blogs/deploy/</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://deploytemplate.com/blogs/speed/</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
