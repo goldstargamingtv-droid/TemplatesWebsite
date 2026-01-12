@@ -5730,16 +5730,16 @@
         // =============================================
         gsap.registerPlugin(ScrollTrigger);
 
-        // Initialize Lenis smooth scroll (maximum butter)
+        // Initialize Lenis smooth scroll (smooth but accessible)
         const lenis = new Lenis({
-            duration: 2.2,
+            duration: 2.0,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true,
             gestureDirection: "vertical",
             smoothTouch: false,
             touchMultiplier: 2,
-            lerp: 0.025,         // Maximum smooth - long dreamy coast
-            wheelMultiplier: 2,  // Boosted for scroll wheel users
+            lerp: 0.05,          // Balanced smooth - works across all setups
+            wheelMultiplier: 1.5,
             infinite: false
         });
         
