@@ -1760,7 +1760,7 @@
         }
 
         .section-header {
-            margin-bottom: 4rem;
+            margin-bottom: 2rem;
         }
 
         .section-count {
@@ -1828,8 +1828,13 @@
            ============================================= */
         .how-we-build-section {
             position: relative;
-            z-index: 1;
+            z-index: 15;
             background: transparent;
+            padding-top: 100px;
+        }
+        
+        .how-we-build-section .electric-card-container {
+            z-index: 16;
         }
         
         .how-we-build-section::before {
@@ -1847,7 +1852,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 2rem;
-            margin-top: 3rem;
+            margin-top: 2rem;
             justify-content: center;
         }
 
@@ -2731,6 +2736,17 @@
             overflow: visible;
             padding-bottom: 120px;
             margin-bottom: -80px;
+        }
+        
+        /* Ensure blog doesn't clip adjacent section glows */
+        #blog::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            pointer-events: none;
         }
 
         /* Blog - Pinned Scroll Effect (reversed) */
@@ -3707,7 +3723,7 @@
         /* Template Glow Cards */
         .template-cards-section {
             position: relative;
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
 
         .template-cards-inner {
@@ -4886,6 +4902,210 @@
             .electric-cta-secondary {
                 padding: 0.6rem 0.75rem !important;
                 font-size: 0.8rem !important;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════════════
+           DEPLOYTEMPLATE ENHANCEMENTS v2 - Scroll Journey & Parallax
+        ═══════════════════════════════════════════════════════════════════════════ */
+
+        /* Scroll Progress Bar */
+        .scroll-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: 100001;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* Enhanced Loader */
+        .preloader-logo {
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(-8px) rotate(2deg) scale(1.02); }
+        }
+
+        .preloader-bar-fill {
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary)) !important;
+            background-size: 200% 100% !important;
+            animation: shimmer 1.5s ease-in-out infinite !important;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Hero Floating Orbs */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 40vw;
+            height: 40vw;
+            max-width: 500px;
+            max-height: 500px;
+            background: radial-gradient(circle, rgba(29, 154, 155, 0.12) 0%, transparent 60%);
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+            animation: orbFloat1 20s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 15%;
+            right: 10%;
+            width: 35vw;
+            height: 35vw;
+            max-width: 400px;
+            max-height: 400px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.1) 0%, transparent 60%);
+            border-radius: 50%;
+            filter: blur(50px);
+            pointer-events: none;
+            animation: orbFloat2 25s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -40px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-40px, 30px) scale(0.95); }
+            66% { transform: translate(20px, -30px) scale(1.08); }
+        }
+
+        /* Parallax Background Text */
+        .parallax-bg-text {
+            position: absolute;
+            top: -5%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(8rem, 22vw, 22rem);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.015);
+            letter-spacing: -0.05em;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+        }
+
+        /* Enhanced Card Effects */
+        .electric-card-container {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            transform-style: preserve-3d;
+        }
+
+        .electric-card-container:hover {
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 80px rgba(29, 154, 155, 0.15) !important;
+        }
+
+        /* Card glow pulse on hover */
+        .electric-card-container::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(29, 154, 155, 0.4), transparent 50%, rgba(249, 115, 22, 0.3));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s;
+            filter: blur(15px);
+        }
+
+        .electric-card-container:hover::after {
+            opacity: 0.6;
+            animation: borderPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes borderPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.01); }
+        }
+
+        /* Enhanced Blob */
+        .hero-blob {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-blob::after {
+            content: '';
+            position: absolute;
+            inset: -25px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(29, 154, 155, 0.25) 0%, transparent 70%);
+            animation: blobGlow 3s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes blobGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+
+        /* Enhanced FAQ */
+        .faq-item {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 2px solid transparent;
+            padding-left: 0;
+        }
+
+        .faq-item:hover {
+            background: rgba(29, 154, 155, 0.03);
+            padding-left: 15px;
+            border-left-color: rgba(29, 154, 155, 0.3);
+        }
+
+        .faq-item.active {
+            background: rgba(29, 154, 155, 0.05);
+            border-left-color: var(--primary);
+            padding-left: 15px;
+        }
+
+        /* Hide Theme Toggle - Unified Dark */
+        .hero-theme-toggle {
+            display: none !important;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .hero::before,
+            .hero::after {
+                width: 60vw;
+                height: 60vw;
+                filter: blur(40px);
+            }
+
+            .parallax-bg-text {
+                font-size: clamp(4rem, 18vw, 10rem);
+                opacity: 0.8;
+            }
+
+            .scroll-progress-bar {
+                height: 2px;
+            }
+
+            section::before {
+                height: 50px;
             }
         }
 
@@ -6491,10 +6711,10 @@
         setTimeout(() => {
             const isMobileHeaders = window.innerWidth <= 768;
             
-            // All section headers EXCEPT how-we-build (which is broken with ScrollTrigger)
+            // All section headers EXCEPT how-we-build (broken with ScrollTrigger due to blog overlap) and faq
             const headerSelector = isMobileHeaders 
                 ? '.section-header:not(#how-we-build .section-header)' 
-                : '.section-header:not(#faq .section-header)';
+                : '.section-header:not(#faq .section-header):not(#how-we-build .section-header)';
             const allHeaders = document.querySelectorAll(headerSelector);
             
             allHeaders.forEach((header) => {
@@ -6515,52 +6735,56 @@
                 });
             });
             
-            // HOW-WE-BUILD: Use simple scroll check (ScrollTrigger position calc is broken)
-            if (isMobileHeaders) {
-                const hwbHeader = document.querySelector('#how-we-build .section-header');
-                const hwbSection = document.querySelector('#how-we-build');
-                const hwbDesc = document.querySelector('#how-we-build .section-desc');
-                const hwbLabel = document.querySelector('#how-we-build .section-label');
+            // HOW-WE-BUILD: Use simple scroll check (ScrollTrigger position calc is broken due to blog overlap)
+            // This now runs on BOTH mobile and desktop
+            const hwbHeader = document.querySelector('#how-we-build .section-header');
+            const hwbSection = document.querySelector('#how-we-build');
+            const hwbTitle = document.querySelector('#how-we-build .section-title');
+            const hwbDesc = document.querySelector('#how-we-build .section-desc');
+            const hwbLabel = document.querySelector('#how-we-build .section-label');
+            
+            if (hwbHeader && hwbSection) {
+                // Animate title and desc separately, NOT the whole header
+                // This keeps the label visible
+                if (hwbTitle) gsap.set(hwbTitle, { opacity: 0, y: 40 });
+                if (hwbDesc) gsap.set(hwbDesc, { opacity: 0, y: 20 });
+                if (hwbLabel) gsap.set(hwbLabel, { opacity: 0, y: 20 });
                 
-                if (hwbHeader && hwbSection) {
-                    gsap.set(hwbHeader, { opacity: 0, y: 40 });
-                    if (hwbDesc) gsap.set(hwbDesc, { opacity: 0, y: 20 });
-                    // Ensure label is always visible relative to parent
-                    if (hwbLabel) gsap.set(hwbLabel, { opacity: 1 });
+                let hwbState = 'hidden'; // 'hidden', 'visible', 'above'
+                
+                const checkHwb = () => {
+                    const sectionRect = hwbSection.getBoundingClientRect();
+                    const headerRect = hwbHeader.getBoundingClientRect();
+                    const navbarHeight = 80;
                     
-                    let hwbState = 'hidden'; // 'hidden', 'visible', 'above'
+                    // Section top is below 90% of viewport (not yet scrolled to)
+                    const isBelow = sectionRect.top > window.innerHeight * 0.9;
+                    // Header bottom has scrolled above navbar (passed it)
+                    const isAbove = headerRect.bottom < navbarHeight;
+                    // In view = not below and not above
+                    const inView = !isBelow && !isAbove;
                     
-                    const checkHwb = () => {
-                        const sectionRect = hwbSection.getBoundingClientRect();
-                        const headerRect = hwbHeader.getBoundingClientRect();
-                        const navbarHeight = 80;
-                        
-                        // Section top is below 90% of viewport (not yet scrolled to)
-                        const isBelow = sectionRect.top > window.innerHeight * 0.9;
-                        // Header bottom has scrolled above navbar (passed it)
-                        const isAbove = headerRect.bottom < navbarHeight;
-                        // In view = not below and not above
-                        const inView = !isBelow && !isAbove;
-                        
-                        if (inView && hwbState !== 'visible') {
-                            hwbState = 'visible';
-                            gsap.to(hwbHeader, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' });
-                            if (hwbDesc) gsap.to(hwbDesc, { opacity: 1, y: 0, duration: 0.6, delay: 0.2, ease: 'power2.out' });
-                        } else if (isBelow && hwbState !== 'hidden') {
-                            hwbState = 'hidden';
-                            gsap.to(hwbHeader, { opacity: 0, y: 40, duration: 0.4, ease: 'power2.in' });
-                            if (hwbDesc) gsap.to(hwbDesc, { opacity: 0, y: 20, duration: 0.3, ease: 'power2.in' });
-                        } else if (isAbove && hwbState !== 'above') {
-                            hwbState = 'above';
-                            gsap.to(hwbHeader, { opacity: 0, y: -30, duration: 0.4, ease: 'power2.in' });
-                            if (hwbDesc) gsap.to(hwbDesc, { opacity: 0, y: -20, duration: 0.3, ease: 'power2.in' });
-                        }
-                    };
-                    
-                    // Hook into Lenis scroll
-                    lenis.on('scroll', checkHwb);
-                    checkHwb(); // Initial check
-                }
+                    if (inView && hwbState !== 'visible') {
+                        hwbState = 'visible';
+                        if (hwbLabel) gsap.to(hwbLabel, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' });
+                        if (hwbTitle) gsap.to(hwbTitle, { opacity: 1, y: 0, duration: 0.8, delay: 0.1, ease: 'power3.out' });
+                        if (hwbDesc) gsap.to(hwbDesc, { opacity: 1, y: 0, duration: 0.6, delay: 0.3, ease: 'power2.out' });
+                    } else if (isBelow && hwbState !== 'hidden') {
+                        hwbState = 'hidden';
+                        if (hwbLabel) gsap.to(hwbLabel, { opacity: 0, y: 20, duration: 0.3, ease: 'power2.in' });
+                        if (hwbTitle) gsap.to(hwbTitle, { opacity: 0, y: 40, duration: 0.4, ease: 'power2.in' });
+                        if (hwbDesc) gsap.to(hwbDesc, { opacity: 0, y: 20, duration: 0.3, ease: 'power2.in' });
+                    } else if (isAbove && hwbState !== 'above') {
+                        hwbState = 'above';
+                        if (hwbLabel) gsap.to(hwbLabel, { opacity: 0, y: -15, duration: 0.3, ease: 'power2.in' });
+                        if (hwbTitle) gsap.to(hwbTitle, { opacity: 0, y: -30, duration: 0.4, ease: 'power2.in' });
+                        if (hwbDesc) gsap.to(hwbDesc, { opacity: 0, y: -20, duration: 0.3, ease: 'power2.in' });
+                    }
+                };
+                
+                // Hook into Lenis scroll
+                lenis.on('scroll', checkHwb);
+                checkHwb(); // Initial check
             }
             
             ScrollTrigger.refresh();
@@ -8917,6 +9141,207 @@
                 closeDemoModal();
             }
         });
+
+        /* ═══════════════════════════════════════════════════════════════════════════
+           DEPLOYTEMPLATE ENHANCEMENTS v2 - Scroll Journey & Parallax Effects
+           Fixed: Hero links, Built Different section, unified timing
+        ═══════════════════════════════════════════════════════════════════════════ */
+
+        (function initEnhancements() {
+            // Wait for GSAP and give existing animations time to initialize
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+                console.warn('GSAP not loaded, enhancements skipped');
+                return;
+            }
+
+            // Delay to let existing animations set up first
+            setTimeout(() => {
+                gsap.registerPlugin(ScrollTrigger);
+
+                // Unified timing values for consistency
+                const SCRUB_SPEED = 1;
+                const EASE_OUT = 'power3.out';
+                const STAGGER_AMOUNT = 0.1;
+
+                // ═══════════════════════════════════════════════════════════════════
+                // SCROLL PROGRESS BAR
+                // ═══════════════════════════════════════════════════════════════════
+                const progressBar = document.createElement('div');
+                progressBar.className = 'scroll-progress-bar';
+                document.body.appendChild(progressBar);
+
+                gsap.to(progressBar, {
+                    width: '100%',
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: document.body,
+                        start: 'top top',
+                        end: 'bottom bottom',
+                        scrub: 0.3
+                    }
+                });
+
+                // ═══════════════════════════════════════════════════════════════════
+                // PARALLAX BACKGROUND TEXT (excluding how-we-build)
+                // ═══════════════════════════════════════════════════════════════════
+                const bgTextSections = [
+                    { id: '#extensions', text: 'TOOLS', x: -15 },
+                    { id: '#custom', text: 'BUILD', x: 20 },
+                    { id: '#templates', text: 'LAUNCH', x: -10 }
+                ];
+
+                bgTextSections.forEach(section => {
+                    const el = document.querySelector(section.id);
+                    if (!el) return;
+
+                    // Create a container for the parallax text to avoid overflow issues
+                    const bgTextContainer = document.createElement('div');
+                    bgTextContainer.style.cssText = `
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        overflow: hidden;
+                        pointer-events: none;
+                        z-index: 0;
+                    `;
+
+                    const bgText = document.createElement('div');
+                    bgText.className = 'parallax-bg-text';
+                    bgText.textContent = section.text;
+                    bgText.style.cssText = `
+                        position: absolute;
+                        top: 5%;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        font-size: clamp(8rem, 22vw, 22rem);
+                        font-weight: 900;
+                        color: rgba(255, 255, 255, 0.015);
+                        letter-spacing: -0.05em;
+                        white-space: nowrap;
+                        pointer-events: none;
+                        user-select: none;
+                    `;
+                    
+                    bgTextContainer.appendChild(bgText);
+                    el.style.position = 'relative';
+                    el.insertBefore(bgTextContainer, el.firstChild);
+
+                    gsap.fromTo(bgText, 
+                        { x: -section.x + '%' },
+                        {
+                            x: section.x + '%',
+                            scrollTrigger: {
+                                trigger: el,
+                                start: 'top bottom',
+                                end: 'bottom top',
+                                scrub: SCRUB_SPEED
+                            }
+                        }
+                    );
+                });
+
+                // ═══════════════════════════════════════════════════════════════════
+                // HERO BLOB ENHANCED PARALLAX
+                // ═══════════════════════════════════════════════════════════════════
+                const heroBlob = document.getElementById('heroBlob');
+                if (heroBlob) {
+                    gsap.to(heroBlob, {
+                        y: -200,
+                        x: 60,
+                        rotation: 15,
+                        scrollTrigger: {
+                            trigger: '.hero',
+                            start: 'top top',
+                            end: '150%',
+                            scrub: SCRUB_SPEED
+                        }
+                    });
+                }
+
+                // ═══════════════════════════════════════════════════════════════════
+                // 3D CARD TILT ON HOVER (desktop only)
+                // ═══════════════════════════════════════════════════════════════════
+                if (window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
+                    document.querySelectorAll('.electric-card-container').forEach(card => {
+                        let bounds;
+
+                        card.addEventListener('mouseenter', () => {
+                            bounds = card.getBoundingClientRect();
+                        });
+
+                        card.addEventListener('mousemove', (e) => {
+                            if (!bounds) bounds = card.getBoundingClientRect();
+                            const x = e.clientX - bounds.left;
+                            const y = e.clientY - bounds.top;
+                            const centerX = bounds.width / 2;
+                            const centerY = bounds.height / 2;
+                            
+                            const rotateX = (y - centerY) / 30;
+                            const rotateY = (centerX - x) / 30;
+                            
+                            gsap.to(card, {
+                                rotateX: rotateX,
+                                rotateY: rotateY,
+                                y: -8,
+                                duration: 0.3,
+                                ease: 'power2.out',
+                                transformPerspective: 1000
+                            });
+                        });
+
+                        card.addEventListener('mouseleave', () => {
+                            gsap.to(card, {
+                                rotateX: 0,
+                                rotateY: 0,
+                                y: 0,
+                                duration: 0.5,
+                                ease: 'elastic.out(1, 0.5)'
+                            });
+                            bounds = null;
+                        });
+                    });
+                }
+
+                // ═══════════════════════════════════════════════════════════════════
+                // MAGNETIC BUTTONS (desktop only)
+                // ═══════════════════════════════════════════════════════════════════
+                if (window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
+                    document.querySelectorAll('.electric-cta, .hero-btn-primary, .hero-btn-secondary, .form-submit').forEach(btn => {
+                        btn.addEventListener('mousemove', (e) => {
+                            const rect = btn.getBoundingClientRect();
+                            const x = e.clientX - rect.left - rect.width / 2;
+                            const y = e.clientY - rect.top - rect.height / 2;
+                            
+                            gsap.to(btn, {
+                                x: x * 0.2,
+                                y: y * 0.2,
+                                duration: 0.3,
+                                ease: 'power2.out'
+                            });
+                        });
+
+                        btn.addEventListener('mouseleave', () => {
+                            gsap.to(btn, {
+                                x: 0,
+                                y: 0,
+                                duration: 0.5,
+                                ease: 'elastic.out(1, 0.4)'
+                            });
+                        });
+                    });
+                }
+
+                // ═══════════════════════════════════════════════════════════════════
+                // FORCE DARK MODE
+                // ═══════════════════════════════════════════════════════════════════
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.removeItem('theme');
+
+                console.log('✨ DeployTemplate Enhancements v2 loaded (fixed)');
+            }, 500); // Wait for existing animations
+        })();
     </script>
 </body>
 </html>
