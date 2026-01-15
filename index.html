@@ -1005,6 +1005,64 @@
             text-transform: uppercase;
             color: var(--text-muted);
             opacity: 0;
+            min-height: 1.5em;
+            position: relative;
+        }
+
+        /* =============================================
+           TYPEWRITER PRELOADER ENHANCEMENT
+           ============================================= */
+        .typewriter-container {
+            display: inline-block;
+            position: relative;
+        }
+
+        .typewriter-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--primary);
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        .typewriter-text.typing {
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        .typewriter-text.glitching {
+            animation: typewriter-glitch 0.1s ease-in-out;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--primary); }
+        }
+
+        @keyframes typewriter-glitch {
+            0% { transform: translateX(0); filter: blur(0); }
+            25% { transform: translateX(-2px) skewX(-2deg); filter: blur(1px); }
+            50% { transform: translateX(2px) skewX(2deg); filter: blur(0); }
+            75% { transform: translateX(-1px); filter: blur(1px); }
+            100% { transform: translateX(0); filter: blur(0); }
+        }
+
+        .preloader-message-glitch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            color: var(--accent);
+            text-shadow:
+                2px 0 var(--primary),
+                -2px 0 var(--accent);
+            animation: glitch-flash 0.15s ease-out;
+        }
+
+        @keyframes glitch-flash {
+            0% { opacity: 0.8; transform: translateX(-50%) translateY(-2px); }
+            50% { opacity: 0.4; transform: translateX(-50%) translateY(2px); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(0); }
         }
 
         .preloader-bar {
@@ -4056,6 +4114,121 @@
         }
 
         /* =============================================
+           ENHANCED CARD REVEAL ANIMATIONS
+           ============================================= */
+        .electric-card-container.cascade-reveal {
+            opacity: 0;
+            transform: translateY(80px) rotate(3deg) scale(0.92);
+            filter: blur(8px);
+            transition: none;
+        }
+
+        .electric-card-container.cascade-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg) scale(1);
+            filter: blur(0px);
+            transition:
+                opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Subtle bounce at the end */
+        .electric-card-container.cascade-reveal.revealed.bounce {
+            animation: card-settle 0.4s ease-out forwards;
+        }
+
+        @keyframes card-settle {
+            0% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(-8px) rotate(0deg) scale(1.01); }
+            100% { transform: translateY(0) rotate(0deg) scale(1); }
+        }
+
+        /* =============================================
+           CURSOR WAKE / PROXIMITY EFFECTS
+           ============================================= */
+        .wake-glow {
+            position: absolute;
+            pointer-events: none;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle,
+                rgba(29, 154, 155, 0.15) 0%,
+                rgba(29, 154, 155, 0.05) 40%,
+                transparent 70%);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .electric-card-container .cursor-proximity-glow {
+            position: absolute;
+            inset: -2px;
+            border-radius: var(--card-radius);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%),
+                rgba(29, 154, 155, 0.4) 0%,
+                transparent 50%);
+            z-index: 0;
+        }
+
+        .electric-card-container:hover .cursor-proximity-glow {
+            opacity: 0;
+        }
+
+        /* Floating particles container */
+        .cursor-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100005;
+            overflow: hidden;
+        }
+
+        .cursor-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            box-shadow: 0 0 6px var(--primary);
+        }
+
+        .cursor-particle.active {
+            animation: particle-scatter 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes particle-scatter {
+            0% {
+                opacity: 0.8;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--dx), var(--dy)) scale(0);
+            }
+        }
+
+        /* Hero blob cursor attraction */
+        #heroBlob.cursor-attracted canvas {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Text proximity shift */
+        .proximity-shift {
+            transition: transform 0.15s ease-out;
+        }
+
+        /* =============================================
            ANIMATIONS & UTILS
            ============================================= */
         .reveal {
@@ -4908,6 +5081,9 @@
     <div class="cursor-trail" id="cursorTrail2"></div>
     <div class="cursor-trail" id="cursorTrail3"></div>
 
+    <!-- Cursor particles for wake effect -->
+    <div class="cursor-particles" id="cursorParticles"></div>
+
     <!-- Film grain overlay -->
     <div class="film-grain" id="filmGrain">
         <canvas id="grainCanvas"></canvas>
@@ -4934,7 +5110,7 @@
                     <path d="M2 12l10 5 10-5"/>
                 </svg>
             </div>
-            <p class="preloader-text" id="preloaderText">Loading</p>
+            <p class="preloader-text" id="preloaderText"><span class="typewriter-container"><span class="typewriter-text" id="typewriterText"></span></span></p>
             <div class="preloader-bar" id="preloaderBar">
                 <div class="preloader-bar-fill" id="preloaderFill"></div>
             </div>
@@ -8917,6 +9093,325 @@
                 closeDemoModal();
             }
         });
+
+        // =============================================
+        // ENHANCEMENT 1: TYPEWRITER PRELOADER
+        // =============================================
+        (function initTypewriterPreloader() {
+            const typewriterEl = document.getElementById('typewriterText');
+            if (!typewriterEl) return;
+
+            const messages = [
+                "Building something cool",
+                "Optimizing pixels",
+                "Warming up the AI",
+                "Preparing awesomeness",
+                "Almost there"
+            ];
+
+            let currentMessageIndex = 0;
+            let currentCharIndex = 0;
+            let isDeleting = false;
+            let typeSpeed = 60;
+            let deleteSpeed = 30;
+            let pauseBetweenMessages = 800;
+            let isRunning = true;
+
+            function glitchTransition() {
+                typewriterEl.classList.add('glitching');
+                setTimeout(() => {
+                    typewriterEl.classList.remove('glitching');
+                }, 150);
+            }
+
+            function type() {
+                if (!isRunning) return;
+
+                const currentMessage = messages[currentMessageIndex];
+
+                if (!isDeleting) {
+                    // Typing
+                    typewriterEl.textContent = currentMessage.substring(0, currentCharIndex + 1);
+                    currentCharIndex++;
+                    typewriterEl.classList.add('typing');
+
+                    if (currentCharIndex === currentMessage.length) {
+                        // Finished typing, pause then delete
+                        typewriterEl.classList.remove('typing');
+                        setTimeout(() => {
+                            isDeleting = true;
+                            type();
+                        }, pauseBetweenMessages);
+                        return;
+                    }
+                } else {
+                    // Deleting
+                    typewriterEl.textContent = currentMessage.substring(0, currentCharIndex);
+                    currentCharIndex--;
+
+                    if (currentCharIndex === 0) {
+                        isDeleting = false;
+                        currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+                        glitchTransition();
+                        setTimeout(type, 200);
+                        return;
+                    }
+                }
+
+                setTimeout(type, isDeleting ? deleteSpeed : typeSpeed);
+            }
+
+            // Start typewriter after preloader text becomes visible
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.target.id === 'preloaderText') {
+                        const opacity = window.getComputedStyle(mutation.target).opacity;
+                        if (parseFloat(opacity) > 0.5 && isRunning) {
+                            type();
+                            observer.disconnect();
+                        }
+                    }
+                });
+            });
+
+            const preloaderText = document.getElementById('preloaderText');
+            if (preloaderText) {
+                observer.observe(preloaderText, { attributes: true, attributeFilter: ['style'] });
+                // Also start after a delay as backup
+                setTimeout(() => {
+                    if (isRunning && typewriterEl.textContent === '') {
+                        type();
+                    }
+                }, 1500);
+            }
+
+            // Stop when preloader fades
+            const stopObserver = new MutationObserver(() => {
+                const preloader = document.getElementById('preloader');
+                if (preloader) {
+                    const display = window.getComputedStyle(preloader).display;
+                    const opacity = window.getComputedStyle(preloader).opacity;
+                    if (display === 'none' || parseFloat(opacity) < 0.3) {
+                        isRunning = false;
+                        stopObserver.disconnect();
+                    }
+                }
+            });
+
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                stopObserver.observe(preloader, { attributes: true, attributeFilter: ['style'] });
+            }
+        })();
+
+        // =============================================
+        // ENHANCEMENT 2: CASCADE CARD REVEALS
+        // =============================================
+        (function initCascadeCardReveals() {
+            // Only on desktop
+            if (window.innerWidth <= 768) return;
+
+            const cardSelectors = [
+                '.extensions-grid .electric-card-container',
+                '.template-cards-inner .electric-card-container',
+                '.blog-cards-grid .electric-card-container',
+                '.build-process-grid .electric-card-container'
+            ];
+
+            cardSelectors.forEach(selector => {
+                const cards = document.querySelectorAll(selector);
+                if (!cards.length) return;
+
+                cards.forEach((card, index) => {
+                    // Add the cascade class
+                    card.classList.add('cascade-reveal');
+
+                    // Add proximity glow element
+                    const glowEl = document.createElement('div');
+                    glowEl.className = 'cursor-proximity-glow';
+                    card.appendChild(glowEl);
+
+                    // Create intersection observer for each card
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                // Staggered delay based on index
+                                setTimeout(() => {
+                                    card.classList.add('revealed');
+                                    // Add bounce after reveal completes
+                                    setTimeout(() => {
+                                        card.classList.add('bounce');
+                                        setTimeout(() => card.classList.remove('bounce'), 400);
+                                    }, 700);
+                                }, index * 120);
+                                observer.unobserve(card);
+                            }
+                        });
+                    }, {
+                        threshold: 0.2,
+                        rootMargin: '0px 0px -10% 0px'
+                    });
+
+                    observer.observe(card);
+                });
+            });
+        })();
+
+        // =============================================
+        // ENHANCEMENT 3: CURSOR WAKE / PROXIMITY EFFECTS
+        // =============================================
+        (function initCursorWakeEffects() {
+            // Only on desktop
+            if (window.innerWidth <= 768) return;
+
+            let mouseX = 0, mouseY = 0;
+            let lastMouseX = 0, lastMouseY = 0;
+            let mouseSpeed = 0;
+            const particlesContainer = document.getElementById('cursorParticles');
+            const heroBlob = document.getElementById('heroBlob');
+            const blobCanvas = document.getElementById('blobCanvas');
+
+            // Track mouse position
+            document.addEventListener('mousemove', (e) => {
+                lastMouseX = mouseX;
+                lastMouseY = mouseY;
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+
+                // Calculate speed
+                const dx = mouseX - lastMouseX;
+                const dy = mouseY - lastMouseY;
+                mouseSpeed = Math.sqrt(dx * dx + dy * dy);
+            }, { passive: true });
+
+            // Particle system for fast cursor movement
+            function createParticle() {
+                if (!particlesContainer || mouseSpeed < 25) return;
+
+                const particle = document.createElement('div');
+                particle.className = 'cursor-particle';
+
+                // Random scatter direction
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 30 + Math.random() * 60;
+                const dx = Math.cos(angle) * distance;
+                const dy = Math.sin(angle) * distance;
+
+                particle.style.cssText = `
+                    left: ${mouseX}px;
+                    top: ${mouseY}px;
+                    --dx: ${dx}px;
+                    --dy: ${dy}px;
+                `;
+
+                particlesContainer.appendChild(particle);
+                requestAnimationFrame(() => particle.classList.add('active'));
+
+                setTimeout(() => particle.remove(), 800);
+            }
+
+            // Spawn particles on fast movement
+            let particleInterval = setInterval(() => {
+                if (mouseSpeed > 25) {
+                    createParticle();
+                    if (mouseSpeed > 50) createParticle();
+                    if (mouseSpeed > 80) createParticle();
+                }
+            }, 50);
+
+            // Proximity glow on cards
+            const cards = document.querySelectorAll('.electric-card-container');
+
+            function updateProximityGlow() {
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const cardCenterX = rect.left + rect.width / 2;
+                    const cardCenterY = rect.top + rect.height / 2;
+
+                    const dx = mouseX - cardCenterX;
+                    const dy = mouseY - cardCenterY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    const glowEl = card.querySelector('.cursor-proximity-glow');
+                    if (!glowEl) return;
+
+                    if (distance < 400) {
+                        // Calculate glow position relative to card
+                        const glowX = ((mouseX - rect.left) / rect.width) * 100;
+                        const glowY = ((mouseY - rect.top) / rect.height) * 100;
+
+                        glowEl.style.setProperty('--glow-x', `${glowX}%`);
+                        glowEl.style.setProperty('--glow-y', `${glowY}%`);
+                        glowEl.style.opacity = Math.max(0, (400 - distance) / 400) * 0.6;
+                    } else {
+                        glowEl.style.opacity = 0;
+                    }
+                });
+
+                requestAnimationFrame(updateProximityGlow);
+            }
+
+            updateProximityGlow();
+
+            // Blob attraction toward cursor
+            if (heroBlob && blobCanvas) {
+                function updateBlobAttraction() {
+                    const rect = heroBlob.getBoundingClientRect();
+                    const blobCenterX = rect.left + rect.width / 2;
+                    const blobCenterY = rect.top + rect.height / 2;
+
+                    const dx = mouseX - blobCenterX;
+                    const dy = mouseY - blobCenterY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 500) {
+                        const strength = (500 - distance) / 500;
+                        const moveX = (dx / distance) * strength * 15;
+                        const moveY = (dy / distance) * strength * 15;
+                        blobCanvas.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                    } else {
+                        blobCanvas.style.transform = 'translate(0, 0)';
+                    }
+
+                    requestAnimationFrame(updateBlobAttraction);
+                }
+
+                updateBlobAttraction();
+            }
+
+            // Text proximity shift (subtle)
+            const shiftElements = document.querySelectorAll('.hero-headline, .hero-subline, .section-title');
+
+            shiftElements.forEach(el => {
+                el.classList.add('proximity-shift');
+            });
+
+            function updateTextShift() {
+                shiftElements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    const elCenterX = rect.left + rect.width / 2;
+                    const elCenterY = rect.top + rect.height / 2;
+
+                    const dx = mouseX - elCenterX;
+                    const dy = mouseY - elCenterY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 300 && distance > 0) {
+                        const strength = (300 - distance) / 300;
+                        // Push away from cursor (negative direction)
+                        const pushX = -(dx / distance) * strength * 3;
+                        const pushY = -(dy / distance) * strength * 2;
+                        el.style.transform = `translate(${pushX}px, ${pushY}px)`;
+                    } else {
+                        el.style.transform = 'translate(0, 0)';
+                    }
+                });
+
+                requestAnimationFrame(updateTextShift);
+            }
+
+            updateTextShift();
+        })();
     </script>
 </body>
 </html>
