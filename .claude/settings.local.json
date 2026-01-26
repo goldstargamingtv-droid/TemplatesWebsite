@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx serve -l 3000)",
+      "Bash(timeout:*)",
+      "Bash(npx http-server -p 3000)",
+      "Bash(npx http-server:*)"
+    ]
+  }
+}
