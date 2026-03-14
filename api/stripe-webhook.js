@@ -1,6 +1,6 @@
 // Stripe Webhook Handler for DeployTemplate
 // Vercel Serverless Function
-
+ 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { createClient } = require('@supabase/supabase-js');
 
