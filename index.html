@@ -1490,9 +1490,12 @@
         /* ---------- Extensions ---------- */
         .ext-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 1.4rem;
         }
+
+        .ext-card { grid-column: span 2; }
+        .ext-card.wide { grid-column: span 3; }
 
         .ext-card {
             display: flex;
@@ -1585,6 +1588,14 @@
             letter-spacing: .16em;
             text-transform: uppercase;
             color: var(--ok);
+            white-space: nowrap;
+        }
+        .ext-status.hot { color: var(--flame); }
+
+        .chip-new {
+            color: var(--flame);
+            border-color: color-mix(in srgb, var(--flame) 45%, transparent);
+            background: color-mix(in srgb, var(--flame) 8%, transparent);
         }
 
         .ext-desc { color: var(--ink-2); font-size: .95rem; flex: 1; }
@@ -1611,70 +1622,6 @@
         }
         .ext-card:hover .ext-cta .cta-arrow { transform: translateX(5px); }
         .ext-cta svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-
-        /* Coming soon — bench rows */
-        .bench {
-            margin-top: 1.4rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.4rem;
-        }
-
-        .bench-row {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            background: color-mix(in srgb, var(--bg1) 62%, transparent);
-            border: 1px dashed var(--line-2);
-            border-radius: var(--radius);
-            padding: 1rem 1.3rem 1rem 1rem;
-            transition: border-color .3s ease, background-color .3s ease;
-        }
-        .bench-row:hover { border-color: var(--amber); }
-
-        .bench-thumb {
-            width: 132px;
-            aspect-ratio: 5 / 2;
-            flex: none;
-            border-radius: 9px;
-            overflow: hidden;
-            border: 1px solid var(--line);
-        }
-        .bench-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(.75) contrast(.92);
-            opacity: .75;
-            transition: filter .45s ease, opacity .45s ease;
-        }
-        .bench-row:hover .bench-thumb img { filter: grayscale(.1); opacity: 1; }
-
-        .bench-info { flex: 1; min-width: 0; }
-        .bench-name {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1.05rem;
-            letter-spacing: -.01em;
-            margin-bottom: .15rem;
-        }
-        .bench-desc {
-            color: var(--ink-2);
-            font-size: .88rem;
-            line-height: 1.45;
-        }
-        .bench-status {
-            display: inline-flex;
-            align-items: center;
-            gap: .5rem;
-            font-family: var(--font-mono);
-            font-size: .62rem;
-            font-weight: 700;
-            letter-spacing: .16em;
-            text-transform: uppercase;
-            color: var(--amber);
-            flex: none;
-        }
 
         /* ---------- Templates ---------- */
         .tpl-grid {
@@ -2345,6 +2292,7 @@
         /* ---------- Responsive ---------- */
         @media (max-width: 1080px) {
             .ext-grid, .tpl-grid { grid-template-columns: repeat(2, 1fr); }
+            .ext-card, .ext-card.wide { grid-column: auto; }
             .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
             .term { max-width: 640px; }
             .post { grid-template-columns: 2.6rem 6.5rem 1fr auto auto; gap: 1.1rem; }
@@ -2358,7 +2306,6 @@
             .stats-grid { grid-template-columns: 1fr; }
             .stat { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; }
             .stat:first-child { border-top: 0; }
-            .bench { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 720px) {
@@ -2377,8 +2324,6 @@
         @media (max-width: 520px) {
             body { font-size: 1rem; }
             .hero-ctas .btn { width: 100%; justify-content: center; }
-            .bench-row { flex-wrap: wrap; }
-            .bench-thumb { width: 100%; }
             .foot-cta-btns { width: 100%; }
             .foot-cta-btns .btn { width: 100%; justify-content: center; }
         }
@@ -2520,10 +2465,68 @@
                         <span class="label">Browser extensions</span>
                     </div>
                     <h2 class="section-title" id="extensions-title">Superpowers for your <span class="flame-word">browser.</span></h2>
-                    <p class="section-desc">Three live on the Chrome Web Store, two on the bench. No subscriptions, no limits, no catch — install and go.</p>
+                    <p class="section-desc">All five live on the Chrome Web Store. No subscriptions, no limits, no catch — install and go.</p>
                 </div>
 
                 <div class="ext-grid">
+                    <!-- Twitch Ad Crusher -->
+                    <a class="ext-card wide rv" href="https://chromewebstore.google.com/detail/twitch-ad-crusher/ifbcandjkbnkjolhfglabhhmcdphnddj" target="_blank" rel="noopener" aria-label="Twitch Ad Crusher — get the extension on the Chrome Web Store">
+                        <div class="shot">
+                            <div class="shot-bar" aria-hidden="true">
+                                <i></i><i></i><i></i>
+                                <span class="shot-url">chromewebstore.google.com/twitch-ad-crusher</span>
+                            </div>
+                            <div class="shot-img">
+                                <img src="images/twitchadcrusher-hero.png" alt="Twitch Ad Crusher blocking ads on a live Twitch stream" loading="lazy" decoding="async" width="1400" height="560">
+                            </div>
+                        </div>
+                        <div class="ext-body">
+                            <div class="ext-title-row">
+                                <h3 class="ext-name">Twitch Ad Crusher</h3>
+                                <span class="ext-status hot">★ Most installed</span>
+                            </div>
+                            <p class="ext-desc">Blocks Twitch ads so streams just play — lightweight, fast, uninterrupted. We use it every single day.</p>
+                            <div class="ext-chips">
+                                <span class="chip chip-new">New</span>
+                                <span class="chip">Ad blocking</span>
+                                <span class="chip">Lightweight</span>
+                                <span class="chip">Zero setup</span>
+                            </div>
+                            <span class="ext-cta">Add to Chrome — free
+                                <span class="cta-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                            </span>
+                        </div>
+                    </a>
+
+                    <!-- Cookie Crusher -->
+                    <a class="ext-card wide rv" style="--d:.1s" href="https://chromewebstore.google.com/detail/cookie-crusher/klpimllgkmfjohocfodhadpfmjnhnagf" target="_blank" rel="noopener" aria-label="Cookie Crusher — get the extension on the Chrome Web Store">
+                        <div class="shot">
+                            <div class="shot-bar" aria-hidden="true">
+                                <i></i><i></i><i></i>
+                                <span class="shot-url">chromewebstore.google.com/cookie-crusher</span>
+                            </div>
+                            <div class="shot-img">
+                                <img src="images/cookiecrusher-hero.png" alt="Cookie Crusher dismissing a cookie consent popup automatically" loading="lazy" decoding="async" width="1400" height="560">
+                            </div>
+                        </div>
+                        <div class="ext-body">
+                            <div class="ext-title-row">
+                                <h3 class="ext-name">Cookie Crusher</h3>
+                                <span class="ext-status"><span class="led" aria-hidden="true"></span>Live</span>
+                            </div>
+                            <p class="ext-desc">Auto-dismisses cookie popups on every site you visit. Set it once, browse in peace forever.</p>
+                            <div class="ext-chips">
+                                <span class="chip chip-new">New</span>
+                                <span class="chip">Auto-dismiss</span>
+                                <span class="chip">All sites</span>
+                                <span class="chip">Set &amp; forget</span>
+                            </div>
+                            <span class="ext-cta">Add to Chrome — free
+                                <span class="cta-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+                            </span>
+                        </div>
+                    </a>
+
                     <!-- ZapReply -->
                     <a class="ext-card rv" href="https://chromewebstore.google.com/detail/zapreply-ai-email-assista/pimhdhjjkcdidgjekiligafldklogljd" target="_blank" rel="noopener" aria-label="ZapReply — get the extension on the Chrome Web Store">
                         <div class="shot">
@@ -2607,31 +2610,6 @@
                             </span>
                         </div>
                     </a>
-                </div>
-
-                <!-- On the bench -->
-                <div class="bench">
-                    <article class="bench-row rv">
-                        <div class="bench-thumb">
-                            <img src="images/twitchadcrusher-hero.png" alt="Twitch Ad Crusher extension preview" loading="lazy" decoding="async" width="1400" height="560">
-                        </div>
-                        <div class="bench-info">
-                            <h3 class="bench-name">Twitch Ad Crusher</h3>
-                            <p class="bench-desc">Watch streams, not ads. Lightweight, fast, uninterrupted.</p>
-                        </div>
-                        <span class="bench-status"><span class="led amber" aria-hidden="true"></span>In the works</span>
-                    </article>
-
-                    <article class="bench-row rv" style="--d:.1s">
-                        <div class="bench-thumb">
-                            <img src="images/cookiecrusher-hero.png" alt="Cookie Crusher extension preview" loading="lazy" decoding="async" width="1400" height="560">
-                        </div>
-                        <div class="bench-info">
-                            <h3 class="bench-name">Cookie Crusher</h3>
-                            <p class="bench-desc">Auto-dismisses cookie popups on every site. Browse in peace.</p>
-                        </div>
-                        <span class="bench-status"><span class="led amber" aria-hidden="true"></span>In the works</span>
-                    </article>
                 </div>
             </div>
         </section>
